@@ -9,9 +9,20 @@ yarn-error.log*
 dist/
 build/
 coverage/
+.next/
+out/
+.serverless/
 
 .env
 .env.*
+!.env.example
 
 .DS_Store
 Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
