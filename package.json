@@ -1,7 +1,7 @@
 {
   "name": "piar-repo",
   "version": "1.0.0",
-  "description": "",
+  "description": "Production-ready monorepo template by Piar Concept for building modern web applications with Next.js, TypeScript, and scalable architecture",
   "main": "index.js",
   "scripts": {
     "dev": "turbo dev",
@@ -13,8 +13,8 @@
     "verify": "bash scripts/verify-all.sh"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Piar Concept <contact@piarconcept.com> (https://piarconcept.com)",
+  "license": "MIT",
   "packageManager": "pnpm@10.28.0",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.53.0",

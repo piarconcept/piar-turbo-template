@@ -1,0 +1,62 @@
+MIT License
+
+Copyright (c) 2026 Piar Concept
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+## About This Template
+
+This is a production-ready monorepo template created by **Piar Concept** to help 
+startups and businesses quickly launch modern web applications with:
+
+- Multiple Next.js applications (public website + backoffice)
+- Serverless functions ready
+- Shared packages architecture
+- Complete testing infrastructure
+- ESLint configuration
+- TypeScript strict mode
+- Turbo build system with caching
+- AI-friendly documentation
+
+## Support & Contact
+
+**Created by:** Piar Concept  
+**Website:** https://piarconcept.com  
+**Support:** For any questions, issues, or custom development needs, please contact us at https://piarconcept.com
+
+We provide:
+- ✅ Implementation support
+- ✅ Custom development
+- ✅ Architecture consulting
+- ✅ Team augmentation
+- ✅ Startup acceleration services
+
+Feel free to reach out - we're here to help make your project successful!
+
+## Attribution
+
+When using this template, please consider:
+- Giving credit to Piar Concept in your project documentation
+- Linking back to https://piarconcept.com in your README or about page
+- Sharing your success story with us!
+
+While not required by the license, attribution helps us continue creating and 
+maintaining free tools for the community.

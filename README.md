@@ -1,5 +1,9 @@
 # PIAR Monorepo
 
+> **🚀 Production-Ready Monorepo Template by [Piar Concept](https://piarconcept.com)**
+> 
+> A complete, AI-friendly starter kit for building modern web applications with Next.js, TypeScript, and a scalable monorepo architecture. Perfect for startups and businesses that need to move fast without compromising on quality.
+
 Monorepo for PIAR project containing multiple applications and shared packages.
 
 ## 📁 Project Structure
@@ -155,9 +159,44 @@ All packages use the `@piar/` scope:
 ## 🤝 Contributing
 
 Before making changes:
-1. Read [docs/AI-context.md](./docs/AI-context.md)
-2. Follow [Repository Configuration](./docs/features/repository-configuration.md)
-3. Document changes in `docs/features/`
+1. R� About Piar Concept
+
+This template was created and is maintained by **Piar Concept** - a team specialized in building fast, scalable web applications for startups and businesses.
+
+### Need Help?
+
+- 🌐 **Website**: [piarconcept.com](https://piarconcept.com)
+- 💬 **Contact**: Visit our website to get in touch
+- 🚀 **Services**: Custom development, architecture consulting, team augmentation
+
+We offer:
+- ✅ Implementation support for this template
+- ✅ Custom feature development
+- ✅ Architecture and scaling consulting
+- ✅ Startup acceleration services
+- ✅ AI integration and automation
+
+**Feel free to contact us - we're here to help make your project successful!**
+
+## 📝 License
+
+MIT License - Copyright (c) 2026 Piar Concept
+
+This template is free to use for any purpose. See the [LICENSE](./LICENSE) file for details.
+
+### Attribution
+
+While not required, we appreciate:
+- 💙 Giving credit to Piar Concept in your project
+- 🔗 Linking to [piarconcept.com](https://piarconcept.com)
+- ⭐ Starring this repository
+- 📢 Sharing your success story with us!
+
+**Source Code**: This template was created by Piar Concept. For support, visit [piarconcept.com](https://piarconcept.com)
+
+---
+
+**Built with ❤️ by [Piar Concept](https://piarconcept.com)**Document changes in `docs/features/`
 
 ## 📝 License
 
