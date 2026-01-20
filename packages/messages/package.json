@@ -1,0 +1,44 @@
+{
+  "name": "@piar/messages",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./es": {
+      "types": "./dist/es/index.d.ts",
+      "default": "./dist/es/index.js"
+    },
+    "./ca": {
+      "types": "./dist/ca/index.d.ts",
+      "default": "./dist/ca/index.js"
+    },
+    "./en": {
+      "types": "./dist/en/index.d.ts",
+      "default": "./dist/en/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^22.10.5",
+    "@vitest/coverage-v8": "^2.1.9",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.26",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.53.0",
+    "vitest": "^2.1.9"
+  }
+}

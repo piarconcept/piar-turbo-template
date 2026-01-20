@@ -1,0 +1,48 @@
+import type { CommonMessages } from '../types/common';
+
+export const common: CommonMessages = {
+  nav: {
+    home: 'Home',
+    about: 'About us',
+    programs: 'Programs',
+    contact: 'Contact',
+    login: 'Log in',
+    logout: 'Log out',
+  },
+  actions: {
+    save: 'Save',
+    cancel: 'Cancel',
+    delete: 'Delete',
+    edit: 'Edit',
+    create: 'Create',
+    confirm: 'Confirm',
+    close: 'Close',
+    back: 'Back',
+    next: 'Next',
+    submit: 'Submit',
+    search: 'Search',
+  },
+  status: {
+    loading: 'Loading...',
+    success: 'Success',
+    error: 'Error',
+    warning: 'Warning',
+    info: 'Information',
+  },
+  general: {
+    yes: 'Yes',
+    no: 'No',
+    ok: 'OK',
+    notAvailable: 'Not available',
+    required: 'Required',
+    optional: 'Optional',
+  },
+  home: 'Home',
+  aboutUs: 'About us',
+  contact: 'Contact',
+  description: 'Extra curricular sports program for schools in Barcelona',
+  quickLinks: 'Quick links',
+  allRightsReserved: 'All rights reserved',
+  privacy: 'Privacy',
+  terms: 'Terms and conditions',
+};

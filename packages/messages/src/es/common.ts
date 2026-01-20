@@ -1,0 +1,48 @@
+import type { CommonMessages } from '../types/common';
+
+export const common: CommonMessages = {
+  nav: {
+    home: 'Inicio',
+    about: 'Sobre nosotros',
+    programs: 'Programas',
+    contact: 'Contacto',
+    login: 'Iniciar sesión',
+    logout: 'Cerrar sesión',
+  },
+  actions: {
+    save: 'Guardar',
+    cancel: 'Cancelar',
+    delete: 'Eliminar',
+    edit: 'Editar',
+    create: 'Crear',
+    confirm: 'Confirmar',
+    close: 'Cerrar',
+    back: 'Atrás',
+    next: 'Siguiente',
+    submit: 'Enviar',
+    search: 'Buscar',
+  },
+  status: {
+    loading: 'Cargando...',
+    success: 'Éxito',
+    error: 'Error',
+    warning: 'Advertencia',
+    info: 'Información',
+  },
+  general: {
+    yes: 'Sí',
+    no: 'No',
+    ok: 'OK',
+    notAvailable: 'No disponible',
+    required: 'Obligatorio',
+    optional: 'Opcional',
+  },
+  home: 'Inicio',
+  aboutUs: 'Sobre nosotros',
+  contact: 'Contacto',
+  description: 'Programa deportivo extra curricular para escuelas de Barcelona',
+  quickLinks: 'Enlaces rápidos',
+  allRightsReserved: 'Todos los derechos reservados',
+  privacy: 'Privacidad',
+  terms: 'Términos y condiciones',
+};
