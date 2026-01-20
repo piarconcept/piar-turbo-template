@@ -1,18 +1,7 @@
-import type { ComingSoonProps } from './types';
-import * as messagesPackage from '@piar/messages';
+import { useTranslations } from "next-intl";
 
-/**
- * Simple and elegant Coming Soon component
- * Displays a minimal "Coming Soon" message centered on the page
- */
-export function ComingSoon({ language = 'ca' }: ComingSoonProps) {
-  const languageMessages = {
-    es: messagesPackage.es.messages.comingSoon,
-    ca: messagesPackage.ca.messages.comingSoon,
-    en: messagesPackage.en.messages.comingSoon,
-  };
-
-  const content = languageMessages[language];
+export function ComingSoon() {
+  const t = useTranslations('comingSoon');
 
   return (
     <div
@@ -39,7 +28,7 @@ export function ComingSoon({ language = 'ca' }: ComingSoonProps) {
           letterSpacing: '-0.02em',
         }}
       >
-        {content.title}
+        {t('title')}
       </h1>
       <p
         style={{
@@ -50,7 +39,7 @@ export function ComingSoon({ language = 'ca' }: ComingSoonProps) {
           fontWeight: 400,
         }}
       >
-        {content.subtitle}
+        {t('subtitle')}
       </p>
     </div>
   );
