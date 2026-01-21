@@ -26,7 +26,27 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body className={`${montserrat.variable} font-sans antialiased`}>
         <NextIntlClientProvider>
-          <Layout>{children}</Layout>
+          <Layout 
+            config={{
+              footer: {
+                sections: [],
+                copyright: '© 2024 Piar Inc.',
+                socialLinks: []
+              },
+              header: {
+                navigation: [],
+                logo: {
+                  src: '/logo.png',
+                  alt: 'Piar Logo',
+                  href: '/',
+                }
+              },
+              type: 'public'
+            }}
+            locale={locale}
+          >
+            {children}
+          </Layout>
         </NextIntlClientProvider>
       </body>
     </html>
