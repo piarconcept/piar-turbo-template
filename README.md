@@ -50,9 +50,6 @@ pnpm install
 # Build all packages
 pnpm turbo build
 
-# Run all tests
-pnpm test
-
 # Verify everything works (install, build, typecheck, test)
 pnpm verify
 

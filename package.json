@@ -18,7 +18,7 @@
     "build:backoffice-bff": "pnpm turbo build --filter=@piar/backoffice-bff",
     "typecheck": "turbo typecheck",
     "lint": "turbo lint",
-    "test": "turbo test",
+    "test": "pnpm test:coverage -- --run",
     "test:coverage": "turbo test:coverage",
     "verify": "bash scripts/verify-all.sh"
   },
