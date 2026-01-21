@@ -307,6 +307,9 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+      typescript-eslint:
+        specifier: ^8.31.1
+        version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       vitest:
         specifier: ^2.1.8
         version: 2.1.9(@types/node@20.19.29)(@vitest/ui@2.1.9)(happy-dom@16.8.1)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)
@@ -319,6 +322,9 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+      typescript-eslint:
+        specifier: ^8.31.1
+        version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       vitest:
         specifier: ^2.1.8
         version: 2.1.9(@types/node@22.19.7)(@vitest/ui@2.1.9)(happy-dom@16.8.1)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)
@@ -375,6 +381,9 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+      typescript-eslint:
+        specifier: ^8.31.1
+        version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@22.19.7)(@vitest/ui@2.1.9)(happy-dom@16.8.1)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)
@@ -415,6 +424,9 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+      typescript-eslint:
+        specifier: ^8.31.1
+        version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@22.19.7)(@vitest/ui@2.1.9)(happy-dom@16.8.1)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)
@@ -430,6 +442,9 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+      typescript-eslint:
+        specifier: ^8.31.1
+        version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@22.19.7)(@vitest/ui@2.1.9)(happy-dom@16.8.1)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)

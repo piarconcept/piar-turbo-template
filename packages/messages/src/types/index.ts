@@ -6,5 +6,4 @@ import { CommonMessages } from './common';
 export interface Messages {
   common: CommonMessages;
   comingSoon: ComingSoonMessages;
-  [key: string]: any; // Add index signature for next-intl compatibility
 }

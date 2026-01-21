@@ -1,13 +1,26 @@
-import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
+import tsEslint from 'typescript-eslint';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-export default tseslint.config(
-  eslint.configs.recommended,
-  ...tseslint.configs.recommended,
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+export default tsEslint.config(
+  ...tsEslint.configs.recommended,
   {
-    rules: {
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    languageOptions: {
+      parserOptions: {
+        project: true,
+        tsconfigRootDir: __dirname,
+      },
     },
+    rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
+    },
+  },
+  {
+    ignores: ['dist/**', 'node_modules/**', '.turbo/**', 'eslint.config.mjs', 'coverage/**', 'tests/**', '**/*.config.*', '**/*.test.*', '**/*.spec.*'],
   }
 );
