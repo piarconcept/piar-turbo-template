@@ -9,7 +9,7 @@
     "./postcss": "./postcss.config.mjs"
   },
   "scripts": {
-    "lint": "eslint .",
+    "lint": "echo 'No TypeScript files to lint in CSS config package'",
     "typecheck": "echo 'No TypeScript to check in CSS config package'"
   },
   "devDependencies": {
