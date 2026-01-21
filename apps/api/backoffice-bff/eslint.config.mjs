@@ -1,14 +1,31 @@
-import baseConfig from '../../../eslint.config.mjs';
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
+import rootConfig from "../../../eslint.config.mjs";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 
-export default [
-  ...baseConfig,
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const eslintConfig = defineConfig([
+  ...rootConfig,
+  ...nextVitals,
+  ...nextTs,
   {
-    files: ['**/*.ts'],
-    rules: {
-      '@typescript-eslint/interface-name-prefix': 'off',
-      '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/explicit-module-boundary-types': 'off',
-      '@typescript-eslint/no-explicit-any': 'warn',
+    languageOptions: {
+      parserOptions: {
+        tsconfigRootDir: __dirname,
+      },
     },
   },
-];
+  // Override default ignores of eslint-config-next.
+  globalIgnores([
+    // Default ignores of eslint-config-next:
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+  ]),
+]);
+
+export default eslintConfig;

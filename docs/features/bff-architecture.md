@@ -63,7 +63,7 @@ The PIAR monorepo implements the **Backend for Frontend (BFF)** pattern, which p
 
 **Location**: `apps/api/web-bff`
 
-**Port**: 5000
+**Port**: 5010
 
 **Responsibilities**:
 - Public content delivery
@@ -183,7 +183,7 @@ Security is implemented at the BFF level:
 ```typescript
 // Example: Web client fetches user profile
 // 1. Client makes request
-const response = await fetch('http://localhost:5000/api/user/profile', {
+const response = await fetch('http://localhost:5010/api/user/profile', {
   headers: {
     'Authorization': `Bearer ${token}`
   }
@@ -509,7 +509,7 @@ Each BFF needs:
 
 ```env
 # Application
-PORT=5000
+PORT=5010
 NODE_ENV=production
 
 # Client
@@ -551,7 +551,7 @@ COPY --from=builder /app/apps/api/web-bff/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 
 ENV NODE_ENV=production
-EXPOSE 5000
+EXPOSE 5010
 
 CMD ["node", "dist/main"]
 ```
@@ -562,7 +562,7 @@ Both BFFs include health check endpoints:
 
 ```bash
 # Check if BFF is running
-curl http://localhost:5000/health
+curl http://localhost:5010/health
 
 # Response:
 {
@@ -598,7 +598,7 @@ spec:
       - name: web-bff
         image: piar/web-bff:latest
         ports:
-        - containerPort: 5000
+        - containerPort: 5010
 ```
 
 ### Load Balancing
@@ -607,9 +607,9 @@ Use a load balancer (Nginx, ALB, etc.):
 
 ```nginx
 upstream web_bff {
-    server bff1:5000;
-    server bff2:5000;
-    server bff3:5000;
+    server bff1:5010;
+    server bff2:5010;
+    server bff3:5010;
 }
 
 server {

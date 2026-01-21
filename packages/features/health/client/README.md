@@ -45,12 +45,12 @@ import { HealthModule } from '@piar/health-client';
 const healthController = HealthModule.create();
 
 // Get health status of a service
-const status = await healthController.getHealth('http://localhost:5000');
+const status = await healthController.getHealth('http://localhost:5010');
 console.log(status);
 // { status: 'ok', timestamp: '...', service: 'web-bff' }
 
 // Check if service is healthy
-const isHealthy = await healthController.isHealthy('http://localhost:5000');
+const isHealthy = await healthController.isHealthy('http://localhost:5010');
 console.log(isHealthy); // true or false
 ```
 
@@ -60,7 +60,7 @@ console.log(isHealthy); // true or false
 const healthController = HealthModule.create();
 
 const services = [
-  'http://localhost:5000',  // web-bff
+  'http://localhost:5010',  // web-bff
   'http://localhost:5050',  // backoffice-bff
 ];
 
@@ -76,7 +76,7 @@ statuses.forEach(status => {
 const healthController = HealthModule.create();
 
 const result = await healthController.getAggregatedHealth([
-  'http://localhost:5000',
+  'http://localhost:5010',
   'http://localhost:5050',
 ]);
 
@@ -94,7 +94,7 @@ result.services.forEach(service => {
 const healthController = HealthModule.create();
 
 // Will retry up to 3 times with 1 second delay
-const status = await healthController.getHealthWithRetry('http://localhost:5000');
+const status = await healthController.getHealthWithRetry('http://localhost:5010');
 ```
 
 ### Singleton Pattern
@@ -170,7 +170,7 @@ import { HttpHealthRepository } from '@piar/health-api';
 const repository = new HttpHealthRepository();
 const useCase = new GetHealthStatusUseCase(repository);
 
-const status = await useCase.execute('http://localhost:5000');
+const status = await useCase.execute('http://localhost:5010');
 ```
 
 ### GetMultipleHealthStatusUseCase
@@ -185,7 +185,7 @@ const repository = new HttpHealthRepository();
 const useCase = new GetMultipleHealthStatusUseCase(repository);
 
 const statuses = await useCase.execute([
-  'http://localhost:5000',
+  'http://localhost:5010',
   'http://localhost:5050',
 ]);
 ```
@@ -205,7 +205,7 @@ const useCase = new GetHealthStatusWithRetryUseCase(
   1000  // retry delay in ms
 );
 
-const status = await useCase.execute('http://localhost:5000');
+const status = await useCase.execute('http://localhost:5010');
 ```
 
 ## Testing
@@ -287,7 +287,7 @@ export default function HealthPage() {
     const controller = HealthModule.getInstance();
     
     controller.getMultipleHealth([
-      'http://localhost:5000',
+      'http://localhost:5010',
       'http://localhost:5050',
     ]).then(setStatuses);
   }, []);

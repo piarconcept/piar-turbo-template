@@ -65,7 +65,7 @@ apps/api/web-bff/
 
 #### 3. Environment Variables
 ```env
-PORT=5000
+PORT=5010
 NODE_ENV=development
 WEB_CLIENT_URL=http://localhost:3000
 ```

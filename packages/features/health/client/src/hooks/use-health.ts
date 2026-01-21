@@ -51,7 +51,7 @@ export function useMultipleHealth(serviceUrls: string[], repository?: IHealthRep
     setLoading(true);
     setError(null);
 
-    const promises = urlsRef.current.map(url => repo.getHealthWithTimeout(url, 5000));
+    const promises = urlsRef.current.map(url => repo.getHealthWithTimeout(url, 5010));
     const results = await Promise.all(promises);
     setStatuses(results);
     setLoading(false);

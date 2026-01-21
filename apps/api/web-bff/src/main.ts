@@ -10,7 +10,7 @@ async function bootstrap() {
     credentials: true,
   });
 
-  const port = process.env.PORT || 5000;
+  const port = process.env.PORT || 5010;
   await app.listen(port);
   
   console.warn(`🚀 Web BFF is running on: http://localhost:${port}`);

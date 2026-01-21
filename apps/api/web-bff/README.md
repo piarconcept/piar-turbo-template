@@ -37,7 +37,7 @@ pnpm --filter @piar/web-bff test:coverage
 
 Copy `.env.example` to `.env` and configure:
 
-- `PORT`: Server port (default: 5000)
+- `PORT`: Server port (default: 5010)
 - `NODE_ENV`: Environment (development/production)
 - `WEB_CLIENT_URL`: Web client URL for CORS configuration
 

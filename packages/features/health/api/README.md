@@ -29,7 +29,7 @@ import type { HealthStatus } from '@piar/health-configuration';
 const healthRepository = new HttpHealthRepository();
 
 // Check health status
-const status: HealthStatus = await healthRepository.getHealth('http://localhost:5000');
+const status: HealthStatus = await healthRepository.getHealth('http://localhost:5010');
 
 console.log(status);
 // {
@@ -40,8 +40,8 @@ console.log(status);
 
 // Check with timeout (5 seconds)
 const statusWithTimeout = await healthRepository.getHealthWithTimeout(
-  'http://localhost:5000',
-  5000
+  'http://localhost:5010',
+  5010
 );
 ```
 
@@ -95,7 +95,7 @@ import { HttpHealthRepository } from './http-health.repository';
 describe('HttpHealthRepository', () => {
   it('should fetch health status', async () => {
     const repository = new HttpHealthRepository();
-    const status = await repository.getHealth('http://localhost:5000');
+    const status = await repository.getHealth('http://localhost:5010');
     
     expect(status).toHaveProperty('status');
     expect(status).toHaveProperty('timestamp');

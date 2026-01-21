@@ -272,13 +272,13 @@ export default function Home() {
       
       {/* Badge simple */}
       <HealthBadge 
-        serviceUrl="http://localhost:5000/health" 
+        serviceUrl="http://localhost:5010/health" 
         serviceName="Web BFF"
       />
       
       {/* Card detallado */}
       <HealthCard 
-        serviceUrl="http://localhost:5000/health/detailed"
+        serviceUrl="http://localhost:5010/health/detailed"
         serviceName="Web BFF"
       />
     </div>
@@ -294,7 +294,7 @@ import { useHealth, useHealthPolling } from '@piar/health-client';
 function CustomHealthComponent() {
   // Polling cada 30 segundos
   const { status, loading, error } = useHealthPolling(
-    'http://localhost:5000/health',
+    'http://localhost:5010/health',
     30000
   );
 
@@ -380,8 +380,8 @@ pnpm run dev:web-bff
 pnpm run dev:backoffice-bff
 
 # Test manual del endpoint
-curl http://localhost:5000/health
-curl http://localhost:5000/health/detailed
+curl http://localhost:5010/health
+curl http://localhost:5010/health/detailed
 ```
 
 ## Ventajas de esta arquitectura

@@ -13,7 +13,7 @@ const ENV_FILE = '.env';
       load: [() => loadConfigurationParams()],
       envFilePath: [ENV_FILE],
     }),
-    HealthModule,
+    HealthModule.register(),
   ],
 })
-export class AppModule {}
+export class AppModule { }

@@ -50,11 +50,17 @@ pnpm install
 # Build all packages
 pnpm turbo build
 
+# Run all tests
+pnpm test
+
 # Verify everything works (install, build, typecheck, test)
 pnpm verify
 
-# Start development
-pnpm turbo dev
+# Start web in dev mode
+pnpm turbo dev:web 
+
+# Start backoffice in dev mode
+pnpm turbo dev:backoffice
 ```
 Applications
 
@@ -69,7 +75,7 @@ pnpm --filter @piar/web-bff dev
 pnpm turbo build --filter=@piar/web-bff
 ```
 
-Runs on: `http://localhost:5000`  
+Runs on: `http://localhost:5010`  
 [→ Documentation](./apps/api/web-bff/README.md)
 
 #### @piar/backoffice-bff
@@ -136,7 +142,7 @@ pnpm --filter @piar/web dev
 
 - **Web Client**: `http://localhost:3000`
 - **Backoffice Client**: `http://localhost:3030`
-- **Web BFF**: `http://localhost:5000`
+- **Web BFF**: `http://localhost:5010`
 - **Backoffice BFF**: `http://localhost:5050`14-step guide for new packages
 - **[Testing Guide](./docs/features/testing-guide.md)** - Testing standards and examples
 - **[ESLint Configuration](./docs/features/eslint-configuration.md)** - Linting setup and rules

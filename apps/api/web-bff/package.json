@@ -26,6 +26,7 @@
     "rxjs": "^7.8.1"
   },
   "devDependencies": {
+    "@piar/health-api": "workspace:*",
     "@nestjs/cli": "^11.0.16",
     "@nestjs/schematics": "^11.0.9",
     "@nestjs/testing": "^11.0.16",
