@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  /* PIAR Design System Tokens */
+  
+  /* Color Palette */
+  --color-primary-orange: #ec6b38;
+  --color-primary-blue: #262b50;
+  --color-background: #ffffff;
+  --color-foreground: #262b50;
+  
+  /* Typography */
+  --font-family-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  
+  /* Spacing scale (extends defaults) */
+  /* Tailwind v4 provides default spacing, extend as needed */
+}
+
+/* Base layer customizations */
+@layer base {
+  html,
+  body {
+    @apply max-w-full overflow-x-hidden;
+  }
+
+  body {
+    @apply text-foreground bg-background antialiased;
+    font-family: var(--font-family-sans);
+  }
+
+  * {
+    @apply box-border p-0 m-0;
+  }
+
+  a {
+    @apply no-underline;
+    color: inherit;
+  }
+}

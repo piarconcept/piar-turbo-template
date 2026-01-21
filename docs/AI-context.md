@@ -59,14 +59,17 @@ docs/
 6. **[testing-guide.md](features/testing-guide.md)** - Testing standards, patterns, and examples with Vitest
 7. **[eslint-configuration.md](features/eslint-configuration.md)** - ESLint setup, rules, and linting across monorepo
 8. **[styling-configuration.md](features/styling-configuration.md)** - Styling approach and CSS configuration (Tailwind removed)
+9. **[tailwind-v4-implementation.md](features/tailwind-v4-implementation.md)** - Tailwind CSS v4 implementation guide and architecture
 
 ### 📚 Package Documentation
 9. **[domain-models.md](features/domain-models.md)** - `@piar/domain-models` package documentation
 10. **[domain-fields.md](features/domain-fields.md)** - `@piar/domain-fields` package documentation (field configuration system)
+11. **ui-config** - `@piar/ui-config` - Centralized Tailwind CSS v4 configuration and design tokens
+12. **ui-components** - `@piar/ui-components` - Shared UI components library with Tailwind CSS
+3. **[health-feature.md](features/health-feature.md)** - Health check feature with Clean Architecture (configuration/api/client)
 
-### 🎯 Features
-11. **[health-feature.md](features/health-feature.md)** - Health check feature with Clean Architecture (configuration/api/client)
-
+### 🏢 Applications
+14
 ### 🏢 Applications
 12. **[TEMPLATE.md](features/TEMPLATE.md)** - Template for creating new documentation
 
@@ -126,4 +129,4 @@ For **Developers**:
 - Create duplicate documentation
 - Ignore existing conventions
 ## Last Updated
-21 January 2026 - Removed Tailwind CSS from project, fixed ESLint configuration
+21 January 2026 - Implemented Tailwind CSS v4 with centralized configuration in @piar/ui-config

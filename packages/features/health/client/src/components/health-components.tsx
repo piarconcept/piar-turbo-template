@@ -13,17 +13,17 @@ export function HealthBadge({ serviceUrl, serviceName }: HealthBadgeProps) {
   const { status, loading } = useHealth(serviceUrl);
 
   if (loading) {
-    return <span style={{ color: '#999' }}>⏳ Checking...</span>;
+    return <span className="text-gray-500">⏳ Checking...</span>;
   }
 
   if (!status) {
-    return <span style={{ color: '#999' }}>❓ Unknown</span>;
+    return <span className="text-gray-500">❓ Unknown</span>;
   }
 
-  const statusColors = {
-    ok: '#22c55e',
-    degraded: '#f59e0b',
-    error: '#ef4444',
+  const statusStyles = {
+    ok: 'text-green-500',
+    degraded: 'text-amber-500',
+    error: 'text-red-500',
   };
 
   const statusIcons = {
@@ -33,7 +33,7 @@ export function HealthBadge({ serviceUrl, serviceName }: HealthBadgeProps) {
   };
 
   return (
-    <span style={{ color: statusColors[status.status] }}>
+    <span className={statusStyles[status.status]}>
       {statusIcons[status.status]} {serviceName || status.service}
     </span>
   );
@@ -53,7 +53,7 @@ export function HealthCard({ serviceUrl, serviceName }: HealthCardProps) {
 
   if (loading) {
     return (
-      <div style={{ padding: '1rem', border: '1px solid #e5e7eb', borderRadius: '0.5rem' }}>
+      <div className="p-4 border border-gray-200 rounded-lg">
         <p>Loading...</p>
       </div>
     );
@@ -63,10 +63,16 @@ export function HealthCard({ serviceUrl, serviceName }: HealthCardProps) {
     return null;
   }
 
-  const statusColors = {
-    ok: '#22c55e',
-    degraded: '#f59e0b',
-    error: '#ef4444',
+  const statusBorderColors = {
+    ok: 'border-green-500',
+    degraded: 'border-amber-500',
+    error: 'border-red-500',
+  };
+
+  const statusTextColors = {
+    ok: 'text-green-500',
+    degraded: 'text-amber-500',
+    error: 'text-red-500',
   };
 
   // Check if there's an error in checks
@@ -74,32 +80,37 @@ export function HealthCard({ serviceUrl, serviceName }: HealthCardProps) {
   
   if (status.status === 'error' && errorCheck) {
     return (
-      <div style={{ padding: '1rem', border: '1px solid #ef4444', borderRadius: '0.5rem' }}>
-        <p style={{ color: '#ef4444' }}>Error: {errorCheck.message}</p>
-        <button onClick={refetch}>Retry</button>
+      <div className="p-4 border border-red-500 rounded-lg">
+        <p className="text-red-500">Error: {errorCheck.message}</p>
+        <button 
+          onClick={refetch}
+          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+        >
+          Retry
+        </button>
       </div>
     );
   }
 
   return (
-    <div style={{ padding: '1rem', border: `1px solid ${statusColors[status.status]}`, borderRadius: '0.5rem' }}>
-      <h3>{serviceName || status.service}</h3>
-      <p>
-        Status: <strong style={{ color: statusColors[status.status] }}>{status.status.toUpperCase()}</strong>
+    <div className={`p-4 border ${statusBorderColors[status.status]} rounded-lg`}>
+      <h3 className="text-lg font-semibold mb-2">{serviceName || status.service}</h3>
+      <p className="mb-1">
+        Status: <strong className={statusTextColors[status.status]}>{status.status.toUpperCase()}</strong>
       </p>
-      <p>
-        <small>Last checked: {new Date(status.timestamp).toLocaleString()}</small>
+      <p className="text-sm text-gray-600 mb-2">
+        Last checked: {new Date(status.timestamp).toLocaleString()}
       </p>
       
-      {status.version && <p>Version: {status.version}</p>}
+      {status.version && <p className="mb-2">Version: {status.version}</p>}
 
       {status.checks && status.checks.length > 0 && (
-        <div style={{ marginTop: '0.5rem' }}>
+        <div className="mt-2">
           <strong>Checks:</strong>
-          <ul style={{ margin: '0.5rem 0', paddingLeft: '1.5rem' }}>
+          <ul className="my-2 pl-6 list-disc">
             {status.checks.map((check, idx) => (
               <li key={idx}>
-                {check.name}: <span style={{ color: check.status === 'ok' ? '#22c55e' : '#ef4444' }}>
+                {check.name}: <span className={check.status === 'ok' ? 'text-green-500' : 'text-red-500'}>
                   {check.status}
                 </span>
                 {check.message && ` - ${check.message}`}
@@ -109,7 +120,10 @@ export function HealthCard({ serviceUrl, serviceName }: HealthCardProps) {
         </div>
       )}
 
-      <button onClick={refetch} style={{ marginTop: '0.5rem' }}>
+      <button 
+        onClick={refetch}
+        className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+      >
         Refresh
       </button>
     </div>

@@ -28,6 +28,8 @@ piar-repo/
 │   ├── features/             # Feature packages (health, coming-soon, etc.)
 │   ├── messages/             # @piar/messages - Internationalization
 │   └── ui/
+│       ├── config/           # @piar/ui-config - Tailwind CSS v4 configuration
+│       ├── components/       # @piar/ui-components - Shared UI components
 │       └── layout/           # @piar/layout - Shared layout components
 ├── docs/                     # 📚 Documentation (AI Context)
 │   ├── AI-context.md        # Main index and guidelines
@@ -146,6 +148,7 @@ pnpm --filter @piar/web dev
 - **Backoffice BFF**: `http://localhost:5050`14-step guide for new packages
 - **[Testing Guide](./docs/features/testing-guide.md)** - Testing standards and examples
 - **[ESLint Configuration](./docs/features/eslint-configuration.md)** - Linting setup and rules
+- **[Tailwind CSS v4 Implementation](./docs/features/tailwind-v4-implementation.md)** - Styling with Tailwind CSS v4
 - **[Domain Models](./docs/features/domain-models.md)** - Entity package documentation
 - **[Domain Fields](./docs/features/domain-fields.md)** - Field configuration system
 - **[Web BFF](./docs/features/web-bff-application.md)** - Web BFF API documentation
@@ -157,6 +160,7 @@ pnpm --filter @piar/web dev
 - **Build System**: Turbo 2.7.4 for caching and orchestration
 - **Frontend**: Next.js 16.1.2, React 19.2.3
 - **Backend**: NestJS 11.x
+- **Styling**: Tailwind CSS v4 with centralized configuration
 - **Language**: TypeScript 5.9.3 (strict mode)
 - **Testing**: Vitest 2.1.8 with @vitest/coverage-v8
 - **Linting**: ESLint 9.x with TypeScript support
@@ -258,6 +262,8 @@ All packages use the `@piar/` scope:
 - `@piar/domain-models` - Domain entities
 - `@piar/domain-fields` - Field configuration system
 - `@piar/messages` - Internationalization (i18n)
+- `@piar/ui-config` - Tailwind CSS v4 configuration and design tokens
+- `@piar/ui-components` - Shared UI components library
 - `@piar/layout` - Shared layout components
 - `@piar/health-*` - Health check feature packages
 - `@piar/coming-soon` - Coming soon feature
@@ -304,7 +310,7 @@ While not required, we appreciate:
 
 **Built with ❤️ by [Piar Concept](https://piarconcept.com)**
 
----
+--- - Implemented Tailwind CSS v4 with centralized configuration
 
 **Last Updated**: 21 January 2026
 

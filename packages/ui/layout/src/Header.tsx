@@ -19,50 +19,20 @@ export function Header({ language = 'ca' }: HeaderProps) {
   ];
 
   return (
-    <header style={{ 
-      backgroundColor: 'var(--primary-blue)', 
-      color: 'white',
-      position: 'sticky',
-      top: 0,
-      zIndex: 50,
-      boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-    }}>
-      <nav style={{
-        maxWidth: '1280px',
-        margin: '0 auto',
-        padding: '1rem 1.5rem',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }}>
+    <header className="bg-[var(--color-primary-blue)] text-white sticky top-0 z-50 shadow-md">
+      <nav className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
-        <Link href="/" style={{
-          fontSize: '1.5rem',
-          fontWeight: 700,
-          color: 'white',
-          textDecoration: 'none'
-        }}>
-          <span style={{ color: 'var(--primary-orange)' }}>Sticka</span>prop
+        <Link href="/" className="text-2xl font-bold text-white no-underline">
+          <span className="text-[var(--color-primary-orange)]">Sticka</span>prop
         </Link>
 
         {/* Desktop Navigation */}
-        <div style={{
-          display: 'none',
-          gap: '2rem',
-          alignItems: 'center'
-        }} className="desktop-nav">
+        <div className="hidden md:flex gap-8 items-center">
           {navigation.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              style={{
-                color: 'white',
-                fontWeight: 500,
-                textDecoration: 'none',
-                transition: 'color 0.2s'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.color = 'var(--primary-orange)'}
-              onMouseLeave={(e) => e.currentTarget.style.color = 'white'}
+              className="text-white font-medium no-underline transition-colors hover:text-[var(--color-primary-orange)]"
             >
               {item.name}
             </Link>
@@ -72,15 +42,7 @@ export function Header({ language = 'ca' }: HeaderProps) {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          style={{
-            display: 'block',
-            color: 'white',
-            padding: '0.5rem',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer'
-          }}
-          className="mobile-menu-btn"
+          className="block md:hidden text-white p-2 bg-transparent border-none cursor-pointer"
           aria-label="Toggle menu"
         >
           <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -95,24 +57,13 @@ export function Header({ language = 'ca' }: HeaderProps) {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div style={{
-          backgroundColor: 'var(--primary-blue)',
-          borderTop: '1px solid rgba(255,255,255,0.1)',
-          padding: '1rem 1.5rem'
-        }} className="mobile-menu">
+        <div className="bg-[var(--color-primary-blue)] border-t border-white/10 px-6 py-4 md:hidden">
           {navigation.map((item) => (
             <Link
               key={item.name}
               href={item.href}
               onClick={() => setMobileMenuOpen(false)}
-              style={{
-                display: 'block',
-                color: 'white',
-                padding: '0.75rem 0',
-                fontWeight: 500,
-                textDecoration: 'none',
-                borderBottom: '1px solid rgba(255,255,255,0.1)'
-              }}
+              className="block text-white py-3 font-medium no-underline border-b border-white/10 last:border-b-0"
             >
               {item.name}
             </Link>

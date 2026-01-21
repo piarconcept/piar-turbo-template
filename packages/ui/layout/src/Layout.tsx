@@ -12,20 +12,10 @@ export interface LayoutProps {
 
 export function Layout({ children, language = 'ca', className = '' }: LayoutProps) {
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      minHeight: '100vh'
-    }}>
+    <div className="flex flex-col min-h-screen">
       <Header language={language} />
       
-      <main 
-        className={className}
-        style={{
-          flex: 1,
-          width: '100%'
-        }}
-      >
+      <main className={`flex-1 w-full ${className}`}>
         {children}
       </main>
       

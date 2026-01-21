@@ -8,8 +8,7 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    },
-    "./styles.css": "./src/styles.css"
+    }
   },
   "scripts": {
     "build": "tsc",

@@ -1,31 +1,9 @@
-:root {
-  --background: #ffffff;
-  --foreground: #262b50;
-  --primary-orange: #ec6b38;
-  --primary-blue: #262b50;
-}
+/**
+ * Global styles for @piar/backoffice app
+ * Imports Tailwind CSS v4 configuration from @piar/ui-config
+ */
+@import "@piar/ui-config/tailwind.css";
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: #ffffff;
-  font-family: var(--font-montserrat), sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
+/* Additional app-specific sources can be added here if needed */
+@source "../../../../../../packages/ui/**/*.{ts,tsx}";
+@source "../../../../../../packages/features/**/*.{ts,tsx}";
