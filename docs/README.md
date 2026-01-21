@@ -24,6 +24,7 @@
 | [creating-packages.md](features/creating-packages.md) | 📦 GUIDE | 14-step guide for creating new workspace packages |
 | [testing-guide.md](features/testing-guide.md) | ✅ Complete | Testing standards, patterns, and Vitest setup |
 | [eslint-configuration.md](features/eslint-configuration.md) | ✅ Complete | ESLint setup, rules, and linting across monorepo |
+| [styling-configuration.md](features/styling-configuration.md) | ✅ Complete | Styling approach and CSS configuration |
 
 #### 📚 Package Documentation
 | Package | Document | Status | Description |
@@ -91,4 +92,4 @@ When adding new documentation:
 
 ---
 
-**Last Updated**: 15 January 2026
+**Last Updated**: 21 January 2026

@@ -21,9 +21,9 @@ export { es, ca, en };
 
 export const getTranslations = (locale: string) => {
     const translations = {
-        es: es,
-        ca: ca,
-        en: en,
+        es: es.messages,
+        ca: ca.messages,
+        en: en.messages,
     };
     const translation = translations[locale as keyof typeof translations];
 

@@ -1,6 +1,6 @@
 import { getRequestConfig } from 'next-intl/server';
 import {
-    es, ca, en, SUPPORTED_LANGUAGES, SupportedLanguage
+    getTranslations, SUPPORTED_LANGUAGES, SupportedLanguage
 } from '@piar/messages';
 
 export const locales = SUPPORTED_LANGUAGES;
@@ -29,11 +29,7 @@ export default getRequestConfig(async (req) => {
     });
     const locale = resolvedLocale;
 
-    const messages = {
-        ca: ca.messages,
-        es: es.messages,
-        en: en.messages,
-    }[locale];
+    const messages = getTranslations(locale);
 
     return { locale, messages };
 });

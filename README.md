@@ -22,9 +22,13 @@ piar-repo/
 │   │   └── web/              # @piar/web - Public website (Next.js)
 │   └── sqs/                  # SQS queue handlers (data sync, migrations, etc.)
 ├── packages/
-│   └── domain/
-│       ├── models/           # @piar/domain-models - Shared entities
-│       └── fields/           # @piar/domain-fields - Field configuration system
+│   ├── domain/
+│   │   ├── models/           # @piar/domain-models - Shared entities
+│   │   └── fields/           # @piar/domain-fields - Field configuration system
+│   ├── features/             # Feature packages (health, coming-soon, etc.)
+│   ├── messages/             # @piar/messages - Internationalization
+│   └── ui/
+│       └── layout/           # @piar/layout - Shared layout components
 ├── docs/                     # 📚 Documentation (AI Context)
 │   ├── AI-context.md        # Main index and guidelines
 │   └── features/            # Feature-specific documentation
@@ -240,9 +244,20 @@ Start with [docs/AI-context.md](./docs/AI-context.md) - it contains all critical
 ## 📋 Package Naming Convention
 
 All packages use the `@piar/` scope:
+
+**Applications:**
+- `@piar/web` - Public website (Next.js)
+- `@piar/backoffice` - Admin app (Next.js)
+- `@piar/web-bff` - Web BFF API (NestJS)
+- `@piar/backoffice-bff` - Backoffice BFF API (NestJS)
+
+**Shared Packages:**
 - `@piar/domain-models` - Domain entities
-- `@piar/backoffice` - Admin app
-- `@piar/web` - Public website
+- `@piar/domain-fields` - Field configuration system
+- `@piar/messages` - Internationalization (i18n)
+- `@piar/layout` - Shared layout components
+- `@piar/health-*` - Health check feature packages
+- `@piar/coming-soon` - Coming soon feature
 
 ## 🤝 Contributing
 
@@ -284,8 +299,12 @@ While not required, we appreciate:
 
 ---
 
-**Built with ❤️ by [Piar Concept](https://piarconcept.com)**Document changes in `docs/features/`
+**Built with ❤️ by [Piar Concept](https://piarconcept.com)**
+
+---
+
+**Last Updated**: 21 January 2026
 
 ## 📝 License
 
-ISC
+MIT

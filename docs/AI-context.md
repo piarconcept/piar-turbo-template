@@ -58,16 +58,17 @@ docs/
 5. **[creating-features-guide.md](features/creating-features-guide.md)** - Guide for creating features with Clean Architecture (use-cases, controllers, modules)
 6. **[testing-guide.md](features/testing-guide.md)** - Testing standards, patterns, and examples with Vitest
 7. **[eslint-configuration.md](features/eslint-configuration.md)** - ESLint setup, rules, and linting across monorepo
+8. **[styling-configuration.md](features/styling-configuration.md)** - Styling approach and CSS configuration (Tailwind removed)
 
 ### 📚 Package Documentation
-8. **[domain-models.md](features/domain-models.md)** - `@piar/domain-models` package documentation
-9. **[domain-fields.md](features/domain-fields.md)** - `@piar/domain-fields` package documentation (field configuration system)
+9. **[domain-models.md](features/domain-models.md)** - `@piar/domain-models` package documentation
+10. **[domain-fields.md](features/domain-fields.md)** - `@piar/domain-fields` package documentation (field configuration system)
 
 ### 🎯 Features
-10. **[health-feature.md](features/health-feature.md)** - Health check feature with Clean Architecture (configuration/api/client)
+11. **[health-feature.md](features/health-feature.md)** - Health check feature with Clean Architecture (configuration/api/client)
 
 ### 🏢 Applications
-13. **[TEMPLATE.md](features/TEMPLATE.md)** - Template for creating new documentation
+12. **[TEMPLATE.md](features/TEMPLATE.md)** - Template for creating new documentation
 
 ## Quick Reference
 
@@ -124,3 +125,5 @@ For **Developers**:
 - Skip updating documentation
 - Create duplicate documentation
 - Ignore existing conventions
+## Last Updated
+21 January 2026 - Removed Tailwind CSS from project, fixed ESLint configuration

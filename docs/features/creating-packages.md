@@ -36,8 +36,8 @@ cd packages/
 mkdir -p {category}/{package-name}
 
 # Example: packages/domain/models (category + name)
-# Example: packages/ui/components
-# Example: packages/utils/validation
+# Example: packages/ui/layout
+# Example: packages/features/health
 ```
 
 ### Step 2: Create package.json
