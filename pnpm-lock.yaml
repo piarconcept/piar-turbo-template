@@ -350,6 +350,87 @@ importers:
         specifier: ^2.1.8
         version: 2.1.9(@types/node@22.19.7)(@vitest/ui@2.1.9)(happy-dom@16.8.1)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)
 
+  packages/features/auth/api:
+    dependencies:
+      '@nestjs/common':
+        specifier: ^11.0.16
+        version: 11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@nestjs/core':
+        specifier: ^11.0.16
+        version: 11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.1.12)(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@piar/auth-configuration':
+        specifier: workspace:*
+        version: link:../configuration
+      '@piar/auth-infra-backend':
+        specifier: workspace:*
+        version: link:../infra/backend
+    devDependencies:
+      '@nestjs/testing':
+        specifier: ^11.0.16
+        version: 11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12)(@nestjs/platform-express@11.1.12)
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.19.7
+      '@vitest/coverage-v8':
+        specifier: ^2.1.9
+        version: 2.1.9(vitest@2.1.9)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      typescript-eslint:
+        specifier: ^8.31.1
+        version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@22.19.7)(@vitest/ui@2.1.9)(happy-dom@16.8.1)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)
+
+  packages/features/auth/configuration:
+    dependencies:
+      '@piar/domain-models':
+        specifier: workspace:*
+        version: link:../../../domain/models
+    devDependencies:
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.19.7
+      '@vitest/coverage-v8':
+        specifier: ^2.1.9
+        version: 2.1.9(vitest@2.1.9)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      typescript-eslint:
+        specifier: ^8.31.1
+        version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@22.19.7)(@vitest/ui@2.1.9)(happy-dom@16.8.1)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)
+
+  packages/features/auth/infra/backend:
+    dependencies:
+      '@piar/auth-configuration':
+        specifier: workspace:*
+        version: link:../../configuration
+      '@piar/domain-models':
+        specifier: workspace:*
+        version: link:../../../../domain/models
+    devDependencies:
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.19.7
+      '@vitest/coverage-v8':
+        specifier: ^2.1.9
+        version: 2.1.9(vitest@2.1.9)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      typescript-eslint:
+        specifier: ^8.31.1
+        version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@22.19.7)(@vitest/ui@2.1.9)(happy-dom@16.8.1)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)
+
   packages/features/comingSoon:
     dependencies:
       '@piar/messages':
@@ -515,6 +596,9 @@ importers:
         specifier: ^19.0.0
         version: 19.1.0(react@19.1.0)
     devDependencies:
+      '@eslint/js':
+        specifier: ^9.39.2
+        version: 9.39.2
       '@types/node':
         specifier: ^22.10.5
         version: 22.19.7
@@ -545,6 +629,9 @@ importers:
       '@piar/messages':
         specifier: workspace:*
         version: link:../../messages
+      '@piar/ui-components':
+        specifier: workspace:*
+        version: link:../components
       next:
         specifier: ^16.0.0
         version: 16.1.2(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)

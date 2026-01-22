@@ -1,5 +1,5 @@
 {
-  "name": "@piar/auth-api",
+  "name": "@piar/auth-configuration",
   "version": "0.1.0",
   "private": true,
   "main": "./dist/index.js",
@@ -15,17 +15,13 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "dev": "tsc --watch",
-    "test": "echo 'No tests configured yet for auth-api'",
-    "test:coverage": "echo 'No tests configured yet for auth-api'"
+    "test": "echo 'No tests needed for type definitions'",
+    "test:coverage": "echo 'No tests needed for type definitions'"
   },
   "dependencies": {
-    "@piar/auth-infra-backend": "workspace:*",
-    "@piar/auth-configuration": "workspace:*",
-    "@nestjs/common": "^11.0.16",
-    "@nestjs/core": "^11.0.16"
+    "@piar/domain-models": "workspace:*"
   },
   "devDependencies": {
-    "@nestjs/testing": "^11.0.16",
     "@types/node": "^22.10.5",
     "@vitest/coverage-v8": "^2.1.9",
     "typescript": "^5.9.3",

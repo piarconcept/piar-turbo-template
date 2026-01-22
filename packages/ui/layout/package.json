@@ -23,7 +23,8 @@
     "next": "^16.0.0"
   },
   "dependencies": {
-    "@piar/messages": "workspace:*"
+    "@piar/messages": "workspace:*",
+    "@piar/ui-components": "workspace:*"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",

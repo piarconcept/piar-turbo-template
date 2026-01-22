@@ -1,4 +1,6 @@
 import React from 'react';
+import Link from 'next/link';
+import { Button, Text } from '@piar/ui-components';
 import type { HeaderConfig } from '../types';
 
 export interface PublicHeaderProps {
@@ -12,10 +14,10 @@ export function PublicHeader({ config, locale: _locale = 'en' }: PublicHeaderPro
       <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         {/* Logo */}
         {config.logo && (
-          <a href={config.logo.href} className="flex items-center gap-2">
+          <Link href={config.logo.href} className="flex items-center gap-2">
             <div className="h-8 w-8 rounded-md bg-[var(--color-primary)]" />
-            <span className="text-xl font-bold text-white">{config.logo.alt}</span>
-          </a>
+            <Text variant="h3" className="text-white">{config.logo.alt}</Text>
+          </Link>
         )}
 
         {/* Desktop Navigation */}
@@ -23,13 +25,19 @@ export function PublicHeader({ config, locale: _locale = 'en' }: PublicHeaderPro
           {config.navigation.map((section, sectionIdx) => (
             <React.Fragment key={sectionIdx}>
               {section.routes.map((route) => (
-                <a
+                <Button
                   key={route.href}
-                  href={route.href}
-                  className="text-sm font-medium text-white transition-colors hover:text-[var(--color-primary)]"
+                  variant="ghost"
+                  size="sm"
+                  asChild
                 >
-                  {route.label}
-                </a>
+                  <Link
+                    href={route.href}
+                    className="text-white hover:text-[var(--color-primary)]"
+                  >
+                    {route.label}
+                  </Link>
+                </Button>
               ))}
             </React.Fragment>
           ))}
@@ -39,25 +47,29 @@ export function PublicHeader({ config, locale: _locale = 'en' }: PublicHeaderPro
         <div className="flex items-center gap-4">
           {config.actions?.showUserMenu && (
             <div className="flex items-center gap-2">
-              <a
-                href="/login"
-                className="hidden md:inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10"
+              <Button
+                variant="ghost"
+                size="sm"
+                asChild
+                className="hidden md:inline-flex text-white hover:bg-white/10"
               >
-                Login
-              </a>
-              <a
-                href="/signup"
-                className="inline-flex items-center justify-center rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--color-primary)]/90"
+                <Link href="/login">Login</Link>
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                asChild
               >
-                Sign Up
-              </a>
+                <Link href="/signup">Sign Up</Link>
+              </Button>
             </div>
           )}
 
           {/* Mobile Menu Button */}
-          <button
-            type="button"
-            className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-white/10"
+          <Button
+            variant="ghost"
+            size="sm"
+            className="md:hidden text-white hover:bg-white/10"
             aria-label="Toggle menu"
           >
             <svg
@@ -73,7 +85,7 @@ export function PublicHeader({ config, locale: _locale = 'en' }: PublicHeaderPro
                 d="M4 6h16M4 12h16M4 18h16"
               />
             </svg>
-          </button>
+          </Button>
         </div>
       </div>
     </header>
