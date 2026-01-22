@@ -1,7 +1,6 @@
 import { type ReactNode } from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { Montserrat } from 'next/font/google';
-import { Layout } from '@piar/layout';
 import './globals.css';
 
 const montserrat = Montserrat({
@@ -13,6 +12,12 @@ const montserrat = Montserrat({
 
 export const dynamicParams = false;
 
+/**
+ * Root Layout - Provides font and i18n setup
+ * Actual layout structure is handled by route groups:
+ * - (auth) - Public layout for authentication pages
+ * - (dashboard) - Dashboard layout for private pages
+ */
 export default async function LocaleLayout({
   children,
   params,
@@ -26,29 +31,10 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body className={`${montserrat.variable} font-sans antialiased`}>
         <NextIntlClientProvider>
-          <Layout 
-            config={{
-              footer: {
-                sections: [],
-                copyright: '© 2024 Piar Inc.',
-                socialLinks: []
-              },
-              header: {
-                navigation: [],
-                logo: {
-                  src: '/logo.png',
-                  alt: 'Piar Logo',
-                  href: '/',
-                }
-              },
-              type: 'public'
-            }}
-            locale={locale}
-          >
-            {children}
-          </Layout>
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>
   );
 }
+

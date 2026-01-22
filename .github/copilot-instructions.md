@@ -140,7 +140,7 @@ See [docs/features/testing-guide.md](../docs/features/testing-guide.md) for comp
 <div className="flex p-4">
 
 // ✅ Use design tokens
-<div className="bg-[var(--color-primary-blue)] text-[var(--color-primary-orange)]">
+<div className="bg-[var(--color-secondary)] text-[var(--color-primary)]">
 ```
 
 ## Documentation Requirements
@@ -171,3 +171,7 @@ See [docs/features/testing-guide.md](../docs/features/testing-guide.md) for comp
 - ❌ Running builds outside Turbo (breaks caching and dependencies)
 - ❌ Creating one big API instead of BFF-specific endpoints
 - ❌ Mixing infrastructure code in configuration packages (keep domain pure)
+- ❌ **Using `useTranslations()` with full keys and fallbacks**: `t('auth.login.title', 'Sign In')` ✗
+  - ✅ **Correct**: Use namespace: `useTranslations('auth.login')` then `t('title')`
+- ❌ **Using `<a>` tags for internal navigation**: `<a href="/page">Link</a>` ✗
+  - ✅ **Correct**: Use Next.js Link: `import Link from 'next/link'` then `<Link href="/page">Link</Link>`

@@ -17,7 +17,7 @@ export function DashboardFooter({ config, locale: _locale = 'en' }: DashboardFoo
                 <a
                   key={route.href}
                   href={route.href}
-                  className="text-sm text-gray-600 transition-colors hover:text-[var(--color-primary-blue)]"
+                  className="text-sm text-gray-600 transition-colors hover:text-[var(--color-secondary)]"
                 >
                   {route.label}
                 </a>

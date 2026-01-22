@@ -54,7 +54,7 @@ Each Next.js application has its own `globals.css` file:
 :root {
   --background: #ffffff;
   --foreground: #262b50;
-  --primary-orange: #ec6b38;
+  --primary: #ec6b38;
   --primary-blue: #262b50;
 }
 

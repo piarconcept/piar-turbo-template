@@ -4,8 +4,9 @@
   /* PIAR Design System Tokens */
   
   /* Color Palette */
-  --color-primary-orange: #ec6b38;
-  --color-primary-blue: #262b50;
+  --color-primary: #b22222;
+  --color-secondary: #000000;
+  --color-tertiary: #ffffff;
   --color-background: #ffffff;
   --color-foreground: #262b50;
   

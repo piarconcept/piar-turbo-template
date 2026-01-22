@@ -12,8 +12,8 @@ export function DashboardHeader({ config, locale: _locale = 'en' }: DashboardHea
         {/* Logo */}
         {config.logo && (
           <a href={config.logo.href} className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-md bg-[var(--color-primary-orange)]" />
-            <span className="text-xl font-bold text-[var(--color-primary-blue)]">
+            <div className="h-8 w-8 rounded-md bg-[var(--color-primary)]" />
+            <span className="text-xl font-bold text-[var(--color-secondary)]">
               {config.logo.alt}
             </span>
           </a>
@@ -39,7 +39,7 @@ export function DashboardHeader({ config, locale: _locale = 'en' }: DashboardHea
               <input
                 type="search"
                 placeholder="Search..."
-                className="w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-4 text-sm placeholder:text-gray-500 focus:border-[var(--color-primary-blue)] focus:outline-none focus:ring-1 focus:ring-[var(--color-primary-blue)]"
+                className="w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-4 text-sm placeholder:text-gray-500 focus:border-[var(--color-secondary)] focus:outline-none focus:ring-1 focus:ring-[var(--color-secondary)]"
               />
             </div>
           </div>
@@ -78,7 +78,7 @@ export function DashboardHeader({ config, locale: _locale = 'en' }: DashboardHea
               className="inline-flex items-center gap-2 rounded-md p-2 text-gray-600 hover:bg-gray-100"
               aria-label="User menu"
             >
-              <div className="h-8 w-8 rounded-full bg-[var(--color-primary-orange)]" />
+              <div className="h-8 w-8 rounded-full bg-[var(--color-primary)]" />
               <svg
                 className="h-4 w-4"
                 fill="none"

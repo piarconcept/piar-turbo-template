@@ -58,7 +58,7 @@ export function DashboardAside({ config, locale: _locale = 'en' }: DashboardAsid
                   <li key={route.href}>
                     <a
                       href={route.href}
-                      className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-[var(--color-primary-blue)]"
+                      className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-[var(--color-secondary)]"
                       title={isCollapsed ? route.label : undefined}
                     >
                       {route.icon && (
@@ -70,7 +70,7 @@ export function DashboardAside({ config, locale: _locale = 'en' }: DashboardAsid
                         <>
                           <span className="flex-1">{route.label}</span>
                           {route.badge && (
-                            <span className="rounded-full bg-[var(--color-primary-orange)] px-2 py-0.5 text-xs font-semibold text-white">
+                            <span className="rounded-full bg-[var(--color-primary)] px-2 py-0.5 text-xs font-semibold text-white">
                               {route.badge}
                             </span>
                           )}
@@ -85,7 +85,7 @@ export function DashboardAside({ config, locale: _locale = 'en' }: DashboardAsid
                           <li key={child.href}>
                             <a
                               href={child.href}
-                              className="flex items-center gap-2 rounded-md px-3 py-1.5 text-sm text-gray-600 transition-colors hover:bg-gray-100 hover:text-[var(--color-primary-blue)]"
+                              className="flex items-center gap-2 rounded-md px-3 py-1.5 text-sm text-gray-600 transition-colors hover:bg-gray-100 hover:text-[var(--color-secondary)]"
                             >
                               {child.label}
                               {child.badge && (
@@ -109,7 +109,7 @@ export function DashboardAside({ config, locale: _locale = 'en' }: DashboardAsid
         {!isCollapsed && (
           <div className="border-t border-gray-200 p-4">
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-full bg-[var(--color-primary-orange)]" />
+              <div className="h-10 w-10 rounded-full bg-[var(--color-primary)]" />
               <div className="flex-1 overflow-hidden">
                 <p className="truncate text-sm font-medium text-gray-900">John Doe</p>
                 <p className="truncate text-xs text-gray-500">john@example.com</p>

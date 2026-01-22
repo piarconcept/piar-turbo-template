@@ -56,24 +56,35 @@ docs/
 ### 📦 Development Guides
 4. **[creating-packages.md](features/creating-packages.md)** - Complete guide for creating new packages (14 steps)
 5. **[creating-features-guide.md](features/creating-features-guide.md)** - Guide for creating features with Clean Architecture (use-cases, controllers, modules)
-6. **[testing-guide.md](features/testing-guide.md)** - Testing standards, patterns, and examples with Vitest
-7. **[eslint-configuration.md](features/eslint-configuration.md)** - ESLint setup, rules, and linting across monorepo
-8. **[styling-configuration.md](features/styling-configuration.md)** - Styling approach and CSS configuration (Tailwind removed)
-9. **[tailwind-v4-implementation.md](features/tailwind-v4-implementation.md)** - Tailwind CSS v4 implementation guide and architecture
+6. **[component-library-development-guide.md](features/component-library-development-guide.md)** - ⭐ **Component & page development workflow, Atomic Design, growing the design system**
+7. **[testing-guide.md](features/testing-guide.md)** - Testing standards, patterns, and examples with Vitest
+8. **[eslint-configuration.md](features/eslint-configuration.md)** - ESLint setup, rules, and linting across monorepo
+9. **[styling-configuration.md](features/styling-configuration.md)** - Styling approach and CSS configuration (Tailwind removed)
+10. **[tailwind-v4-implementation.md](features/tailwind-v4-implementation.md)** - Tailwind CSS v4 implementation guide and architecture
 
 ### 📚 Package Documentation
-9. **[domain-models.md](features/domain-models.md)** - `@piar/domain-models` package documentation
-10. **[domain-fields.md](features/domain-fields.md)** - `@piar/domain-fields` package documentation (field configuration system)
-11. **ui-config** - `@piar/ui-config` - Centralized Tailwind CSS v4 configuration and design tokens
-12. **ui-components** - `@piar/ui-components` - Shared UI components library with Tailwind CSS
-3. **[health-feature.md](features/health-feature.md)** - Health check feature with Clean Architecture (configuration/api/client)
+10. **[domain-models.md](features/domain-models.md)** - `@piar/domain-models` package documentation
+11. **[domain-fields.md](features/domain-fields.md)** - `@piar/domain-fields` package documentation (field configuration system)
+12. **[ui-components-atomic-design.md](features/ui-components-atomic-design.md)** - `@piar/ui-components` - Atomic Design architecture (Button, Input, Label, Text atoms, AuthCard molecule)
+13. **[auth-card-refactoring.md](features/auth-card-refactoring.md)** - AuthCard molecule refactoring (eliminated 37% code duplication in auth pages)
+14. **[health-feature.md](features/health-feature.md)** - Health check feature with Clean Architecture (configuration/api/client)
 
 ### 🏢 Applications
-14
-### 🏢 Applications
-12. **[TEMPLATE.md](features/TEMPLATE.md)** - Template for creating new documentation
+15. **[web-bff-application.md](features/web-bff-application.md)** - Web BFF application documentation
+16. **[backoffice-bff-application.md](features/backoffice-bff-application.md)** - Backoffice BFF application documentation
+
+### 📄 Templates
+17. **[TEMPLATE.md](features/TEMPLATE.md)** - Template for creating new documentation
 
 ## Quick Reference
+
+### Creating a New Component
+1. Read: [component-library-development-guide.md](features/component-library-development-guide.md)
+2. Identify duplication (used 3+ times)
+3. Choose level: atom/molecule/organism
+4. Create in `packages/ui/components/src/{level}/`
+5. Export in index.ts
+6. Build and document
 
 ### Creating a New Feature
 1. Read: [creating-features-guide.md](features/creating-features-guide.md)
@@ -122,11 +133,12 @@ For **Developers**:
 - Update this index when adding docs
 - Follow existing patterns and conventions
 - Check docs before making changes
-
+2 January 2026 - Added comprehensive component library development guide
 ❌ **NEVER DO**:
 - Make structural changes without documenting
 - Skip updating documentation
 - Create duplicate documentation
 - Ignore existing conventions
+
 ## Last Updated
-21 January 2026 - Implemented Tailwind CSS v4 with centralized configuration in @piar/ui-config
+21 January 2026 - Added AuthCard molecule and refactored all auth pages (35% code reduction)

@@ -1,0 +1,48 @@
+import type { AuthMessages } from '../types/auth';
+
+export const auth: AuthMessages = {
+  login: {
+    title: 'Iniciar sessió',
+    noAccount: 'No tens compte?',
+    signUp: "Registra't",
+    email: 'Correu electrònic',
+    password: 'Contrasenya',
+    rememberMe: "Recorda'm",
+    forgotPassword: 'Has oblidat la contrasenya?',
+    submit: 'Entrar',
+  },
+  register: {
+    title: 'Crear compte',
+    haveAccount: 'Ja tens compte?',
+    signIn: 'Inicia sessió',
+    accountCode: 'Codi de compte',
+    email: 'Correu electrònic',
+    password: 'Contrasenya',
+    confirmPassword: 'Confirma la contrasenya',
+    acceptTerms: 'Accepto els',
+    termsAndConditions: 'termes i condicions',
+    submit: 'Registra\'t',
+  },
+  forgotPassword: {
+    title: 'Recuperar contrasenya',
+    description: "T'enviarem un enllaç per restablir-la.",
+    rememberPassword: 'La recordes?',
+    backToLogin: 'Torna a iniciar sessió',
+    noAccount: 'No tens compte?',
+    signUp: "Registra't",
+    email: 'Correu electrònic',
+    submit: 'Enviar enllaç',
+  },
+  unauthorized: {
+    title: 'Accés pendent',
+    message: 'El teu compte està pendent d\'aprovació.',
+    needHelp: 'Necessites ajuda?',
+    contactSupport: 'Contacta amb suport',
+    whatHappensNext: 'Què passa ara?',
+    step1: 'Revisem la teva sol·licitud.',
+    step2: 'T\'avisarem quan estigui aprovada.',
+    step3: 'Podràs accedir al tauler.',
+    backToLogin: 'Torna a iniciar sessió',
+    goToHome: "Ves a l'inici",
+  },
+};

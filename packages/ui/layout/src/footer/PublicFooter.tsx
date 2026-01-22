@@ -20,7 +20,7 @@ export function PublicFooter({ config, locale: _locale = 'en' }: PublicFooterPro
                   <li key={route.href}>
                     <a
                       href={route.href}
-                      className="text-sm text-gray-600 transition-colors hover:text-[var(--color-primary-blue)]"
+                      className="text-sm text-gray-600 transition-colors hover:text-[var(--color-secondary)]"
                     >
                       {route.label}
                     </a>
@@ -40,7 +40,7 @@ export function PublicFooter({ config, locale: _locale = 'en' }: PublicFooterPro
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-600 transition-colors hover:text-[var(--color-primary-blue)]"
+                className="text-gray-600 transition-colors hover:text-[var(--color-secondary)]"
                 aria-label={social.label}
               >
                 {social.icon || (

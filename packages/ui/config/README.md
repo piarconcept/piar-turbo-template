@@ -42,7 +42,7 @@ Packages that use Tailwind classes should have the apps that consume them list t
 
 All design tokens are defined in `tailwind.css` using `@theme`:
 
-- **Colors**: `--color-primary-orange`, `--color-primary-blue`
+- **Colors**: `--color-primary`, `--color-secondary`
 - **Typography**: `--font-family-sans`
 
 ## Architecture

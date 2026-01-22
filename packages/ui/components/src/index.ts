@@ -3,9 +3,18 @@
  * 
  * Shared UI components for the PIAR monorepo.
  * All components use Tailwind CSS v4 classes for styling.
+ * 
+ * Follows Atomic Design principles:
+ * - Atoms: Basic building blocks (Button, Text, Input)
+ * - Molecules: Simple combinations of atoms
+ * - Organisms: Complex combinations of molecules and atoms
  */
 
-// Export components here as they are created
-// Example: export { Button } from './button';
+// Atoms - Basic building blocks
+export * from './atoms';
 
-export {};
+// Molecules - Simple combinations of atoms
+export * from './molecules';
+
+// Organisms - Complex combinations of molecules and atoms
+export * from './organisms';

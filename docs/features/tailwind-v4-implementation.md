@@ -138,8 +138,8 @@ Todos los tokens están centralizados en `@piar/ui-config/tailwind.css`:
 
 ```css
 @theme {
-  --color-primary-orange: #ec6b38;
-  --color-primary-blue: #262b50;
+  --color-primary: #ec6b38;
+  --color-secondary: #262b50;
   --color-background: #ffffff;
   --color-foreground: #262b50;
   --font-family-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
@@ -148,7 +148,7 @@ Todos los tokens están centralizados en `@piar/ui-config/tailwind.css`:
 
 Uso en componentes:
 ```tsx
-<div className="bg-[var(--color-primary-blue)] text-[var(--color-primary-orange)]">
+<div className="bg-[var(--color-secondary)] text-[var(--color-primary)]">
 ```
 
 ## Base Styles
@@ -203,7 +203,7 @@ Para migrar un componente de estilos inline a Tailwind:
 - `padding: 1rem` → `p-4`
 - `margin: 0 auto` → `mx-auto`
 - `maxWidth: 1280px` → `max-w-7xl`
-- `backgroundColor: #ec6b38` → `bg-[#ec6b38]` o `bg-[var(--color-primary-orange)]`
+- `backgroundColor: #ec6b38` → `bg-[#ec6b38]` o `bg-[var(--color-primary)]`
 - `color: #999` → `text-gray-500`
 - `fontSize: 1.5rem` → `text-2xl`
 - `fontWeight: 700` → `font-bold`
@@ -320,7 +320,7 @@ pnpm --filter @piar/backoffice dev
 ### Problema: CSS variables no funcionan
 **Solución**:
 1. Verificar que `globals.css` importa `@piar/ui-config/tailwind.css`
-2. Usar sintaxis correcta: `bg-[var(--color-primary-blue)]`
+2. Usar sintaxis correcta: `bg-[var(--color-secondary)]`
 3. Verificar que las variables están definidas en `@theme`
 
 ### Problema: Build falla en producción

@@ -1,0 +1,48 @@
+import type { AuthMessages } from '../types/auth';
+
+export const auth: AuthMessages = {
+  login: {
+    title: 'Iniciar sesión',
+    noAccount: '¿No tienes cuenta?',
+    signUp: 'Regístrate',
+    email: 'Correo electrónico',
+    password: 'Contraseña',
+    rememberMe: 'Recuérdame',
+    forgotPassword: '¿Olvidaste tu contraseña?',
+    submit: 'Entrar',
+  },
+  register: {
+    title: 'Crear cuenta',
+    haveAccount: '¿Ya tienes cuenta?',
+    signIn: 'Inicia sesión',
+    accountCode: 'Código de cuenta',
+    email: 'Correo electrónico',
+    password: 'Contraseña',
+    confirmPassword: 'Confirmar contraseña',
+    acceptTerms: 'Acepto los',
+    termsAndConditions: 'términos y condiciones',
+    submit: 'Registrarse',
+  },
+  forgotPassword: {
+    title: 'Recuperar contraseña',
+    description: 'Te enviaremos un enlace para restablecerla.',
+    rememberPassword: '¿La recuerdas?',
+    backToLogin: 'Volver a iniciar sesión',
+    noAccount: '¿No tienes cuenta?',
+    signUp: 'Regístrate',
+    email: 'Correo electrónico',
+    submit: 'Enviar enlace',
+  },
+  unauthorized: {
+    title: 'Acceso pendiente',
+    message: 'Tu cuenta está pendiente de aprobación.',
+    needHelp: '¿Necesitas ayuda?',
+    contactSupport: 'Contacta con soporte',
+    whatHappensNext: '¿Qué pasa ahora?',
+    step1: 'Revisamos tu solicitud.',
+    step2: 'Te notificaremos cuando esté aprobada.',
+    step3: 'Podrás acceder al panel.',
+    backToLogin: 'Volver a iniciar sesión',
+    goToHome: 'Ir al inicio',
+  },
+};

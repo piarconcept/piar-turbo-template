@@ -1,0 +1,48 @@
+import type { AuthMessages } from '../types/auth';
+
+export const auth: AuthMessages = {
+  login: {
+    title: 'Log in',
+    noAccount: "Don't have an account?",
+    signUp: 'Sign up',
+    email: 'Email',
+    password: 'Password',
+    rememberMe: 'Remember me',
+    forgotPassword: 'Forgot your password?',
+    submit: 'Sign in',
+  },
+  register: {
+    title: 'Create account',
+    haveAccount: 'Already have an account?',
+    signIn: 'Sign in',
+    accountCode: 'Account code',
+    email: 'Email',
+    password: 'Password',
+    confirmPassword: 'Confirm password',
+    acceptTerms: 'I accept the',
+    termsAndConditions: 'terms and conditions',
+    submit: 'Create account',
+  },
+  forgotPassword: {
+    title: 'Reset password',
+    description: "We'll send you a link to reset it.",
+    rememberPassword: 'Remembered your password?',
+    backToLogin: 'Back to login',
+    noAccount: "Don't have an account?",
+    signUp: 'Sign up',
+    email: 'Email',
+    submit: 'Send link',
+  },
+  unauthorized: {
+    title: 'Access pending',
+    message: 'Your account is pending approval.',
+    needHelp: 'Need help?',
+    contactSupport: 'Contact support',
+    whatHappensNext: 'What happens next?',
+    step1: 'We review your request.',
+    step2: "We'll notify you once it's approved.",
+    step3: "You'll be able to access the dashboard.",
+    backToLogin: 'Back to login',
+    goToHome: 'Go to home',
+  },
+};

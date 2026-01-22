@@ -13,6 +13,7 @@
     "@piar/coming-soon": "workspace:*",
     "@piar/layout": "workspace:*",
     "@piar/messages": "workspace:*",
+    "@piar/ui-components": "workspace:*",
     "@piar/ui-config": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
