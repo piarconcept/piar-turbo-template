@@ -11,11 +11,10 @@ import type {
   UpdateUserRoleResponse,
 } from '@piar/auth-configuration';
 import { 
-  AccountEntity, 
+  AccountEntity,
   InvalidCredentialsError,
   ResourceAlreadyExistsError,
-  NotFoundError,
-  ForbiddenError
+  NotFoundError
 } from '@piar/domain-models';
 
 const defaultAccounts: AccountEntity[] = [
