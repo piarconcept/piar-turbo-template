@@ -1,6 +1,8 @@
 import { type ReactNode } from 'react';
+import { redirect } from 'next/navigation';
 import { Layout, dashboardHeaderConfig, dashboardAsideConfig, dashboardFooterConfig, AsideConfig } from '@piar/layout';
 import { Home } from 'lucide-react';
+import { auth } from '@/auth';
 
 // Extend dashboard aside config with minimal navigation
 const dashboardNav: AsideConfig = {
@@ -21,7 +23,7 @@ const dashboardNav: AsideConfig = {
 
 /**
  * Dashboard Layout - Private area with sidebar navigation
- * Used for authenticated backoffice pages
+ * Only accessible to users with admin role
  */
 export default async function DashboardLayout({
   children,
@@ -31,6 +33,12 @@ export default async function DashboardLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const session = await auth();
+
+  // Verify user has admin role (double-check server-side)
+  if (!session || session.user?.role !== 'admin') {
+    redirect(`/${locale}/unauthorized`);
+  }
 
   return (
     <Layout

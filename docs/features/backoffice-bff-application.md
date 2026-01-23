@@ -67,7 +67,7 @@ apps/api/backoffice-bff/
 ```env
 PORT=5050
 NODE_ENV=development
-BACKOFFICE_CLIENT_URL=http://localhost:3030
+BACKOFFICE_CLIENT_URL=http://localhost:3000
 ```
 
 ### Development Scripts

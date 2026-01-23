@@ -8,7 +8,7 @@ import { LogoutButton } from '@/components/auth/logout-button';
  * Dashboard Home Page
  * Main overview page for the backoffice with user session info
  */
-export default function HomePage() {
+export default function DashboardPage() {
   const t = useTranslations('dashboard');
   const { data: session, status } = useSession();
 

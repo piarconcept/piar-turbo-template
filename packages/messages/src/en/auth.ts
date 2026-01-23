@@ -10,6 +10,8 @@ export const auth: AuthMessages = {
     rememberMe: 'Remember me',
     forgotPassword: 'Forgot your password?',
     submit: 'Sign in',
+    loading: 'Signing in...',
+    error: 'Invalid email or password. Please try again.',
   },
   register: {
     title: 'Create account',

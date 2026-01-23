@@ -11,6 +11,8 @@ export interface AuthMessages {
     rememberMe: string;
     forgotPassword: string;
     submit: string;
+    loading: string;
+    error: string;
   };
   register: {
     title: string;

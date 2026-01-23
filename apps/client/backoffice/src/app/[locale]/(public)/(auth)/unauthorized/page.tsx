@@ -1,7 +1,8 @@
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { ShieldAlert, Clock } from 'lucide-react';
-import { AuthCard, AuthPage, Button, Text } from '@piar/ui-components';
+import { AuthCard, AuthPage, Text } from '@piar/ui-components';
+import { LogoutButton } from '@/components/auth/logout-button';
 
 /**
  * Unauthorized Page
@@ -53,19 +54,9 @@ export default function UnauthorizedPage() {
               <Text variant="body">{t('step3')}</Text>
             </li>
           </ul>
-        </div>
-
-        <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-          <Button asChild variant="primary">
-            <Link href="/login">
-              {t('backToLogin')}
-            </Link>
-          </Button>
-          <Button asChild variant="outline">
-            <Link href="/">
-              {t('goToHome')}
-            </Link>
-          </Button>
+          <div className="mt-6 flex justify-end">
+            <LogoutButton />
+          </div>
         </div>
       </AuthCard>
     </AuthPage>

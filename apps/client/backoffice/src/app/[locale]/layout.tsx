@@ -1,6 +1,7 @@
-import { type ReactNode } from "react";
-import { NextIntlClientProvider } from "next-intl";
+import { type ReactNode } from 'react';
+import { NextIntlClientProvider } from 'next-intl';
 import { Montserrat } from 'next/font/google';
+import { SessionProvider } from '@/components/providers/session-provider';
 import './globals.css';
 
 const montserrat = Montserrat({
@@ -13,9 +14,9 @@ const montserrat = Montserrat({
 export const dynamicParams = false;
 
 /**
- * Root Layout - Provides font and i18n setup
+ * Root Layout - Provides font, i18n, and session setup
  * Actual layout structure is handled by route groups:
- * - (auth) - Public layout for authentication pages
+ * - (public) - Public layout for authentication pages
  * - (dashboard) - Dashboard layout for private pages
  */
 export default async function LocaleLayout({
@@ -26,13 +27,13 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  
+
   return (
     <html lang={locale}>
       <body className={`${montserrat.variable} font-sans antialiased`}>
-        <NextIntlClientProvider>
-          {children}
-        </NextIntlClientProvider>
+        <SessionProvider>
+          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        </SessionProvider>
       </body>
     </html>
   );

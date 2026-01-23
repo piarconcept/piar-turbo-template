@@ -80,28 +80,51 @@ pnpm --filter @piar/backoffice typecheck
 - **React 19**
 - **TypeScript 5.9**
 - **Tailwind CSS v4**
-- **next-intl** for i18n
+- **next-intl** for i18n (multi-language support)
+- **NextAuth.js v5** for authentication
 - **lucide-react** for icons
 - **@piar/layout** for layouts
+- **@piar/ui-components** for shared components
+
+## Authentication
+
+This app uses **NextAuth.js v5** for authentication with JWT sessions.
+
+**Key Features:**
+- ✅ Credentials provider (email/password)
+- ✅ JWT sessions (24-hour duration)
+- ✅ Route protection via middleware
+- ✅ Session persistence
+- ✅ Integration with backoffice-bff
+
+**Quick Start:**
+1. Copy `.env.example` to `.env.local`
+2. Configure environment variables (see below)
+3. Start backoffice-bff on port 5050
+4. Start this app and visit `/login`
+
+**Documentation:** See [docs/features/nextauth-authentication.md](../../../docs/features/nextauth-authentication.md) for complete implementation details.
+
+## Environment Variables
+
+Required in `.env.local`:
+
+```bash
+# Backoffice BFF URL
+NEXT_PUBLIC_BACKOFFICE_BFF_URL=http://localhost:5050
+
+# NextAuth Configuration
+NEXTAUTH_SECRET=your-secret-key-here  # Generate with: openssl rand -base64 32
+NEXTAUTH_URL=http://localhost:3001
+```
 
 ## Related Documentation
 
-- Layout Package: `packages/ui/layout/README.md`
-- BFF Architecture: `docs/features/bff-architecture.md`
+- **Authentication**: [docs/features/nextauth-authentication.md](../../../docs/features/nextauth-authentication.md)
+- Layout Package: [packages/ui/layout/README.md](../../../packages/ui/layout/README.md)
+- BFF Architecture: [docs/features/bff-architecture.md](../../../docs/features/bff-architecture.md)
+- Backoffice BFF: [docs/features/backoffice-bff-application.md](../../../docs/features/backoffice-bff-application.md)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Built with ❤️ by [Piar Concept](https://piarconcept.com)**

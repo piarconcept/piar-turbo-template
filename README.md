@@ -143,7 +143,7 @@ pnpm --filter @piar/web dev
 ### Development Ports
 
 - **Web Client**: `http://localhost:3000`
-- **Backoffice Client**: `http://localhost:3030`
+- **Backoffice Client**: `http://localhost:3000`
 - **Web BFF**: `http://localhost:5010`
 - **Backoffice BFF**: `http://localhost:5050`14-step guide for new packages
 - **[Testing Guide](./docs/features/testing-guide.md)** - Testing standards and examples

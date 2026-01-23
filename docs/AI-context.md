@@ -71,13 +71,14 @@ docs/
 15. **[auth-feature.md](features/auth-feature.md)** - Auth feature with Clean Architecture (configuration/api)
 16. **[infra-backend-security.md](features/infra-backend-security.md)** - Shared JWT security package for backend services
 17. **[error-handling-system.md](features/error-handling-system.md)** - ⭐ **Complete error handling system (domain errors, filters, deserializers)**
+18. **[nextauth-authentication.md](features/nextauth-authentication.md)** - ⭐ **NextAuth.js v5 authentication in backoffice (JWT sessions, route protection, BFF integration)**
 
 ### 🏢 Applications
-18. **[web-bff-application.md](features/web-bff-application.md)** - Web BFF application documentation
-19. **[backoffice-bff-application.md](features/backoffice-bff-application.md)** - Backoffice BFF application documentation
+19. **[web-bff-application.md](features/web-bff-application.md)** - Web BFF application documentation
+20. **[backoffice-bff-application.md](features/backoffice-bff-application.md)** - Backoffice BFF application documentation
 
 ### 📄 Templates
-20. **[TEMPLATE.md](features/TEMPLATE.md)** - Template for creating new documentation
+21. **[TEMPLATE.md](features/TEMPLATE.md)** - Template for creating new documentation
 
 ## Quick Reference
 
@@ -144,4 +145,4 @@ For **Developers**:
 - Ignore existing conventions
 
 ## Last Updated
-21 January 2026 - Added AuthCard molecule and refactored all auth pages (35% code reduction)
+21 January 2026 - Added NextAuth.js v5 authentication implementation in backoffice

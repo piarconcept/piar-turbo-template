@@ -10,6 +10,8 @@ export const auth: AuthMessages = {
     rememberMe: "Recorda'm",
     forgotPassword: 'Has oblidat la contrasenya?',
     submit: 'Entrar',
+    loading: 'Iniciant sessió...',
+    error: 'Correu o contrasenya incorrectes. Si us plau, torna-ho a provar.',
   },
   register: {
     title: 'Crear compte',
