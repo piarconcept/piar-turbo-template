@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@piar/auth-infra-client": "workspace:*",
     "@piar/coming-soon": "workspace:*",
     "@piar/layout": "workspace:*",
     "@piar/messages": "workspace:*",

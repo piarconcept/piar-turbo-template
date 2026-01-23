@@ -1,0 +1,31 @@
+{
+  "name": "@piar/auth-infra-client",
+  "version": "0.1.0",
+  "description": "Auth client infrastructure - HTTP repository implementation",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "echo 'No tests configured yet'",
+    "test:coverage": "echo 'No tests configured yet'"
+  },
+  "dependencies": {
+    "@piar/auth-configuration": "workspace:*",
+    "@piar/domain-models": "workspace:*",
+    "@piar/infra-client-common-error": "workspace:*",
+    "@piar/infra-client-common-http": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "typescript": "^5.9.3"
+  }
+}

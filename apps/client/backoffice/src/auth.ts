@@ -1,5 +1,10 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
+import { HttpAuthRepository } from '@piar/auth-infra-client';
+
+const authRepository = new HttpAuthRepository(
+  process.env.NEXT_PUBLIC_BACKOFFICE_BFF_URL || "http://localhost:5050"
+);
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -11,45 +16,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error(JSON.stringify({
-            i18n: 'missing_credentials',
-            message: 'Email and password are required'
-          }));
-        }
-
         try {
-          // Call backoffice-bff API
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKOFFICE_BFF_URL}/auth/login`,
-            {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                email: credentials.email,
-                password: credentials.password,
-              }),
-            }
-          );
-
-          if (!response.ok) {
-            const error = await response.json();
-            throw error
-          }
-
-          const data = await response.json();
+          // Use repository instead of direct fetch
+          const { account, session } = await authRepository.login({
+            email: credentials.email as string,
+            password: credentials.password as string,
+          });
 
           return {
-            id: data.account.id,
-            email: data.account.email,
-            name: data.account.email,
-            role: data.account.role,
-            accessToken: data.token,
+            id: account.id,
+            email: account.email ?? '',
+            name: account.email ?? 'User', // Use email as name since AccountEntity doesn't have name
+            role: account.role ?? 'user',
+            accessToken: session.token,
           };
         } catch (error) {
-          console.error('Auth error:', error);
-          // Otherwise, wrap it in a generic error
-          throw error
+          // Error is already structured by repository
+          throw error;
         }
       },
     }),
