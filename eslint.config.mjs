@@ -16,6 +16,8 @@ export default defineConfig([
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
+        // Note: No project/tsconfigRootDir configured here
+        // Each package can override if they need type-aware linting
       },
     },
     plugins: {
@@ -23,7 +25,7 @@ export default defineConfig([
       'import': importPlugin,
     },
     rules: {
-      // TypeScript rules
+      // TypeScript rules (syntax-only, no type information needed)
       '@typescript-eslint/no-unused-vars': [
         'error',
         {

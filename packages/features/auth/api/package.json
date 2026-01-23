@@ -19,12 +19,15 @@
     "test:coverage": "echo 'No tests configured yet for auth-api'"
   },
   "dependencies": {
-    "@piar/auth-infra-backend": "workspace:*",
     "@piar/auth-configuration": "workspace:*",
+    "@piar/auth-infra-backend": "workspace:*",
+    "@piar/infra-backend-common-security": "workspace:*",
+    "@piar/domain-models": "workspace:*",
     "@nestjs/common": "^11.0.16",
     "@nestjs/core": "^11.0.16"
   },
   "devDependencies": {
+    "@nestjs/swagger": "^8.0.7",
     "@nestjs/testing": "^11.0.16",
     "@types/node": "^22.10.5",
     "@vitest/coverage-v8": "^2.1.9",

@@ -1,5 +1,9 @@
-import { DynamicModule, Module } from '@nestjs/common';
+import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { AuthRepository } from '@piar/auth-infra-backend';
+import {
+  JwtTokenService,
+  SecurityModule,
+} from '@piar/infra-backend-common-security';
 import { AuthController } from '../controllers/auth.controller';
 import {
   ForgotPasswordUseCase,
@@ -11,21 +15,32 @@ import {
   UpdateUserRoleUseCase,
   UpdateUserRoleUseCaseExecuter,
 } from '../use-cases';
+import { AccountPort } from '@piar/domain-models';
 
-/**
- * Auth Module (NestJS)
- * Module for authentication functionality
- */
+export interface AuthModuleOptions {
+  accountPort: Provider<AccountPort>;
+}
+
 @Module({
   controllers: [AuthController],
 })
 export class AuthModule {
-  static register(): DynamicModule {
+  static register(options: AuthModuleOptions): DynamicModule {
     return {
       module: AuthModule,
-      imports: [],
+      imports: [
+        SecurityModule.register({
+          secret: process.env.JWT_SECRET ?? 'change-me',
+          expiresIn: process.env.JWT_EXPIRES_IN ?? '1h',
+        }),
+      ],
       providers: [
-        AuthRepository,
+        {
+          provide: AuthRepository,
+          useFactory: (accountPort: AccountPort, tokenService: JwtTokenService) =>
+            new AuthRepository(accountPort, tokenService),
+          inject: [AccountPort, JwtTokenService],
+        },
         {
           provide: LoginUseCase,
           useFactory: (repository: AuthRepository) =>
@@ -50,6 +65,7 @@ export class AuthModule {
             new UpdateUserRoleUseCaseExecuter(repository),
           inject: [AuthRepository],
         },
+        ...Object.values(options),
       ],
       exports: [],
     };

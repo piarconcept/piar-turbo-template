@@ -66,6 +66,7 @@ packages/features/auth/
 - `@nestjs/core`
 - `@piar/auth-configuration`
 - `@piar/auth-infra-backend`
+- `@piar/infra-backend-common-security`
 
 #### Use Cases
 Use-cases encapsulate the auth flows:

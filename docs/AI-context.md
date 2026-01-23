@@ -69,13 +69,15 @@ docs/
 13. **[auth-card-refactoring.md](features/auth-card-refactoring.md)** - AuthCard molecule refactoring (eliminated 37% code duplication in auth pages)
 14. **[health-feature.md](features/health-feature.md)** - Health check feature with Clean Architecture (configuration/api/client)
 15. **[auth-feature.md](features/auth-feature.md)** - Auth feature with Clean Architecture (configuration/api)
+16. **[infra-backend-security.md](features/infra-backend-security.md)** - Shared JWT security package for backend services
+17. **[error-handling-system.md](features/error-handling-system.md)** - ⭐ **Complete error handling system (domain errors, filters, deserializers)**
 
 ### 🏢 Applications
-16. **[web-bff-application.md](features/web-bff-application.md)** - Web BFF application documentation
-17. **[backoffice-bff-application.md](features/backoffice-bff-application.md)** - Backoffice BFF application documentation
+18. **[web-bff-application.md](features/web-bff-application.md)** - Web BFF application documentation
+19. **[backoffice-bff-application.md](features/backoffice-bff-application.md)** - Backoffice BFF application documentation
 
 ### 📄 Templates
-18. **[TEMPLATE.md](features/TEMPLATE.md)** - Template for creating new documentation
+20. **[TEMPLATE.md](features/TEMPLATE.md)** - Template for creating new documentation
 
 ## Quick Reference
 

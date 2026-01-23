@@ -20,7 +20,9 @@
   },
   "dependencies": {
     "@piar/auth-configuration": "workspace:*",
-    "@piar/domain-models": "workspace:*"
+    "@piar/infra-backend-repositories": "workspace:*",
+    "@piar/domain-models": "workspace:*",
+    "@piar/infra-backend-common-security": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.10.5",

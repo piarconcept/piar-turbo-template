@@ -10,12 +10,14 @@ import type {
   UpdateUserRoleRequest,
   UpdateUserRoleResponse,
 } from '@piar/auth-configuration';
-import { 
+import {
   AccountEntity,
   InvalidCredentialsError,
   ResourceAlreadyExistsError,
-  NotFoundError
+  NotFoundError,
+  AccountPort
 } from '@piar/domain-models';
+import { JwtTokenService } from '@piar/infra-backend-common-security';
 
 const defaultAccounts: AccountEntity[] = [
   new AccountEntity({
@@ -36,32 +38,32 @@ const defaultAccounts: AccountEntity[] = [
 
 
 export class AuthRepository implements IAuthRepository {
-  private accounts: AccountEntity[];
+  private accounts: AccountEntity[] = defaultAccounts
 
   constructor(
-    // in case of database, inject entities repositories here
+    private readonly accountPort: AccountPort,
+    private readonly tokenService: JwtTokenService,
   ) {
-    this.accounts = defaultAccounts
   }
 
   async login(payload: LoginRequest): Promise<LoginResponse> {
-    const account = this.findAccountByEmail(payload.email);
+    const account = await this.accountPort.getByEmail(payload.email);
 
     if (!account || account.passwordHash !== payload.password) {
-      throw new InvalidCredentialsError('Invalid email or password');
+      throw new InvalidCredentialsError('Invalid email or password', undefined, 'invalid_credentials');
     }
-
+    const accountEntity = new AccountEntity(account);
     return {
-      account,
-      session: this.createSession(account),
+      account: accountEntity,
+      session: this.createSession(accountEntity),
     };
   }
 
   async register(payload: RegisterRequest): Promise<RegisterResponse> {
-    const existing = this.findAccountByEmail(payload.email);
+    const existing = await this.accountPort.getByEmail(payload.email);
 
     if (existing) {
-      throw new ResourceAlreadyExistsError('Email', payload.email);
+      throw new ResourceAlreadyExistsError('Email', payload.email, 'email_exists');
     }
 
     const account = new AccountEntity({
@@ -78,7 +80,7 @@ export class AuthRepository implements IAuthRepository {
   }
 
   async forgotPassword(payload: ForgotPasswordRequest): Promise<ForgotPasswordResponse> {
-    const account = this.findAccountByEmail(payload.email);
+    const account = await this.accountPort.getByEmail(payload.email);
 
     if (!account) {
       return { success: false, message: 'Email not found' };
@@ -93,28 +95,24 @@ export class AuthRepository implements IAuthRepository {
   async updateUserRole(
     payload: UpdateUserRoleRequest
   ): Promise<UpdateUserRoleResponse> {
-    const account = this.findAccountById(payload.userId);
+    const account = await this.accountPort.getById(payload.userId);
 
     if (!account) {
-      throw new NotFoundError('User', payload.userId);
+      throw new NotFoundError('User', payload.userId, 'user_not_found');
     }
 
     account.role = payload.role;
 
-    return { account };
-  }
-
-  private findAccountByEmail(email: string): AccountEntity | undefined {
-    return this.accounts.find((account) => account.email === email);
-  }
-
-  private findAccountById(userId: string): AccountEntity | undefined {
-    return this.accounts.find((account) => account.id === userId);
+    return { account: new AccountEntity(account) };
   }
 
   private createSession(account: AccountEntity): AuthSession {
     return {
-      token: `token-${account.id}`,
+      token: this.tokenService.sign({
+        accountId: account.id,
+        email: account.email,
+        role: account.role,
+      }),
       expiresAt: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
     };
   }

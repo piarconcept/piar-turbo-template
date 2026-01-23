@@ -101,3 +101,5 @@ export interface IAuthRepository {
    */
   updateUserRole(payload: UpdateUserRoleRequest): Promise<UpdateUserRoleResponse>;
 }
+
+export const IAuthRepository = Symbol('IAuthRepository');

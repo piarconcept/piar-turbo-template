@@ -10,6 +10,7 @@ export interface SerializableError {
   statusCode: number;
   details?: Record<string, unknown>;
   timestamp: string;
+  i18nKey?: string;
 }
 
 /**
@@ -21,11 +22,13 @@ export class ApplicationError extends Error {
   public readonly statusCode: number;
   public readonly details?: Record<string, unknown>;
   public readonly timestamp: string;
+  public readonly i18nKey?: string;
 
   constructor(
     code: ErrorCode,
     message: string,
-    details?: Record<string, unknown>
+    details?: Record<string, unknown>,
+    i18nKey?: string
   ) {
     super(message);
     this.name = 'ApplicationError';
@@ -33,9 +36,8 @@ export class ApplicationError extends Error {
     this.statusCode = ErrorCodeHttpStatus[code];
     this.details = details;
     this.timestamp = new Date().toISOString();
-
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, ApplicationError);
+    if (i18nKey) {
+      this.i18nKey = i18nKey;
     }
   }
 
@@ -49,6 +51,7 @@ export class ApplicationError extends Error {
       statusCode: this.statusCode,
       details: this.details,
       timestamp: this.timestamp,
+      i18nKey: this.i18nKey,
     };
   }
 
@@ -56,6 +59,6 @@ export class ApplicationError extends Error {
    * Create from serialized error (e.g., from API response)
    */
   static fromJSON(json: SerializableError): ApplicationError {
-    return new ApplicationError(json.code, json.message, json.details);
+    return new ApplicationError(json.code, json.message, json.details, json.i18nKey);
   }
 }

@@ -22,6 +22,8 @@
     "@nestjs/core": "^11.0.16",
     "@nestjs/platform-express": "^11.0.16",
     "@piar/health-api": "workspace:*",
+    "@piar/infra-backend-common-error": "workspace:*",
+    "@nestjs/swagger": "^8.0.7",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
