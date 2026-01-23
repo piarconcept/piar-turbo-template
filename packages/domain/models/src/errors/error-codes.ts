@@ -1,0 +1,72 @@
+/**
+ * Error codes for the application
+ * These codes are shared between frontend and backend
+ */
+export enum ErrorCode {
+  // General errors (1000-1999)
+  UNKNOWN_ERROR = 'UNKNOWN_ERROR',
+  INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR',
+  BAD_REQUEST = 'BAD_REQUEST',
+  VALIDATION_ERROR = 'VALIDATION_ERROR',
+
+  // Authentication errors (2000-2999)
+  UNAUTHORIZED = 'UNAUTHORIZED',
+  FORBIDDEN = 'FORBIDDEN',
+  INVALID_CREDENTIALS = 'INVALID_CREDENTIALS',
+  TOKEN_EXPIRED = 'TOKEN_EXPIRED',
+  TOKEN_INVALID = 'TOKEN_INVALID',
+  SESSION_EXPIRED = 'SESSION_EXPIRED',
+
+  // Resource errors (3000-3999)
+  NOT_FOUND = 'NOT_FOUND',
+  RESOURCE_NOT_FOUND = 'RESOURCE_NOT_FOUND',
+  RESOURCE_ALREADY_EXISTS = 'RESOURCE_ALREADY_EXISTS',
+  DUPLICATE_ENTRY = 'DUPLICATE_ENTRY',
+
+  // Business logic errors (4000-4999)
+  BUSINESS_RULE_VIOLATION = 'BUSINESS_RULE_VIOLATION',
+  INSUFFICIENT_PERMISSIONS = 'INSUFFICIENT_PERMISSIONS',
+  OPERATION_NOT_ALLOWED = 'OPERATION_NOT_ALLOWED',
+
+  // External service errors (5000-5999)
+  EXTERNAL_SERVICE_ERROR = 'EXTERNAL_SERVICE_ERROR',
+  THIRD_PARTY_API_ERROR = 'THIRD_PARTY_API_ERROR',
+  DATABASE_ERROR = 'DATABASE_ERROR',
+  NETWORK_ERROR = 'NETWORK_ERROR',
+}
+
+/**
+ * HTTP status codes mapping for error codes
+ */
+export const ErrorCodeHttpStatus: Record<ErrorCode, number> = {
+  // General errors
+  [ErrorCode.UNKNOWN_ERROR]: 500,
+  [ErrorCode.INTERNAL_SERVER_ERROR]: 500,
+  [ErrorCode.BAD_REQUEST]: 400,
+  [ErrorCode.VALIDATION_ERROR]: 400,
+
+  // Authentication errors
+  [ErrorCode.UNAUTHORIZED]: 401,
+  [ErrorCode.FORBIDDEN]: 403,
+  [ErrorCode.INVALID_CREDENTIALS]: 401,
+  [ErrorCode.TOKEN_EXPIRED]: 401,
+  [ErrorCode.TOKEN_INVALID]: 401,
+  [ErrorCode.SESSION_EXPIRED]: 401,
+
+  // Resource errors
+  [ErrorCode.NOT_FOUND]: 404,
+  [ErrorCode.RESOURCE_NOT_FOUND]: 404,
+  [ErrorCode.RESOURCE_ALREADY_EXISTS]: 409,
+  [ErrorCode.DUPLICATE_ENTRY]: 409,
+
+  // Business logic errors
+  [ErrorCode.BUSINESS_RULE_VIOLATION]: 422,
+  [ErrorCode.INSUFFICIENT_PERMISSIONS]: 403,
+  [ErrorCode.OPERATION_NOT_ALLOWED]: 403,
+
+  // External service errors
+  [ErrorCode.EXTERNAL_SERVICE_ERROR]: 502,
+  [ErrorCode.THIRD_PARTY_API_ERROR]: 502,
+  [ErrorCode.DATABASE_ERROR]: 500,
+  [ErrorCode.NETWORK_ERROR]: 503,
+};

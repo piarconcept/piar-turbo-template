@@ -10,7 +10,13 @@ import type {
   UpdateUserRoleRequest,
   UpdateUserRoleResponse,
 } from '@piar/auth-configuration';
-import { AccountEntity } from '@piar/domain-models';
+import { 
+  AccountEntity, 
+  InvalidCredentialsError,
+  ResourceAlreadyExistsError,
+  NotFoundError,
+  ForbiddenError
+} from '@piar/domain-models';
 
 const defaultAccounts: AccountEntity[] = [
   new AccountEntity({
@@ -29,22 +35,21 @@ const defaultAccounts: AccountEntity[] = [
   }),
 ];
 
-/**
- * In-memory auth repository.
- * Replace with a persistent implementation when infra is available.
- */
+
 export class AuthRepository implements IAuthRepository {
   private accounts: AccountEntity[];
 
-  constructor(seedAccounts: AccountEntity[] = defaultAccounts) {
-    this.accounts = [...seedAccounts];
+  constructor(
+    // in case of database, inject entities repositories here
+  ) {
+    this.accounts = defaultAccounts
   }
 
   async login(payload: LoginRequest): Promise<LoginResponse> {
     const account = this.findAccountByEmail(payload.email);
 
     if (!account || account.passwordHash !== payload.password) {
-      throw new Error('Invalid credentials');
+      throw new InvalidCredentialsError('Invalid email or password');
     }
 
     return {
@@ -57,7 +62,7 @@ export class AuthRepository implements IAuthRepository {
     const existing = this.findAccountByEmail(payload.email);
 
     if (existing) {
-      throw new Error('Email already registered');
+      throw new ResourceAlreadyExistsError('Email', payload.email);
     }
 
     const account = new AccountEntity({
@@ -92,7 +97,7 @@ export class AuthRepository implements IAuthRepository {
     const account = this.findAccountById(payload.userId);
 
     if (!account) {
-      throw new Error('User not found');
+      throw new NotFoundError('User', payload.userId);
     }
 
     account.role = payload.role;
