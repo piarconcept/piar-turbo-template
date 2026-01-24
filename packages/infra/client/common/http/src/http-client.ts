@@ -1,15 +1,10 @@
 import axios, { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axios';
 
-/**
- * HTTP Client utility for making API requests with error handling
- * Uses axios for cleaner HTTP implementation
- */
-
 export interface HttpClientError {
-  i18n: string;
   message: string;
   code?: string;
   statusCode?: number;
+  i18nKey?: string;
 }
 
 export interface HttpClientConfig {
@@ -17,13 +12,6 @@ export interface HttpClientConfig {
   withCredentials?: boolean;
   timeout?: number;
   headers?: Record<string, string>;
-}
-
-interface ErrorResponse {
-  i18nKey?: string;
-  i18n?: string;
-  message?: string;
-  code?: string;
 }
 
 export class HttpClient {
@@ -96,10 +84,10 @@ export class HttpClient {
   private handleError(error: AxiosError): Error {
     if (error.response) {
       // Server responded with error status
-      const errorData = error.response.data as ErrorResponse;
+      const errorData = error.response.data as HttpClientError;
       
       return new Error(JSON.stringify({
-        i18n: errorData?.i18nKey || errorData?.i18n || 'server_error',
+        i18nKey: errorData?.i18nKey || 'server_error',
         message: errorData?.message || error.message,
         code: errorData?.code,
         statusCode: error.response.status,
@@ -107,14 +95,14 @@ export class HttpClient {
     } else if (error.request) {
       // Request made but no response received
       return new Error(JSON.stringify({
-        i18n: 'network_error',
+        i18nKey: 'network_error',
         message: 'No response from server',
         statusCode: 0,
       } as HttpClientError));
     } else {
       // Something else happened
       return new Error(JSON.stringify({
-        i18n: 'network_error',
+        i18nKey: 'network_error',
         message: error.message || 'Request failed',
         statusCode: 0,
       } as HttpClientError));
