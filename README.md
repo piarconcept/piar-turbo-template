@@ -121,4 +121,4 @@ MIT License. See `LICENSE`.
 This template is created and maintained by Piar Concept.
 
 Website: `https://piarconcept.com`
-Contact: `contact@piarconcept.com`
+Contact: `polribasrovira@gmail.com`

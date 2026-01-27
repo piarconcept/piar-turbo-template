@@ -24,7 +24,7 @@
     "entities",
     "validation"
   ],
-  "author": "Piar Concept <contact@piarconcept.com> (https://piarconcept.com)",
+  "author": "Piar Concept <polribasrovira@gmail.com> (https://piarconcept.com)",
   "license": "MIT",
   "dependencies": {
     "@piar/domain-models": "workspace:*"

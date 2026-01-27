@@ -8,7 +8,7 @@ This repository is a template. Security fixes are applied to the main branch.
 
 Please report security issues to:
 
-- Email: contact@piarconcept.com
+- Email: polribasrovira@gmail.com
 
 Include:
 
