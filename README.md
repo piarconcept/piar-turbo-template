@@ -85,6 +85,14 @@ Key docs:
 - `docs/features/testing-guide.md`
 - `docs/features/tailwind-v4-implementation.md`
 
+## Contributing
+
+See `CONTRIBUTING.md` for workflow and commit rules.
+
+## Security
+
+See `SECURITY.md` for reporting vulnerabilities.
+
 ## Commit Convention
 
 This repo uses **Conventional Commits** enforced by commitlint.

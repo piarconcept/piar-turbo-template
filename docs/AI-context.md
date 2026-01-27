@@ -58,6 +58,12 @@ Start here. This file is the canonical index and rules for documentation and dev
 
 25. `features/TEMPLATE.md` - Template for new docs
 
+## Repository Governance
+
+- `CONTRIBUTING.md` - Contribution workflow and commit rules
+- `SECURITY.md` - Vulnerability reporting
+- `CHANGELOG.md` - Template change history
+
 ## Quick Reference
 
 ### Creating a New Component
