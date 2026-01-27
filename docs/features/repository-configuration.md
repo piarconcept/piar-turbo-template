@@ -21,6 +21,7 @@ Document critical repository configuration decisions and conventions that must b
 - **Workspaces**: Root `pnpm-workspace.yaml` includes:
   - `apps/**`
   - `packages/**`
+- **TypeScript base config**: All `tsconfig.json` extend `tsconfig.base.json`
 
 ### Build System
 
@@ -126,4 +127,4 @@ pnpm verify               # install, build, typecheck, format check, test, lint
 
 ## Last Updated
 
-27 January 2026 - Fixed rules, workspace paths, and scripts
+27 January 2026 - Added tsconfig base usage across packages and apps
