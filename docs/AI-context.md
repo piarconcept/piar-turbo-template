@@ -70,15 +70,16 @@ docs/
 14. **[health-feature.md](features/health-feature.md)** - Health check feature with Clean Architecture (configuration/api/client)
 15. **[auth-feature.md](features/auth-feature.md)** - Auth feature with Clean Architecture (configuration/api)
 16. **[infra-backend-security.md](features/infra-backend-security.md)** - Shared JWT security package for backend services
-17. **[error-handling-system.md](features/error-handling-system.md)** - ⭐ **Complete error handling system (domain errors, filters, deserializers)**
-18. **[nextauth-authentication.md](features/nextauth-authentication.md)** - ⭐ **NextAuth.js v5 authentication in backoffice (JWT sessions, route protection, BFF integration)**
+17. **[infra-client-seo.md](features/infra-client-seo.md)** - ⭐ **Professional SEO infrastructure (meta tags, Schema.org, sitemaps, robots.txt, validators)**
+18. **[error-handling-system.md](features/error-handling-system.md)** - ⭐ **Complete error handling system (domain errors, filters, deserializers)**
+19. **[nextauth-authentication.md](features/nextauth-authentication.md)** - ⭐ **NextAuth.js v5 authentication in backoffice (JWT sessions, route protection, BFF integration)**
 
 ### 🏢 Applications
-19. **[web-bff-application.md](features/web-bff-application.md)** - Web BFF application documentation
-20. **[backoffice-bff-application.md](features/backoffice-bff-application.md)** - Backoffice BFF application documentation
+20. **[web-bff-application.md](features/web-bff-application.md)** - Web BFF application documentation
+21. **[backoffice-bff-application.md](features/backoffice-bff-application.md)** - Backoffice BFF application documentation
 
 ### 📄 Templates
-21. **[TEMPLATE.md](features/TEMPLATE.md)** - Template for creating new documentation
+22. **[TEMPLATE.md](features/TEMPLATE.md)** - Template for creating new documentation
 
 ## Quick Reference
 
@@ -145,4 +146,4 @@ For **Developers**:
 - Ignore existing conventions
 
 ## Last Updated
-21 January 2026 - Added NextAuth.js v5 authentication implementation in backoffice
+24 January 2026 - Added professional SEO infrastructure package (@piar/infra-client-seo)
