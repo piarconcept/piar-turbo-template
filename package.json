@@ -52,6 +52,14 @@
       "prettier --write"
     ]
   },
+  "pnpm": {
+    "overrides": {
+      "esbuild": "^0.25.0",
+      "js-yaml": "^4.1.1",
+      "lodash": "^4.17.23",
+      "diff": "^4.0.4"
+    }
+  },
   "private": true,
   "engines": {
     "node": "20.x"
