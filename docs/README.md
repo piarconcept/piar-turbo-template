@@ -54,8 +54,8 @@ Start with `AI-context.md`.
 1. Keep docs in English.
 2. Update `AI-context.md` when adding/removing docs.
 3. Add a Last Updated line to new docs.
-4. Keep `CHANGELOG.md`, `CONTRIBUTING.md`, and `SECURITY.md` updated when relevant.
+4. Keep `CHANGELOG.md`, `CONTRIBUTING.md`, `SECURITY.md`, and `CODE_OF_CONDUCT.md` updated when relevant.
 
 ## Last Updated
 
-27 January 2026 - Cleaned and reindexed documentation
+27 January 2026 - Added code of conduct

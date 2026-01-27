@@ -93,6 +93,10 @@ See `CONTRIBUTING.md` for workflow and commit rules.
 
 See `SECURITY.md` for reporting vulnerabilities.
 
+## Code of Conduct
+
+See `CODE_OF_CONDUCT.md` for community guidelines.
+
 ## Commit Convention
 
 This repo uses **Conventional Commits** enforced by commitlint.

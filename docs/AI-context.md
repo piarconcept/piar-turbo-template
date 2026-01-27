@@ -63,6 +63,7 @@ Start here. This file is the canonical index and rules for documentation and dev
 - `CONTRIBUTING.md` - Contribution workflow and commit rules
 - `SECURITY.md` - Vulnerability reporting
 - `CHANGELOG.md` - Template change history
+- `CODE_OF_CONDUCT.md` - Community standards
 
 ## Quick Reference
 
@@ -98,4 +99,4 @@ Start here. This file is the canonical index and rules for documentation and dev
 
 ## Last Updated
 
-27 January 2026 - Cleaned and reindexed documentation
+27 January 2026 - Added code of conduct
