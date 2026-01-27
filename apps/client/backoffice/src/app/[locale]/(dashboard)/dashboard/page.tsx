@@ -86,6 +86,46 @@ export default function DashboardPage() {
           <ActivityItem title="Settings updated" time="1 hour ago" type="settings" />
         </div>
       </div>
+      <div className="rounded-lg border border-gray-200 bg-white p-6">
+        <h2 className="mb-4 text-xl font-semibold text-[var(--color-secondary)]">
+          {t('recentActivity')}
+        </h2>
+        <div className="space-y-4">
+          <ActivityItem title="New user registered" time="2 minutes ago" type="user" />
+          <ActivityItem title="Content published" time="15 minutes ago" type="content" />
+          <ActivityItem title="Settings updated" time="1 hour ago" type="settings" />
+        </div>
+      </div>
+      <div className="rounded-lg border border-gray-200 bg-white p-6">
+        <h2 className="mb-4 text-xl font-semibold text-[var(--color-secondary)]">
+          {t('recentActivity')}
+        </h2>
+        <div className="space-y-4">
+          <ActivityItem title="New user registered" time="2 minutes ago" type="user" />
+          <ActivityItem title="Content published" time="15 minutes ago" type="content" />
+          <ActivityItem title="Settings updated" time="1 hour ago" type="settings" />
+        </div>
+      </div>
+      <div className="rounded-lg border border-gray-200 bg-white p-6">
+        <h2 className="mb-4 text-xl font-semibold text-[var(--color-secondary)]">
+          {t('recentActivity')}
+        </h2>
+        <div className="space-y-4">
+          <ActivityItem title="New user registered" time="2 minutes ago" type="user" />
+          <ActivityItem title="Content published" time="15 minutes ago" type="content" />
+          <ActivityItem title="Settings updated" time="1 hour ago" type="settings" />
+        </div>
+      </div>
+      <div className="rounded-lg border border-gray-200 bg-white p-6">
+        <h2 className="mb-4 text-xl font-semibold text-[var(--color-secondary)]">
+          {t('recentActivity')}
+        </h2>
+        <div className="space-y-4">
+          <ActivityItem title="New user registered" time="2 minutes ago" type="user" />
+          <ActivityItem title="Content published" time="15 minutes ago" type="content" />
+          <ActivityItem title="Settings updated" time="1 hour ago" type="settings" />
+        </div>
+      </div>
     </div>
   );
 }

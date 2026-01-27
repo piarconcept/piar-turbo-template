@@ -6,3 +6,6 @@ export * from './client';
 
 // Server-side only
 export * from './server';
+
+// Page templates (UI)
+export * from './pages';

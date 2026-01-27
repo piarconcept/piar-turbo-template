@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { AuthCard, AuthPage, Label, Input, Button, Checkbox } from '@piar/ui-components';
+import { AuthCard, AuthPage, Label, Input, Button, Checkbox, Text } from '@piar/ui-components';
 
 /**
  * Register Page
@@ -15,10 +15,21 @@ export default function RegisterPage() {
         title={t('title')}
         footer={
           <>
-            {t('haveAccount')}{' '}
-            <Link href="/login" className="font-medium text-[var(--color-primary)] hover:underline">
-              {t('signIn')}
-            </Link>
+            <Text as="span" variant="bodySmall">
+              {t('haveAccount')}{' '}
+            </Text>
+            <Button
+              asChild
+              variant="ghost"
+              size="inline"
+              className="px-0 text-[var(--color-primary)] hover:bg-transparent hover:underline"
+            >
+              <Link href="/login">
+                <Text as="span" variant="bodySmall" className="text-[var(--color-primary)]">
+                  {t('signIn')}
+                </Text>
+              </Link>
+            </Button>
           </>
         }
       >
@@ -46,11 +57,22 @@ export default function RegisterPage() {
 
           <div className="flex items-start">
             <Checkbox id="terms" required wrapperClassName="items-start" />
-            <Label htmlFor="terms" className="text-sm text-gray-600 font-normal ml-2">
-              {t('acceptTerms')}{' '}
-              <Link href="/terms" className="text-[var(--color-primary)] hover:underline">
-                {t('termsAndConditions')}
-              </Link>
+            <Label htmlFor="terms" className="ml-2 text-sm font-normal text-gray-600">
+              <Text as="span" variant="bodySmall" className="text-gray-600">
+                {t('acceptTerms')}{' '}
+              </Text>
+              <Button
+                asChild
+                variant="ghost"
+                size="inline"
+                className="px-0 text-[var(--color-primary)] hover:bg-transparent hover:underline"
+              >
+                <Link href="/terms">
+                  <Text as="span" variant="bodySmall" className="text-[var(--color-primary)]">
+                    {t('termsAndConditions')}
+                  </Text>
+                </Link>
+              </Button>
             </Label>
           </div>
 

@@ -70,6 +70,7 @@ piar-repo/
 2. Use scoped package names
 3. Include `typecheck` in TypeScript packages
 4. Update documentation when configuration changes
+5. Use `next/link` instead of raw `<a>` for internal navigation in Next.js apps
 
 ## Configuration Files
 
@@ -127,4 +128,4 @@ pnpm verify               # install, build, typecheck, format check, test, lint
 
 ## Last Updated
 
-27 January 2026 - Added tsconfig base usage across packages and apps
+27 January 2026 - Added Next.js Link navigation rule

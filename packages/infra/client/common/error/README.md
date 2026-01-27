@@ -1,15 +1,16 @@
 # @piar/infra-client-common-error
 
-Next.js error handling infrastructure for client applications (logic only, no UI).
+Next.js error handling infrastructure for client applications (logic + shared page templates).
 
 ## Features
 
 - **Shared**: HTTP error deserializer, error formatter (works on both client and server)
-- **Client**: React hooks for error handling, ErrorBoundary logic (no UI)
+- **Client**: React hooks for error handling, ErrorBoundary logic
 - **Server**: Error data extraction for Server Components and Server Actions
+- **Pages**: Error and Not Found page templates built with `@piar/ui-components`
 
-**Note**: This package contains only error handling LOGIC.
-For error UI components (alerts, toasts, error pages), use `@piar/ui-components`.
+**Note**: Page templates are provided here to standardize app-level errors.
+For other UI components (alerts, toasts), use `@piar/ui-components`.
 
 ## Usage
 
@@ -86,6 +87,16 @@ export const loginAction = wrapServerAction(async (formData) => {
   // Your logic here
   return { success: true };
 });
+```
+
+### Page Templates
+
+```tsx
+import { ErrorPage, NotFoundPage } from '@piar/infra-client-common-error';
+
+export default function NotFound() {
+  return <NotFoundPage />;
+}
 ```
 
 ## Development

@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@piar/coming-soon": "workspace:*",
+    "@piar/infra-client-common-error": "workspace:*",
     "@piar/layout": "workspace:*",
     "@piar/messages": "workspace:*",
     "@piar/ui-config": "workspace:*",
+    "@piar/ui-components": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.562.0",

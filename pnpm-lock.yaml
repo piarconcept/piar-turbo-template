@@ -231,6 +231,9 @@ importers:
       '@piar/coming-soon':
         specifier: workspace:*
         version: link:../../../packages/features/comingSoon
+      '@piar/infra-client-common-error':
+        specifier: workspace:*
+        version: link:../../../packages/infra/client/common/error
       '@piar/layout':
         specifier: workspace:*
         version: link:../../../packages/ui/layout
@@ -307,12 +310,18 @@ importers:
       '@piar/coming-soon':
         specifier: workspace:*
         version: link:../../../packages/features/comingSoon
+      '@piar/infra-client-common-error':
+        specifier: workspace:*
+        version: link:../../../packages/infra/client/common/error
       '@piar/layout':
         specifier: workspace:*
         version: link:../../../packages/ui/layout
       '@piar/messages':
         specifier: workspace:*
         version: link:../../../packages/messages
+      '@piar/ui-components':
+        specifier: workspace:*
+        version: link:../../../packages/ui/components
       '@piar/ui-config':
         specifier: workspace:*
         version: link:../../../packages/ui/config
@@ -395,6 +404,10 @@ importers:
         version: 2.1.9(@types/node@20.19.29)(@vitest/ui@2.1.9)(happy-dom@20.3.9)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)
 
   packages/domain/models:
+    dependencies:
+      '@piar/messages':
+        specifier: workspace:*
+        version: link:../../messages
     devDependencies:
       '@vitest/coverage-v8':
         specifier: ^2.1.8
@@ -742,6 +755,9 @@ importers:
       '@piar/domain-models':
         specifier: workspace:*
         version: link:../../../../domain/models
+      '@piar/ui-components':
+        specifier: workspace:*
+        version: link:../../../../ui/components
       next:
         specifier: ^16.0.0
         version: 16.1.2(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.1.0))(react@19.1.0)

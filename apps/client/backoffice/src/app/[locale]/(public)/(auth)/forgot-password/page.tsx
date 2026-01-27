@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { KeyRound } from 'lucide-react';
-import { AuthCard, AuthPage, Label, Input, Button } from '@piar/ui-components';
+import { AuthCard, AuthPage, Label, Input, Button, Text } from '@piar/ui-components';
 
 /**
  * Forgot Password Page
@@ -18,24 +18,36 @@ export default function ForgotPasswordPage() {
         icon={<KeyRound className="h-12 w-12 text-[var(--color-primary)]" />}
         footer={
           <div className="space-y-3">
-            <p>
+            <Text as="p" variant="bodySmall">
               {t('rememberPassword')}{' '}
-              <Link
-                href="/login"
-                className="font-medium text-[var(--color-primary)] hover:underline"
+              <Button
+                asChild
+                variant="ghost"
+                size="inline"
+                className="px-0 text-[var(--color-primary)] hover:bg-transparent hover:underline"
               >
-                {t('backToLogin')}
-              </Link>
-            </p>
-            <p>
+                <Link href="/login">
+                  <Text as="span" variant="bodySmall" className="text-[var(--color-primary)]">
+                    {t('backToLogin')}
+                  </Text>
+                </Link>
+              </Button>
+            </Text>
+            <Text as="p" variant="bodySmall">
               {t('noAccount')}{' '}
-              <Link
-                href="/register"
-                className="font-medium text-[var(--color-primary)] hover:underline"
+              <Button
+                asChild
+                variant="ghost"
+                size="inline"
+                className="px-0 text-[var(--color-primary)] hover:bg-transparent hover:underline"
               >
-                {t('signUp')}
-              </Link>
-            </p>
+                <Link href="/register">
+                  <Text as="span" variant="bodySmall" className="text-[var(--color-primary)]">
+                    {t('signUp')}
+                  </Text>
+                </Link>
+              </Button>
+            </Text>
           </div>
         }
       >

@@ -19,7 +19,7 @@ Centralized package for domain entities and models shared across all application
 ## Key Decisions
 
 - **Single source of truth**: All domain entities are defined here to avoid duplication
-- **TypeScript only**: Pure TypeScript interfaces and types, no runtime dependencies
+- **TypeScript only**: Pure TypeScript interfaces and types, minimal runtime dependencies when required
 - **Compiled output**: Built to `dist/` for consumption by other packages
 - **Strict typing**: Enforces strict TypeScript rules for maximum type safety
 
@@ -29,7 +29,7 @@ Centralized package for domain entities and models shared across all application
 
 This package contains TypeScript classes and types that represent the core business domain:
 
-- **Entities**: Core domain objects as classes (AccountEntity, etc.)
+- **Entities**: Core domain objects as classes (AccountEntity, I18nTextEntity, etc.)
   - Each entity has Props interface and Class implementation
   - All extend BaseEntity for consistent id/timestamps
   - Organized in folders: `entities/{entity-name}/{entity-name}.entity.ts`
@@ -39,8 +39,8 @@ This package contains TypeScript classes and types that represent the core busin
 
 ### Dependencies
 
-- **typescript 5.9.3**: Only dev dependency, no runtime dependencies
-- **Pure types**: This package should remain dependency-free to avoid version conflicts
+- **typescript 5.9.3**: Dev dependencies for tooling, runtime dependencies only when shared types require it
+- **Pure types**: Keep runtime dependencies minimal and aligned with shared type sources
 
 ### File Structure
 
@@ -55,6 +55,10 @@ packages/domain/models/
 │   │   │   └── index.ts
 │   │   ├── account/
 │   │   │   ├── account.entity.ts    # AccountEntity + AccountEntityProps
+│   │   │   └── index.ts
+│   │   ├── i18n/
+│   │   │   ├── i18n.entity.ts       # I18nTextEntity + I18nTextEntityProps (no id)
+│   │   │   ├── i18n.port.ts         # I18nTextPort
 │   │   │   └── index.ts
 │   │   └── [other-entities]/        # Same pattern for new entities
 │   ├── value-objects/    # Value objects (to be added)

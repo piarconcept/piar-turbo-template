@@ -1,5 +1,5 @@
 // Export types
-export type { Messages } from './types';
+export type { Messages, LegalTemplateMessages, LegalTemplateSectionMessages } from './types';
 
 // Export constants
 export {

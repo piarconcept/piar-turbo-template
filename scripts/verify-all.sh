@@ -25,6 +25,7 @@ echo "✅ Type check passed"
 echo ""
 
 echo "🧼 Step 4: Checking formatting..."
+pnpm format
 pnpm format:check
 echo "✅ Formatting check passed"
 echo ""

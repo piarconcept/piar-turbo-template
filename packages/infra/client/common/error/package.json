@@ -32,7 +32,8 @@
     "test:coverage": "echo 'No tests configured yet'"
   },
   "dependencies": {
-    "@piar/domain-models": "workspace:*"
+    "@piar/domain-models": "workspace:*",
+    "@piar/ui-components": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.10.5",

@@ -5,7 +5,7 @@ Shared domain models and TypeScript entities for the entire PIAR monorepo.
 ## Usage
 
 ```typescript
-import { AccountEntity, AccountEntityProps } from '@piar/domain-models';
+import { AccountEntity, AccountEntityProps, I18nTextEntity } from '@piar/domain-models';
 
 // Create new account
 const account = new AccountEntity({
@@ -17,6 +17,14 @@ const account = new AccountEntity({
 
 console.log(account.id); // '123'
 console.log(account.createdAt); // Current Date
+
+// I18n text example
+const i18nText = new I18nTextEntity({
+  language: 'es',
+  value: 'Bienvenido',
+});
+
+console.log(i18nText.language); // 'es'
 ```
 
 ## Development

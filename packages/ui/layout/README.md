@@ -48,6 +48,11 @@ function App() {
 }
 ```
 
+## Navigation Links (Next.js)
+
+In Next.js apps, always use `Link` for navigation. Do not use raw `<a>` tags for internal routes.
+All layout components in this package follow this rule.
+
 ### Dashboard Layout
 
 ```tsx

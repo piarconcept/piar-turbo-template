@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { ShieldAlert, Clock } from 'lucide-react';
-import { AuthCard, AuthPage, Text } from '@piar/ui-components';
+import { AuthCard, AuthPage, Button, Text } from '@piar/ui-components';
 import { LogoutButton } from '@/components/auth/logout-button';
 
 /**
@@ -25,15 +25,21 @@ export default function UnauthorizedPage() {
         }
         className="border-orange-200 bg-orange-50"
         footer={
-          <p className="text-sm text-gray-500">
+          <Text as="p" variant="bodySmall" className="text-gray-500">
             {t('needHelp')}{' '}
-            <Link
-              href="/contact"
-              className="font-medium text-[var(--color-primary)] hover:underline"
+            <Button
+              asChild
+              variant="ghost"
+              size="inline"
+              className="px-0 text-[var(--color-primary)] hover:bg-transparent hover:underline"
             >
-              {t('contactSupport')}
-            </Link>
-          </p>
+              <Link href="/contact">
+                <Text as="span" variant="bodySmall" className="text-[var(--color-primary)]">
+                  {t('contactSupport')}
+                </Text>
+              </Link>
+            </Button>
+          </Text>
         }
       >
         <div className="rounded-lg bg-white p-6 text-left">
@@ -42,15 +48,21 @@ export default function UnauthorizedPage() {
           </Text>
           <ul className="space-y-2 text-gray-600">
             <li className="flex items-start gap-2">
-              <span className="mt-1 text-[var(--color-primary)]">•</span>
+              <Text as="span" variant="bodySmall" className="mt-1 text-[var(--color-primary)]">
+                •
+              </Text>
               <Text variant="body">{t('step1')}</Text>
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-1 text-[var(--color-primary)]">•</span>
+              <Text as="span" variant="bodySmall" className="mt-1 text-[var(--color-primary)]">
+                •
+              </Text>
               <Text variant="body">{t('step2')}</Text>
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-1 text-[var(--color-primary)]">•</span>
+              <Text as="span" variant="bodySmall" className="mt-1 text-[var(--color-primary)]">
+                •
+              </Text>
               <Text variant="body">{t('step3')}</Text>
             </li>
           </ul>

@@ -24,16 +24,17 @@ export function DashboardLayout({
   locale = 'en',
 }: DashboardLayoutProps) {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="min-h-screen bg-gray-50">
       <HeaderDispatcher config={headerConfig} layoutType="dashboard" locale={locale} />
 
-      <div className="flex flex-1">
+      <div className="flex pt-16">
         <AsideDispatcher config={asideConfig} layoutType="dashboard" locale={locale} />
 
-        <main className="flex-1 overflow-y-auto bg-gray-50 p-6">{children}</main>
+        <div className="flex min-h-[calc(100vh-4rem)] flex-1 flex-col pl-[var(--layout-aside-width,16rem)]">
+          <main className="flex-1 px-6 py-6">{children}</main>
+          <FooterDispatcher config={footerConfig} layoutType="dashboard" locale={locale} />
+        </div>
       </div>
-
-      <FooterDispatcher config={footerConfig} layoutType="dashboard" locale={locale} />
     </div>
   );
 }

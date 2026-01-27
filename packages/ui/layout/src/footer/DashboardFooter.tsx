@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import { Button, Text } from '@piar/ui-components';
 import type { FooterConfig } from '../types';
 
 export interface DashboardFooterProps {
@@ -14,19 +16,29 @@ export function DashboardFooter({ config, locale: _locale = 'en' }: DashboardFoo
           <nav className="flex flex-wrap items-center gap-4">
             {config.sections.map((section) =>
               section.routes.map((route) => (
-                <a
+                <Button
                   key={route.href}
-                  href={route.href}
-                  className="text-sm text-gray-600 transition-colors hover:text-[var(--color-secondary)]"
+                  asChild
+                  variant="ghost"
+                  size="inline"
+                  className="px-0 text-gray-600 hover:bg-transparent hover:text-[var(--color-secondary)]"
                 >
-                  {route.label}
-                </a>
+                  <Link href={route.href}>
+                    <Text as="span" variant="bodySmall" className="text-gray-600">
+                      {route.label}
+                    </Text>
+                  </Link>
+                </Button>
               )),
             )}
           </nav>
 
           {/* Copyright */}
-          {config.copyright && <p className="text-sm text-gray-500">{config.copyright}</p>}
+          {config.copyright && (
+            <Text as="p" variant="bodySmall" className="text-gray-500">
+              {config.copyright}
+            </Text>
+          )}
         </div>
       </div>
     </footer>

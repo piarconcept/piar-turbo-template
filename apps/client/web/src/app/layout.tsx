@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
+import { getLocale } from 'next-intl/server';
 import { Montserrat } from 'next/font/google';
 import { Layout } from '@piar/layout';
 import './globals.css';
@@ -11,16 +12,8 @@ const montserrat = Montserrat({
   display: 'swap',
 });
 
-export const dynamicParams = false;
-
-export default async function LocaleLayout({
-  children,
-  params,
-}: {
-  children: ReactNode;
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const locale = await getLocale();
 
   return (
     <html lang={locale}>

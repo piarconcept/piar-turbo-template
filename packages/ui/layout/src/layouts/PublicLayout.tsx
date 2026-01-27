@@ -24,7 +24,7 @@ export function PublicLayout({
     <div className="flex min-h-screen flex-col">
       <HeaderDispatcher config={headerConfig} layoutType="public" locale={locale} />
 
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 pt-16">{children}</main>
 
       <FooterDispatcher config={footerConfig} layoutType="public" locale={locale} />
     </div>

@@ -19,6 +19,9 @@
     "test:watch": "vitest --watch",
     "test:coverage": "vitest --coverage"
   },
+  "dependencies": {
+    "@piar/messages": "workspace:*"
+  },
   "devDependencies": {
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.31.1",

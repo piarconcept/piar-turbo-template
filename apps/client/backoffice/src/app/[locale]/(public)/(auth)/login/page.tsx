@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
-import { AuthCard, AuthPage, Label, Input, Button, Checkbox } from '@piar/ui-components';
+import { AuthCard, AuthPage, Label, Input, Button, Checkbox, Text } from '@piar/ui-components';
 
 /**
  * Login Page
@@ -55,20 +55,30 @@ export default function LoginPage() {
         title={t('title')}
         footer={
           <>
-            {t('noAccount')}{' '}
-            <Link
-              href="/register"
-              className="font-medium text-[var(--color-primary)] hover:underline"
+            <Text as="span" variant="bodySmall">
+              {t('noAccount')}{' '}
+            </Text>
+            <Button
+              asChild
+              variant="ghost"
+              size="inline"
+              className="px-0 text-[var(--color-primary)] hover:bg-transparent hover:underline"
             >
-              {t('signUp')}
-            </Link>
+              <Link href="/register">
+                <Text as="span" variant="bodySmall" className="text-[var(--color-primary)]">
+                  {t('signUp')}
+                </Text>
+              </Link>
+            </Button>
           </>
         }
       >
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
-            <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
-              {error}
+            <div className="rounded-md border border-red-200 bg-red-50 p-3">
+              <Text as="p" variant="bodySmall" className="text-red-600">
+                {error}
+              </Text>
             </div>
           )}
 
@@ -108,12 +118,18 @@ export default function LoginPage() {
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
             />
-            <Link
-              href="/forgot-password"
-              className="text-sm text-[var(--color-primary)] hover:underline"
+            <Button
+              asChild
+              variant="ghost"
+              size="inline"
+              className="px-0 text-[var(--color-primary)] hover:bg-transparent hover:underline"
             >
-              {t('forgotPassword')}
-            </Link>
+              <Link href="/forgot-password">
+                <Text as="span" variant="bodySmall" className="text-[var(--color-primary)]">
+                  {t('forgotPassword')}
+                </Text>
+              </Link>
+            </Button>
           </div>
 
           <Button type="submit" variant="primary" className="w-full" disabled={isLoading}>

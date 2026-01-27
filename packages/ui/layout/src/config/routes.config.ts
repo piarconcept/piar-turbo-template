@@ -58,9 +58,9 @@ export const publicFooterConfig: FooterConfig = {
     {
       title: 'legal',
       routes: [
-        { label: 'privacy', href: '/privacy' },
-        { label: 'terms', href: '/terms' },
-        { label: 'cookies', href: '/cookies' },
+        { label: 'privacy', href: '/legal/privacy' },
+        { label: 'terms', href: '/legal/terms' },
+        { label: 'cookies', href: '/legal/cookies' },
       ],
     },
   ],
