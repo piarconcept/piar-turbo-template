@@ -18,11 +18,11 @@
   },
   "dependencies": {
     "@nestjs/common": "^11.0.16",
-    "@nestjs/config": "^3.3.0",
+    "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.16",
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/platform-express": "^11.0.16",
-    "@nestjs/swagger": "^8.0.7",
+    "@nestjs/swagger": "^11.2.5",
     "@piar/health-api": "workspace:*",
     "@piar/infra-backend-repositories": "workspace:*",
     "@piar/domain-models": "workspace:*",
@@ -37,16 +37,16 @@
     "@nestjs/schematics": "^11.0.9",
     "@nestjs/testing": "^11.0.16",
     "@types/express": "^5.0.0",
-    "@types/node": "^22.10.5",
-    "@typescript-eslint/eslint-plugin": "^8.53.0",
-    "@typescript-eslint/parser": "^8.53.0",
-    "@vitest/coverage-v8": "^2.1.9",
+    "@types/node": "^25.0.10",
+    "@typescript-eslint/eslint-plugin": "^8.54.0",
+    "@typescript-eslint/parser": "^8.54.0",
+    "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^9.39.2",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.18"
   },
   "engines": {
     "node": "20.x"
