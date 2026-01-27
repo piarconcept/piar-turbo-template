@@ -7,19 +7,19 @@ export enum FieldType {
   Number = 'number',
   Boolean = 'boolean',
   Date = 'date',
-  
+
   // Specialized types
   Email = 'email',
   Phone = 'phone',
   URL = 'url',
-  
+
   // Complex types
   Text = 'text', // Long text / textarea
   Select = 'select',
   MultiSelect = 'multi-select',
   Radio = 'radio',
   Checkbox = 'checkbox',
-  
+
   // Special types
   File = 'file',
   Image = 'image',
@@ -63,7 +63,14 @@ export interface UIConfig {
  */
 export interface VisibilityRule {
   field: string;
-  operator: 'equals' | 'not-equals' | 'contains' | 'greater-than' | 'less-than' | 'exists' | 'not-exists';
+  operator:
+    | 'equals'
+    | 'not-equals'
+    | 'contains'
+    | 'greater-than'
+    | 'less-than'
+    | 'exists'
+    | 'not-exists';
   value?: unknown;
 }
 
@@ -95,40 +102,44 @@ export interface FieldConfig<TEntity = unknown, TValue = unknown> {
   type: FieldType;
   label: string;
   description?: string;
-  
+
   // Behavior
   required?: boolean;
   editable?: boolean;
   visible?: boolean;
   disabled?: boolean;
-  
+
   // Default and initial values
   defaultValue?: TValue;
-  
+
   // Validation
   validation?: ValidationRule | ValidationRule[];
-  
+
   // UI Configuration
   ui?: UIConfig;
-  
+
   // Dependencies
-  dependsOn?: TEntity extends Record<string, unknown> ? (keyof TEntity)[] | FieldDependency<TEntity>[] : string[] | FieldDependency[];
-  
+  dependsOn?: TEntity extends Record<string, unknown>
+    ? (keyof TEntity)[] | FieldDependency<TEntity>[]
+    : string[] | FieldDependency[];
+
   // Visibility rules
   visibleWhen?: VisibilityRule | VisibilityRule[];
-  
+
   // Options (for select, radio, checkbox)
-  options?: FieldOption[] | ((context: Record<string, unknown>) => FieldOption[] | Promise<FieldOption[]>);
-  
+  options?:
+    | FieldOption[]
+    | ((context: Record<string, unknown>) => FieldOption[] | Promise<FieldOption[]>);
+
   // Permissions
   permissions?: {
     view?: string[];
     edit?: string[];
   };
-  
+
   // Metadata
   metadata?: Record<string, unknown>;
-  
+
   // Transform functions
   transform?: {
     input?: (value: TValue) => unknown; // Transform before saving

@@ -11,7 +11,7 @@ export type TranslationFunction = (key: string, defaultValue?: string) => string
  */
 export function formatErrorMessage(
   error: ApplicationError | Error,
-  t?: TranslationFunction
+  t?: TranslationFunction,
 ): string {
   if (error instanceof ApplicationError) {
     // Use i18nKey if available and translation function provided

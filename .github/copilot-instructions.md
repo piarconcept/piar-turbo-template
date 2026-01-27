@@ -7,6 +7,7 @@
 This is a **pnpm workspace monorepo** using **Turbo** for build orchestration. Two key architectural patterns define this codebase:
 
 ### 1. Backend for Frontend (BFF) Pattern
+
 - **Two specialized NestJS APIs**, not one generic backend
 - `@piar/web-bff` (port 5010): Serves public website `@piar/web`
 - `@piar/backoffice-bff` (port 5050): Serves admin panel `@piar/backoffice`
@@ -14,7 +15,9 @@ This is a **pnpm workspace monorepo** using **Turbo** for build orchestration. T
 - See [docs/features/bff-architecture.md](../docs/features/bff-architecture.md) for full rationale
 
 ### 2. Three-Layer Clean Architecture for Features
+
 Every feature splits into three packages under `packages/features/{feature}/`:
+
 ```
 {feature}/
 ├── configuration/  # Domain layer: ports (interfaces), types, DTOs - zero dependencies
@@ -27,6 +30,7 @@ Every feature splits into three packages under `packages/features/{feature}/`:
 ## Critical Workspace Rules
 
 ⚠️ **NEVER violate these** (see [docs/features/repository-configuration.md](../docs/features/repository-configuration.md)):
+
 1. **Single pnpm-workspace.yaml** at root only - never create workspace files in subdirectories
 2. **All packages use `@piar/` scope** - e.g., `@piar/backoffice`, `@piar/web-bff`
 3. **Turbo orchestrates builds** - always use workspace scripts (`pnpm dev`, `pnpm build`), never bypass
@@ -36,6 +40,7 @@ Every feature splits into three packages under `packages/features/{feature}/`:
 ## Developer Workflows
 
 ### Development
+
 ```bash
 # Start specific apps (most common)
 pnpm dev:web              # Web client + BFF
@@ -49,6 +54,7 @@ pnpm --filter @piar/web-bff dev
 ```
 
 ### Building & Testing
+
 ```bash
 pnpm build                # Build all via Turbo (respects dependencies)
 pnpm typecheck            # TypeScript validation across workspace
@@ -58,6 +64,7 @@ pnpm verify               # Full CI check: install + build + typecheck + test
 ```
 
 ### Key Turbo Configuration ([turbo.json](../turbo.json))
+
 - `dev`: No cache, persistent (servers)
 - `build`: Cached, depends on `^build` (upstream packages first)
 - `test`: No cache, depends on `^build`, outputs to `coverage/`
@@ -71,6 +78,7 @@ pnpm verify               # Full CI check: install + build + typecheck + test
 - **Example**: [packages/domain/models/tests/](../packages/domain/models/tests/) shows entity testing patterns
 
 **Run package tests**:
+
 ```bash
 pnpm --filter @piar/domain-models test        # Single package
 pnpm test:coverage                            # All packages with aggregated coverage
@@ -101,6 +109,7 @@ See [docs/features/testing-guide.md](../docs/features/testing-guide.md) for comp
 ## Creating New Packages
 
 **Always follow the 14-step process** in [docs/features/creating-packages.md](../docs/features/creating-packages.md):
+
 - Use `@piar/` scope in package.json
 - Include `build`, `typecheck`, `lint`, `test`, `test:coverage` scripts
 - Add `vitest.config.ts` for testable packages
@@ -132,6 +141,7 @@ See [docs/features/testing-guide.md](../docs/features/testing-guide.md) for comp
 - See [docs/features/tailwind-v4-implementation.md](../docs/features/tailwind-v4-implementation.md)
 
 ### Usage Pattern:
+
 ```tsx
 // ❌ Don't use inline styles
 <div style={{ display: 'flex', padding: '1rem' }}>
@@ -146,6 +156,7 @@ See [docs/features/testing-guide.md](../docs/features/testing-guide.md) for comp
 ## Documentation Requirements
 
 ⚠️ **ALWAYS update documentation** ([docs/AI-context.md](../docs/AI-context.md)):
+
 1. **Before changes**: Check existing docs in `docs/features/` for patterns/conventions
 2. **After changes**: Update or create docs reflecting what was done
 3. **New features**: Use [docs/features/TEMPLATE.md](../docs/features/TEMPLATE.md), update index in AI-context.md

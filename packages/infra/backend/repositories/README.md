@@ -18,21 +18,26 @@ src/
 ## Pattern Explanation
 
 ### 1. Schema (`schema.ts`)
+
 Data source definition. Currently exports MockData, but can be replaced with:
+
 - Prisma schema
-- TypeORM entities  
+- TypeORM entities
 - MongoDB models
 - Raw SQL queries
 
 ### 2. Repository (`repository.ts`)
+
 Implements the domain port interface. Handles data persistence and retrieval.
 All methods return **domain entities** (via factory).
 
 ### 3. Factory (`factory.ts`)
+
 Converts raw data → domain entities.
 Ensures data integrity and validation before creating entities.
 
 ### 4. Provider (`provider.ts`)
+
 NestJS module that provides the repository as an injectable service.
 Configures dependency injection.
 
@@ -59,7 +64,7 @@ import { AccountPort } from '@piar/domain-models';
 export class LoginUseCase {
   constructor(
     @Inject('AccountPort')
-    private readonly accountRepository: AccountPort
+    private readonly accountRepository: AccountPort,
   ) {}
 
   async execute(email: string, password: string) {

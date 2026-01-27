@@ -11,7 +11,7 @@ export class HttpHealthRepository implements IHealthRepository {
   async getHealth(serviceUrl: string): Promise<HealthStatus> {
     try {
       const response = await fetch(serviceUrl);
-      
+
       if (!response.ok) {
         return {
           status: 'error',
@@ -27,11 +27,13 @@ export class HttpHealthRepository implements IHealthRepository {
         status: 'error',
         timestamp: new Date().toISOString(),
         service: serviceUrl,
-        checks: [{
-          name: 'connection',
-          status: 'error',
-          message: error instanceof Error ? error.message : 'Unknown error',
-        }],
+        checks: [
+          {
+            name: 'connection',
+            status: 'error',
+            message: error instanceof Error ? error.message : 'Unknown error',
+          },
+        ],
       };
     }
   }
@@ -62,18 +64,24 @@ export class HttpHealthRepository implements IHealthRepository {
       return data as HealthStatus;
     } catch (error) {
       clearTimeout(timeoutId);
-      
+
       const isTimeout = error instanceof Error && error.name === 'AbortError';
-      
+
       return {
         status: 'error',
         timestamp: new Date().toISOString(),
         service: serviceUrl,
-        checks: [{
-          name: 'connection',
-          status: 'error',
-          message: isTimeout ? 'Request timeout' : (error instanceof Error ? error.message : 'Unknown error'),
-        }],
+        checks: [
+          {
+            name: 'connection',
+            status: 'error',
+            message: isTimeout
+              ? 'Request timeout'
+              : error instanceof Error
+                ? error.message
+                : 'Unknown error',
+          },
+        ],
       };
     }
   }

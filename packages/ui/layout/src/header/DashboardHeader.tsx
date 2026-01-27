@@ -54,12 +54,7 @@ export function DashboardHeader({ config, locale: _locale = 'en' }: DashboardHea
               className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:bg-gray-100"
               aria-label="Notifications"
             >
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -79,12 +74,7 @@ export function DashboardHeader({ config, locale: _locale = 'en' }: DashboardHea
               aria-label="User menu"
             >
               <div className="h-8 w-8 rounded-full bg-[var(--color-primary)]" />
-              <svg
-                className="h-4 w-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"

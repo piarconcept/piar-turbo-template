@@ -1,9 +1,11 @@
 # Backoffice BFF Application
 
 ## Purpose
+
 Backend for Frontend (BFF) API built with NestJS for the backoffice application. Provides a tailored API layer optimized for admin and management operations.
 
 ## Status
+
 - [x] Completed - Initial NestJS setup
 
 ## Overview
@@ -19,6 +21,7 @@ The Backoffice BFF (Backend for Frontend) is a NestJS application that serves as
 ## Technical Details
 
 ### Technology Stack
+
 - **Framework**: NestJS 11.x
 - **Runtime**: Node.js 20.x
 - **Language**: TypeScript 5.9.x
@@ -26,6 +29,7 @@ The Backoffice BFF (Backend for Frontend) is a NestJS application that serves as
 - **Build**: NestJS CLI with TypeScript compiler
 
 ### Package Information
+
 - **Name**: `@piar/backoffice-bff`
 - **Version**: 0.1.0
 - **Type**: Private application
@@ -55,15 +59,18 @@ apps/api/backoffice-bff/
 ### Key Features
 
 #### 1. Bootstrap Configuration
+
 - CORS enabled for backoffice client
 - Configurable port (default: 3002)
 - Environment-based configuration
 
 #### 2. API Endpoints
+
 - `GET /`: Welcome message
 - `GET /health`: Health check with timestamp and status
 
 #### 3. Environment Variables
+
 ```env
 PORT=5050
 NODE_ENV=development
@@ -96,6 +103,7 @@ pnpm --filter @piar/backoffice-bff test:coverage
 ### Dependencies
 
 **Production**:
+
 - `@nestjs/common`: ^11.0.16
 - `@nestjs/core`: ^11.0.16
 - `@nestjs/platform-express`: ^11.0.16
@@ -103,6 +111,7 @@ pnpm --filter @piar/backoffice-bff test:coverage
 - `rxjs`: ^7.8.1
 
 **Development**:
+
 - `@nestjs/cli`: ^11.0.16
 - `@nestjs/schematics`: ^11.0.9
 - `@nestjs/testing`: ^11.0.16
@@ -112,6 +121,7 @@ pnpm --filter @piar/backoffice-bff test:coverage
 ## Configuration Details
 
 ### TypeScript Configuration
+
 - **Target**: ES2021
 - **Module**: CommonJS (NestJS standard)
 - **Decorators**: Enabled for NestJS
@@ -119,6 +129,7 @@ pnpm --filter @piar/backoffice-bff test:coverage
 - **Path Aliases**: `@/*` maps to `src/*`
 
 ### ESLint Configuration
+
 - Extends root configuration
 - NestJS-specific rules:
   - Interface name prefix: off
@@ -127,6 +138,7 @@ pnpm --filter @piar/backoffice-bff test:coverage
   - No explicit any: warn
 
 ### Vitest Configuration
+
 - **Environment**: Node
 - **Globals**: Enabled
 - **Coverage**: v8 provider with HTML/JSON/text reports
@@ -135,13 +147,16 @@ pnpm --filter @piar/backoffice-bff test:coverage
 ## Integration
 
 ### Monorepo Integration
+
 - Part of pnpm workspace at root
 - Uses Turbo for build orchestration
 - Follows repository naming conventions (`@piar/` scope)
 - Shares common configurations (ESLint, TypeScript)
 
 ### Client Integration
+
 The BFF is designed to work with:
+
 - `@piar/backoffice` - Backoffice client application
 - CORS configured for local development
 - Environment-based client URL configuration
@@ -149,6 +164,7 @@ The BFF is designed to work with:
 ## Usage Examples
 
 ### Starting the Server
+
 ```bash
 # From repository root
 pnpm --filter @piar/backoffice-bff dev
@@ -157,6 +173,7 @@ pnpm --filter @piar/backoffice-bff dev
 ```
 
 ### Testing the API
+
 ```bash
 # Health check
 curl http://localhost:3002/health
@@ -170,6 +187,7 @@ curl http://localhost:3002/health
 ```
 
 ### Adding New Endpoints
+
 1. Create a new module: `nest g module <name>`
 2. Create a controller: `nest g controller <name>`
 3. Create a service: `nest g service <name>`
@@ -178,6 +196,7 @@ curl http://localhost:3002/health
 ## Best Practices
 
 ### Module Organization
+
 - Keep modules focused and cohesive
 - Use dependency injection for services
 - Implement proper error handling
@@ -185,12 +204,14 @@ curl http://localhost:3002/health
 - Use guards for authentication/authorization
 
 ### Testing Strategy
+
 - Unit tests for services
 - Integration tests for controllers
 - E2E tests for critical admin flows
 - Maintain >80% coverage
 
 ### Security Considerations
+
 - Implement authentication middleware
 - Use role-based access control (RBAC)
 - Validate and sanitize all inputs
@@ -198,6 +219,7 @@ curl http://localhost:3002/health
 - Use HTTPS in production
 
 ### Error Handling
+
 - Use NestJS exception filters
 - Provide meaningful error messages
 - Log errors appropriately
@@ -206,6 +228,7 @@ curl http://localhost:3002/health
 ## Future Enhancements
 
 ### Planned Features
+
 - [ ] Authentication & authorization (JWT)
 - [ ] Role-based access control (RBAC)
 - [ ] Audit logging for admin actions
@@ -218,6 +241,7 @@ curl http://localhost:3002/health
 - [ ] System configuration endpoints
 
 ### Performance Optimizations
+
 - [ ] Response caching
 - [ ] Connection pooling
 - [ ] Compression middleware
@@ -234,6 +258,7 @@ While both BFFs share similar architecture, the Backoffice BFF has specific cons
 5. **Security**: Enhanced security measures for privileged operations
 
 ## Related Documentation
+
 - [Web BFF Application](web-bff-application.md)
 - [Repository Configuration](repository-configuration.md)
 - [Creating Packages](creating-packages.md)
@@ -241,6 +266,7 @@ While both BFFs share similar architecture, the Backoffice BFF has specific cons
 - [ESLint Configuration](eslint-configuration.md)
 
 ## Notes
+
 - This application follows NestJS best practices and conventions
 - Uses CommonJS modules (NestJS standard) unlike other packages that use ESM
 - Decorators and metadata are essential for NestJS dependency injection
@@ -248,4 +274,5 @@ While both BFFs share similar architecture, the Backoffice BFF has specific cons
 - Security is paramount for backoffice operations - implement auth/authz early
 
 ## Last Updated
+
 16 January 2026 - Initial NestJS setup for backoffice-bff application

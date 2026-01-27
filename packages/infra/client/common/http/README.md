@@ -28,6 +28,7 @@ await client.delete('/users/123');
 ## Error Handling
 
 All errors are structured with:
+
 - `i18n`: Translation key
 - `message`: Error message
 - `code`: Optional error code

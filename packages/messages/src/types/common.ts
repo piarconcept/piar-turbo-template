@@ -11,7 +11,7 @@ export interface CommonMessages {
     login: string;
     logout: string;
   };
-  
+
   // Actions
   actions: {
     save: string;
@@ -26,7 +26,7 @@ export interface CommonMessages {
     submit: string;
     search: string;
   };
-  
+
   // Status
   status: {
     loading: string;
@@ -35,7 +35,7 @@ export interface CommonMessages {
     warning: string;
     info: string;
   };
-  
+
   // General
   general: {
     yes: string;

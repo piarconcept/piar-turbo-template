@@ -24,7 +24,7 @@ describe('GetDetailedHealthUseCase', () => {
     const useCase = new GetDetailedHealthUseCaseExecuter();
     const result = await useCase.execute();
 
-    const databaseCheck = result.checks?.find(check => check.name === 'database');
+    const databaseCheck = result.checks?.find((check) => check.name === 'database');
     expect(databaseCheck).toBeDefined();
     expect(databaseCheck?.status).toBe('ok');
   });
@@ -33,7 +33,7 @@ describe('GetDetailedHealthUseCase', () => {
     const useCase = new GetDetailedHealthUseCaseExecuter();
     const result = await useCase.execute();
 
-    const cacheCheck = result.checks?.find(check => check.name === 'cache');
+    const cacheCheck = result.checks?.find((check) => check.name === 'cache');
     expect(cacheCheck).toBeDefined();
     expect(cacheCheck?.status).toBe('ok');
   });
@@ -57,7 +57,7 @@ describe('GetDetailedHealthUseCase', () => {
     expect(result).toHaveProperty('checks');
     expect(['ok', 'degraded', 'error']).toContain(result.status);
 
-    result.checks?.forEach(check => {
+    result.checks?.forEach((check) => {
       expect(check).toHaveProperty('name');
       expect(check).toHaveProperty('status');
       expect(['ok', 'error']).toContain(check.status);

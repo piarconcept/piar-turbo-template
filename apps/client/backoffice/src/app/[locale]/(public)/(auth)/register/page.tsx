@@ -16,10 +16,7 @@ export default function RegisterPage() {
         footer={
           <>
             {t('haveAccount')}{' '}
-            <Link
-              href="/login"
-              className="font-medium text-[var(--color-primary)] hover:underline"
-            >
+            <Link href="/login" className="font-medium text-[var(--color-primary)] hover:underline">
               {t('signIn')}
             </Link>
           </>
@@ -27,47 +24,31 @@ export default function RegisterPage() {
       >
         <form className="space-y-4">
           <div>
-            <Label htmlFor="email" required>{t('email')}</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="you@example.com"
-              required
-            />
+            <Label htmlFor="email" required>
+              {t('email')}
+            </Label>
+            <Input id="email" type="email" placeholder="you@example.com" required />
           </div>
 
           <div>
-            <Label htmlFor="password" required>{t('password')}</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              required
-            />
+            <Label htmlFor="password" required>
+              {t('password')}
+            </Label>
+            <Input id="password" type="password" placeholder="••••••••" required />
           </div>
 
           <div>
-            <Label htmlFor="confirmPassword" required>{t('confirmPassword')}</Label>
-            <Input
-              id="confirmPassword"
-              type="password"
-              placeholder="••••••••"
-              required
-            />
+            <Label htmlFor="confirmPassword" required>
+              {t('confirmPassword')}
+            </Label>
+            <Input id="confirmPassword" type="password" placeholder="••••••••" required />
           </div>
 
           <div className="flex items-start">
-            <Checkbox
-              id="terms"
-              required
-              wrapperClassName="items-start"
-            />
+            <Checkbox id="terms" required wrapperClassName="items-start" />
             <Label htmlFor="terms" className="text-sm text-gray-600 font-normal ml-2">
               {t('acceptTerms')}{' '}
-              <Link
-                href="/terms"
-                className="text-[var(--color-primary)] hover:underline"
-              >
+              <Link href="/terms" className="text-[var(--color-primary)] hover:underline">
                 {t('termsAndConditions')}
               </Link>
             </Label>

@@ -60,12 +60,12 @@ console.log(isHealthy); // true or false
 const healthController = HealthModule.create();
 
 const services = [
-  'http://localhost:5010',  // web-bff
-  'http://localhost:5050',  // backoffice-bff
+  'http://localhost:5010', // web-bff
+  'http://localhost:5050', // backoffice-bff
 ];
 
 const statuses = await healthController.getMultipleHealth(services);
-statuses.forEach(status => {
+statuses.forEach((status) => {
   console.log(`${status.service}: ${status.status}`);
 });
 ```
@@ -83,7 +83,7 @@ const result = await healthController.getAggregatedHealth([
 console.log(`Overall: ${result.overall}`);
 // Overall: ok | degraded | error
 
-result.services.forEach(service => {
+result.services.forEach((service) => {
   console.log(`- ${service.service}: ${service.status}`);
 });
 ```
@@ -122,7 +122,7 @@ class CustomHealthRepository implements IHealthRepository {
   async getHealth(serviceUrl: string) {
     // Custom implementation
   }
-  
+
   async getHealthWithTimeout(serviceUrl: string, timeout: number) {
     // Custom implementation
   }
@@ -184,10 +184,7 @@ import { HttpHealthRepository } from '@piar/health-api';
 const repository = new HttpHealthRepository();
 const useCase = new GetMultipleHealthStatusUseCase(repository);
 
-const statuses = await useCase.execute([
-  'http://localhost:5010',
-  'http://localhost:5050',
-]);
+const statuses = await useCase.execute(['http://localhost:5010', 'http://localhost:5050']);
 ```
 
 ### GetHealthStatusWithRetryUseCase
@@ -201,8 +198,8 @@ import { HttpHealthRepository } from '@piar/health-api';
 const repository = new HttpHealthRepository();
 const useCase = new GetHealthStatusWithRetryUseCase(
   repository,
-  3,    // max retries
-  1000  // retry delay in ms
+  3, // max retries
+  1000, // retry delay in ms
 );
 
 const status = await useCase.execute('http://localhost:5010');
@@ -285,7 +282,7 @@ export default function HealthPage() {
 
   useEffect(() => {
     const controller = HealthModule.getInstance();
-    
+
     controller.getMultipleHealth([
       'http://localhost:5010',
       'http://localhost:5050',

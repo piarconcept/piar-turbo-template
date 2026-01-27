@@ -34,22 +34,24 @@ export function PublicFooter({ config, locale: _locale = 'en' }: PublicFooterPro
         {/* Social Links */}
         {config.socialLinks && config.socialLinks.length > 0 && (
           <div className="mt-12 flex items-center justify-center gap-6">
-            {config.socialLinks.map((social: { label: string; href: string; icon?: React.ReactNode }) => (
-              <a
-                key={social.href}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-600 transition-colors hover:text-[var(--color-secondary)]"
-                aria-label={social.label}
-              >
-                {social.icon || (
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10" />
-                  </svg>
-                )}
-              </a>
-            ))}
+            {config.socialLinks.map(
+              (social: { label: string; href: string; icon?: React.ReactNode }) => (
+                <a
+                  key={social.href}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 transition-colors hover:text-[var(--color-secondary)]"
+                  aria-label={social.label}
+                >
+                  {social.icon || (
+                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10" />
+                    </svg>
+                  )}
+                </a>
+              ),
+            )}
           </div>
         )}
 

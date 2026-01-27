@@ -20,7 +20,7 @@ import type {
 
 /**
  * SchemaBuilder - Constructs Schema.org JSON-LD structured data
- * 
+ *
  * @example
  * ```typescript
  * const schema = SchemaBuilder.organization({

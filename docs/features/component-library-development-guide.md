@@ -1,9 +1,11 @@
 # Component Library Development Guide
 
 ## Purpose
+
 Comprehensive guide for developing pages and components following Atomic Design principles and building a consistent, scalable design system for the PIAR project.
 
 ## Status
+
 - [x] Completed - Full component development workflow documented
 
 ## Philosophy
@@ -11,6 +13,7 @@ Comprehensive guide for developing pages and components following Atomic Design 
 **Grow the library organically**: Don't create components you don't need yet. When building a new page and you find yourself repeating code, that's when you extract it into a component.
 
 **Benefits**:
+
 1. ✅ **Consistency**: All pages use the same components = same look and feel
 2. ✅ **Maintainability**: Change once, update everywhere
 3. ✅ **Speed**: Build new pages faster by composing existing components
@@ -27,11 +30,13 @@ Comprehensive guide for developing pages and components following Atomic Design 
 ```
 
 ### 🔹 Atoms (Level 1)
+
 **What**: Smallest, indivisible UI elements
 
 **When to create**: When you need a basic, reusable element
 
 **Examples**:
+
 - `Button` - All button variations
 - `Input` - All input types
 - `Checkbox` - Checkbox with optional label
@@ -39,6 +44,7 @@ Comprehensive guide for developing pages and components following Atomic Design 
 - `Text` - Typography (h1-h6, body, label, etc.)
 
 **Characteristics**:
+
 - No business logic
 - Pure presentation
 - CVA variants for different styles
@@ -46,34 +52,40 @@ Comprehensive guide for developing pages and components following Atomic Design 
 - Exported with type
 
 ### 🔸 Molecules (Level 2)
+
 **What**: Simple combinations of atoms that work together
 
 **When to create**: When 2-3 atoms are always used together
 
 **Examples**:
+
 - `AuthCard` - Icon + Title + Description + Children + Footer
 - `FormField` - Label + Input + Error message
 - `SearchBar` - Input + Button
 - `StatCard` - Icon + Title + Value + Trend
 
 **Characteristics**:
+
 - Compose atoms
 - Handle simple interactions
 - Props control atom behavior
 - Still presentation-focused
 
 ### 🔶 Organisms (Level 3)
+
 **What**: Complex components with complete functionality
 
 **When to create**: When molecules + atoms create a complete section
 
 **Examples**:
+
 - `AuthPage` - Full authentication page layout
 - `DataTable` - Complete table with sorting, pagination
 - `NavigationBar` - Complete navigation with menu, user dropdown
 - `DashboardStats` - Grid of stat cards with data
 
 **Characteristics**:
+
 - Can contain business logic
 - Manage complex state
 - Compose molecules and atoms
@@ -84,12 +96,14 @@ Comprehensive guide for developing pages and components following Atomic Design 
 ### Step 1: Identify the Need
 
 ❌ **Don't**: Create components speculatively
+
 ```tsx
 // Don't create FormField if you only have one form
 <FormField label="Email" />
 ```
 
 ✅ **Do**: Create when you see duplication
+
 ```tsx
 // After building 3 forms with the same structure:
 <div>
@@ -104,11 +118,13 @@ Comprehensive guide for developing pages and components following Atomic Design 
 ### Step 2: Choose the Right Level
 
 **Ask yourself**:
+
 1. Is it a single element? → **Atom**
 2. Does it combine 2-3 atoms? → **Molecule**
 3. Does it compose multiple molecules/atoms with logic? → **Organism**
 
 **Example: Search Feature**
+
 ```
 SearchBox (Organism)
   ├─ SearchInput (Molecule)
@@ -121,6 +137,7 @@ SearchBox (Organism)
 ### Step 3: Create the Component File
 
 **Location pattern**:
+
 ```
 packages/ui/components/src/
   ├── atoms/{ComponentName}.tsx
@@ -129,40 +146,42 @@ packages/ui/components/src/
 ```
 
 **File template**:
-```tsx
-import React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
-import { clsx } from "clsx";
+
+````tsx
+import React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { clsx } from 'clsx';
 
 /**
  * Component Variants (if using CVA)
  */
 const componentVariants = cva(
-  "base-classes-here", // Always applied
+  'base-classes-here', // Always applied
   {
     variants: {
       variant: {
-        primary: "variant-specific-classes",
-        secondary: "variant-specific-classes",
+        primary: 'variant-specific-classes',
+        secondary: 'variant-specific-classes',
       },
       size: {
-        sm: "size-specific-classes",
-        md: "size-specific-classes",
-        lg: "size-specific-classes",
+        sm: 'size-specific-classes',
+        md: 'size-specific-classes',
+        lg: 'size-specific-classes',
       },
     },
     defaultVariants: {
-      variant: "primary",
-      size: "md",
+      variant: 'primary',
+      size: 'md',
     },
-  }
+  },
 );
 
 /**
  * Component Props
  */
 export interface ComponentNameProps
-  extends React.HTMLAttributes<HTMLDivElement>, // Or appropriate HTML element
+  extends
+    React.HTMLAttributes<HTMLDivElement>, // Or appropriate HTML element
     VariantProps<typeof componentVariants> {
   /**
    * Prop description
@@ -173,9 +192,9 @@ export interface ComponentNameProps
 
 /**
  * ComponentName Component
- * 
+ *
  * Brief description of what it does.
- * 
+ *
  * @example
  * ```tsx
  * <ComponentName variant="primary" size="lg">
@@ -188,22 +207,19 @@ export const ComponentName = React.forwardRef<
   ComponentNameProps
 >(({ className, variant, size, children, ...props }, ref) => {
   return (
-    <div
-      ref={ref}
-      className={clsx(componentVariants({ variant, size }), className)}
-      {...props}
-    >
+    <div ref={ref} className={clsx(componentVariants({ variant, size }), className)} {...props}>
       {children}
     </div>
   );
 });
 
-ComponentName.displayName = "ComponentName";
-```
+ComponentName.displayName = 'ComponentName';
+````
 
 ### Step 4: Export the Component
 
 **Update the index file**:
+
 ```tsx
 // packages/ui/components/src/atoms/index.ts
 export { ComponentName, type ComponentNameProps } from './ComponentName';
@@ -231,14 +247,14 @@ export default function MyPage() {
 ### Example 1: Button Atom
 
 **Problem**: Multiple button styles repeated across pages
+
 ```tsx
 // ❌ Before - repeated in every page
-<button className="rounded-md bg-[var(--color-secondary)] px-4 py-2 ...">
-  Submit
-</button>
+<button className="rounded-md bg-[var(--color-secondary)] px-4 py-2 ...">Submit</button>
 ```
 
 **Solution**: Button atom with variants
+
 ```tsx
 // ✅ After - consistent everywhere
 <Button variant="primary" size="md">Submit</Button>
@@ -247,6 +263,7 @@ export default function MyPage() {
 ```
 
 **Implementation**: `packages/ui/components/src/atoms/Button.tsx`
+
 - 6 variants: primary, secondary, outline, ghost, danger, success
 - 5 sizes: xs, sm, md, lg, xl
 - CVA for type-safe variants
@@ -255,6 +272,7 @@ export default function MyPage() {
 ### Example 2: AuthCard Molecule
 
 **Problem**: Auth pages had identical card structure (85-120 lines)
+
 ```tsx
 // ❌ Before - repeated in login, register, forgot-password, unauthorized
 <div className="flex min-h-screen items-center justify-center bg-gray-50">
@@ -269,6 +287,7 @@ export default function MyPage() {
 ```
 
 **Solution**: AuthCard molecule
+
 ```tsx
 // ✅ After - used in all 4 auth pages
 <AuthCard
@@ -286,6 +305,7 @@ export default function MyPage() {
 ### Example 3: AuthPage Organism
 
 **Problem**: Every auth page had the same full-page container
+
 ```tsx
 // ❌ Before - repeated wrapper
 <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -294,6 +314,7 @@ export default function MyPage() {
 ```
 
 **Solution**: AuthPage organism
+
 ```tsx
 // ✅ After - complete page encapsulation
 <AuthPage>
@@ -308,17 +329,23 @@ export default function MyPage() {
 ### 1. Start with Existing Components
 
 **Always check** what's available first:
+
 ```tsx
-import { 
-  AuthPage, AuthCard,        // Organisms
-  Button, Input, Label,      // Atoms
-  Checkbox, Text 
+import {
+  AuthPage,
+  AuthCard, // Organisms
+  Button,
+  Input,
+  Label, // Atoms
+  Checkbox,
+  Text,
 } from '@piar/ui-components';
 ```
 
 ### 2. Build the Page Structure
 
 **Pattern for auth pages**:
+
 ```tsx
 export default function MyAuthPage() {
   const t = useTranslations('auth.mypage');
@@ -331,9 +358,7 @@ export default function MyAuthPage() {
         icon={<Icon />}
         footer={<Links />}
       >
-        <form className="space-y-4">
-          {/* Use atoms here */}
-        </form>
+        <form className="space-y-4">{/* Use atoms here */}</form>
       </AuthCard>
     </AuthPage>
   );
@@ -341,12 +366,13 @@ export default function MyAuthPage() {
 ```
 
 **Pattern for dashboard pages**:
+
 ```tsx
 export default function DashboardPage() {
   return (
     <div className="container mx-auto p-6">
       <Text variant="h1">Dashboard</Text>
-      
+
       {/* Use components */}
       <StatsGrid data={stats} />
       <DataTable data={users} />
@@ -358,6 +384,7 @@ export default function DashboardPage() {
 ### 3. Identify Repeated Patterns
 
 **If you find yourself copying**:
+
 - The same JSX structure
 - Similar styling combinations
 - The same component composition
@@ -369,6 +396,7 @@ export default function DashboardPage() {
 **Example progression**:
 
 **Stage 1: Raw HTML** (First page)
+
 ```tsx
 <div>
   <label htmlFor="email">Email</label>
@@ -377,6 +405,7 @@ export default function DashboardPage() {
 ```
 
 **Stage 2: Atoms** (After 2-3 forms)
+
 ```tsx
 <div>
   <Label htmlFor="email">Email</Label>
@@ -385,13 +414,9 @@ export default function DashboardPage() {
 ```
 
 **Stage 3: Molecule** (After 5+ forms)
+
 ```tsx
-<FormField
-  id="email"
-  label="Email"
-  type="email"
-  error={errors.email}
-/>
+<FormField id="email" label="Email" type="email" error={errors.email} />
 ```
 
 ## Component Design Best Practices
@@ -401,63 +426,63 @@ export default function DashboardPage() {
 **Why**: Type-safe, maintainable, consistent
 
 ```tsx
-const buttonVariants = cva(
-  "base-classes",
-  {
-    variants: {
-      variant: {
-        primary: "bg-primary text-white",
-        secondary: "bg-secondary text-white",
-      },
-      size: {
-        sm: "px-2 py-1 text-sm",
-        md: "px-4 py-2",
-        lg: "px-6 py-3 text-lg",
-      },
+const buttonVariants = cva('base-classes', {
+  variants: {
+    variant: {
+      primary: 'bg-primary text-white',
+      secondary: 'bg-secondary text-white',
     },
-    defaultVariants: {
-      variant: "primary",
-      size: "md",
+    size: {
+      sm: 'px-2 py-1 text-sm',
+      md: 'px-4 py-2',
+      lg: 'px-6 py-3 text-lg',
     },
-  }
-);
+  },
+  defaultVariants: {
+    variant: 'primary',
+    size: 'md',
+  },
+});
 ```
 
 ### 2. Use Design Tokens
 
 **Always use CSS variables** from `@piar/ui-config`:
+
 ```tsx
 // ✅ Good - uses design tokens
-className="bg-[var(--color-primary)] text-[var(--color-tertiary)]"
+className = 'bg-[var(--color-primary)] text-[var(--color-tertiary)]';
 
 // ❌ Bad - hardcoded colors
-className="bg-red-500 text-white"
+className = 'bg-red-500 text-white';
 ```
 
 **Available tokens**:
+
 ```css
---color-primary: #b22222 (red)
---color-secondary: #000000 (black)
---color-tertiary: #ffffff (white)
---font-family-sans: Montserrat, sans-serif
+--color-primary:
+  #b22222 (red) --color-secondary: #000000 (black) --color-tertiary: #ffffff (white)
+    --font-family-sans: Montserrat,
+  sans-serif;
 ```
 
 ### 3. Provide Sensible Defaults
 
 ```tsx
 export interface ButtonProps {
-  variant?: "primary" | "secondary"; // ← Optional with default
-  size?: "sm" | "md" | "lg";         // ← Optional with default
-  children: React.ReactNode;         // ← Required
+  variant?: 'primary' | 'secondary'; // ← Optional with default
+  size?: 'sm' | 'md' | 'lg'; // ← Optional with default
+  children: React.ReactNode; // ← Required
 }
 
 // Usage is simple
-<Button>Click me</Button> // Works! Uses defaults
+<Button>Click me</Button>; // Works! Uses defaults
 ```
 
 ### 4. Support className Override
 
 **Always allow custom styling**:
+
 ```tsx
 export const Component = ({ className, ...props }) => {
   return (
@@ -468,31 +493,29 @@ export const Component = ({ className, ...props }) => {
 };
 
 // Usage
-<Component className="mt-4 shadow-lg" />
+<Component className="mt-4 shadow-lg" />;
 ```
 
 ### 5. Use forwardRef for Form Elements
 
 ```tsx
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  (props, ref) => {
-    return <input ref={ref} {...props} />;
-  }
-);
+export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+  return <input ref={ref} {...props} />;
+});
 
 // Enables:
 const inputRef = useRef<HTMLInputElement>(null);
-<Input ref={inputRef} />
+<Input ref={inputRef} />;
 ```
 
 ### 6. Document with JSDoc
 
-```tsx
+````tsx
 /**
  * Button Component
- * 
+ *
  * A button with multiple variants and sizes following the design system.
- * 
+ *
  * @example
  * ```tsx
  * <Button variant="primary" size="lg">
@@ -501,7 +524,7 @@ const inputRef = useRef<HTMLInputElement>(null);
  * ```
  */
 export const Button = ...
-```
+````
 
 ### 7. Export Types
 
@@ -522,12 +545,14 @@ import type { ButtonProps } from '@piar/ui-components';
 **Location**: `packages/ui/components/tests/`
 
 **Pattern**: Mirror the src/ structure
+
 ```
 src/atoms/Button.tsx
 tests/Button.test.tsx
 ```
 
 **Example test**:
+
 ```tsx
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
@@ -537,16 +562,14 @@ describe('Button', () => {
   it('renders with primary variant by default', () => {
     const { getByText } = render(<Button>Click me</Button>);
     const button = getByText('Click me');
-    
+
     expect(button).toBeInTheDocument();
     expect(button).toHaveClass('bg-[var(--color-primary)]');
   });
 
   it('applies custom className', () => {
-    const { getByText } = render(
-      <Button className="custom-class">Click me</Button>
-    );
-    
+    const { getByText } = render(<Button className="custom-class">Click me</Button>);
+
     expect(getByText('Click me')).toHaveClass('custom-class');
   });
 });
@@ -557,21 +580,24 @@ describe('Button', () => {
 **After creating a component**, update:
 
 ### 1. Component README
+
 `packages/ui/components/README.md`
 
 ```markdown
 ### 🔹 Atoms
+
 - `Button` - Buttons with variants ✅
-- `NewComponent` - Description ✅  ← Add here
+- `NewComponent` - Description ✅ ← Add here
 ```
 
 Add usage example:
+
 ```markdown
 ### NewComponent
 
 \`\`\`tsx
 <NewComponent variant="primary" size="lg">
-  Content
+Content
 </NewComponent>
 \`\`\`
 ```
@@ -587,6 +613,7 @@ Only update this guide if you're introducing a **new pattern** or **important de
 **Need**: Registration form with email, password, confirm password
 
 **Steps**:
+
 1. ✅ Use existing: `AuthPage`, `AuthCard`, `Label`, `Input`, `Button`
 2. ✅ Build the form
 3. ✅ See if any new patterns emerge (e.g., password strength indicator)
@@ -599,13 +626,16 @@ Only update this guide if you're introducing a **new pattern** or **important de
 **Need**: Display 4 stat cards in a grid
 
 **Steps**:
+
 1. ❌ Don't have `StatCard` yet
 2. ✅ Build first stat card with atoms:
    ```tsx
    <div className="rounded-lg border bg-white p-6">
      <Text variant="h3">{title}</Text>
      <Text variant="h1">{value}</Text>
-     <Text variant="body" className="text-gray-600">{trend}</Text>
+     <Text variant="body" className="text-gray-600">
+       {trend}
+     </Text>
    </div>
    ```
 3. ✅ Copy for 4 cards (duplication detected!)
@@ -620,6 +650,7 @@ Only update this guide if you're introducing a **new pattern** or **important de
 **Need**: Table with sorting, pagination, actions
 
 **Steps**:
+
 1. ❌ Very complex, don't build from scratch
 2. ✅ Start with basic HTML table using `Text` and `Button` atoms
 3. ✅ After 2-3 tables, extract common patterns
@@ -637,6 +668,7 @@ Only update this guide if you're introducing a **new pattern** or **important de
 ## Component Library Growth Strategy
 
 ### Phase 1: Core Atoms (✅ DONE)
+
 - Button
 - Input
 - Label
@@ -644,19 +676,23 @@ Only update this guide if you're introducing a **new pattern** or **important de
 - Checkbox
 
 ### Phase 2: Common Molecules (✅ DONE)
+
 - AuthCard
 
 ### Phase 3: Layout Organisms (✅ DONE)
+
 - AuthPage
 
 ### Phase 4: Grow Organically (🔄 ONGOING)
 
 **As you build new features**, extract components when you see:
+
 1. **Duplication**: Same structure 3+ times
 2. **Complexity**: JSX getting too nested
 3. **Reusability**: Pattern used across features
 
 **Potential future components** (don't build until needed):
+
 - `FormField` molecule (Label + Input + Error)
 - `Card` molecule (Container with header/body/footer)
 - `Modal` organism (Overlay + Card + Actions)
@@ -687,7 +723,7 @@ Only update this guide if you're introducing a **new pattern** or **important de
 // apps/client/backoffice/next.config.ts
 const nextConfig = {
   transpilePackages: [
-    "@piar/ui-components",
+    '@piar/ui-components',
     // ... other packages
   ],
 };
@@ -722,6 +758,7 @@ export default function Page() {
 ### Review Checklist
 
 Before merging a component:
+
 - [ ] Follows Atomic Design level (atom/molecule/organism)
 - [ ] Uses CVA for variants
 - [ ] Uses design tokens (CSS variables)
@@ -740,6 +777,7 @@ Before merging a component:
 **Problem**: `Cannot find module '@piar/ui-components'`
 
 **Solutions**:
+
 1. Export in index.ts: `export { Component } from './Component';`
 2. Build package: `pnpm --filter @piar/ui-components build`
 3. Restart dev server: `pnpm --filter @piar/backoffice dev`
@@ -749,6 +787,7 @@ Before merging a component:
 **Problem**: Component renders but styles are missing
 
 **Solutions**:
+
 1. Check Tailwind scanning in `postcss.config.mjs`
 2. Verify `@piar/ui-components` in transpilePackages
 3. Clear Next.js cache: `rm -rf .next`
@@ -759,6 +798,7 @@ Before merging a component:
 **Problem**: Type errors when using component
 
 **Solutions**:
+
 1. Check props interface is exported: `export interface ComponentProps`
 2. Rebuild: `pnpm --filter @piar/ui-components build`
 3. Check types in index.ts: `export { Component, type ComponentProps }`
@@ -774,6 +814,7 @@ Before merging a component:
 ## Summary
 
 **The PIAR Way**:
+
 1. ✅ Build pages with existing components
 2. ✅ Notice duplication (3+ times)
 3. ✅ Extract to component at appropriate level
@@ -783,4 +824,5 @@ Before merging a component:
 **Result**: A custom design system that grows naturally with your needs, ensuring consistency while avoiding premature abstraction.
 
 ## Last Updated
+
 22 January 2026 - Complete component library development guide created

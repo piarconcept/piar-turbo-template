@@ -1,9 +1,11 @@
 # Testing Guide
 
 ## Purpose
+
 Guide for writing and running tests in the PIAR monorepo. Establishes testing standards, patterns, and best practices for all packages and applications.
 
 ## Status
+
 - [x] Completed - Testing setup for domain-models package
 - [x] Vitest configured as test framework
 - [x] Example tests created
@@ -11,9 +13,11 @@ Guide for writing and running tests in the PIAR monorepo. Establishes testing st
 ## Testing Strategy
 
 ### Framework: Vitest
+
 We use **Vitest** as our testing framework for all packages.
 
 **Why Vitest?**
+
 - ⚡ Fast - Uses Vite for instant test execution
 - 🔧 TypeScript native - No additional configuration needed
 - 📦 ESM first - Modern module support
@@ -22,7 +26,9 @@ We use **Vitest** as our testing framework for all packages.
 - 🔄 Workspace support - Test multiple packages together
 
 ### Workspace Configuration
+
 **Monorepo structure:**
+
 ```
 piar-repo/
 ├── vitest.config.ts           # Root workspace config
@@ -40,6 +46,7 @@ piar-repo/
 ```
 
 **Package structure:**
+
 ```
 package-name/
 ├── src/
@@ -49,45 +56,35 @@ package-name/
 ├── tests/
 │   └── account.entity.test.ts     # Tests mirror src structure
 ├── vitest.config.ts               # Package config
-  'packages/*/*/vitest.config.ts', // For nested packages
+└── package.json
+```
+
+### Root Workspace Configuration
+
+The root `vitest.config.ts` aggregates package and app configs:
+
+```ts
+import { defineWorkspace } from 'vitest/config';
+
+export default defineWorkspace([
+  'apps/**/vitest.config.ts',
+  'apps/*/*/vitest.config.ts',
+  'packages/*/vitest.config.ts',
+  'packages/**/vitest.config.ts',
+  'packages/*/*/vitest.config.ts',
   {
     test: {
       globals: true,
       environment: 'node',
-      coverage: {
-        provider: 'v8',
-        reporter: ['text', 'json', 'html', 'lcov'],
-        reportsDirectory: './coverage',
-        exclude: [
-          '**/node_modules/**',
-          '**/dist/**',
-          '**/.turbo/**',
-          '**/coverage/**',
-          '**/*.d.ts',
-          '**/*.config.*',
-          '**/tests/**',
-          '**/index.ts',
-          'apps/**', // Don't test apps in workspace tests
-          'scripts/**',
-          'docs/**',
-          '*.md',
-        ],
-        // Coverage thresholds for the entire workspace
-        thresholds: {
-          lines: 80,
-          functions: 80,
-          branches: 75,
-          statements: 80
-        }
-      }
-    }
-  }
+    },
+    cacheDir: '../../node_modules/.vitest',
+  },
 ]);
 ```
 
 **Key configuration points:**
-- **Workspace mode** - Automatically discovers and runs tests from all packages
-- **Packages only** - Apps are excluded from workspace tests (tested separately if needed)
+
+- **Workspace mode** - Automatically discovers and runs tests from all configured packages/apps
 - **Centralized coverage** - Aggregates coverage from all packages in `./coverage`
 - **Coverage thresholds** - Enforces minimum 80% coverage on lines/functions/statements
 - **Multiple reporters** - (if creating workspace from scratch)
@@ -95,31 +92,29 @@ package-name/
 Root workspace already has vitest installed. For individual packages:
 
 Add to `package.json`:
+
 ```json
 {
   "devDependencies": {
-    "vitest": "^2.1.8",
-    "@vitest/coverage-v8": "^2.1.8"
+    "vitest": "^2.1.9",
+    "@vitest/coverage-v8": "^2.1.9"
   }
 }
 ```
 
-**Note:** If using workspace mode, packages inherit from root vitest installation. tests/
-│   └── account.entity.test.ts     # Tests mirror src structure
-├── vitest.config.ts               # Vitest configuration
-└── package.json                   # Test scripts
-```
+**Note:** If using workspace mode, packages inherit Vitest from the root installation.
 
 ## Setting Up Tests for a Package
 
 ### Step 1: Install Vitest
 
 Add to `package.json`:
+
 ```json
 {
   "devDependencies": {
-    "vitest": "^2.1.8",
-    "@vitest/coverage-v8": "^2.1.8"
+    "vitest": "^2.1.9",
+    "@vitest/coverage-v8": "^2.1.9"
   }
 }
 ```
@@ -139,19 +134,28 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
       exclude: [
-        'dist', 'node_modules', 
-        '**/*.d.ts', '**/*.config.*', 
-        '**/tests/**', 'vitest.config.ts', 
-        'package.json', 'tsconfig.json', 'turbo.json', 
-        '.gitignore', 'README.md', 'docs/**', 'coverage/**',
+        'dist',
+        'node_modules',
+        '**/*.d.ts',
+        '**/*.config.*',
+        '**/tests/**',
+        'vitest.config.ts',
+        'package.json',
+        'tsconfig.json',
+        'turbo.json',
+        '.gitignore',
+        'README.md',
+        'docs/**',
+        'coverage/**',
         '**/index.ts',
-      ]
-    }
-  }
+      ],
+    },
+  },
 });
 ```
 
 **Configuration explained:**
+
 - `globals: true` - Use describe/it/expect without imports
 - `environment: 'node'` - Node.js environment (use 'jsdom' for browser/React components)
 - `coverage.provider: 'v8'` - Fast coverage using V8's built-in coverage
@@ -171,6 +175,7 @@ Index files are typically simple re-exports (`export * from './entity'`) and don
 ### Step 3: Add Test Scripts
 
 In `package.json`:
+
 ```json
 {
   "scripts": {
@@ -184,6 +189,7 @@ In `package.json`:
 ### Step 4: Update .gitignore
 
 Add coverage folder:
+
 ```
 node_modules
 dist
@@ -201,6 +207,7 @@ coverage
 - **Mirror structure**: Match the src/ folder structure
 
 Examples:
+
 ```
 src/entities/account/account.entity.ts
 tests/account.entity.test.ts
@@ -219,10 +226,10 @@ describe('EntityToTest', () => {
   it('should do something specific', () => {
     // Arrange - Setup test data
     const input = 'test';
-    
+
     // Act - Execute the code
     const result = new EntityToTest(input);
-    
+
     // Assert - Verify results
     expect(result).toBeDefined();
   });
@@ -246,7 +253,7 @@ import { BaseEntity, BaseEntityProps } from '../src/entities/base/base.entity';
 describe('BaseEntity', () => {
   it('should create entity with provided id and auto-generate timestamps', () => {
     const props: BaseEntityProps = {
-      id: '123'
+      id: '123',
     };
 
     const entity = new BaseEntity(props);
@@ -263,7 +270,7 @@ describe('BaseEntity', () => {
     const props: BaseEntityProps = {
       id: '456',
       createdAt: createdDate,
-      updatedAt: updatedDate
+      updatedAt: updatedDate,
     };
 
     const entity = new BaseEntity(props);
@@ -287,7 +294,7 @@ describe('AccountEntity', () => {
   it('should create account entity with required properties', () => {
     const props: AccountEntityProps = {
       id: 'acc-001',
-      accountCode: 'ACC-001'
+      accountCode: 'ACC-001',
     };
 
     const account = new AccountEntity(props);
@@ -301,7 +308,7 @@ describe('AccountEntity', () => {
     const props: AccountEntityProps = {
       id: 'acc-002',
       accountCode: 'ACC-002',
-      role: 'admin'
+      role: 'admin',
     };
 
     const account = new AccountEntity(props);
@@ -326,6 +333,7 @@ pnpm test:coverage
 ```
 
 These commands use Turbo to:
+
 - Build dependencies first (`dependsOn: ["^build"]`)
 - Run tests in all packages that have a `test` script
 - Aggregate all results
@@ -364,11 +372,11 @@ pnpm turbo test --filter=@piar/domain-models
 it('should create entity with all properties', () => {
   const props = {
     id: '123',
-    name: 'Test'
+    name: 'Test',
   };
-  
+
   const entity = new MyEntity(props);
-  
+
   expect(entity.id).toBe('123');
   expect(entity.name).toBe('Test');
 });
@@ -380,12 +388,12 @@ it('should create entity with all properties', () => {
 it('should handle optional properties', () => {
   const props = {
     id: '123',
-    name: 'Test'
+    name: 'Test',
     // optionalField is not provided
   };
-  
+
   const entity = new MyEntity(props);
-  
+
   expect(entity.optionalField).toBeUndefined();
 });
 ```
@@ -396,9 +404,9 @@ it('should handle optional properties', () => {
 it('should handle date properties correctly', () => {
   const date = new Date('2025-01-01');
   const props = { id: '123', createdAt: date };
-  
+
   const entity = new MyEntity(props);
-  
+
   expect(entity.createdAt).toBeInstanceOf(Date);
   expect(entity.createdAt).toEqual(date);
 });
@@ -410,15 +418,15 @@ it('should handle date properties correctly', () => {
 it('should extend base entity properly', () => {
   const props = {
     id: '123',
-    specificField: 'value'
+    specificField: 'value',
   };
-  
+
   const entity = new SpecificEntity(props);
-  
+
   // Test base properties
   expect(entity.id).toBe('123');
   expect(entity.createdAt).toBeInstanceOf(Date);
-  
+
   // Test specific properties
   expect(entity.specificField).toBe('value');
 });
@@ -427,35 +435,40 @@ it('should extend base entity properly', () => {
 ## Best Practices
 
 ### 1. Test Naming
+
 ✅ **Good**:
+
 - `should create entity with valid properties`
 - `should throw error when id is missing`
 - `should calculate total correctly`
 
 ❌ **Bad**:
+
 - `test 1`
 - `it works`
 - `entity test`
 
 ### 2. Test Structure (AAA Pattern)
+
 ```typescript
 it('should do something', () => {
   // Arrange - Setup
   const input = createTestData();
-  
+
   // Act - Execute
   const result = performAction(input);
-  
+
   // Assert - Verify
   expect(result).toBe(expected);
 });
 ```
 
 ### 3. One Assertion Per Test (When Reasonable)
+
 ```typescript
 // Good - Focused test
 **Workspace-wide coverage:**
-- Root vitest.config.ts aggregates coverage from all packages
+- Root vitest.config.ts aggregates coverage from all packages and apps
 - Reports saved to `./coverage/` in monorepo root
 - Coverage thresholds enforced: 80% lines, 80% functions, 75% branchesit('should return correct id', () => {
   expect(entity.id).toBe('123');
@@ -470,7 +483,8 @@ it('should create entity with all base properties', () => {
 ```
 
 ### 4. Test Edge Cases
-```typescript
+
+````typescript
 describe('MyEntity', () => {
   itAchieving 100% Coverage
 
@@ -505,14 +519,15 @@ exclude: [
 ```dle null values', () => {
     // Test null
   });
-  
+
   it('should handle undefined values', () => {
     // Test undefined
   });
 });
-```
+````
 
 ### 5. Keep Tests Simple
+
 - Tests should be easy to read and understand
 - Avoid complex logic in tests
 - Each test should test one thing
@@ -520,13 +535,16 @@ exclude: [
 ## Coverage Guidelines
 
 ### Minimum Coverage Targets
+
 - **Statements**: 80%
 - **Branches**: 75%
 - **Functions**: 80%
 - **Lines**: 80%
 
 ### What to Test
+
 ✅ **Always test**:
+
 - Public APIs
 - Entity constructors
 - Business logic
@@ -554,6 +572,7 @@ The root `turbo.json` includes test tasks:
 ```
 
 **Configuration explained:**
+
 - `dependsOn: ["^build"]` - Builds dependencies before running tests
 - `cache: false` - Tests always run (don't use cached results)
 - `outputs: ["coverage/**"]` - Tracks coverage output for potential caching
@@ -570,15 +589,17 @@ The root `package.json` includes convenient scripts:
 ```
 
 **Benefits:**
+
 - Run `pnpm test` from anywhere in the monorepo
 - Automatically runs tests in all packages with test scripts
 - Ensures packages are built before testing
 - Aggregates results from all packages
-      "outputs": ["coverage/**"]
-    }
+  "outputs": ["coverage/**"]
   }
-}
-```
+  }
+  }
+
+````
 
 **Note**: Tests are typically not cached (`cache: false`) because we want to run them every time.
 
@@ -624,13 +645,15 @@ expect(() => fn()).toThrow('error message')
 // Types
 expect(value).toBeInstanceOf(Class)
 expect(typeof value).toBe('string')
-```
+````
 
 ## Related Documentation
+
 - Domain Models Package: `docs/features/domain-models.md`
 - Creating Packages: `docs/features/creating-packages.md`
 
 ## Notes
+
 - Always run tests before committing
 - Add tests for new features
 - Update tests when changing behavior
@@ -638,4 +661,5 @@ expect(typeof value).toBe('string')
 - Check coverage regularly
 
 ## Last Updated
-15 January 2026 - Initial testing guide with vitest setup and examples
+
+27 January 2026 - Updated workspace config and clarified coverage

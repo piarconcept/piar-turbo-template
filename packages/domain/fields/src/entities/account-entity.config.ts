@@ -11,7 +11,7 @@ export const accountEntityFieldsConfig: EntityFieldsConfig<AccountEntityProps> =
   fields: [
     // Inherit base entity fields
     ...baseEntityFieldsConfig.fields,
-    
+
     // Account-specific fields
     {
       key: 'accountCode',
@@ -32,7 +32,8 @@ export const accountEntityFieldsConfig: EntityFieldsConfig<AccountEntityProps> =
         },
         {
           pattern: /^[A-Z0-9_-]+$/,
-          message: 'Account code must contain only uppercase letters, numbers, hyphens, and underscores',
+          message:
+            'Account code must contain only uppercase letters, numbers, hyphens, and underscores',
         },
       ],
       ui: {
@@ -149,5 +150,5 @@ export const accountEntityFieldsConfig: EntityFieldsConfig<AccountEntityProps> =
  * Helper to get only account-specific fields (excluding base entity fields)
  */
 export const accountSpecificFields = accountEntityFieldsConfig.fields.filter(
-  (field) => !['id', 'createdAt', 'updatedAt'].includes(field.key as string)
+  (field) => !['id', 'createdAt', 'updatedAt'].includes(field.key as string),
 );

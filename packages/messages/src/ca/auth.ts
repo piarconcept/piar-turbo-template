@@ -23,7 +23,7 @@ export const auth: AuthMessages = {
     confirmPassword: 'Confirma la contrasenya',
     acceptTerms: 'Accepto els',
     termsAndConditions: 'termes i condicions',
-    submit: 'Registra\'t',
+    submit: "Registra't",
   },
   forgotPassword: {
     title: 'Recuperar contrasenya',
@@ -37,12 +37,12 @@ export const auth: AuthMessages = {
   },
   unauthorized: {
     title: 'Accés pendent',
-    message: 'El teu compte està pendent d\'aprovació.',
+    message: "El teu compte està pendent d'aprovació.",
     needHelp: 'Necessites ajuda?',
     contactSupport: 'Contacta amb suport',
     whatHappensNext: 'Què passa ara?',
     step1: 'Revisem la teva sol·licitud.',
-    step2: 'T\'avisarem quan estigui aprovada.',
+    step2: "T'avisarem quan estigui aprovada.",
     step3: 'Podràs accedir al tauler.',
     backToLogin: 'Torna a iniciar sessió',
     goToHome: "Ves a l'inici",

@@ -9,8 +9,10 @@ export const auth: AuthMessages = {
     password: 'Contraseña',
     rememberMe: 'Recuérdame',
     forgotPassword: '¿Olvidaste tu contraseña?',
-    submit: 'Entrar',    loading: 'Iniciando sesión...',
-    error: 'Correo o contraseña incorrectos. Por favor, inténtalo de nuevo.',  },
+    submit: 'Entrar',
+    loading: 'Iniciando sesión...',
+    error: 'Correo o contraseña incorrectos. Por favor, inténtalo de nuevo.',
+  },
   register: {
     title: 'Crear cuenta',
     haveAccount: '¿Ya tienes cuenta?',

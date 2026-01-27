@@ -28,8 +28,6 @@ const ENV_FILE = '.env';
       useClass: GlobalExceptionFilter,
     },
   ],
-  exports: [
-    ConfigModule,
-  ],
+  exports: [ConfigModule],
 })
 export class AppModule {}

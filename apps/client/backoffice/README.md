@@ -32,11 +32,13 @@ src/app/[locale]/
 **Purpose**: Handles user authentication (login, register, forgot password, etc.)
 
 **Layout**: Uses `public` layout type from `@piar/layout`
+
 - Same visual design as the main website
 - Maintains brand consistency
 - No authentication required
 
 **Routes**:
+
 - `/login` - User login page
 - Future: `/register`, `/forgot-password`, etc.
 
@@ -45,11 +47,13 @@ src/app/[locale]/
 **Purpose**: Admin panel for managing users, content, and settings
 
 **Layout**: Uses `dashboard` layout type from `@piar/layout`
+
 - Collapsible sidebar navigation
 - Compact header with search
 - Minimal footer
 
 **Routes**:
+
 - `/dashboard` - Overview with stats and recent activity
 - `/dashboard/users` - User management table
 - `/dashboard/content` - Content management cards
@@ -91,6 +95,7 @@ pnpm --filter @piar/backoffice typecheck
 This app uses **NextAuth.js v5** for authentication with JWT sessions.
 
 **Key Features:**
+
 - ✅ Credentials provider (email/password)
 - ✅ JWT sessions (24-hour duration)
 - ✅ Route protection via middleware
@@ -98,6 +103,7 @@ This app uses **NextAuth.js v5** for authentication with JWT sessions.
 - ✅ Integration with backoffice-bff
 
 **Quick Start:**
+
 1. Copy `.env.example` to `.env.local`
 2. Configure environment variables (see below)
 3. Start backoffice-bff on port 5050

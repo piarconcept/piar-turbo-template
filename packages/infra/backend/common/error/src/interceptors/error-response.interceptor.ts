@@ -1,10 +1,4 @@
-import {
-  Injectable,
-  NestInterceptor,
-  ExecutionContext,
-  CallHandler,
-  Logger,
-} from '@nestjs/common';
+import { Injectable, NestInterceptor, ExecutionContext, CallHandler, Logger } from '@nestjs/common';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApplicationError } from '@piar/domain-models';
@@ -30,12 +24,12 @@ export class ErrorResponseInterceptor implements NestInterceptor {
         const request = context.switchToHttp().getRequest();
         this.logger.error(
           `Unexpected error in ${request.method} ${request.url}`,
-          error instanceof Error ? error.stack : error
+          error instanceof Error ? error.stack : error,
         );
 
         // Re-throw to let GlobalExceptionFilter handle it
         return throwError(() => error);
-      })
+      }),
     );
   }
 }

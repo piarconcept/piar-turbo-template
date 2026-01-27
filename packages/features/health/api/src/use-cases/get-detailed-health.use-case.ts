@@ -1,4 +1,4 @@
-import { HealthStatus } from "@piar/health-configuration";
+import { HealthStatus } from '@piar/health-configuration';
 
 export interface GetDetailedHealthUseCase {
   execute(): Promise<HealthStatus>;

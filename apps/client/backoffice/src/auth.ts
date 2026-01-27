@@ -3,7 +3,7 @@ import Credentials from 'next-auth/providers/credentials';
 import { HttpAuthRepository } from '@piar/auth-infra-client';
 
 const authRepository = new HttpAuthRepository(
-  process.env.NEXT_PUBLIC_BACKOFFICE_BFF_URL || "http://localhost:5050"
+  process.env.NEXT_PUBLIC_BACKOFFICE_BFF_URL || 'http://localhost:5050',
 );
 
 export const { handlers, signIn, signOut, auth } = NextAuth({

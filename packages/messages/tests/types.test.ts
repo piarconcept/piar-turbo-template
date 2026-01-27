@@ -60,7 +60,7 @@ describe('Type definitions', () => {
         description: 'This feature will be available soon',
         notifyMe: '',
         learnMore: '',
-        backHome: ''
+        backHome: '',
       };
 
       expect(validComingSoon.title).toBe('Coming Soon');
@@ -115,7 +115,7 @@ describe('Type definitions', () => {
           description: '',
           notifyMe: '',
           learnMore: '',
-          backHome: ''
+          backHome: '',
         },
       };
 

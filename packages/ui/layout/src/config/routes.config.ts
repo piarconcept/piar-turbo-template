@@ -65,11 +65,11 @@ export const publicFooterConfig: FooterConfig = {
     },
   ],
   copyright: '© 2026 PIAR. All rights reserved.',
-//   social: [
-//     { label: 'Twitter', href: 'https://twitter.com/piar', icon: 'twitter' },
-//     { label: 'LinkedIn', href: 'https://linkedin.com/company/piar', icon: 'linkedin' },
-//     { label: 'GitHub', href: 'https://github.com/piar', icon: 'github' },
-//   ],
+  //   social: [
+  //     { label: 'Twitter', href: 'https://twitter.com/piar', icon: 'twitter' },
+  //     { label: 'LinkedIn', href: 'https://linkedin.com/company/piar', icon: 'linkedin' },
+  //     { label: 'GitHub', href: 'https://github.com/piar', icon: 'github' },
+  //   ],
 };
 
 /**
@@ -85,9 +85,7 @@ export const dashboardHeaderConfig: HeaderConfig = {
   },
   navigation: [
     {
-      routes: [
-        { label: 'dashboard', href: '/dashboard' },
-      ],
+      routes: [{ label: 'dashboard', href: '/dashboard' }],
     },
   ],
   actions: {
@@ -98,8 +96,8 @@ export const dashboardHeaderConfig: HeaderConfig = {
 };
 
 export const dashboardAsideConfig: AsideConfig = {
-//   title: 'Dashboard',
-//   collapsed: false,
+  //   title: 'Dashboard',
+  //   collapsed: false,
   collapsible: true,
   navigation: [
     {

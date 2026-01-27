@@ -1,42 +1,42 @@
 {
-    "name": "@piar/infra-backend-repositories",
-    "version": "0.1.0",
-    "description": "Repository implementations for backend infrastructure",
-    "main": "./dist/index.js",
-    "types": "./dist/index.d.ts",
-    "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "default": "./dist/index.js"
-        },
-        "./account": {
-            "types": "./dist/account/index.d.ts",
-            "default": "./dist/account/index.js"
-        }
+  "name": "@piar/infra-backend-repositories",
+  "version": "0.1.0",
+  "description": "Repository implementations for backend infrastructure",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
-    "scripts": {
-        "build": "tsc",
-        "dev": "tsc --watch",
-        "typecheck": "tsc --noEmit",
-        "lint": "eslint .",
-        "test": "echo 'No tests configured yet'",
-        "test:coverage": "echo 'No tests configured yet'"
-    },
-    "dependencies": {
-        "bcryptjs": "^2.4.3",
-        "@piar/domain-models": "workspace:*"
-    },
-    "devDependencies": {
-        "@nestjs/common": "^11.0.16",
-        "@nestjs/core": "^11.0.16",
-        "@types/node": "^22.10.5",
-        "@types/bcryptjs": "^2.4.6",
-        "@vitest/coverage-v8": "^2.1.9",
-        "typescript": "^5.9.3",
-        "vitest": "^2.1.9"
-    },
-    "peerDependencies": {
-        "@nestjs/common": "^11.0.0",
-        "@nestjs/core": "^11.0.0"
+    "./account": {
+      "types": "./dist/account/index.d.ts",
+      "default": "./dist/account/index.js"
     }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "echo 'No tests configured yet'",
+    "test:coverage": "echo 'No tests configured yet'"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "@piar/domain-models": "workspace:*"
+  },
+  "devDependencies": {
+    "@nestjs/common": "^11.0.16",
+    "@nestjs/core": "^11.0.16",
+    "@types/node": "^22.10.5",
+    "@types/bcryptjs": "^2.4.6",
+    "@vitest/coverage-v8": "^2.1.9",
+    "typescript": "^5.9.3",
+    "vitest": "^2.1.9"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/core": "^11.0.0"
+  }
 }

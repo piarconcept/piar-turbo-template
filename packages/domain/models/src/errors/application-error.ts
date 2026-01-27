@@ -28,7 +28,7 @@ export class ApplicationError extends Error {
     code: ErrorCode,
     message: string,
     details?: Record<string, unknown>,
-    i18nKey?: string
+    i18nKey?: string,
   ) {
     super(message);
     this.name = 'ApplicationError';

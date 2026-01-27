@@ -1,9 +1,11 @@
 # Domain Models Package
 
 ## Purpose
+
 Centralized package for domain entities and models shared across all applications (web, backoffice, api, sqs). Ensures consistency and type safety across the entire monorepo.
 
 ## Status
+
 - [x] Completed - Build verified working ✅
 - [x] Base entity pattern implemented
 - [x] AccountEntity created as example
@@ -11,9 +13,11 @@ Centralized package for domain entities and models shared across all application
 - [x] Ready for use in all apps
 
 ## Package Location
+
 `packages/domain/models/` → `@piar/domain-models`
 
 ## Key Decisions
+
 - **Single source of truth**: All domain entities are defined here to avoid duplication
 - **TypeScript only**: Pure TypeScript interfaces and types, no runtime dependencies
 - **Compiled output**: Built to `dist/` for consumption by other packages
@@ -22,7 +26,9 @@ Centralized package for domain entities and models shared across all application
 ## Technical Details
 
 ### Architecture
+
 This package contains TypeScript classes and types that represent the core business domain:
+
 - **Entities**: Core domain objects as classes (AccountEntity, etc.)
   - Each entity has Props interface and Class implementation
   - All extend BaseEntity for consistent id/timestamps
@@ -32,10 +38,12 @@ This package contains TypeScript classes and types that represent the core busin
 - **DTOs**: Data Transfer Objects for API communication (to be added as needed)
 
 ### Dependencies
+
 - **typescript 5.9.3**: Only dev dependency, no runtime dependencies
 - **Pure types**: This package should remain dependency-free to avoid version conflicts
 
 ### File Structure
+
 ```
 packages/domain/models/
 ├── package.json           # @piar/domain-models
@@ -64,24 +72,30 @@ packages/domain/models/
 ### Configuration
 
 #### TypeScript Config
+
 - **Target**: ES2020
 - **Module**: ESNext with bundler resolution
 - **Strict mode**: Enabled with all strict checks
 - **Output**: Declaration files (.d.ts) with source maps
 
 #### Turbo Configuration
+
 The package has its own `turbo.json` that extends the root configuration:
+
 ```json
 {
   "extends": ["//"],
   "tasks": { "build": { "outputs": ["dist/**"] } }
 }
 ```
+
 - **Extends**: Uses root turbo.json as base
-- **Outputs**: Specifies dist/** for caching
+- **Outputs**: Specifies dist/\*\* for caching
 
 #### Vitest Configuration
+
 The package has its own `vitest.config.ts` configured for 100% coverage:
+
 ```typescript
 import { defineConfig } from 'vitest/config';
 
@@ -93,24 +107,34 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
       exclude: [
-        'dist', 'node_modules', 
-        '**/*.d.ts', '**/*.config.*', 
-        '**/tests/**', 'vitest.config.ts', 
-        'package.json', 'tsconfig.json', 'turbo.json', 
-        '.gitignore', 'README.md', 'docs/**', 'coverage/**',
-        '**/index.ts',  // Barrel exports excluded
-      ]
-    }
-  }
+        'dist',
+        'node_modules',
+        '**/*.d.ts',
+        '**/*.config.*',
+        '**/tests/**',
+        'vitest.config.ts',
+        'package.json',
+        'tsconfig.json',
+        'turbo.json',
+        '.gitignore',
+        'README.md',
+        'docs/**',
+        'coverage/**',
+        '**/index.ts', // Barrel exports excluded
+      ],
+    },
+  },
 });
 ```
 
 **Key points:**
+
 - Excludes barrel exports (`**/index.ts`) from coverage
 - Achieves 100% test coverage on business logic
 - Comprehensive exclusion list for non-logic files
 
 #### Package Exports
+
 ```json
 {
   "main": "./dist/index.js",
@@ -127,8 +151,10 @@ export default defineConfig({
 ## Usage
 
 ### In Other Packages
+
 1. Add dependency to package.json:
-```jsonAccountEntity, AccountEntityProps } from '@piar/domain-models';
+
+````jsonAccountEntity, AccountEntityProps } from '@piar/domain-models';
 
 // Create new entity instance
 const account = new AccountEntity({
@@ -194,8 +220,10 @@ export * from './product.entity';
 
 // Add to src/entities/index.ts
 export * from './product';
-```
+````
+
 ### Development Commands
+
 ```bash
 # Build the package (recommended: use turbo for caching)
 pnpm turbo build --filter=@piar/domain-models
@@ -223,6 +251,7 @@ pnpm turbo build
 ```
 
 ### Adding New Entities
+
 1. Create new file in `src/entities/` or appropriate folder
 2. Define interfaces with proper types
 3. Export from the index file
@@ -275,15 +304,18 @@ export class AccountEntity extends BaseEntity implements AccountEntityProps {
 ```
 
 **Entity fconfigured with 100% coverage** ✅ - See [testing-guide.md](testing-guide.md)
+
 - All apps (web, backoffice, api, sqs) should use these types
 - Maintain backwards compatibility when possible, document breaking changes
 - The `dist/` folder is cached by turbo for faster rebuilds
 - `.gitignore` excludes build artifacts (dist, node_modules, .turbo, coverage)
 
 ## Last Updated
+
 15 January 2026 - Production-ready with 100% test coverage. vitest.config.ts optimized.
-│   └── index.ts
+│ └── index.ts
 └── index.ts
+
 ```
 
 ## Best Practices
@@ -297,7 +329,7 @@ export class AccountEntity extends BaseEntity implements AccountEntityProps {
 
 ## Related Documentation
 - Repository Configuration: `docs/features/repository-configuration.md`
-- Project Setup: `docs/features/setup-proyecto.md`
+- Project Setup: `docs/features/setup-project.md`
 
 ## Notes
 - **Use turbo for builds**: `pnpm turbo build` leverages caching across workspace
@@ -311,7 +343,5 @@ export class AccountEntity extends BaseEntity implements AccountEntityProps {
 - `.gitignore` excludes build artifacts (dist, node_modules, .turbo, coverage)
 
 ## Last Updated
-15 January 2026 - Added testing setup with Vitest and example tests
-
-## Last Updated
-15 January 2026 - Initial package creation with base entity structure
+27 January 2026 - Updated documentation references
+```

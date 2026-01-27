@@ -12,7 +12,7 @@ export class HealthController {
     @Inject(GetHealthUseCase)
     private readonly getHealthUseCase: GetHealthUseCase,
     @Inject(GetDetailedHealthUseCase)
-    private readonly getDetailedHealthUseCase: GetDetailedHealthUseCase
+    private readonly getDetailedHealthUseCase: GetDetailedHealthUseCase,
   ) {}
 
   /**

@@ -3,7 +3,10 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER } from '@nestjs/core';
 import { HealthModule } from '@piar/health-api';
 import { loadConfigurationParams } from './config';
-import { AccountRepository, AccountRepositoryProviderModule } from '@piar/infra-backend-repositories';
+import {
+  AccountRepository,
+  AccountRepositoryProviderModule,
+} from '@piar/infra-backend-repositories';
 import { AuthModule } from '@piar/auth-api';
 import { AccountPort } from '@piar/domain-models';
 import { ApplicationErrorFilter, GlobalExceptionFilter } from '@piar/infra-backend-common-error';
@@ -25,7 +28,7 @@ const ENV_FILE = '.env';
       accountPort: {
         provide: AccountPort,
         useClass: AccountRepository,
-      }
+      },
     }),
 
     // Providers
@@ -41,8 +44,6 @@ const ENV_FILE = '.env';
       useClass: GlobalExceptionFilter,
     },
   ],
-  exports: [
-    ConfigModule,
-  ],
+  exports: [ConfigModule],
 })
-export class AppModule { }
+export class AppModule {}

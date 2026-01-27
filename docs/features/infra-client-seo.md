@@ -1,9 +1,11 @@
 # @piar/infra-client-seo - SEO Infrastructure
 
 ## Purpose
+
 Professional-grade SEO infrastructure package providing comprehensive tools for search engine optimization including meta tags, structured data (Schema.org), sitemaps, robots.txt, and validation utilities.
 
 ## Status
+
 - [x] Completed - Full SEO toolkit implementation
 
 ## Overview
@@ -60,10 +62,12 @@ packages/infra/client/seo/
 ### 1. Meta Tags Builder
 
 **Classes**:
+
 - `MetaTagsBuilder` - Fluent API for building meta tags
 - `createMetaTags()` - Quick helper function
 
 **Capabilities**:
+
 - Basic meta tags (title, description, keywords, author)
 - Canonical URLs
 - Robots directives (index, follow, max-snippet, max-image-preview)
@@ -75,20 +79,21 @@ packages/infra/client/seo/
 - Favicon links
 
 **Example**:
+
 ```typescript
 const { meta, link } = createMetaTags({
   metadata: {
     title: 'My Page',
     description: 'Page description',
     canonical: 'https://example.com/page',
-    robots: { index: true, follow: true }
+    robots: { index: true, follow: true },
   },
   openGraph: {
     type: 'website',
     title: 'My Page',
     url: 'https://example.com/page',
-    images: [{ url: '/og-image.jpg', width: 1200, height: 630 }]
-  }
+    images: [{ url: '/og-image.jpg', width: 1200, height: 630 }],
+  },
 });
 ```
 
@@ -97,6 +102,7 @@ const { meta, link } = createMetaTags({
 **Class**: `SchemaBuilder` - Static methods for all Schema.org types
 
 **Supported Schemas**:
+
 - Organization
 - Person
 - WebSite (with SearchAction)
@@ -110,19 +116,21 @@ const { meta, link } = createMetaTags({
 - VideoObject
 
 **Features**:
+
 - Type-safe schema construction
 - Schema combination (JSON-LD @graph)
 - Basic validation
 - JSON-LD script tag generation
 
 **Example**:
+
 ```typescript
 const article = SchemaBuilder.article({
   '@type': 'Article',
   headline: 'My Article',
   author: { '@type': 'Person', name: 'John Doe' },
   publisher: organization,
-  datePublished: '2026-01-24T00:00:00Z'
+  datePublished: '2026-01-24T00:00:00Z',
 });
 
 const jsonLd = SchemaBuilder.toJsonLd(article);
@@ -131,11 +139,13 @@ const jsonLd = SchemaBuilder.toJsonLd(article);
 ### 3. Sitemap Generation
 
 **Classes**:
+
 - `SitemapGenerator` - Main sitemap generator
 - `SitemapIndexGenerator` - For large sites with multiple sitemaps
 - `generateSitemap()` - Quick helper
 
 **Features**:
+
 - XML sitemap generation
 - Image sitemaps
 - Alternate language versions (hreflang)
@@ -144,11 +154,12 @@ const jsonLd = SchemaBuilder.toJsonLd(article);
 - Full XML escaping
 
 **Example**:
+
 ```typescript
 const generator = new SitemapGenerator({
   baseUrl: 'https://example.com',
   defaultChangefreq: 'weekly',
-  defaultPriority: 0.7
+  defaultPriority: 0.7,
 });
 
 generator.addUrl({
@@ -159,8 +170,8 @@ generator.addUrl({
   images: [{ loc: '/image.jpg', caption: 'Featured' }],
   alternates: [
     { hreflang: 'en', href: '/en/blog/post' },
-    { hreflang: 'es', href: '/es/blog/post' }
-  ]
+    { hreflang: 'es', href: '/es/blog/post' },
+  ],
 });
 
 const xml = generator.toXML();
@@ -169,11 +180,13 @@ const xml = generator.toXML();
 ### 4. Robots.txt Generation
 
 **Classes**:
+
 - `RobotsGenerator` - Flexible robots.txt builder
 - `RobotsTemplates` - Pre-built templates
 - `generateRobotsTxt()` - Quick helper
 
 **Templates**:
+
 - `allowAll()` - Allow all bots
 - `disallowAll()` - Block all bots (staging/dev)
 - `standardProduction()` - Standard production config
@@ -182,11 +195,12 @@ const xml = generator.toXML();
 - `blockBadBots()` - Block known bad bots
 
 **Example**:
+
 ```typescript
 const robots = RobotsTemplates.standardProduction({
   sitemaps: ['https://example.com/sitemap.xml'],
   host: 'https://example.com',
-  disallowPaths: ['/admin', '/api', '/private']
+  disallowPaths: ['/admin', '/api', '/private'],
 });
 ```
 
@@ -195,6 +209,7 @@ const robots = RobotsTemplates.standardProduction({
 **Class**: `SEOValidator` - Comprehensive SEO validator
 
 **Features**:
+
 - Validate metadata (title length, description length, required fields)
 - Validate Open Graph (type, title, URL, images, dimensions)
 - Validate Twitter Cards (card type, image, character limits)
@@ -203,12 +218,13 @@ const robots = RobotsTemplates.standardProduction({
 - Detailed error/warning/recommendation messages
 
 **Example**:
+
 ```typescript
 const validator = new SEOValidator();
 
 const result = validator.validateAll({
   metadata: { title: 'My Page', description: 'Description' },
-  openGraph: { type: 'website', title: 'My Page', url: '...' }
+  openGraph: { type: 'website', title: 'My Page', url: '...' },
 });
 
 const score = validator.calculateSEOScore({ metadata, openGraph });
@@ -218,6 +234,7 @@ const improvements = validator.getImprovements({ metadata, openGraph });
 ### 6. SEO Utilities
 
 **Functions**:
+
 - `sanitizeText()` - Remove HTML, normalize whitespace
 - `truncateText()` - Smart truncation at word boundaries
 - `generateMetaDescription()` - Create description from content
@@ -248,13 +265,15 @@ export const metadata: Metadata = {
     title: 'My Page',
     description: 'Page description',
     url: 'https://example.com/page',
-    images: [{
-      url: 'https://example.com/og-image.jpg',
-      width: 1200,
-      height: 630,
-      alt: 'Page preview'
-    }]
-  }
+    images: [
+      {
+        url: 'https://example.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Page preview',
+      },
+    ],
+  },
 };
 ```
 
@@ -293,18 +312,18 @@ export async function GET() {
   // Fetch your URLs from database/CMS
   const urls = [
     { loc: '/', changefreq: 'daily', priority: 1.0 },
-    { loc: '/about', changefreq: 'monthly', priority: 0.8 }
+    { loc: '/about', changefreq: 'monthly', priority: 0.8 },
   ];
 
   const sitemap = generateSitemap(urls, {
-    baseUrl: process.env.NEXT_PUBLIC_BASE_URL!
+    baseUrl: process.env.NEXT_PUBLIC_BASE_URL!,
   });
 
   return new Response(sitemap, {
     headers: {
       'Content-Type': 'application/xml',
-      'Cache-Control': 'public, max-age=3600, s-maxage=3600'
-    }
+      'Cache-Control': 'public, max-age=3600, s-maxage=3600',
+    },
   });
 }
 ```
@@ -319,14 +338,14 @@ export async function GET() {
 
   const robots = isProduction
     ? RobotsTemplates.standardProduction({
-        sitemaps: [`${process.env.NEXT_PUBLIC_BASE_URL}/sitemap.xml`]
+        sitemaps: [`${process.env.NEXT_PUBLIC_BASE_URL}/sitemap.xml`],
       })
     : RobotsTemplates.disallowAll();
 
   return new Response(robots, {
     headers: {
-      'Content-Type': 'text/plain'
-    }
+      'Content-Type': 'text/plain',
+    },
   });
 }
 ```
@@ -413,6 +432,7 @@ export function PageSchema({ title, description, publishedTime }: PageSEOProps) 
 ## Best Practices
 
 ### Title Optimization
+
 - **Length**: 50-60 characters (Google displays ~60)
 - **Structure**: Primary Keyword | Secondary Keyword | Brand
 - **Uniqueness**: Every page should have a unique title
@@ -420,6 +440,7 @@ export function PageSchema({ title, description, publishedTime }: PageSEOProps) 
 - **Brand**: Include brand name at the end
 
 ### Meta Description
+
 - **Length**: 150-160 characters (Google displays ~160)
 - **Compelling**: Write to encourage clicks
 - **Keywords**: Include target keywords naturally
@@ -427,6 +448,7 @@ export function PageSchema({ title, description, publishedTime }: PageSEOProps) 
 - **Uniqueness**: Every page should have a unique description
 
 ### Open Graph Images
+
 - **Dimensions**: 1200x630 pixels (1.91:1 aspect ratio)
 - **File Size**: Under 8MB, ideally under 500KB
 - **Format**: JPG or PNG
@@ -434,6 +456,7 @@ export function PageSchema({ title, description, publishedTime }: PageSEOProps) 
 - **Text**: Include text overlay for better sharing
 
 ### Structured Data
+
 - **Organization**: Include on every page
 - **BreadcrumbList**: Use on all pages for navigation
 - **Article**: Required for blog posts and news
@@ -443,6 +466,7 @@ export function PageSchema({ title, description, publishedTime }: PageSEOProps) 
 - **Validation**: Always validate with Google's Rich Results Test
 
 ### Sitemaps
+
 - **Frequency**: Update daily for dynamic content
 - **lastmod**: Always include accurate last modification dates
 - **Priority**: Use wisely (homepage: 1.0, important pages: 0.8)
@@ -451,6 +475,7 @@ export function PageSchema({ title, description, publishedTime }: PageSEOProps) 
 - **Index**: Use sitemap index for sites with >50,000 URLs
 
 ### Robots.txt
+
 - **Specificity**: Be precise with disallow rules
 - **Testing**: Test with Google's robots.txt Tester
 - **Sitemaps**: Always include sitemap URLs
@@ -460,22 +485,26 @@ export function PageSchema({ title, description, publishedTime }: PageSEOProps) 
 ## Testing & Validation
 
 ### Run Tests
+
 ```bash
 pnpm --filter @piar/infra-client-seo test
 pnpm --filter @piar/infra-client-seo test:coverage
 ```
 
 ### Type Checking
+
 ```bash
 pnpm --filter @piar/infra-client-seo typecheck
 ```
 
 ### Linting
+
 ```bash
 pnpm --filter @piar/infra-client-seo lint
 ```
 
 ### SEO Validation in Code
+
 ```typescript
 import { SEOValidator } from '@piar/infra-client-seo';
 
@@ -506,7 +535,7 @@ import { getPost } from '@/lib/blog';
 
 export async function generateMetadata({ params }) {
   const post = await getPost(params.slug);
-  
+
   return generatePageMetadata({
     title: post.title,
     description: post.excerpt,
@@ -577,19 +606,19 @@ const locales = ['en', 'es', 'fr'];
 
 export async function generateMetadata({ params }) {
   const { locale } = params;
-  
+
   const builder = new MetaTagsBuilder();
   builder.setBasicMetadata({
     title: getTitle(locale),
-    description: getDescription(locale)
+    description: getDescription(locale),
   });
 
   // Add alternate languages
   builder.addAlternateLanguages(
-    locales.map(lang => ({
+    locales.map((lang) => ({
       lang,
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/${lang}`
-    }))
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/${lang}`,
+    })),
   );
 
   return builder.build();
@@ -620,4 +649,5 @@ export async function generateMetadata({ params }) {
 - Follows all modern SEO best practices and standards
 
 ## Last Updated
+
 24 January 2026 - Initial SEO infrastructure package creation

@@ -35,8 +35,8 @@ const emailField: FieldConfig = {
   editable: true,
   validation: {
     pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-    message: 'Invalid email format'
-  }
+    message: 'Invalid email format',
+  },
 };
 ```
 
@@ -52,7 +52,7 @@ const stateField: FieldConfig = {
   dependsOn: ['country'],
   options: (context) => {
     return getStatesByCountry(context.country);
-  }
+  },
 };
 ```
 
@@ -68,8 +68,8 @@ const bioField: FieldConfig = {
     component: 'textarea',
     rows: 5,
     placeholder: 'Tell us about yourself...',
-    helpText: 'Maximum 500 characters'
-  }
+    helpText: 'Maximum 500 characters',
+  },
 };
 ```
 

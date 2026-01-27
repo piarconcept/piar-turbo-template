@@ -1,95 +1,60 @@
 # Documentation Index
 
-> **Quick Link**: Start with [AI-context.md](AI-context.md) for the complete guide
+Start with `AI-context.md`.
 
-## 📖 Documentation Structure
+## Entry Points
 
-### Entry Points
-| File | Purpose | Audience |
-|------|---------|----------|
-| [../README.md](../README.md) | Project overview and quick start | Developers |
-| [AI-context.md](AI-context.md) | Main documentation index | AI Agents & Developers |
+- `../README.md` - Project overview and quick start
+- `AI-context.md` - Documentation index and rules
 
-### Core Documentation
+## Core Documents
 
-#### 🏗️ Setup & Configuration
-| Document | Status | Description |
-|----------|--------|-------------|
-| [setup-proyecto.md](features/setup-proyecto.md) | ✅ Complete | Initial project setup, structure, and commands |
-| [repository-configuration.md](features/repository-configuration.md) | ⚠️ CRITICAL | Monorepo configuration, naming conventions, rules |
+### Setup & Configuration
 
-#### 📦 Development Guides
-| Document | Status | Description |
-|----------|--------|-------------|
-| [creating-packages.md](features/creating-packages.md) | 📦 GUIDE | 14-step guide for creating new workspace packages |
-| [testing-guide.md](features/testing-guide.md) | ✅ Complete | Testing standards, patterns, and Vitest setup |
-| [eslint-configuration.md](features/eslint-configuration.md) | ✅ Complete | ESLint setup, rules, and linting across monorepo |
-| [styling-configuration.md](features/styling-configuration.md) | ✅ Complete | Styling approach and CSS configuration |
+- `features/setup-project.md`
+- `features/repository-configuration.md`
+- `features/github-workflows.md`
+- `features/bff-architecture.md`
 
-#### 📚 Package Documentation
-| Package | Document | Status | Description |
-|---------|----------|--------|-------------|
-| `@piar/domain-models` | [domain-models.md](features/domain-models.md) | ✅ Complete | Shared domain entities and models |
+### Development Guides
 
-#### 📝 Templates & Resources
-| Document | Purpose |
-|----------|---------|
-| [TEMPLATE.md](features/TEMPLATE.md) | Template for creating new feature documentation |
+- `features/creating-packages.md`
+- `features/creating-features-guide.md`
+- `features/component-library-development-guide.md`
+- `features/testing-guide.md`
+- `features/eslint-configuration.md`
+- `features/quality-gates.md`
+- `features/styling-configuration.md`
+- `features/tailwind-v4-implementation.md`
 
-## 🔍 Quick Find
+### Package Docs
 
-### I want to...
+- `features/domain-models.md`
+- `features/domain-fields.md`
+- `features/ui-components-atomic-design.md`
+- `features/auth-card-refactoring.md`
+- `features/health-feature.md`
+- `features/auth-feature.md`
+- `features/infra-backend-security.md`
+- `features/infra-client-seo.md`
+- `features/error-handling-system.md`
+- `features/nextauth-authentication.md`
 
-**Set up the project for the first time**
-→ [setup-proyecto.md](features/setup-proyecto.md)
+### Applications
 
-**Understand the monorepo structure and rules**
-→ [repository-configuration.md](features/repository-configuration.md)
+- `features/web-bff-application.md`
+- `features/backoffice-bff-application.md`
 
-**Create a new shared package**
-→ [creating-packages.md](features/creating-packages.md)
+### Templates
 
-**Use domain entities in my app**
-→ [domain-models.md](features/domain-models.md)
+- `features/TEMPLATE.md`
 
-**Document a new feature**
-→ [TEMPLATE.md](features/TEMPLATE.md)
+## Maintenance Rules
 
-**Get AI agent guidelines**
-→ [AI-context.md](AI-context.md)
+1. Keep docs in English.
+2. Update `AI-context.md` when adding/removing docs.
+3. Add a Last Updated line to new docs.
 
-## 📂 Folder Structure
+## Last Updated
 
-```
-docs/
-├── README.md              # This file - Quick index
-├── AI-context.md         # Main entry point for AI agents
-└── features/             # Feature-specific documentation
-    ├── TEMPLATE.md
-    ├── setup-proyecto.md
-    ├── repository-configuration.md
-    ├── creating-packages.md
-    └── domain-models.md
-```
-
-## 🎯 Documentation Standards
-
-All documentation follows these principles:
-
-1. ✅ **Single Source of Truth** - No duplicate information
-2. ✅ **Up to Date** - Last updated date on each doc
-3. ✅ **Structured** - Follow the TEMPLATE.md format
-4. ✅ **Indexed** - All docs listed in AI-context.md
-5. ✅ **Clear** - Written for both humans and AI
-
-## 🔄 Maintenance
-
-When adding new documentation:
-1. Create file in `features/` following TEMPLATE.md
-2. Add entry to [AI-context.md](AI-context.md)
-3. Add entry to this file
-4. Update last modified date
-
----
-
-**Last Updated**: 21 January 2026
+27 January 2026 - Cleaned and reindexed documentation

@@ -170,9 +170,7 @@ describe('FieldConfig Interface', () => {
       type: FieldType.Select,
       label: 'Category',
       options: (context) => {
-        return [
-          { value: String(context.type), label: String(context.type) },
-        ];
+        return [{ value: String(context.type), label: String(context.type) }];
       },
     };
 

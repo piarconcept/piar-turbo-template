@@ -2,7 +2,7 @@
 
 **Status**: ✅ Active  
 **Created**: 2026-01-15  
-**Last Updated**: 2026-01-15
+**Last Updated**: 2026-01-27
 
 ## Overview
 
@@ -12,13 +12,15 @@ This document describes the GitHub Actions workflows configured for continuous i
 
 ### CI - Verify (`ci.yml`)
 
-**Trigger**: 
+**Trigger**:
+
 - Push to `main` branch
 - Pull requests to `main` branch
 
 **Purpose**: Runs complete verification of the entire monorepo to ensure code quality and functionality.
 
 **Steps**:
+
 1. **Checkout code** - Checks out the repository code
 2. **Setup Node.js 20** - Installs Node.js version 20
 3. **Install pnpm 10.28.0** - Installs the exact pnpm version used in the project
@@ -28,21 +30,25 @@ This document describes the GitHub Actions workflows configured for continuous i
    - Install dependencies
    - Build all packages
    - Type checking
+   - Formatting check
    - Tests with coverage
    - Linting
 7. **Upload coverage** - Uploads coverage reports as artifacts (30 days retention)
 
 **Environment**:
+
 - Runner: `ubuntu-latest`
 - Node.js: `20`
 - pnpm: `10.28.0`
 
 **Caching Strategy**:
+
 - Caches pnpm store based on `pnpm-lock.yaml` hash
 - Reduces installation time on subsequent runs
 - Fallback to latest cache if exact match not found
 
 **Artifacts**:
+
 - Coverage reports stored for 30 days
 - Accessible from workflow run summary
 
@@ -85,21 +91,25 @@ All pull requests to `main` will automatically trigger the CI workflow. The PR c
 ## Troubleshooting
 
 ### CI Fails on Install
+
 - Check if `pnpm-lock.yaml` is committed
 - Ensure Node.js version matches (20)
 - Verify pnpm version matches (10.28.0)
 
 ### CI Fails on Build
+
 - Run `pnpm build` locally to reproduce
 - Check TypeScript errors
 - Ensure all dependencies are properly installed
 
 ### CI Fails on Tests
+
 - Run `pnpm test:coverage -- --run` locally
 - Check test failures in the logs
 - Ensure tests don't depend on local environment
 
 ### CI Fails on Lint
+
 - Run `pnpm lint` locally
 - Fix linting errors
 - Consider running `pnpm lint --fix` for auto-fixable issues

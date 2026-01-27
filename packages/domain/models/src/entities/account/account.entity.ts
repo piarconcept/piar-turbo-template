@@ -1,6 +1,4 @@
-import {
-  BaseEntityProps, BaseEntity
-} from '../base/base.entity.js';
+import { BaseEntityProps, BaseEntity } from '../base/base.entity.js';
 
 export interface AccountEntityProps extends BaseEntityProps {
   accountCode: string;

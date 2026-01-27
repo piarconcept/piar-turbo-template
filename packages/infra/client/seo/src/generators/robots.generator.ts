@@ -33,11 +33,11 @@ export interface RobotsOptions {
 
 /**
  * RobotsGenerator - Creates robots.txt content
- * 
+ *
  * @example
  * ```typescript
  * const generator = new RobotsGenerator();
- * 
+ *
  * generator
  *   .addRule({
  *     userAgent: '*',
@@ -45,7 +45,7 @@ export interface RobotsOptions {
  *     disallow: ['/admin', '/api']
  *   })
  *   .addSitemap('https://example.com/sitemap.xml');
- * 
+ *
  * const robotsTxt = generator.build();
  * ```
  */
@@ -214,13 +214,7 @@ export class RobotsTemplates {
   }): string {
     const generator = new RobotsGenerator();
 
-    const disallow = options.disallowPaths || [
-      '/admin',
-      '/api',
-      '/private',
-      '/_next',
-      '/static',
-    ];
+    const disallow = options.disallowPaths || ['/admin', '/api', '/private', '/_next', '/static'];
 
     generator.addRule({
       userAgent: '*',
@@ -240,10 +234,7 @@ export class RobotsTemplates {
   /**
    * Configuration for e-commerce sites
    */
-  static ecommerce(options: {
-    sitemaps: string[];
-    host?: string;
-  }): string {
+  static ecommerce(options: { sitemaps: string[]; host?: string }): string {
     const generator = new RobotsGenerator();
 
     // Allow all except sensitive paths
@@ -281,23 +272,13 @@ export class RobotsTemplates {
   /**
    * Configuration for blogs
    */
-  static blog(options: {
-    sitemaps: string[];
-    host?: string;
-  }): string {
+  static blog(options: { sitemaps: string[]; host?: string }): string {
     const generator = new RobotsGenerator();
 
     generator.addRule({
       userAgent: '*',
       allow: ['/'],
-      disallow: [
-        '/admin',
-        '/api',
-        '/draft',
-        '/private',
-        '/_next',
-        '/static',
-      ],
+      disallow: ['/admin', '/api', '/draft', '/private', '/_next', '/static'],
     });
 
     generator.addSitemaps(options.sitemaps);
@@ -316,14 +297,7 @@ export class RobotsTemplates {
     const generator = new RobotsGenerator();
 
     // Block known bad bots
-    const badBots = [
-      'AhrefsBot',
-      'SemrushBot',
-      'DotBot',
-      'MJ12bot',
-      'BLEXBot',
-      'PetalBot',
-    ];
+    const badBots = ['AhrefsBot', 'SemrushBot', 'DotBot', 'MJ12bot', 'BLEXBot', 'PetalBot'];
 
     badBots.forEach((bot) => {
       generator.addRule({

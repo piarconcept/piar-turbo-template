@@ -9,6 +9,6 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "types": ["react", "react-dom", "node", "jest"],
+    "types": ["react", "react-dom", "node", "jest"]
   }
 }

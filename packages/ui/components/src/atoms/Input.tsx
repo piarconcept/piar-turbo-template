@@ -10,7 +10,8 @@ const inputVariants = cva(
   {
     variants: {
       variant: {
-        default: 'border-gray-300 bg-white focus:border-[var(--color-primary-blue)] focus:ring-[var(--color-primary-blue)]',
+        default:
+          'border-gray-300 bg-white focus:border-[var(--color-primary-blue)] focus:ring-[var(--color-primary-blue)]',
         error: 'border-red-500 bg-white focus:border-red-500 focus:ring-red-500',
         success: 'border-green-500 bg-white focus:border-green-500 focus:ring-green-500',
       },
@@ -24,24 +25,23 @@ const inputVariants = cva(
       variant: 'default',
       inputSize: 'md',
     },
-  }
+  },
 );
 
 export interface InputProps
-  extends InputHTMLAttributes<HTMLInputElement>,
-    VariantProps<typeof inputVariants> {}
+  extends InputHTMLAttributes<HTMLInputElement>, VariantProps<typeof inputVariants> {}
 
 /**
  * Input Component - Atomic Design: Atom
- * 
+ *
  * @example
  * // Basic input
  * <Input type="email" placeholder="Email" />
- * 
+ *
  * @example
  * // Error state
  * <Input type="text" variant="error" placeholder="Invalid input" />
- * 
+ *
  * @example
  * // Large input
  * <Input type="text" inputSize="lg" placeholder="Large input" />
@@ -49,13 +49,9 @@ export interface InputProps
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, variant, inputSize, ...props }, ref) => {
     return (
-      <input
-        className={inputVariants({ variant, inputSize, className })}
-        ref={ref}
-        {...props}
-      />
+      <input className={inputVariants({ variant, inputSize, className })} ref={ref} {...props} />
     );
-  }
+  },
 );
 
 Input.displayName = 'Input';

@@ -23,9 +23,9 @@ describe('GetHealthUseCase', () => {
 
   it('should return different timestamps on multiple calls', async () => {
     const useCase = new GetHealthUseCaseExecuter();
-    
+
     const result1 = await useCase.execute();
-    await new Promise(resolve => setTimeout(resolve, 10));
+    await new Promise((resolve) => setTimeout(resolve, 10));
     const result2 = await useCase.execute();
 
     expect(result1.timestamp).not.toBe(result2.timestamp);
@@ -33,7 +33,7 @@ describe('GetHealthUseCase', () => {
 
   it('should return consistent service name', async () => {
     const useCase = new GetHealthUseCaseExecuter();
-    
+
     const result1 = await useCase.execute();
     const result2 = await useCase.execute();
 

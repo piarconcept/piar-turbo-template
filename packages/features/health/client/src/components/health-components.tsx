@@ -76,13 +76,13 @@ export function HealthCard({ serviceUrl, serviceName }: HealthCardProps) {
   };
 
   // Check if there's an error in checks
-  const errorCheck = status.checks?.find(c => c.status === 'error' && c.name === 'connection');
-  
+  const errorCheck = status.checks?.find((c) => c.status === 'error' && c.name === 'connection');
+
   if (status.status === 'error' && errorCheck) {
     return (
       <div className="p-4 border border-red-500 rounded-lg">
         <p className="text-red-500">Error: {errorCheck.message}</p>
-        <button 
+        <button
           onClick={refetch}
           className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
         >
@@ -96,12 +96,13 @@ export function HealthCard({ serviceUrl, serviceName }: HealthCardProps) {
     <div className={`p-4 border ${statusBorderColors[status.status]} rounded-lg`}>
       <h3 className="text-lg font-semibold mb-2">{serviceName || status.service}</h3>
       <p className="mb-1">
-        Status: <strong className={statusTextColors[status.status]}>{status.status.toUpperCase()}</strong>
+        Status:{' '}
+        <strong className={statusTextColors[status.status]}>{status.status.toUpperCase()}</strong>
       </p>
       <p className="text-sm text-gray-600 mb-2">
         Last checked: {new Date(status.timestamp).toLocaleString()}
       </p>
-      
+
       {status.version && <p className="mb-2">Version: {status.version}</p>}
 
       {status.checks && status.checks.length > 0 && (
@@ -110,7 +111,8 @@ export function HealthCard({ serviceUrl, serviceName }: HealthCardProps) {
           <ul className="my-2 pl-6 list-disc">
             {status.checks.map((check, idx) => (
               <li key={idx}>
-                {check.name}: <span className={check.status === 'ok' ? 'text-green-500' : 'text-red-500'}>
+                {check.name}:{' '}
+                <span className={check.status === 'ok' ? 'text-green-500' : 'text-red-500'}>
                   {check.status}
                 </span>
                 {check.message && ` - ${check.message}`}
@@ -120,7 +122,7 @@ export function HealthCard({ serviceUrl, serviceName }: HealthCardProps) {
         </div>
       )}
 
-      <button 
+      <button
         onClick={refetch}
         className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
       >

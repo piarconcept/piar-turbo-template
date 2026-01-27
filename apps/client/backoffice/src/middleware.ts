@@ -24,9 +24,7 @@ export default async function middleware(request: NextRequest) {
   const maybeLocale = segments[0];
   const hasLocale = locales.includes(maybeLocale as (typeof locales)[number]);
   const locale = hasLocale ? maybeLocale : defaultLocale;
-  const pathnameWithoutLocale = hasLocale
-    ? `/${segments.slice(1).join('/')}` || '/'
-    : pathname;
+  const pathnameWithoutLocale = hasLocale ? `/${segments.slice(1).join('/')}` || '/' : pathname;
 
   // Apply intl middleware for non-API routes
   const response = intlMiddleware(request);
@@ -49,10 +47,7 @@ export default async function middleware(request: NextRequest) {
 
     // No valid session or user - redirect to login
     const url = new URL(`/${locale}/login`, request.url);
-    url.searchParams.set(
-      'callbackUrl',
-      `${request.nextUrl.pathname}${request.nextUrl.search}`
-    );
+    url.searchParams.set('callbackUrl', `${request.nextUrl.pathname}${request.nextUrl.search}`);
     return NextResponse.redirect(url);
   }
 
@@ -70,8 +65,9 @@ export default async function middleware(request: NextRequest) {
   }
 
   // User has valid session - check if trying to access dashboard without admin role
-  const isDashboardRoute = pathnameWithoutLocale.startsWith('/dashboard') || pathnameWithoutLocale.startsWith('/home');
-  
+  const isDashboardRoute =
+    pathnameWithoutLocale.startsWith('/dashboard') || pathnameWithoutLocale.startsWith('/home');
+
   if (isDashboardRoute && session.user.role !== 'admin') {
     // Has session but not admin - redirect to unauthorized
     const url = new URL(`/${locale}/unauthorized`, request.url);

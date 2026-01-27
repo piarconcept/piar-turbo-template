@@ -3,11 +3,11 @@ import { isApplicationError } from '../shared/http-error-deserializer';
 /**
  * Extract error information for Server Components
  * Returns error data that can be passed to error UI components
- * 
+ *
  * @example
  * ```tsx
  * import { ErrorPage } from '@piar/ui-components';
- * 
+ *
  * export default async function Page() {
  *   try {
  *     const data = await fetchData();

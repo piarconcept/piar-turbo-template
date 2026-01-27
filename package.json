@@ -17,10 +17,13 @@
     "build:web-bff": "pnpm turbo build --filter=@piar/web-bff",
     "build:backoffice-bff": "pnpm turbo build --filter=@piar/backoffice-bff",
     "typecheck": "turbo typecheck",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
     "lint": "turbo lint",
     "test": "pnpm test:coverage -- --run",
     "test:coverage": "turbo test:coverage",
-    "verify": "bash scripts/verify-all.sh"
+    "verify": "bash scripts/verify-all.sh",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "Piar Concept <contact@piarconcept.com> (https://piarconcept.com)",
@@ -30,12 +33,24 @@
     "@typescript-eslint/eslint-plugin": "^8.53.0",
     "@typescript-eslint/parser": "^8.53.0",
     "@vitest/coverage-v8": "^2.1.9",
+    "@commitlint/cli": "^19.6.0",
+    "@commitlint/config-conventional": "^19.6.0",
     "eslint": "^9.39.2",
     "eslint-plugin-import": "^2.32.0",
+    "eslint-config-prettier": "^10.0.1",
+    "globals": "^15.11.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.4.2",
     "tough-cookie": "^6.0.0",
     "turbo": "^2.7.4",
     "typescript": "^5.9.3",
     "vitest": "^2.1.9"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,md,json,yml,yaml,css,scss}": [
+      "prettier --write"
+    ]
   },
   "private": true,
   "engines": {

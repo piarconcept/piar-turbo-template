@@ -21,14 +21,12 @@ export function DashboardFooter({ config, locale: _locale = 'en' }: DashboardFoo
                 >
                   {route.label}
                 </a>
-              ))
+              )),
             )}
           </nav>
 
           {/* Copyright */}
-          {config.copyright && (
-            <p className="text-sm text-gray-500">{config.copyright}</p>
-          )}
+          {config.copyright && <p className="text-sm text-gray-500">{config.copyright}</p>}
         </div>
       </div>
     </footer>

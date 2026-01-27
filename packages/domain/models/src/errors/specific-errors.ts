@@ -12,7 +12,11 @@ export class UnauthorizedError extends ApplicationError {
 }
 
 export class InvalidCredentialsError extends ApplicationError {
-  constructor(message = 'Invalid credentials', details?: Record<string, unknown>, i18nKey?: string) {
+  constructor(
+    message = 'Invalid credentials',
+    details?: Record<string, unknown>,
+    i18nKey?: string,
+  ) {
     super(ErrorCode.INVALID_CREDENTIALS, message, details, i18nKey);
     this.name = 'InvalidCredentialsError';
   }
@@ -59,7 +63,11 @@ export class ResourceAlreadyExistsError extends ApplicationError {
  * Validation errors
  */
 export class ValidationError extends ApplicationError {
-  constructor(message = 'Validation failed', validationErrors?: Record<string, string[]>, i18nKey?: string) {
+  constructor(
+    message = 'Validation failed',
+    validationErrors?: Record<string, string[]>,
+    i18nKey?: string,
+  ) {
     super(ErrorCode.VALIDATION_ERROR, message, { validationErrors }, i18nKey);
     this.name = 'ValidationError';
   }
@@ -74,7 +82,7 @@ export class BusinessRuleViolationError extends ApplicationError {
       ErrorCode.BUSINESS_RULE_VIOLATION,
       message || `Business rule violation: ${rule}`,
       { rule },
-      i18nKey
+      i18nKey,
     );
     this.name = 'BusinessRuleViolationError';
   }
@@ -84,7 +92,11 @@ export class BusinessRuleViolationError extends ApplicationError {
  * Server errors
  */
 export class InternalServerError extends ApplicationError {
-  constructor(message = 'Internal server error', details?: Record<string, unknown>, i18nKey?: string) {
+  constructor(
+    message = 'Internal server error',
+    details?: Record<string, unknown>,
+    i18nKey?: string,
+  ) {
     super(ErrorCode.INTERNAL_SERVER_ERROR, message, details, i18nKey);
     this.name = 'InternalServerError';
   }

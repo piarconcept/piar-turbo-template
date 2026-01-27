@@ -2,7 +2,7 @@
  * Global styles for @piar/web app
  * Imports Tailwind CSS v4 configuration from @piar/ui-config
  */
-@import "@piar/ui-config/tailwind.css";
+@import '@piar/ui-config/tailwind.css';
 
 /* Additional app-specific sources can be added here if needed */
 @source "../../../../../../packages/ui/**/*.{ts,tsx}";

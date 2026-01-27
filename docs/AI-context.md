@@ -1,149 +1,95 @@
 # AI Context - PIAR Monorepo
 
-**START HERE** - This file is the main index for AI agents and developers working on this project.
+Start here. This file is the canonical index and rules for documentation and development decisions.
 
 ## Repository language policy
+
 - The entire repository must be in English unless content is a translation for the website in other languages.
-
-## Documentation Structure
-
-```
-docs/
-├── AI-context.md          # 👈 You are here - Main index
-└── features/              # Detailed documentation
-    ├── TEMPLATE.md                    # Template for new docs
-    ├── setup-proyecto.md              # Project setup
-    ├── repository-configuration.md    # ⚠️ CRITICAL configuration
-    ├── creating-packages.md           # 📦 Package creation guide
-    └── domain-models.md               # Domain entities package
-```
 
 ## Documentation Guidelines (CRITICAL)
 
-**ALWAYS follow these rules to maintain coherence and avoid inconsistencies:**
-
-1. **Single Source of Truth**: All determinant decisions, architectural choices, and project rules MUST be documented in `docs/` or `docs/features/`.
-
-2. **Mandatory documentation updates**: When you make ANY of the following changes, you MUST update the relevant documentation:
-   - Add or modify project structure
-   - Make architectural decisions
-   - Define coding standards or conventions
-   - Configure build tools or dependencies
-   - Establish workflows or processes
-   - Create new features or major functionality
-
-3. **Documentation structure**:
-   - `docs/AI-context.md` (this file): Index and main guidelines for AI agents
-   - `docs/features/`: Detailed documentation for specific features, decisions, or components
-   - Each feature should have its own dedicated markdown file in `docs/features/`
-
-4. **Before making changes**: ALWAYS check existing documentation first to ensure consistency.
-
-5. **After making changes**: ALWAYS update or create documentation to reflect what was done.
-
-6. **Naming convention**: Use descriptive, kebab-case filenames (e.g., `authentication-flow.md`, `database-schema.md`)
-
-7. **Keep index updated**: When adding new documentation files, IMMEDIATELY update the Features section below.
+1. **Single Source of Truth**: All determinant decisions, architectural choices, and project rules must live in `docs/`.
+2. **Mandatory updates**: When you change structure, architecture, workflows, tooling, or conventions, update the relevant docs.
+3. **Structure**:
+   - `docs/AI-context.md` = master index and rules
+   - `docs/features/` = detailed docs per topic
+4. **Naming**: Use kebab-case filenames (e.g., `authentication-flow.md`).
+5. **Index maintenance**: Update this index whenever a doc is added/removed.
 
 ## Documentation Index
 
-### 🏗️ Setup & Configuration (Read First)
-1. **[setup-proyecto.md](features/setup-proyecto.md)** - Initial project setup and structure
-2. **[repository-configuration.md](features/repository-configuration.md)** ⚠️ **CRITICAL** - Monorepo rules and conventions
-3. **[github-workflows.md](features/github-workflows.md)** - GitHub Actions CI/CD workflows
-4. **[bff-architecture.md](features/bff-architecture.md)** - Backend for Frontend (BFF) pattern and implementation
+### Setup & Configuration
 
-### 📦 Development Guides
-4. **[creating-packages.md](features/creating-packages.md)** - Complete guide for creating new packages (14 steps)
-5. **[creating-features-guide.md](features/creating-features-guide.md)** - Guide for creating features with Clean Architecture (use-cases, controllers, modules)
-6. **[component-library-development-guide.md](features/component-library-development-guide.md)** - ⭐ **Component & page development workflow, Atomic Design, growing the design system**
-7. **[testing-guide.md](features/testing-guide.md)** - Testing standards, patterns, and examples with Vitest
-8. **[eslint-configuration.md](features/eslint-configuration.md)** - ESLint setup, rules, and linting across monorepo
-9. **[styling-configuration.md](features/styling-configuration.md)** - Styling approach and CSS configuration (Tailwind removed)
-10. **[tailwind-v4-implementation.md](features/tailwind-v4-implementation.md)** - Tailwind CSS v4 implementation guide and architecture
+1. `features/setup-project.md` - Initial setup and project structure
+2. `features/repository-configuration.md` - Monorepo rules and conventions
+3. `features/github-workflows.md` - CI/CD workflows
+4. `features/bff-architecture.md` - BFF architecture patterns
 
-### 📚 Package Documentation
-10. **[domain-models.md](features/domain-models.md)** - `@piar/domain-models` package documentation
-11. **[domain-fields.md](features/domain-fields.md)** - `@piar/domain-fields` package documentation (field configuration system)
-12. **[ui-components-atomic-design.md](features/ui-components-atomic-design.md)** - `@piar/ui-components` - Atomic Design architecture (Button, Input, Label, Text atoms, AuthCard molecule)
-13. **[auth-card-refactoring.md](features/auth-card-refactoring.md)** - AuthCard molecule refactoring (eliminated 37% code duplication in auth pages)
-14. **[health-feature.md](features/health-feature.md)** - Health check feature with Clean Architecture (configuration/api/client)
-15. **[auth-feature.md](features/auth-feature.md)** - Auth feature with Clean Architecture (configuration/api)
-16. **[infra-backend-security.md](features/infra-backend-security.md)** - Shared JWT security package for backend services
-17. **[infra-client-seo.md](features/infra-client-seo.md)** - ⭐ **Professional SEO infrastructure (meta tags, Schema.org, sitemaps, robots.txt, validators)**
-18. **[error-handling-system.md](features/error-handling-system.md)** - ⭐ **Complete error handling system (domain errors, filters, deserializers)**
-19. **[nextauth-authentication.md](features/nextauth-authentication.md)** - ⭐ **NextAuth.js v5 authentication in backoffice (JWT sessions, route protection, BFF integration)**
+### Development Guides
 
-### 🏢 Applications
-20. **[web-bff-application.md](features/web-bff-application.md)** - Web BFF application documentation
-21. **[backoffice-bff-application.md](features/backoffice-bff-application.md)** - Backoffice BFF application documentation
+5. `features/creating-packages.md` - 14-step guide for creating packages
+6. `features/creating-features-guide.md` - Feature creation with Clean Architecture
+7. `features/component-library-development-guide.md` - Component library workflow
+8. `features/testing-guide.md` - Testing standards and examples
+9. `features/eslint-configuration.md` - ESLint configuration and linting
+10. `features/quality-gates.md` - Formatting, commit hooks, and commit rules
+11. `features/styling-configuration.md` - Styling approach overview
+12. `features/tailwind-v4-implementation.md` - Tailwind v4 implementation details
 
-### 📄 Templates
-22. **[TEMPLATE.md](features/TEMPLATE.md)** - Template for creating new documentation
+### Package Documentation
+
+13. `features/domain-models.md` - `@piar/domain-models`
+14. `features/domain-fields.md` - `@piar/domain-fields`
+15. `features/ui-components-atomic-design.md` - `@piar/ui-components`
+16. `features/auth-card-refactoring.md` - AuthCard refactor notes
+17. `features/health-feature.md` - Health feature architecture
+18. `features/auth-feature.md` - Auth feature architecture
+19. `features/infra-backend-security.md` - Backend security package
+20. `features/infra-client-seo.md` - SEO infrastructure
+21. `features/error-handling-system.md` - Error handling system
+22. `features/nextauth-authentication.md` - NextAuth v5 in backoffice
+
+### Applications
+
+23. `features/web-bff-application.md` - Web BFF documentation
+24. `features/backoffice-bff-application.md` - Backoffice BFF documentation
+
+### Templates
+
+25. `features/TEMPLATE.md` - Template for new docs
 
 ## Quick Reference
 
 ### Creating a New Component
-1. Read: [component-library-development-guide.md](features/component-library-development-guide.md)
-2. Identify duplication (used 3+ times)
+
+1. Read `features/component-library-development-guide.md`
+2. Identify duplication (3+ uses)
 3. Choose level: atom/molecule/organism
 4. Create in `packages/ui/components/src/{level}/`
 5. Export in index.ts
 6. Build and document
 
 ### Creating a New Feature
-1. Read: [creating-features-guide.md](features/creating-features-guide.md)
+
+1. Read `features/creating-features-guide.md`
 2. Create three packages: `configuration/`, `api/`, `client/`
-3. Follow Clean Architecture pattern with use-cases
+3. Follow Clean Architecture
 4. Document in `docs/features/`
 5. Update this index
 
 ### Creating a New Package
-1. Read: [creating-packages.md](features/creating-packages.md)
-2. Follow the 14 steps
-3. Document in `docs/features/`ackage
-1. Read: [creating-packages.md](features/creating-packages.md)
+
+1. Read `features/creating-packages.md`
 2. Follow the 14 steps
 3. Document in `docs/features/`
 4. Update this index
-4. Update this index
 
-### Adding a New Feature
-1. Create file in `docs/features/`
-2. Use [TEMPLATE.md](features/TEMPLATE.md) as base
-3. Update this index
+## Before Making Changes
 
-### Before Making Changes
-1. Check [repository-configuration.md](features/repository-configuration.md)
-2. Review existing docs in `docs/features/`
-3. Understand current structure
-
-## How to Use This Documentation
-
-For **AI Agents**:
-1. Start here - read this entire file
-2. Read [repository-configuration.md](features/repository-configuration.md) next (CRITICAL)
-3. Check relevant feature docs before making changes
-4. Always update docs after making changes
-
-For **Developers**:
-1. Start with [README.md](../README.md) at root
-2. Come here for detailed guidelines
-3. Reference specific feature docs as needed
-
-## Rules Summary
-
-✅ **ALWAYS DO**:
-- Document all decisions in `docs/features/`
-- Update this index when adding docs
-- Follow existing patterns and conventions
-- Check docs before making changes
-2 January 2026 - Added comprehensive component library development guide
-❌ **NEVER DO**:
-- Make structural changes without documenting
-- Skip updating documentation
-- Create duplicate documentation
-- Ignore existing conventions
+1. Check `features/repository-configuration.md`
+2. Review relevant docs in `docs/features/`
+3. Update docs after changes
 
 ## Last Updated
-24 January 2026 - Added professional SEO infrastructure package (@piar/infra-client-seo)
+
+27 January 2026 - Cleaned and reindexed documentation

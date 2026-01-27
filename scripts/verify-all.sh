@@ -24,12 +24,17 @@ pnpm typecheck
 echo "✅ Type check passed"
 echo ""
 
-echo "🧪 Step 4: Running tests with coverage..."
+echo "🧼 Step 4: Checking formatting..."
+pnpm format:check
+echo "✅ Formatting check passed"
+echo ""
+
+echo "🧪 Step 5: Running tests with coverage..."
 pnpm test:coverage -- --run
 echo "✅ All tests passed"
 echo ""
 
-echo "🎨 Step 5: Linting code..."
+echo "🎨 Step 6: Linting code..."
 pnpm lint
 echo "✅ Linting passed"
 echo ""
@@ -42,6 +47,7 @@ echo "Summary:"
 echo "  ✅ Dependencies installed"
 echo "  ✅ All packages built"
 echo "  ✅ Type checking passed"
+echo "  ✅ Formatting check passed"
 echo "  ✅ All tests passed with coverage"
 echo ""
 echo "Your monorepo is ready! 🚀"

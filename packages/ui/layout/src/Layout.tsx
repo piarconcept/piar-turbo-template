@@ -6,11 +6,11 @@ import type { LayoutProps } from './types';
 
 /**
  * Layout - Main layout component that dispatches to the correct layout type
- * 
+ *
  * @example
  * // Using with predefined configs
  * import { Layout, publicHeaderConfig, publicFooterConfig } from '@piar/layout';
- * 
+ *
  * function App() {
  *   return (
  *     <Layout
@@ -25,11 +25,11 @@ import type { LayoutProps } from './types';
  *     </Layout>
  *   );
  * }
- * 
+ *
  * @example
  * // Dashboard layout
  * import { Layout, dashboardHeaderConfig, dashboardAsideConfig, dashboardFooterConfig } from '@piar/layout';
- * 
+ *
  * function Dashboard() {
  *   return (
  *     <Layout
@@ -66,11 +66,7 @@ export function Layout({ children, config, locale }: LayoutProps) {
 
   // Default to public layout
   return (
-    <PublicLayout
-      headerConfig={config.header}
-      footerConfig={config.footer}
-      locale={locale}
-    >
+    <PublicLayout headerConfig={config.header} footerConfig={config.footer} locale={locale}>
       {children}
     </PublicLayout>
   );

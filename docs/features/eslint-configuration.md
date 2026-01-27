@@ -1,7 +1,7 @@
 # ESLint Configuration
 
 **Status**: ✅ Configured  
-**Last Updated**: 15 January 2026
+**Last Updated**: 27 January 2026
 
 ## Overview
 
@@ -30,20 +30,25 @@ Base configuration for all TypeScript packages:
 
 - **Parser**: `@typescript-eslint/parser`
 - **Plugins**: `@typescript-eslint`, `eslint-plugin-import`
+- **Globals**: `globals` package for Node/Vitest globals in tests
+- **Formatting**: `eslint-config-prettier` disables conflicting rules
 - **File Types**: `**/*.ts`, `**/*.tsx`
 
 ### Key Rules
 
 #### TypeScript
+
 - `@typescript-eslint/no-unused-vars`: Error (allows `_` prefix for unused)
 - `@typescript-eslint/no-explicit-any`: Warning
 - `@typescript-eslint/no-non-null-assertion`: Warning
 
 #### Import Organization
-- `import/order`: Enforced with groups and alphabetical sorting
-- `import/no-duplicates`: Error
+
+- `import/order`: Disabled (kept flexible for faster iteration)
+- `import/no-duplicates`: Disabled (handled by tooling and review)
 
 #### Code Quality
+
 - `no-console`: Warn (except `console.warn`, `console.error`)
 - `prefer-const`: Error
 - `no-var`: Error
@@ -59,8 +64,23 @@ ignores: [
   '**/.next/**',
   '**/out/**',
   '**/build/**',
+  '**/*.config.*',
   'apps/**', // Apps have their own configs
-]
+];
+```
+
+### Test File Overrides
+
+Test files are linted and include Vitest globals:
+
+```js
+files: ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
+languageOptions: {
+  globals: {
+    ...globals.node,
+    ...globals.vitest,
+  },
+},
 ```
 
 ## Next.js Apps Configuration
@@ -94,6 +114,7 @@ export default rootConfig;
 ## Scripts
 
 ### Root Level (`pnpm lint`)
+
 Runs ESLint across all workspace packages and apps using Turbo:
 
 ```json
@@ -105,6 +126,7 @@ Runs ESLint across all workspace packages and apps using Turbo:
 ```
 
 ### Package Level
+
 Each package has its own lint script:
 
 ```json
@@ -132,22 +154,26 @@ Each package has its own lint script:
 ## Usage
 
 ### Lint All Workspace
+
 ```bash
 pnpm lint
 ```
 
 ### Lint Specific Package
+
 ```bash
 pnpm --filter @piar/domain-models lint
 ```
 
 ### Lint Next.js Apps
+
 ```bash
 pnpm --filter @piar/backoffice lint
 pnpm --filter @piar/web lint
 ```
 
 ### Auto-fix Issues
+
 ```bash
 pnpm lint -- --fix
 ```
@@ -155,6 +181,7 @@ pnpm lint -- --fix
 ## Dependencies
 
 ### Root Workspace (`-w`)
+
 ```json
 {
   "devDependencies": {
@@ -167,6 +194,7 @@ pnpm lint -- --fix
 ```
 
 ### Next.js Apps
+
 ```json
 {
   "devDependencies": {
@@ -183,12 +211,14 @@ pnpm lint -- --fix
 For most packages, extending the root configuration is sufficient:
 
 1. Create `eslint.config.mjs`:
+
    ```js
    import rootConfig from '../../../eslint.config.mjs';
    export default rootConfig;
    ```
 
 2. Add lint script to `package.json`:
+
    ```json
    {
      "scripts": {
@@ -204,6 +234,7 @@ For most packages, extending the root configuration is sufficient:
 ⚠️ **Important**: Use this approach when you need advanced TypeScript rules or the simple extension causes "weird errors". This is the pattern used in `@piar/ui-components`.
 
 **When to use this approach:**
+
 - Package has complex TypeScript with generics, conditional types
 - Need strict TypeScript rules with project-aware parsing
 - The simple extension approach causes module resolution errors
@@ -245,24 +276,23 @@ export default tsEslint.config(
       '.turbo/**',
       'eslint.config.mjs',
       'coverage/**',
-      'tests/**',
       '**/*.config.*',
-      '**/*.test.*',
-      '**/*.spec.*',
     ],
-  }
+  },
 );
 ```
 
 **Key elements explained:**
+
 - `import tsEslint from 'typescript-eslint'`: Direct import of typescript-eslint package
 - `__dirname` resolution: Required for ESM modules to correctly locate tsconfig.json
 - `project: true`: Enables type-aware linting with TypeScript's type checker
 - `tsconfigRootDir: __dirname`: Tells ESLint where to find tsconfig.json
 - Custom rules: Override specific rules for your package's needs
-- Comprehensive ignores: Prevent linting of build artifacts and test files
+- Comprehensive ignores: Prevent linting of build artifacts and config files
 
 **Dependencies required:**
+
 ```json
 {
   "devDependencies": {
@@ -273,6 +303,7 @@ export default tsEslint.config(
 ```
 
 **Common issues this solves:**
+
 - ❌ "Cannot find package 'typescript-eslint'" → Fixed by correct import path
 - ❌ "Parsing error: Cannot read file" → Fixed by tsconfigRootDir
 - ❌ "Unable to resolve path to module" → Fixed by project: true
@@ -280,16 +311,17 @@ export default tsEslint.config(
 
 ### Comparison: When to Use Each Approach
 
-| Feature | Simple Extension | Complete Config |
-|---------|-----------------|-----------------|
-| **Setup Time** | ⚡ Fast (2 lines) | ⏱️ Medium (15 lines) |
-| **Maintenance** | ✅ Easy | ⚠️ Manual updates |
-| **TypeScript Awareness** | ⚠️ Basic | ✅ Full type-aware |
-| **Custom Rules** | ❌ Limited | ✅ Full control |
-| **Use Case** | Domain packages, utilities | UI components, complex libs |
-| **Examples** | @piar/domain-models, @piar/domain-fields | @piar/ui-components |
+| Feature                  | Simple Extension                         | Complete Config             |
+| ------------------------ | ---------------------------------------- | --------------------------- |
+| **Setup Time**           | ⚡ Fast (2 lines)                        | ⏱️ Medium (15 lines)        |
+| **Maintenance**          | ✅ Easy                                  | ⚠️ Manual updates           |
+| **TypeScript Awareness** | ⚠️ Basic                                 | ✅ Full type-aware          |
+| **Custom Rules**         | ❌ Limited                               | ✅ Full control             |
+| **Use Case**             | Domain packages, utilities               | UI components, complex libs |
+| **Examples**             | @piar/domain-models, @piar/domain-fields | @piar/ui-components         |
 
 **Decision flowchart:**
+
 1. Start with **Simple Extension** (Approach 1)
 2. If you encounter ESLint errors or need type-aware rules:
    - Try fixing with simple config first
@@ -323,14 +355,16 @@ Add to `.vscode/settings.json`:
 ## Best Practices
 
 ### ✅ DO:
+
 1. **Start simple**: Begin with simple extension (Approach 1), upgrade if needed
 2. **Document your choice**: Explain in package README why you chose a specific config
 3. **Use complete config for UI packages**: Components often need type-aware rules
 4. **Test after changes**: Run `pnpm lint` after modifying ESLint config
-5. **Keep ignores comprehensive**: Include dist, coverage, test files, config files
+5. **Keep ignores comprehensive**: Include dist, coverage, config files
 6. **Centralize common rules**: Put shared rules in root config when possible
 
 ### ❌ DON'T:
+
 1. **Don't mix approaches**: Stick to one config pattern per package
 2. **Don't skip tsconfigRootDir**: Required for ESM modules with project-aware linting
 3. **Don't ignore the "weird errors"**: They indicate incomplete configuration
@@ -340,22 +374,24 @@ Add to `.vscode/settings.json`:
 
 ### Package-Specific Recommendations:
 
-| Package Type | Recommended Approach | Reason |
-|--------------|---------------------|---------|
-| **Domain models** (`@piar/domain-models`) | Simple Extension | Pure TypeScript, minimal complexity |
-| **Utilities** (`@piar/domain-fields`) | Simple Extension | Straightforward logic, no JSX |
-| **UI Components** (`@piar/ui-components`) | Complete Config | React/JSX, complex types, needs type-aware rules |
-| **Layout packages** (`@piar/layout`) | Complete Config | React components with composition patterns |
-| **Feature packages** (configuration) | Simple Extension | Interface definitions only |
-| **Feature packages** (client) | Complete Config | React hooks and components |
-| **Messages/i18n** | Simple Extension | JSON manipulation, minimal logic |
+| Package Type                              | Recommended Approach | Reason                                           |
+| ----------------------------------------- | -------------------- | ------------------------------------------------ |
+| **Domain models** (`@piar/domain-models`) | Simple Extension     | Pure TypeScript, minimal complexity              |
+| **Utilities** (`@piar/domain-fields`)     | Simple Extension     | Straightforward logic, no JSX                    |
+| **UI Components** (`@piar/ui-components`) | Complete Config      | React/JSX, complex types, needs type-aware rules |
+| **Layout packages** (`@piar/layout`)      | Complete Config      | React components with composition patterns       |
+| **Feature packages** (configuration)      | Simple Extension     | Interface definitions only                       |
+| **Feature packages** (client)             | Complete Config      | React hooks and components                       |
+| **Messages/i18n**                         | Simple Extension     | JSON manipulation, minimal logic                 |
 
 ## Troubleshooting
 
 ### Issue: "Cannot find package 'typescript-eslint'" or similar module errors
+
 **Problem**: Package ESLint config can't resolve typescript-eslint modules.
 
 **Solutions**:
+
 1. **Best solution**: Use the complete TypeScript-specific configuration (see Approach 2 above)
 2. Verify `typescript-eslint` is in devDependencies of the package
 3. Run `pnpm install` to ensure dependencies are linked
@@ -364,41 +400,51 @@ Add to `.vscode/settings.json`:
 **Why this happens**: ESM module resolution can be strict. The complete config with direct imports avoids resolution ambiguities.
 
 ### Issue: "Weird errors" with ESLint (parsing errors, type errors)
+
 **Problem**: Random ESLint failures, parsing errors, or type-checking issues.
 
 **Root Cause**: Simple config extension doesn't provide enough context for TypeScript project-aware linting.
 
 **Solution**: Switch to the complete TypeScript-specific configuration (Approach 2). This pattern is proven to work in `@piar/ui-components` and provides:
+
 - Proper `__dirname` resolution for ESM
 - `project: true` for type-aware linting
 - `tsconfigRootDir` pointing to correct location
 - Explicit ignores to avoid parsing build artifacts
 
 ### Issue: ESLint not finding configuration
+
 **Solution**: Ensure `eslint.config.mjs` exists in the package directory or verify path to root config.
 
 ### Issue: Import order errors
+
 **Solution**: Run `pnpm lint -- --fix` to auto-sort imports.
 
 ### Issue: Next.js specific rules not working
+
 **Solution**: Verify app's `eslint.config.mjs` extends both root and Next.js configs.
 
 ### Issue: "Parsing error: Cannot read file 'tsconfig.json'"
+
 **Problem**: ESLint can't locate TypeScript configuration.
 
-**Solution**: 
+**Solution**:
+
 1. Use complete config with `tsconfigRootDir: __dirname`
 2. Verify `tsconfig.json` exists in package root
 3. Ensure `project: true` is set in parserOptions
 
 ### Issue: Different behavior between packages
+
 **Problem**: ESLint works in some packages but fails in others.
 
-**Analysis**: 
+**Analysis**:
+
 - Packages with **simple extension**: Inherit root rules, basic TypeScript support
 - Packages with **complete config**: Full type-aware linting, custom rules
 
 **Solution**: Standardize on one approach per package type:
+
 - Domain/util packages → Simple extension
 - Component/UI packages → Complete config
 

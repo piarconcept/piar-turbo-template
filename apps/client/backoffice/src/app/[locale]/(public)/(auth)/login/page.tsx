@@ -41,7 +41,7 @@ export default function LoginPage() {
         setError(t('error'));
         setIsLoading(false);
       } else if (result?.ok) {
-        router.push(callbackUrl)
+        router.push(callbackUrl);
       }
     } catch {
       setError(t('error'));
@@ -116,12 +116,7 @@ export default function LoginPage() {
             </Link>
           </div>
 
-          <Button
-            type="submit"
-            variant="primary"
-            className="w-full"
-            disabled={isLoading}
-          >
+          <Button type="submit" variant="primary" className="w-full" disabled={isLoading}>
             {isLoading ? t('loading') : t('submit')}
           </Button>
         </form>

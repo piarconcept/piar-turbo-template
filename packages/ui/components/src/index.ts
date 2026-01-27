@@ -1,9 +1,9 @@
 /**
  * @piar/ui-components
- * 
+ *
  * Shared UI components for the PIAR monorepo.
  * All components use Tailwind CSS v4 classes for styling.
- * 
+ *
  * Follows Atomic Design principles:
  * - Atoms: Basic building blocks (Button, Text, Input)
  * - Molecules: Simple combinations of atoms

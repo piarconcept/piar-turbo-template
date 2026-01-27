@@ -42,14 +42,24 @@ import { IAuthRepository, LoginRequest } from '@piar/auth-configuration';
 class HttpAuthRepository implements IAuthRepository {
   async login(payload: LoginRequest) {
     return {
-      account: new AccountEntity({ id: '1', accountCode: 'USR-001', email: payload.email, role: 'user' }),
+      account: new AccountEntity({
+        id: '1',
+        accountCode: 'USR-001',
+        email: payload.email,
+        role: 'user',
+      }),
       session: { token: 'token', expiresAt: new Date().toISOString() },
     };
   }
 
   async register(payload) {
     return {
-      account: new AccountEntity({ id: '1', accountCode: payload.accountCode, email: payload.email, role: 'user' }),
+      account: new AccountEntity({
+        id: '1',
+        accountCode: payload.accountCode,
+        email: payload.email,
+        role: 'user',
+      }),
     };
   }
 
@@ -62,7 +72,12 @@ class HttpAuthRepository implements IAuthRepository {
 
   async updateUserRole(payload) {
     return {
-      account: new AccountEntity({ id: payload.userId, accountCode: 'USR-001', email: 'user@piar.com', role: payload.role }),
+      account: new AccountEntity({
+        id: payload.userId,
+        accountCode: 'USR-001',
+        email: 'user@piar.com',
+        role: payload.role,
+      }),
     };
   }
 }

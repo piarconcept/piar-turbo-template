@@ -1,9 +1,11 @@
 # Web BFF Application
 
 ## Purpose
+
 Backend for Frontend (BFF) API built with NestJS for the web application. Provides a tailored API layer optimized for the web client's needs.
 
 ## Status
+
 - [x] Completed - Initial NestJS setup
 
 ## Overview
@@ -19,6 +21,7 @@ The Web BFF (Backend for Frontend) is a NestJS application that serves as an int
 ## Technical Details
 
 ### Technology Stack
+
 - **Framework**: NestJS 11.x
 - **Runtime**: Node.js 20.x
 - **Language**: TypeScript 5.9.x
@@ -26,6 +29,7 @@ The Web BFF (Backend for Frontend) is a NestJS application that serves as an int
 - **Build**: NestJS CLI with TypeScript compiler
 
 ### Package Information
+
 - **Name**: `@piar/web-bff`
 - **Version**: 0.1.0
 - **Type**: Private application
@@ -55,15 +59,18 @@ apps/api/web-bff/
 ### Key Features
 
 #### 1. Bootstrap Configuration
+
 - CORS enabled for web client
 - Configurable port (default: 3001)
 - Environment-based configuration
 
 #### 2. API Endpoints
+
 - `GET /`: Welcome message
 - `GET /health`: Health check with timestamp and status
 
 #### 3. Environment Variables
+
 ```env
 PORT=5010
 NODE_ENV=development
@@ -96,6 +103,7 @@ pnpm --filter @piar/web-bff test:coverage
 ### Dependencies
 
 **Production**:
+
 - `@nestjs/common`: ^11.0.16
 - `@nestjs/core`: ^11.0.16
 - `@nestjs/platform-express`: ^11.0.16
@@ -103,6 +111,7 @@ pnpm --filter @piar/web-bff test:coverage
 - `rxjs`: ^7.8.1
 
 **Development**:
+
 - `@nestjs/cli`: ^11.0.16
 - `@nestjs/schematics`: ^11.0.9
 - `@nestjs/testing`: ^11.0.16
@@ -112,6 +121,7 @@ pnpm --filter @piar/web-bff test:coverage
 ## Configuration Details
 
 ### TypeScript Configuration
+
 - **Target**: ES2021
 - **Module**: CommonJS (NestJS standard)
 - **Decorators**: Enabled for NestJS
@@ -119,6 +129,7 @@ pnpm --filter @piar/web-bff test:coverage
 - **Path Aliases**: `@/*` maps to `src/*`
 
 ### ESLint Configuration
+
 - Extends root configuration
 - NestJS-specific rules:
   - Interface name prefix: off
@@ -127,6 +138,7 @@ pnpm --filter @piar/web-bff test:coverage
   - No explicit any: warn
 
 ### Vitest Configuration
+
 - **Environment**: Node
 - **Globals**: Enabled
 - **Coverage**: v8 provider with HTML/JSON/text reports
@@ -135,13 +147,16 @@ pnpm --filter @piar/web-bff test:coverage
 ## Integration
 
 ### Monorepo Integration
+
 - Part of pnpm workspace at root
 - Uses Turbo for build orchestration
 - Follows repository naming conventions (`@piar/` scope)
 - Shares common configurations (ESLint, TypeScript)
 
 ### Client Integration
+
 The BFF is designed to work with:
+
 - `@piar/web` - Web client application
 - CORS configured for local development
 - Environment-based client URL configuration
@@ -149,6 +164,7 @@ The BFF is designed to work with:
 ## Usage Examples
 
 ### Starting the Server
+
 ```bash
 # From repository root
 pnpm --filter @piar/web-bff dev
@@ -157,6 +173,7 @@ pnpm --filter @piar/web-bff dev
 ```
 
 ### Testing the API
+
 ```bash
 # Health check
 curl http://localhost:3001/health
@@ -170,6 +187,7 @@ curl http://localhost:3001/health
 ```
 
 ### Adding New Endpoints
+
 1. Create a new module: `nest g module <name>`
 2. Create a controller: `nest g controller <name>`
 3. Create a service: `nest g service <name>`
@@ -178,18 +196,21 @@ curl http://localhost:3001/health
 ## Best Practices
 
 ### Module Organization
+
 - Keep modules focused and cohesive
 - Use dependency injection for services
 - Implement proper error handling
 - Add input validation with DTOs
 
 ### Testing Strategy
+
 - Unit tests for services
 - Integration tests for controllers
 - E2E tests for critical flows
 - Maintain >80% coverage
 
 ### Error Handling
+
 - Use NestJS exception filters
 - Provide meaningful error messages
 - Log errors appropriately
@@ -198,6 +219,7 @@ curl http://localhost:3001/health
 ## Future Enhancements
 
 ### Planned Features
+
 - [ ] Authentication middleware
 - [ ] API versioning
 - [ ] Request logging
@@ -207,22 +229,26 @@ curl http://localhost:3001/health
 - [ ] GraphQL support (optional)
 
 ### Performance Optimizations
+
 - [ ] Response caching
 - [ ] Connection pooling
 - [ ] Compression middleware
 - [ ] Request validation caching
 
 ## Related Documentation
+
 - [Repository Configuration](repository-configuration.md)
 - [Creating Packages](creating-packages.md)
 - [Testing Guide](testing-guide.md)
 - [ESLint Configuration](eslint-configuration.md)
 
 ## Notes
+
 - This application follows NestJS best practices and conventions
 - Uses CommonJS modules (NestJS standard) unlike other packages that use ESM
 - Decorators and metadata are essential for NestJS dependency injection
 - Health check endpoint is crucial for container orchestration and monitoring
 
 ## Last Updated
+
 16 January 2026 - Initial NestJS setup for web-bff application

@@ -14,7 +14,7 @@ describe('Base Entity Fields Configuration', () => {
   });
 
   it('should have all required base entity field keys', () => {
-    const fieldKeys = baseEntityFieldsConfig.fields.map(f => f.key);
+    const fieldKeys = baseEntityFieldsConfig.fields.map((f) => f.key);
     expect(fieldKeys).toContain('id');
     expect(fieldKeys).toContain('createdAt');
     expect(fieldKeys).toContain('updatedAt');
@@ -23,15 +23,15 @@ describe('Base Entity Fields Configuration', () => {
   it('should only allow valid BaseEntityProps keys', () => {
     // This test validates that TypeScript enforces the correct keys
     const validKeys: (keyof BaseEntityProps)[] = ['id', 'createdAt', 'updatedAt'];
-    const fieldKeys = baseEntityFieldsConfig.fields.map(f => f.key);
-    
-    fieldKeys.forEach(key => {
+    const fieldKeys = baseEntityFieldsConfig.fields.map((f) => f.key);
+
+    fieldKeys.forEach((key) => {
       expect(validKeys).toContain(key as keyof BaseEntityProps);
     });
   });
 
   describe('id field', () => {
-    const idField = baseEntityFieldsConfig.fields.find(f => f.key === 'id');
+    const idField = baseEntityFieldsConfig.fields.find((f) => f.key === 'id');
 
     it('should be configured correctly', () => {
       expect(idField).toBeDefined();
@@ -59,7 +59,7 @@ describe('Base Entity Fields Configuration', () => {
   });
 
   describe('createdAt field', () => {
-    const createdAtField = baseEntityFieldsConfig.fields.find(f => f.key === 'createdAt');
+    const createdAtField = baseEntityFieldsConfig.fields.find((f) => f.key === 'createdAt');
 
     it('should be configured correctly', () => {
       expect(createdAtField).toBeDefined();
@@ -87,7 +87,7 @@ describe('Base Entity Fields Configuration', () => {
   });
 
   describe('updatedAt field', () => {
-    const updatedAtField = baseEntityFieldsConfig.fields.find(f => f.key === 'updatedAt');
+    const updatedAtField = baseEntityFieldsConfig.fields.find((f) => f.key === 'updatedAt');
 
     it('should be configured correctly', () => {
       expect(updatedAtField).toBeDefined();
@@ -122,7 +122,7 @@ describe('Base Entity Fields Configuration', () => {
 
     it('should configure metadata group correctly', () => {
       const metadataGroup = baseEntityFieldsConfig.groups?.[0];
-      
+
       expect(metadataGroup?.id).toBe('metadata');
       expect(metadataGroup?.label).toBe('Metadata');
       expect(metadataGroup?.description).toBe('System-generated metadata fields');
@@ -130,34 +130,34 @@ describe('Base Entity Fields Configuration', () => {
 
     it('should include all base fields in metadata group', () => {
       const metadataGroup = baseEntityFieldsConfig.groups?.[0];
-      
+
       expect(metadataGroup?.fields).toEqual(['id', 'createdAt', 'updatedAt']);
     });
 
     it('should be collapsible and collapsed by default', () => {
       const metadataGroup = baseEntityFieldsConfig.groups?.[0];
-      
+
       expect(metadataGroup?.collapsible).toBe(true);
       expect(metadataGroup?.defaultCollapsed).toBe(true);
     });
 
     it('should have low priority order', () => {
       const metadataGroup = baseEntityFieldsConfig.groups?.[0];
-      
+
       expect(metadataGroup?.order).toBe(999);
     });
   });
 
   describe('Permissions', () => {
     it('should allow admin and user to view all fields', () => {
-      baseEntityFieldsConfig.fields.forEach(field => {
+      baseEntityFieldsConfig.fields.forEach((field) => {
         expect(field.permissions?.view).toContain('admin');
         expect(field.permissions?.view).toContain('user');
       });
     });
 
     it('should not allow anyone to edit base fields', () => {
-      baseEntityFieldsConfig.fields.forEach(field => {
+      baseEntityFieldsConfig.fields.forEach((field) => {
         expect(field.permissions?.edit).toHaveLength(0);
       });
     });
@@ -167,8 +167,8 @@ describe('Base Entity Fields Configuration', () => {
     it('should enforce BaseEntityProps keys at compile time', () => {
       // This test validates TypeScript type checking
       // If we try to add a field with an invalid key, TypeScript will error
-      type ValidKeys = typeof baseEntityFieldsConfig.fields[number]['key'];
-      
+      type ValidKeys = (typeof baseEntityFieldsConfig.fields)[number]['key'];
+
       const testKey: ValidKeys = 'id';
       expect(testKey).toBe('id');
     });
@@ -181,7 +181,7 @@ describe('Base Entity Fields Configuration', () => {
       };
 
       // All field keys should be valid BaseEntityProps keys
-      baseEntityFieldsConfig.fields.forEach(field => {
+      baseEntityFieldsConfig.fields.forEach((field) => {
         expect(field.key in testEntity).toBe(true);
       });
     });

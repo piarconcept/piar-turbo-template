@@ -32,32 +32,28 @@ const textVariants = cva('', {
   },
 });
 
-export interface TextProps
-  extends HTMLAttributes<HTMLElement>,
-    VariantProps<typeof textVariants> {
+export interface TextProps extends HTMLAttributes<HTMLElement>, VariantProps<typeof textVariants> {
   as?: 'p' | 'span' | 'div' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'label';
 }
 
 /**
  * Text Component - Atomic Design: Atom
- * 
+ *
  * @example
  * // Heading
  * <Text variant="h1">Page Title</Text>
- * 
+ *
  * @example
  * // Body text
  * <Text variant="body">This is body text</Text>
- * 
+ *
  * @example
  * // Custom element
  * <Text as="label" variant="label">Email</Text>
  */
 export const Text = ({ className, variant, align, as = 'p', ...props }: TextProps) => {
   const Component = as;
-  return (
-    <Component className={textVariants({ variant, align, className })} {...props} />
-  );
+  return <Component className={textVariants({ variant, align, className })} {...props} />;
 };
 
 Text.displayName = 'Text';

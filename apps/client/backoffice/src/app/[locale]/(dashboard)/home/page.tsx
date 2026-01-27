@@ -28,12 +28,8 @@ export default function HomePage() {
       {/* Page Header with Logout Button */}
       <div className="border-b border-gray-200 pb-4 flex items-start justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-[var(--color-secondary)]">
-            {t('title')}
-          </h1>
-          <p className="mt-2 text-gray-600">
-            {t('subtitle')}
-          </p>
+          <h1 className="text-3xl font-bold text-[var(--color-secondary)]">{t('title')}</h1>
+          <p className="mt-2 text-gray-600">{t('subtitle')}</p>
         </div>
         <LogoutButton />
       </div>
@@ -65,9 +61,7 @@ export default function HomePage() {
             )}
             <div className="flex items-center gap-2">
               <span className="font-medium text-gray-700">User ID:</span>
-              <span className="text-gray-600 font-mono text-sm">
-                {session.user?.id}
-              </span>
+              <span className="text-gray-600 font-mono text-sm">{session.user?.id}</span>
             </div>
           </div>
         </div>
@@ -75,30 +69,10 @@ export default function HomePage() {
 
       {/* Stats Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <StatsCard
-          title={t('stats.users')}
-          value="1,234"
-          change="+12%"
-          changeType="positive"
-        />
-        <StatsCard
-          title={t('stats.content')}
-          value="567"
-          change="+8%"
-          changeType="positive"
-        />
-        <StatsCard
-          title={t('stats.views')}
-          value="45.2K"
-          change="+23%"
-          changeType="positive"
-        />
-        <StatsCard
-          title={t('stats.conversion')}
-          value="3.24%"
-          change="-2%"
-          changeType="negative"
-        />
+        <StatsCard title={t('stats.users')} value="1,234" change="+12%" changeType="positive" />
+        <StatsCard title={t('stats.content')} value="567" change="+8%" changeType="positive" />
+        <StatsCard title={t('stats.views')} value="45.2K" change="+23%" changeType="positive" />
+        <StatsCard title={t('stats.conversion')} value="3.24%" change="-2%" changeType="negative" />
       </div>
 
       {/* Recent Activity */}
@@ -107,21 +81,9 @@ export default function HomePage() {
           {t('recentActivity')}
         </h2>
         <div className="space-y-4">
-          <ActivityItem
-            title="New user registered"
-            time="2 minutes ago"
-            type="user"
-          />
-          <ActivityItem
-            title="Content published"
-            time="15 minutes ago"
-            type="content"
-          />
-          <ActivityItem
-            title="Settings updated"
-            time="1 hour ago"
-            type="settings"
-          />
+          <ActivityItem title="New user registered" time="2 minutes ago" type="user" />
+          <ActivityItem title="Content published" time="15 minutes ago" type="content" />
+          <ActivityItem title="Settings updated" time="1 hour ago" type="settings" />
         </div>
       </div>
     </div>
@@ -142,13 +104,9 @@ function StatsCard({
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-6">
       <p className="text-sm text-gray-600">{title}</p>
-      <p className="mt-2 text-3xl font-bold text-[var(--color-secondary)]">
-        {value}
-      </p>
+      <p className="mt-2 text-3xl font-bold text-[var(--color-secondary)]">{value}</p>
       <p
-        className={`mt-2 text-sm ${
-          changeType === 'positive' ? 'text-green-600' : 'text-red-600'
-        }`}
+        className={`mt-2 text-sm ${changeType === 'positive' ? 'text-green-600' : 'text-red-600'}`}
       >
         {change} from last month
       </p>
@@ -156,15 +114,7 @@ function StatsCard({
   );
 }
 
-function ActivityItem({
-  title,
-  time,
-  type,
-}: {
-  title: string;
-  time: string;
-  type: string;
-}) {
+function ActivityItem({ title, time, type }: { title: string; time: string; type: string }) {
   return (
     <div className="flex items-center justify-between border-b border-gray-100 pb-4 last:border-0 last:pb-0">
       <div className="flex items-center gap-3">

@@ -1,9 +1,11 @@
 # BFF Architecture (Backend for Frontend)
 
 ## Purpose
+
 Document the BFF (Backend for Frontend) architecture pattern implementation in the PIAR monorepo, explaining the design decisions, structure, and best practices.
 
 ## Status
+
 - [x] Completed - Initial BFF architecture documentation
 
 ## Overview
@@ -66,6 +68,7 @@ The PIAR monorepo implements the **Backend for Frontend (BFF)** pattern, which p
 **Port**: 5010
 
 **Responsibilities**:
+
 - Public content delivery
 - User authentication and registration
 - Public API endpoints
@@ -88,6 +91,7 @@ The PIAR monorepo implements the **Backend for Frontend (BFF)** pattern, which p
 **Port**: 5050
 
 **Responsibilities**:
+
 - Admin operations
 - User management (CRUD)
 - System configuration
@@ -131,6 +135,7 @@ NestJS was chosen for the BFF layer because:
 ### 1. Single Responsibility
 
 Each BFF serves **only one** client application. This ensures:
+
 - Clear ownership
 - Focused API design
 - No feature bloat
@@ -139,6 +144,7 @@ Each BFF serves **only one** client application. This ensures:
 ### 2. Client-Driven Design
 
 BFFs are designed **from the client's perspective**:
+
 - Endpoints match UI needs
 - Data structures match component requirements
 - No unnecessary data transformation in the client
@@ -146,6 +152,7 @@ BFFs are designed **from the client's perspective**:
 ### 3. Independent Deployment
 
 Each BFF can be:
+
 - Deployed independently
 - Scaled independently
 - Updated without affecting other BFFs
@@ -154,6 +161,7 @@ Each BFF can be:
 ### 4. Shared Domain Logic
 
 While BFFs are separate, they share:
+
 - Domain models (`@piar/domain-models`)
 - Field configurations (`@piar/domain-fields`)
 - Business logic (through shared services)
@@ -162,6 +170,7 @@ While BFFs are separate, they share:
 ### 5. Security by Design
 
 Security is implemented at the BFF level:
+
 - Authentication at entry point
 - Authorization per endpoint
 - Input validation
@@ -175,11 +184,13 @@ Security is implemented at the BFF level:
 
 **Protocol**: HTTP/REST
 
-**Authentication**: 
+**Authentication**:
+
 - Web BFF: JWT tokens, session cookies
 - Backoffice BFF: JWT tokens with admin claims
 
 **Request Flow**:
+
 ```typescript
 // Example: Web client fetches user profile
 // 1. Client makes request
@@ -211,6 +222,7 @@ export class UserController {
 ### BFF → Backend Services
 
 BFFs orchestrate calls to:
+
 - **Database**: Direct queries or via repositories
 - **External APIs**: Third-party services
 - **Microservices**: Internal services
@@ -226,7 +238,7 @@ async getDashboard(userId: string) {
     this.analyticsService.getUserStats(userId),
     this.notificationService.getRecent(userId)
   ]);
-  
+
   // Return aggregated, UI-ready data
   return {
     user: this.transformUser(user),
@@ -384,11 +396,11 @@ Use interceptors to transform responses:
 export class TransformInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
-      map(data => ({
+      map((data) => ({
         success: true,
         data,
         timestamp: new Date().toISOString(),
-      }))
+      })),
     );
   }
 }
@@ -585,7 +597,7 @@ kind: Deployment
 metadata:
   name: web-bff
 spec:
-  replicas: 3  # Multiple instances
+  replicas: 3 # Multiple instances
   selector:
     matchLabels:
       app: web-bff
@@ -595,10 +607,10 @@ spec:
         app: web-bff
     spec:
       containers:
-      - name: web-bff
-        image: piar/web-bff:latest
-        ports:
-        - containerPort: 5010
+        - name: web-bff
+          image: piar/web-bff:latest
+          ports:
+            - containerPort: 5010
 ```
 
 ### Load Balancing
@@ -623,6 +635,7 @@ server {
 ## Security Checklist
 
 ### For Web BFF
+
 - [ ] JWT authentication implemented
 - [ ] CORS configured correctly
 - [ ] Rate limiting enabled
@@ -635,6 +648,7 @@ server {
 - [ ] Logging enabled
 
 ### For Backoffice BFF (Additional)
+
 - [ ] Role-based access control (RBAC)
 - [ ] Admin-only guards
 - [ ] Audit logging for all operations
@@ -704,4 +718,5 @@ server {
 - [Micro Frontends by Cam Jackson](https://martinfowler.com/articles/micro-frontends.html)
 
 ## Last Updated
+
 16 January 2026 - Initial BFF architecture documentation

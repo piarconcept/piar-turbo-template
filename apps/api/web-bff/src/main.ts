@@ -4,7 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  
+
   // Enable CORS for web client
   app.enableCors({
     origin: process.env.WEB_CLIENT_URL || 'http://localhost:3000',
@@ -33,12 +33,14 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api-docs', app, document);
 
-    console.warn(`📚 Swagger documentation available at: http://localhost:${process.env.PORT || 5010}/api-docs`);
+    console.warn(
+      `📚 Swagger documentation available at: http://localhost:${process.env.PORT || 5010}/api-docs`,
+    );
   }
 
   const port = process.env.PORT || 5010;
   await app.listen(port);
-  
+
   console.warn(`🚀 Web BFF is running on: http://localhost:${port}`);
 }
 

@@ -5,7 +5,7 @@ describe('AccountEntity', () => {
   it('should create account entity with required properties', () => {
     const props: AccountEntityProps = {
       id: 'acc-001',
-      accountCode: 'ACC-001'
+      accountCode: 'ACC-001',
     };
 
     const account = new AccountEntity(props);
@@ -21,7 +21,7 @@ describe('AccountEntity', () => {
     const props: AccountEntityProps = {
       id: 'acc-002',
       accountCode: 'ACC-002',
-      role: 'admin'
+      role: 'admin',
     };
 
     const account = new AccountEntity(props);
@@ -40,7 +40,7 @@ describe('AccountEntity', () => {
       accountCode: 'ACC-003',
       role: 'user',
       createdAt: createdDate,
-      updatedAt: updatedDate
+      updatedAt: updatedDate,
     };
 
     const account = new AccountEntity(props);

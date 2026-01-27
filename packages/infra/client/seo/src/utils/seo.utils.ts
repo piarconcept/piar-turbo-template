@@ -36,10 +36,7 @@ export function truncateText(text: string, maxLength: number, suffix: string = '
 /**
  * Generate a meta description from content
  */
-export function generateMetaDescription(
-  content: string,
-  maxLength: number = 160
-): string {
+export function generateMetaDescription(content: string, maxLength: number = 160): string {
   return truncateText(content, maxLength);
 }
 
@@ -49,7 +46,7 @@ export function generateMetaDescription(
 export function extractKeywords(
   text: string,
   maxKeywords: number = 10,
-  minWordLength: number = 4
+  minWordLength: number = 4,
 ): string[] {
   const sanitized = sanitizeText(text).toLowerCase();
 
@@ -172,10 +169,7 @@ export function calculateReadingTime(content: string, wordsPerMinute: number = 2
 /**
  * Generate Open Graph image URL with fallback
  */
-export function generateOgImageUrl(
-  imageUrl: string | undefined,
-  fallbackUrl: string
-): string {
+export function generateOgImageUrl(imageUrl: string | undefined, fallbackUrl: string): string {
   if (!imageUrl) {
     return fallbackUrl;
   }

@@ -41,7 +41,7 @@ console.log(status);
 // Check with timeout (5 seconds)
 const statusWithTimeout = await healthRepository.getHealthWithTimeout(
   'http://localhost:5010',
-  5010
+  5010,
 );
 ```
 
@@ -76,12 +76,14 @@ pnpm --filter @piar/health-api test
 Implements `IHealthRepository` using native fetch API:
 
 **Features:**
+
 - Automatic error handling
 - Timeout support with AbortController
 - Structured error responses
 - Type-safe responses
 
 **Error Handling:**
+
 - Network errors: Returns error status with message
 - Timeout errors: Returns timeout-specific error
 - HTTP errors (4xx, 5xx): Returns error status
@@ -96,7 +98,7 @@ describe('HttpHealthRepository', () => {
   it('should fetch health status', async () => {
     const repository = new HttpHealthRepository();
     const status = await repository.getHealth('http://localhost:5010');
-    
+
     expect(status).toHaveProperty('status');
     expect(status).toHaveProperty('timestamp');
   });

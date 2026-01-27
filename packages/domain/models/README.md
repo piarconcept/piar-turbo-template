@@ -11,7 +11,7 @@ import { AccountEntity, AccountEntityProps } from '@piar/domain-models';
 const account = new AccountEntity({
   id: '123',
   accountCode: 'ACC-001',
-  role: 'admin'
+  role: 'admin',
   // createdAt and updatedAt are auto-generated
 });
 

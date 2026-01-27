@@ -1,31 +1,31 @@
-# Guía para Crear Features
+# Feature Creation Guide
 
-Esta guía describe cómo crear nuevos features siguiendo la arquitectura Clean Architecture del proyecto PIAR.
+This guide explains how to create new features following the PIAR Clean Architecture approach.
 
-## Arquitectura de Features
+## Feature Architecture
 
-Cada feature se divide en **tres paquetes** independientes:
+Each feature is split into **three packages**:
 
 ```
 packages/features/{feature-name}/
-├── configuration/    # 🔷 Dominio (Ports & Types)
-├── api/             # 🔶 Infraestructura NestJS
-└── client/          # 🔷 Cliente React
+├── configuration/    # Domain (ports & types)
+├── api/              # NestJS API (use-cases, controllers)
+└── client/           # React client (hooks, components)
 ```
 
-### Principios
+### Principles
 
-1. **Clean Architecture**: Separación clara entre dominio, aplicación e infraestructura
-2. **Dependency Inversion**: Las dependencias apuntan hacia el dominio
-3. **Reutilización**: Tipos compartidos entre API y cliente
-4. **Type-safety**: TypeScript end-to-end
-5. **Testabilidad**: Cada capa es testeable independientemente
+1. **Clean Architecture**: Clear separation between domain, application, and infrastructure
+2. **Dependency Inversion**: Dependencies point inward to the domain
+3. **Reuse**: Shared types across API and client
+4. **Type Safety**: End-to-end TypeScript
+5. **Testability**: Each layer is independently testable
 
-## Paso 1: Crear el paquete Configuration
+## Step 1: Create the Configuration Package
 
-Este paquete define los **contratos** del feature (ports e interfaces).
+The configuration package defines the **contracts** for the feature (ports, types).
 
-### Estructura
+### Structure
 
 ```
 packages/features/{feature-name}/configuration/
@@ -36,77 +36,15 @@ packages/features/{feature-name}/configuration/
 ├── README.md
 └── src/
     ├── index.ts
-    ├── ports/              # Interfaces (puertos)
+    ├── ports/
     │   └── {name}-repository.port.ts
-    └── common/             # Types, DTOs, Entities
+    └── common/
         └── types.ts
 ```
 
-### package.json
+### Example Port
 
-```json
-{
-  "name": "@piar/{feature-name}-configuration",
-  "version": "0.1.0",
-  "description": "Domain configuration for {feature-name} feature",
-  "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    }
-  },
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest",
-    "test:coverage": "vitest --coverage"
-  },
-  "devDependencies": {
-    "@types/node": "^22.10.5",
-    "@vitest/coverage-v8": "^2.1.9",
-    "typescript": "^5.9.3",
-    "vitest": "^2.1.9"
-  }
-}
-```
-
-### tsconfig.json
-
-```json
-{
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "lib": ["ES2020"],
-    "moduleResolution": "bundler",
-    "declaration": true,
-    "declarationMap": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "tests"]
-}
-```
-
-### Ejemplo de Port
-
-```typescript
-// src/ports/{feature}-repository.port.ts
+```ts
 export interface IFeatureRepository {
   findById(id: string): Promise<FeatureEntity | null>;
   save(entity: FeatureEntity): Promise<void>;
@@ -114,10 +52,9 @@ export interface IFeatureRepository {
 }
 ```
 
-### Ejemplo de Types
+### Example Types
 
-```typescript
-// src/common/types.ts
+```ts
 export interface FeatureEntity {
   id: string;
   name: string;
@@ -132,19 +69,16 @@ export type UpdateFeatureDTO = Partial<CreateFeatureDTO>;
 
 ### src/index.ts
 
-```typescript
-// Ports
+```ts
 export * from './ports/{feature}-repository.port';
-
-// Types
 export * from './common/types';
 ```
 
-## Paso 2: Crear el paquete API (NestJS)
+## Step 2: Create the API Package (NestJS)
 
-Este paquete implementa la **lógica backend** con NestJS.
+This package implements backend logic using NestJS.
 
-### Estructura
+### Structure
 
 ```
 packages/features/{feature-name}/api/
@@ -155,168 +89,56 @@ packages/features/{feature-name}/api/
 ├── README.md
 └── src/
     ├── index.ts
-    ├── controllers/         # Controladores HTTP
+    ├── controllers/
     │   └── {feature}.controller.ts
-    ├── use-cases/          # Casos de uso (business logic)
+    ├── use-cases/
     │   ├── create-{feature}.use-case.ts
     │   ├── get-{feature}.use-case.ts
     │   └── index.ts
-    ├── modules/            # Módulos NestJS (DI)
+    ├── modules/
     │   └── {feature}.module.ts
-    └── repositories/       # Implementaciones de ports (opcional)
+    └── repositories/
         └── {feature}.repository.ts
 ```
 
-### package.json
+### Use Cases
 
-```json
-{
-  "name": "@piar/{feature-name}-api",
-  "version": "0.1.0",
-  "description": "NestJS API implementation for {feature-name} feature",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest",
-    "test:coverage": "vitest --coverage"
-  },
-  "dependencies": {
-    "@nestjs/common": "^11.0.16",
-    "@nestjs/core": "^11.0.16",
-    "@piar/{feature-name}-configuration": "workspace:*"
-  },
-  "devDependencies": {
-    "@nestjs/testing": "^11.0.16",
-    "@types/node": "^22.10.5",
-    "@vitest/coverage-v8": "^2.1.9",
-    "typescript": "^5.9.3",
-    "vitest": "^2.1.9"
-  },
-  "peerDependencies": {
-    "@nestjs/common": "^11.0.0",
-    "@nestjs/core": "^11.0.0",
-    "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.0"
+```ts
+export interface CreateFeatureUseCase {
+  execute(dto: CreateFeatureDTO): Promise<FeatureEntity>;
+}
+
+export class CreateFeatureUseCaseExecutor implements CreateFeatureUseCase {
+  constructor(private readonly repository: IFeatureRepository) {}
+
+  async execute(dto: CreateFeatureDTO): Promise<FeatureEntity> {
+    const entity = { ...dto, id: crypto.randomUUID(), createdAt: new Date().toISOString() };
+    await this.repository.save(entity);
+    return entity;
   }
 }
 ```
 
-### tsconfig.json
+### Controller
 
-```json
-{
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
-    "lib": ["ES2020"],
-    "moduleResolution": "node",
-    "declaration": true,
-    "declarationMap": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "tests"]
-}
-```
-
-### Ejemplo de Use Case
-
-```typescript
-// src/use-cases/get-{feature}.use-case.ts
-import { FeatureEntity } from '@piar/{feature-name}-configuration';
-
-/**
- * Use Case Interface
- */
-export interface GetFeatureUseCase {
-  execute(id: string): Promise<FeatureEntity | null>;
-}
-
-/**
- * Symbol for DI
- */
-export const GetFeatureUseCase = Symbol('GetFeatureUseCase');
-
-/**
- * Use Case Implementation
- */
-export class GetFeatureUseCaseExecuter implements GetFeatureUseCase {
-  constructor(
-    // Inyectar repositorio si es necesario
-    // private readonly repository: IFeatureRepository
-  ) {}
-
-  async execute(id: string): Promise<FeatureEntity | null> {
-    // Lógica de negocio aquí
-    return {
-      id,
-      name: 'Example',
-      status: 'active',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-  }
-}
-```
-
-### Ejemplo de Controller
-
-```typescript
-// src/controllers/{feature}.controller.ts
-import { Controller, Get, Post, Body, Param, Inject } from '@nestjs/common';
-import { FeatureEntity, CreateFeatureDTO } from '@piar/{feature-name}-configuration';
-import { GetFeatureUseCase, CreateFeatureUseCase } from '../use-cases';
-
-@Controller('{feature}')
+```ts
+@Controller('features')
 export class FeatureController {
   constructor(
-    @Inject(GetFeatureUseCase)
-    private readonly getFeatureUseCase: GetFeatureUseCase,
     @Inject(CreateFeatureUseCase)
-    private readonly createFeatureUseCase: CreateFeatureUseCase
+    private readonly createFeature: CreateFeatureUseCase,
   ) {}
 
-  @Get(':id')
-  async getById(@Param('id') id: string): Promise<FeatureEntity | null> {
-    return this.getFeatureUseCase.execute(id);
-  }
-
   @Post()
-  async create(@Body() dto: CreateFeatureDTO): Promise<FeatureEntity> {
-    return this.createFeatureUseCase.execute(dto);
+  create(@Body() dto: CreateFeatureDTO): Promise<FeatureEntity> {
+    return this.createFeature.execute(dto);
   }
 }
 ```
 
-### Ejemplo de Module
+### Module
 
-```typescript
-// src/modules/{feature}.module.ts
-import { DynamicModule, Module } from '@nestjs/common';
-import { FeatureController } from '../controllers/{feature}.controller';
-import { 
-  GetFeatureUseCase, 
-  GetFeatureUseCaseExecuter,
-  CreateFeatureUseCase,
-  CreateFeatureUseCaseExecuter
-} from '../use-cases';
-
+```ts
 @Module({
   controllers: [FeatureController],
 })
@@ -326,15 +148,12 @@ export class FeatureModule {
       module: FeatureModule,
       providers: [
         {
-          provide: GetFeatureUseCase,
-          useFactory: () => new GetFeatureUseCaseExecuter(),
-        },
-        {
           provide: CreateFeatureUseCase,
-          useFactory: () => new CreateFeatureUseCaseExecuter(),
+          useFactory: (repo: IFeatureRepository) => new CreateFeatureUseCaseExecutor(repo),
+          inject: [IFeatureRepository],
         },
       ],
-      exports: [GetFeatureUseCase, CreateFeatureUseCase],
+      exports: [CreateFeatureUseCase],
     };
   }
 }
@@ -342,22 +161,17 @@ export class FeatureModule {
 
 ### src/index.ts
 
-```typescript
-// Module
+```ts
 export * from './modules/{feature}.module';
-
-// Controller
 export * from './controllers/{feature}.controller';
-
-// Use Cases
 export * from './use-cases';
 ```
 
-## Paso 3: Crear el paquete Client (React)
+## Step 3: Create the Client Package (React)
 
-Este paquete implementa la **lógica frontend** con React.
+This package implements client-side hooks, repositories, and UI.
 
-### Estructura
+### Structure
 
 ```
 packages/features/{feature-name}/client/
@@ -368,94 +182,28 @@ packages/features/{feature-name}/client/
 ├── README.md
 └── src/
     ├── index.ts
-    ├── repositories/        # Implementación HTTP
+    ├── repositories/
     │   └── http-{feature}.repository.ts
-    ├── hooks/              # Custom hooks
+    ├── hooks/
     │   └── use-{feature}.ts
-    └── components/         # React components
-        └── {feature}-components.tsx
+    └── components/
+        └── {Feature}Card.tsx
 ```
 
-### package.json
+### Repository
 
-```json
-{
-  "name": "@piar/{feature-name}-client",
-  "version": "0.1.0",
-  "description": "React client implementation for {feature-name} feature",
-  "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest",
-    "test:coverage": "vitest --coverage"
-  },
-  "dependencies": {
-    "@piar/{feature-name}-configuration": "workspace:*"
-  },
-  "devDependencies": {
-    "@types/node": "^22.10.5",
-    "@types/react": "^19.0.0",
-    "@vitest/coverage-v8": "^2.1.9",
-    "typescript": "^5.9.3",
-    "vitest": "^2.1.9"
-  },
-  "peerDependencies": {
-    "react": "^19.0.0"
-  }
-}
-```
-
-### tsconfig.json
-
-```json
-{
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "lib": ["ES2020", "DOM"],
-    "jsx": "react-jsx",
-    "moduleResolution": "bundler",
-    "declaration": true,
-    "declarationMap": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "tests"]
-}
-```
-
-### Ejemplo de Repository
-
-```typescript
-// src/repositories/http-{feature}.repository.ts
-import { IFeatureRepository, FeatureEntity } from '@piar/{feature-name}-configuration';
-
+```ts
 export class HttpFeatureRepository implements IFeatureRepository {
   constructor(private readonly baseUrl: string) {}
 
   async findById(id: string): Promise<FeatureEntity | null> {
-    const response = await fetch(`${this.baseUrl}/{feature}/${id}`);
-    if (!response.ok) return null;
-    return response.json();
+    const res = await fetch(`${this.baseUrl}/features/${id}`);
+    if (!res.ok) return null;
+    return res.json();
   }
 
   async save(entity: FeatureEntity): Promise<void> {
-    await fetch(`${this.baseUrl}/{feature}`, {
+    await fetch(`${this.baseUrl}/features`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(entity),
@@ -463,95 +211,40 @@ export class HttpFeatureRepository implements IFeatureRepository {
   }
 
   async delete(id: string): Promise<void> {
-    await fetch(`${this.baseUrl}/{feature}/${id}`, {
-      method: 'DELETE',
-    });
+    await fetch(`${this.baseUrl}/features/${id}`, { method: 'DELETE' });
   }
 }
 ```
 
-### Ejemplo de Hook
+### Hook
 
-```typescript
-// src/hooks/use-{feature}.ts
-import { useState, useEffect } from 'react';
-import { FeatureEntity } from '@piar/{feature-name}-configuration';
-
-export function useFeature(url: string, id: string) {
+```ts
+export function useFeature(id: string, repo: IFeatureRepository) {
   const [data, setData] = useState<FeatureEntity | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(`${url}/{feature}/${id}`);
-        if (!response.ok) throw new Error('Failed to fetch');
-        const result = await response.json();
-        setData(result);
-      } catch (err) {
-        setError(err as Error);
-      } finally {
+    let mounted = true;
+    repo.findById(id).then((value) => {
+      if (mounted) {
+        setData(value);
         setLoading(false);
       }
+    });
+    return () => {
+      mounted = false;
     };
+  }, [id, repo]);
 
-    fetchData();
-  }, [url, id]);
-
-  return { data, loading, error };
+  return { data, loading };
 }
 ```
 
-### Ejemplo de Component
+## Step 4: Wire the Feature into a BFF
 
-```typescript
-// src/components/{feature}-components.tsx
-import React from 'react';
-import { useFeature } from '../hooks/use-{feature}';
-
-export interface FeatureCardProps {
-  apiUrl: string;
-  featureId: string;
-}
-
-export function FeatureCard({ apiUrl, featureId }: FeatureCardProps) {
-  const { data, loading, error } = useFeature(apiUrl, featureId);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-  if (!data) return null;
-
-  return (
-    <div style={{ padding: '1rem', border: '1px solid #ccc', borderRadius: '0.5rem' }}>
-      <h3>{data.name}</h3>
-      <p>Status: {data.status}</p>
-      <small>Created: {new Date(data.createdAt).toLocaleString()}</small>
-    </div>
-  );
-}
-```
-
-### src/index.ts
-
-```typescript
-// Repositories
-export * from './repositories/http-{feature}.repository';
-
-// Hooks
-export * from './hooks/use-{feature}';
-
-// Components
-export * from './components/{feature}-components';
-```
-
-## Paso 4: Integración en BFFs
-
-### 1. Añadir dependencia
+1. Add dependency to `apps/api/{bff}/package.json`:
 
 ```json
-// apps/api/web-bff/package.json
 {
   "dependencies": {
     "@piar/{feature-name}-api": "workspace:*"
@@ -559,28 +252,22 @@ export * from './components/{feature}-components';
 }
 ```
 
-### 2. Importar en AppModule
+2. Import module in `apps/api/{bff}/src/app.module.ts`:
 
-```typescript
-// apps/api/web-bff/src/app.module.ts
-import { Module } from '@nestjs/common';
+```ts
 import { FeatureModule } from '@piar/{feature-name}-api';
 
 @Module({
-  imports: [
-    FeatureModule.register(),
-    // ... otros módulos
-  ],
+  imports: [FeatureModule.register()],
 })
 export class AppModule {}
 ```
 
-## Paso 5: Integración en Clientes
+## Step 5: Wire the Feature into a Client App
 
-### 1. Añadir dependencia
+1. Add dependency to the app `package.json`:
 
 ```json
-// apps/client/web/package.json
 {
   "dependencies": {
     "@piar/{feature-name}-client": "workspace:*"
@@ -588,56 +275,27 @@ export class AppModule {}
 }
 ```
 
-### 2. Usar en componentes
+2. Use the hook or components in your pages.
 
-```tsx
-// apps/client/web/src/app/page.tsx
-import { FeatureCard } from '@piar/{feature-name}-client';
+## Step 6: Tests
 
-export default function Page() {
-  return (
-    <FeatureCard 
-      apiUrl={process.env.NEXT_PUBLIC_API_URL}
-      featureId="123"
-    />
-  );
-}
-```
+- **Configuration**: pure type tests
+- **API**: unit test use-cases and controllers
+- **Client**: test hooks and components
 
-## Checklist de Creación
+## Step 7: Documentation
 
-- [ ] Crear estructura de carpetas: `configuration/`, `api/`, `client/`
-- [ ] Crear `package.json` en cada paquete
-- [ ] Crear `tsconfig.json` con configuración apropiada
-- [ ] Crear `README.md` descriptivo
-- [ ] Definir ports y types en `configuration`
-- [ ] Implementar use-cases en `api`
-- [ ] Implementar controller en `api`
-- [ ] Crear module en `api` con DI
-- [ ] Implementar repository HTTP en `client`
-- [ ] Crear hooks en `client`
-- [ ] Crear componentes en `client`
-- [ ] Exportar todo en `index.ts`
-- [ ] Instalar dependencias: `pnpm install`
-- [ ] Build: `pnpm turbo build --filter=@piar/{feature}-*`
-- [ ] Integrar en BFFs
-- [ ] Integrar en clientes
-- [ ] Crear tests
-- [ ] Documentar en `docs/features/{feature}-feature.md`
+1. Create a new doc in `docs/features/{feature-name}.md`
+2. Update `docs/AI-context.md` and `docs/README.md`
 
-## Ejemplo Completo
+## Checklist
 
-Ver el feature `health` como referencia completa:
-- [Health Feature Documentation](./health-feature.md)
-- Código: `packages/features/health/`
+- [ ] configuration package created
+- [ ] api package created
+- [ ] client package created
+- [ ] tests added
+- [ ] docs updated
 
-## Buenas Prácticas
+## Last Updated
 
-1. **Nombres consistentes**: Usa el mismo nombre base en los tres paquetes
-2. **Zero dependencies en configuration**: No añadas dependencias externas
-3. **Use-cases puros**: La lógica de negocio debe estar en use-cases, no en controllers
-4. **Inyección de dependencias**: Usa Symbols y DI para use-cases
-5. **Type-safety**: Exporta y reutiliza tipos desde configuration
-6. **Tests**: Escribe tests para cada capa independientemente
-7. **README**: Documenta cómo usar el feature en cada paquete
-8. **Exports limpios**: Expón solo lo necesario en index.ts
+27 January 2026 - English rewrite and cleanup

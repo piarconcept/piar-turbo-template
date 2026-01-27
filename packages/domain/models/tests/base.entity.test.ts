@@ -4,7 +4,7 @@ import { BaseEntity, BaseEntityProps } from '../src/entities/base/base.entity';
 describe('BaseEntity', () => {
   it('should create entity with provided id and auto-generate timestamps', () => {
     const props: BaseEntityProps = {
-      id: '123'
+      id: '123',
     };
 
     const entity = new BaseEntity(props);
@@ -21,7 +21,7 @@ describe('BaseEntity', () => {
     const props: BaseEntityProps = {
       id: '456',
       createdAt: createdDate,
-      updatedAt: updatedDate
+      updatedAt: updatedDate,
     };
 
     const entity = new BaseEntity(props);
@@ -35,7 +35,7 @@ describe('BaseEntity', () => {
     const props: BaseEntityProps = {
       id: '789',
       createdAt: new Date('2025-01-01'),
-      updatedAt: new Date('2025-01-15')
+      updatedAt: new Date('2025-01-15'),
     };
 
     const entity = new BaseEntity(props);

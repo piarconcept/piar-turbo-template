@@ -8,7 +8,7 @@ Next.js error handling infrastructure for client applications (logic only, no UI
 - **Client**: React hooks for error handling, ErrorBoundary logic (no UI)
 - **Server**: Error data extraction for Server Components and Server Actions
 
-**Note**: This package contains only error handling LOGIC. 
+**Note**: This package contains only error handling LOGIC.
 For error UI components (alerts, toasts, error pages), use `@piar/ui-components`.
 
 ## Usage

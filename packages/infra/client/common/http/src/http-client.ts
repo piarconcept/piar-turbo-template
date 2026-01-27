@@ -19,9 +19,7 @@ export class HttpClient {
   private bearerToken?: string;
 
   constructor(config: string | HttpClientConfig) {
-    const clientConfig = typeof config === 'string' 
-      ? { baseUrl: config }
-      : config;
+    const clientConfig = typeof config === 'string' ? { baseUrl: config } : config;
 
     this.axiosInstance = axios.create({
       baseURL: clientConfig.baseUrl,
@@ -41,7 +39,7 @@ export class HttpClient {
         }
         return config;
       },
-      (error) => Promise.reject(error)
+      (error) => Promise.reject(error),
     );
 
     // Add response interceptor for error handling
@@ -49,7 +47,7 @@ export class HttpClient {
       (response) => response,
       (error: AxiosError) => {
         return Promise.reject(this.handleError(error));
-      }
+      },
     );
   }
 
@@ -85,27 +83,33 @@ export class HttpClient {
     if (error.response) {
       // Server responded with error status
       const errorData = error.response.data as HttpClientError;
-      
-      return new Error(JSON.stringify({
-        i18nKey: errorData?.i18nKey || 'server_error',
-        message: errorData?.message || error.message,
-        code: errorData?.code,
-        statusCode: error.response.status,
-      } as HttpClientError));
+
+      return new Error(
+        JSON.stringify({
+          i18nKey: errorData?.i18nKey || 'server_error',
+          message: errorData?.message || error.message,
+          code: errorData?.code,
+          statusCode: error.response.status,
+        } as HttpClientError),
+      );
     } else if (error.request) {
       // Request made but no response received
-      return new Error(JSON.stringify({
-        i18nKey: 'network_error',
-        message: 'No response from server',
-        statusCode: 0,
-      } as HttpClientError));
+      return new Error(
+        JSON.stringify({
+          i18nKey: 'network_error',
+          message: 'No response from server',
+          statusCode: 0,
+        } as HttpClientError),
+      );
     } else {
       // Something else happened
-      return new Error(JSON.stringify({
-        i18nKey: 'network_error',
-        message: error.message || 'Request failed',
-        statusCode: 0,
-      } as HttpClientError));
+      return new Error(
+        JSON.stringify({
+          i18nKey: 'network_error',
+          message: error.message || 'Request failed',
+          statusCode: 0,
+        } as HttpClientError),
+      );
     }
   }
 

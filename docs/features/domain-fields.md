@@ -28,6 +28,7 @@ This package enables:
 ### Core Types
 
 #### FieldType Enum
+
 Defines all supported field types:
 
 ```typescript
@@ -37,19 +38,19 @@ export enum FieldType {
   Number = 'number',
   Boolean = 'boolean',
   Date = 'date',
-  
+
   // Specialized types
   Email = 'email',
   Phone = 'phone',
   URL = 'url',
-  
+
   // Complex types
   Text = 'text',
   Select = 'select',
   MultiSelect = 'multi-select',
   Radio = 'radio',
   Checkbox = 'checkbox',
-  
+
   // Special types
   File = 'file',
   Image = 'image',
@@ -59,6 +60,7 @@ export enum FieldType {
 ```
 
 #### FieldConfig Interface
+
 Main configuration interface for individual fields:
 
 ```typescript
@@ -68,40 +70,42 @@ interface FieldConfig<T = unknown> {
   type: FieldType;
   label: string;
   description?: string;
-  
+
   // Behavior
   required?: boolean;
   editable?: boolean;
   visible?: boolean;
   disabled?: boolean;
-  
+
   // Default values
   defaultValue?: T;
-  
+
   // Validation
   validation?: ValidationRule | ValidationRule[];
-  
+
   // UI Configuration
   ui?: UIConfig;
-  
+
   // Dependencies
   dependsOn?: string[] | FieldDependency[];
-  
+
   // Visibility rules
   visibleWhen?: VisibilityRule | VisibilityRule[];
-  
+
   // Options (for select/radio/checkbox)
-  options?: FieldOption[] | ((context: Record<string, unknown>) => FieldOption[] | Promise<FieldOption[]>);
-  
+  options?:
+    | FieldOption[]
+    | ((context: Record<string, unknown>) => FieldOption[] | Promise<FieldOption[]>);
+
   // Permissions
   permissions?: {
     view?: string[];
     edit?: string[];
   };
-  
+
   // Metadata
   metadata?: Record<string, unknown>;
-  
+
   // Transform functions
   transform?: {
     input?: (value: T) => unknown;
@@ -111,6 +115,7 @@ interface FieldConfig<T = unknown> {
 ```
 
 #### EntityFieldsConfig Interface
+
 Configuration for all fields in an entity:
 
 ```typescript
@@ -126,10 +131,10 @@ interface EntityFieldsConfig {
 ### Importing Entity Configurations
 
 ```typescript
-import { 
+import {
   baseEntityFieldsConfig,
   accountEntityFieldsConfig,
-  accountSpecificFields 
+  accountSpecificFields,
 } from '@piar/domain-fields';
 
 // Use base entity fields
@@ -155,8 +160,8 @@ const emailField: FieldConfig = {
   editable: true,
   validation: {
     pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-    message: 'Invalid email format'
-  }
+    message: 'Invalid email format',
+  },
 };
 ```
 
@@ -173,12 +178,12 @@ const bioField: FieldConfig = {
     component: 'textarea',
     rows: 5,
     placeholder: 'Enter your biography...',
-    helpText: 'Maximum 500 characters'
+    helpText: 'Maximum 500 characters',
   },
   validation: {
     maxLength: 500,
-    message: 'Bio must be 500 characters or less'
-  }
+    message: 'Bio must be 500 characters or less',
+  },
 };
 ```
 
@@ -195,12 +200,12 @@ const stateField: FieldConfig = {
   visibleWhen: {
     field: 'country',
     operator: 'equals',
-    value: 'US'
+    value: 'US',
   },
   options: (context) => {
     // Dynamic options based on selected country
     return getStatesByCountry(context.country);
-  }
+  },
 };
 ```
 
@@ -219,8 +224,8 @@ const userProfileConfig: EntityFieldsConfig = {
       editable: true,
       ui: {
         accept: 'image/*',
-        helpText: 'Recommended size: 400x400px'
-      }
+        helpText: 'Recommended size: 400x400px',
+      },
     },
     {
       key: 'firstName',
@@ -230,8 +235,8 @@ const userProfileConfig: EntityFieldsConfig = {
       editable: true,
       validation: {
         minLength: 2,
-        message: 'First name must be at least 2 characters'
-      }
+        message: 'First name must be at least 2 characters',
+      },
     },
     {
       key: 'lastName',
@@ -241,8 +246,8 @@ const userProfileConfig: EntityFieldsConfig = {
       editable: true,
       validation: {
         minLength: 2,
-        message: 'Last name must be at least 2 characters'
-      }
+        message: 'Last name must be at least 2 characters',
+      },
     },
     {
       key: 'email',
@@ -252,8 +257,8 @@ const userProfileConfig: EntityFieldsConfig = {
       editable: false, // Cannot change email
       validation: {
         pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        message: 'Invalid email format'
-      }
+        message: 'Invalid email format',
+      },
     },
     {
       key: 'country',
@@ -264,8 +269,8 @@ const userProfileConfig: EntityFieldsConfig = {
       options: [
         { value: 'US', label: 'United States' },
         { value: 'UK', label: 'United Kingdom' },
-        { value: 'ES', label: 'Spain' }
-      ]
+        { value: 'ES', label: 'Spain' },
+      ],
     },
     {
       key: 'state',
@@ -276,22 +281,22 @@ const userProfileConfig: EntityFieldsConfig = {
       visibleWhen: {
         field: 'country',
         operator: 'equals',
-        value: 'US'
-      }
-    }
+        value: 'US',
+      },
+    },
   ],
   groups: [
     {
       id: 'basic',
       label: 'Basic Information',
-      fields: ['avatar', 'firstName', 'lastName', 'email']
+      fields: ['avatar', 'firstName', 'lastName', 'email'],
     },
     {
       id: 'location',
       label: 'Location',
-      fields: ['country', 'state']
-    }
-  ]
+      fields: ['country', 'state'],
+    },
+  ],
 };
 ```
 
@@ -305,16 +310,16 @@ const salaryField: FieldConfig = {
   editable: true,
   permissions: {
     view: ['admin', 'hr', 'finance'],
-    edit: ['admin', 'hr']
+    edit: ['admin', 'hr'],
   },
   ui: {
     prefix: '$',
-    format: 'currency'
+    format: 'currency',
   },
   transform: {
     input: (value) => value * 100, // Store in cents
-    output: (value) => value / 100  // Display in dollars
-  }
+    output: (value) => value / 100, // Display in dollars
+  },
 };
 ```
 
@@ -389,29 +394,29 @@ The backend can use field configurations to:
 import { accountEntityFieldsConfig } from '@piar/domain-fields';
 
 function validateAccountField(fieldKey: string, value: unknown, userRole: string): boolean {
-  const fieldConfig = accountEntityFieldsConfig.fields.find(f => f.key === fieldKey);
-  
+  const fieldConfig = accountEntityFieldsConfig.fields.find((f) => f.key === fieldKey);
+
   if (!fieldConfig) {
     return false;
   }
-  
+
   // Check if user has permission to edit
   if (!fieldConfig.permissions?.edit?.includes(userRole)) {
     throw new Error('Permission denied');
   }
-  
+
   // Check required
   if (fieldConfig.required && !value) {
     return false;
   }
-  
+
   // Validate accountCode pattern
   if (fieldKey === 'accountCode' && typeof value === 'string') {
     const validation = fieldConfig.validation as any[];
-    const patternRule = validation.find(v => v.pattern);
+    const patternRule = validation.find((v) => v.pattern);
     return patternRule.pattern.test(value);
   }
-  
+
   return true;
 }
 
@@ -438,11 +443,11 @@ function AccountForm({ userRole }: { userRole: string }) {
   const editableFields = accountEntityFieldsConfig.fields.filter(
     field => field.editable && field.permissions?.edit?.includes(userRole)
   );
-  
+
   // Get fields grouped by "basic" group
   const basicGroup = accountEntityFieldsConfig.groups?.find(g => g.id === 'basic');
   const basicFields = editableFields.filter(f => basicGroup?.fields.includes(f.key));
-  
+
   return (
     <form>
       {basicFields.map(field => {
@@ -457,7 +462,7 @@ function AccountForm({ userRole }: { userRole: string }) {
                 pattern={field.validation?.[0]?.pattern?.source}
               />
             );
-            
+
           case FieldType.Email:
             return (
               <input
@@ -468,7 +473,7 @@ function AccountForm({ userRole }: { userRole: string }) {
                 required={field.required}
               />
             );
-            
+
           case FieldType.Select:
             return (
               <select key={field.key} name={field.key} required={field.required}>

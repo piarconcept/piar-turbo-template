@@ -93,5 +93,4 @@ describe('HealthCheck Type', () => {
 
     expect(check.message).toBe('Service unavailable');
   });
-
 });

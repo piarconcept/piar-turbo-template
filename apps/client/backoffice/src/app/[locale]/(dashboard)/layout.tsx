@@ -1,6 +1,12 @@
 import { type ReactNode } from 'react';
 import { redirect } from 'next/navigation';
-import { Layout, dashboardHeaderConfig, dashboardAsideConfig, dashboardFooterConfig, AsideConfig } from '@piar/layout';
+import {
+  Layout,
+  dashboardHeaderConfig,
+  dashboardAsideConfig,
+  dashboardFooterConfig,
+  AsideConfig,
+} from '@piar/layout';
 import { Home } from 'lucide-react';
 import { auth } from '@/auth';
 

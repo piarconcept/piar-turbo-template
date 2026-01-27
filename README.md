@@ -1,319 +1,124 @@
-# PIAR Monorepo
+# PIAR Monorepo Template
 
-> **🚀 Production-Ready Monorepo Template by [Piar Concept](https://piarconcept.com)**
-> 
-> A complete, AI-friendly starter kit for building modern web applications with Next.js, TypeScript, and a scalable monorepo architecture. Perfect for startups and businesses that need to move fast without compromising on quality.
+Production-ready monorepo template for building modern web applications with Next.js, NestJS, and shared TypeScript packages.
 
-Monorepo for PIAR project containing multiple applications and shared packages.
+## Quick Start
 
-## 📁 Project Structure
+Prerequisites:
 
-```
-piar-repo/
-├── eslint.config.mjs          # Root ESLint configuration
-├── vitest.config.ts           # Workspace test configuration
-├── coverage/                  # Test coverage reports (gitignored)
-├── apps/
-│   ├── api/                   # Backend APIs
-│   │   ├── web-bff/          # @piar/web-bff - BFF for web client (NestJS)
-│   │   └── backoffice-bff/   # @piar/backoffice-bff - BFF for backoffice (NestJS)
-│   ├── client/
-│   │   ├── backoffice/       # @piar/backoffice - Admin application (Next.js)
-│   │   └── web/              # @piar/web - Public website (Next.js)
-│   └── sqs/                  # SQS queue handlers (data sync, migrations, etc.)
-├── packages/
-│   ├── domain/
-│   │   ├── models/           # @piar/domain-models - Shared entities
-│   │   └── fields/           # @piar/domain-fields - Field configuration system
-│   ├── features/             # Feature packages (health, coming-soon, etc.)
-│   ├── messages/             # @piar/messages - Internationalization
-│   └── ui/
-│       ├── config/           # @piar/ui-config - Tailwind CSS v4 configuration
-│       ├── components/       # @piar/ui-components - Shared UI components
-│       └── layout/           # @piar/layout - Shared layout components
-├── docs/                     # 📚 Documentation (AI Context)
-│   ├── AI-context.md        # Main index and guidelines
-│   └── features/            # Feature-specific documentation
-└── turbo.json               # Turbo build configuration
-```
-
-## 🚀 Quick Start
-
-### Prerequisites
 - Node.js 20.x
 - pnpm 10.28.0
 
-### Installation
-
 ```bash
-# Install dependencies
 pnpm install
-
-# Build all packages
-pnpm turbo build
-
-# Run all tests
-pnpm test
-
-# Verify everything works (install, build, typecheck, test)
-pnpm verify
-
-# Start web in dev mode
-pnpm turbo dev:web 
-
-# Start backoffice in dev mode
-pnpm turbo dev:backoffice
-```
-Applications
-
-#### @piar/web-bff
-Backend for Frontend API for the web application (NestJS).
-
-```bash
-# Start in dev mode
-pnpm --filter @piar/web-bff dev
-
-# Build
-pnpm turbo build --filter=@piar/web-bff
-```
-
-Runs on: `http://localhost:5010`  
-[→ Documentation](./apps/api/web-bff/README.md)
-
-#### @piar/backoffice-bff
-Backend for Frontend API for the backoffice application (NestJS).
-
-```bash
-# Start in dev mode
-pnpm --filter @piar/backoffice-bff dev
-
-# Build
-pnpm turbo build --filter=@piar/backoffice-bff
-```
-
-Runs on: `http://localhost:5050`  
-[→ Documentation](./apps/api/backoffice-bff/README.md)
-
-#### @piar/web
-Public website application (Next.js).
-
-```bash
-# Start in dev mode
-pnpm --filter @piar/web dev
-```
-
-[→ Documentation](./apps/client/web/README.md)
-
-#### @piar/backoffice
-Admin backoffice application (Next.js).
-
-```bash
-# Start in dev mode
-pnpm --filter @piar/backoffice dev
-```
-
-[→ Documentation](./apps/client/backoffice/README.md)
-
-### Shared Packages
-
-#### @piar/domain-models
-Shared domain entities and models used across all applications.
-
-```bash
-# Build
-pnpm turbo build --filter=@piar/domain-models
-
-# Watch mode
-pnpm --filter @piar/domain-models dev
-```
-
-[→ Documentation](./packages/domain/models/README.md)
-
-#### @piar/domain-fields
-Field all apps in development mode
-pnpm turbo dev
-
-# Run specific app
-pnpm --filter @piar/web-bff dev
-pnpm --filter @piar/backoffice-bff dev
-pnpm --filter @piar/backoffice dev
-pnpm --filter @piar/web dev
-```
-
-### Development Ports
-
-- **Web Client**: `http://localhost:3000`
-- **Backoffice Client**: `http://localhost:3000`
-- **Web BFF**: `http://localhost:5010`
-- **Backoffice BFF**: `http://localhost:5050`14-step guide for new packages
-- **[Testing Guide](./docs/features/testing-guide.md)** - Testing standards and examples
-- **[ESLint Configuration](./docs/features/eslint-configuration.md)** - Linting setup and rules
-- **[Tailwind CSS v4 Implementation](./docs/features/tailwind-v4-implementation.md)** - Styling with Tailwind CSS v4
-- **[Domain Models](./docs/features/domain-models.md)** - Entity package documentation
-- **[Domain Fields](./docs/features/domain-fields.md)** - Field configuration system
-- **[Web BFF](./docs/features/web-bff-application.md)** - Web BFF API documentation
-- **[Backoffice BFF](./docs/features/backoffice-bff-application.md)** - Backoffice BFF API documentation
-```
-
-
-- **Package Manager**: pnpm 10.28.0 with workspaces
-- **Build System**: Turbo 2.7.4 for caching and orchestration
-- **Frontend**: Next.js 16.1.2, React 19.2.3
-- **Backend**: NestJS 11.x
-- **Styling**: Tailwind CSS v4 with centralized configuration
-- **Language**: TypeScript 5.9.3 (strict mode)
-- **Testing**: Vitest 2.1.8 with @vitest/coverage-v8
-- **Linting**: ESLint 9.x with TypeScript support
-### Build Commands
-
-```bash
-# Build all packages and apps
-pnpm turbweb-bff` - Web BFF API
-- `@piar/backoffice-bff` - Backoffice BFF API
-- `@piar/web` - Public website
-- `@piar/backoffice` - Admin app
-- `@piar/domain-models` - Domain entities
-- `@piar/domain-fields` - Field configuration
-pnpm turbo build --filter=@piar/backoffice
-ead [docs/AI-context.md](./docs/AI-context.md) - Main guidelines
-2. Check [repository-configuration.md](./docs/features/repository-configuration.md) - Critical rules
-3. Document changes in `docs/features/`
-# Type check all
-
-# Lint all code
-pnpm turbo lint
-```
-
-### Test Commands
-
-```bash
-# Run all tests in the workspace
-pnpm test
-
-# Run all tests with coverage reports
-pnpm test:coverage -- --run
-
-# Run tests for specific package
-pnpm --filter @piar/domain-models test
-```
-
-### Complete Verification
-
-```bash
-# Run all checks: install, build, typecheck, lint, test with coverage
-# Run all checks: install, build, typecheck, test
 pnpm verify
 ```
 
-This runs:
-1. `pnpm install` - Installs all dependencies
-2. `pnpm turbo build` - Builds all packages
-3. `pnpm typecheck` - Checks TypeScript types
-4. `pnpm test:coverage -- --run` - Runs all tests with coverage
-5. `pnpm lint` - Lints all code
-
-Perfect for CI/CD or before committing.
-
-### Running Apps
+Run apps in dev mode:
 
 ```bash
-# Run backoffice in dev mode
-pnpm --filter @piar/backoffice dev
-
-# Run web in dev mode
 pnpm --filter @piar/web dev
+pnpm --filter @piar/backoffice dev
+pnpm --filter @piar/web-bff dev
+pnpm --filter @piar/backoffice-bff dev
 ```
 
-## 📚 Documentation
+## Repository Structure
 
-All documentation is in the `docs/` folder:
+```
+piar-repo/
+├── apps/
+│   ├── api/                 # NestJS BFFs
+│   ├── client/              # Next.js apps
+│   └── sqs/                 # Queue handlers
+├── packages/                # Shared packages
+├── docs/                    # Documentation and architecture
+├── scripts/                 # Tooling scripts
+├── turbo.json               # Turbo config
+└── tsconfig.base.json       # Base TS config
+```
 
-- **[AI-context.md](./docs/AI-context.md)** - Main index and guidelines (START HERE)
-- **[Repository Configuration](./docs/features/repository-configuration.md)** - Critical setup rules
-- **[Creating Packages](./docs/features/creating-packages.md)** - Guide for new packages
-- **[Testing Guide](./docs/features/testing-guide.md)** - Testing standards and examples
-- **[Domain Models](./docs/features/domain-models.md)** - Entity p14-step guide for new packages
-- **[Testing Guide](./docs/features/testing-guide.md)** - Testing standards and examples
-- **[ESLint Configuration](./docs/features/eslint-configuration.md)** - Linting setup and ru
-### For AI Agents
-Start with [docs/AI-context.md](./docs/AI-context.md) - it contains all critical guidelines and indexes all documentation.
+## Applications
 
-## 🔧 Tech Stack
-10.28.0 with workspaces
-- **Build System**: Turbo 2.7.4 for caching and orchestration
-- **Frontend**: Next.js 16.1.2, React 19.2.3
-- **Language**: TypeScript 5.9.3 (strict mode)
-- **Testing**: Vitest 2.1.8 with @vitest/coverage-v8
-- **Linting**: ESLint 9.x with TypeScript supportact 19
-- **Language**: TypeScript 5.9
-- **Node**: 20.x
-
-## 📋 Package Naming Convention
-
-All packages use the `@piar/` scope:
-
-**Applications:**
 - `@piar/web` - Public website (Next.js)
 - `@piar/backoffice` - Admin app (Next.js)
 - `@piar/web-bff` - Web BFF API (NestJS)
 - `@piar/backoffice-bff` - Backoffice BFF API (NestJS)
 
-**Shared Packages:**
+## Shared Packages (highlights)
+
 - `@piar/domain-models` - Domain entities
 - `@piar/domain-fields` - Field configuration system
-- `@piar/messages` - Internationalization (i18n)
-- `@piar/ui-config` - Tailwind CSS v4 configuration and design tokens
-- `@piar/ui-components` - Shared UI components library
+- `@piar/messages` - i18n messages
+- `@piar/ui-config` - Tailwind CSS v4 shared config and design tokens
+- `@piar/ui-components` - Shared UI components
 - `@piar/layout` - Shared layout components
-- `@piar/health-*` - Health check feature packages
-- `@piar/coming-soon` - Coming soon feature
+- `@piar/infra-client-seo` - SEO infrastructure (sitemap, robots, validators)
+- `@piar/infra-backend-security` - Shared JWT security
 
-## 🤝 Contributing
+## Common Commands
 
-Before making changes:
-1. R� About Piar Concept
+```bash
+pnpm turbo build        # Build all packages/apps
+pnpm typecheck          # Type check all packages/apps
+pnpm lint               # Lint all packages/apps
+pnpm test               # Run all tests with coverage
+pnpm verify             # Install, build, typecheck, test, lint, format check
+```
 
-This template was created and is maintained by **Piar Concept** - a team specialized in building fast, scalable web applications for startups and businesses.
+## Ports (defaults)
 
-### Need Help?
+- Web: Next.js default 3000
+- Backoffice: Next.js default 3000 (set `PORT=3001` if running both)
+- Web BFF: 5010
+- Backoffice BFF: 5050
 
-- 🌐 **Website**: [piarconcept.com](https://piarconcept.com)
-- 💬 **Contact**: Visit our website to get in touch
-- 🚀 **Services**: Custom development, architecture consulting, team augmentation
+## Documentation
 
-We offer:
-- ✅ Implementation support for this template
-- ✅ Custom feature development
-- ✅ Architecture and scaling consulting
-- ✅ Startup acceleration services
-- ✅ AI integration and automation
+Start here: `docs/AI-context.md`
 
-**Feel free to contact us - we're here to help make your project successful!**
+Key docs:
 
-## 📝 License
+- `docs/features/repository-configuration.md`
+- `docs/features/creating-packages.md`
+- `docs/features/creating-features-guide.md`
+- `docs/features/testing-guide.md`
+- `docs/features/tailwind-v4-implementation.md`
 
-MIT License - Copyright (c) 2026 Piar Concept
+## Commit Convention
 
-This template is free to use for any purpose. See the [LICENSE](./LICENSE) file for details.
+This repo uses **Conventional Commits** enforced by commitlint.
 
-### Attribution
+Format:
 
-While not required, we appreciate:
-- 💙 Giving credit to Piar Concept in your project
-- 🔗 Linking to [piarconcept.com](https://piarconcept.com)
-- ⭐ Starring this repository
-- 📢 Sharing your success story with us!
+```
+type(scope): short description
+```
 
-**Source Code**: This template was created by Piar Concept. For support, visit [piarconcept.com](https://piarconcept.com)
+Common types:
 
----
+- `feat`: new feature
+- `fix`: bug fix
+- `chore`: tooling or maintenance
+- `docs`: documentation only
+- `refactor`: code change without behavior change
+- `test`: add or update tests
 
-**Built with ❤️ by [Piar Concept](https://piarconcept.com)**
+Examples:
 
---- - Implemented Tailwind CSS v4 with centralized configuration
+```
+feat(ui): add button variants
+fix(api): handle missing auth token
+docs(readme): document commit convention
+```
 
-**Last Updated**: 21 January 2026
+## License
 
-## 📝 License
+MIT License. See `LICENSE`.
 
-MIT
+## About Piar Concept
+
+This template is created and maintained by Piar Concept.
+
+Website: `https://piarconcept.com`
+Contact: `contact@piarconcept.com`

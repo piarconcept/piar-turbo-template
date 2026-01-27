@@ -55,7 +55,7 @@ describe('Package exports', () => {
   describe('Package structure', () => {
     it('should have all necessary exports', () => {
       const exports = Object.keys(messagesPackage);
-      
+
       expect(exports).toContain('SUPPORTED_LANGUAGES');
       expect(exports).toContain('DEFAULT_LANGUAGE');
       expect(exports).toContain('LANGUAGE_NAMES');

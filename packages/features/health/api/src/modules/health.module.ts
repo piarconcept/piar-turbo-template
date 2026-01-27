@@ -25,7 +25,7 @@ export class HealthModule {
           provide: GetDetailedHealthUseCase,
           useFactory: () => new GetDetailedHealthUseCaseExecuter(),
           inject: [],
-        }
+        },
       ],
       exports: [],
     };

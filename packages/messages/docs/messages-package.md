@@ -43,19 +43,24 @@ packages/messages/
 ## Features
 
 ### ✅ Type Safety
+
 All messages are fully typed with TypeScript interfaces, ensuring compile-time safety and autocomplete support.
 
 ### ✅ Multi-language Support
+
 - **Catalan (ca)**: Default language - Primary for Barcelona region
 - **Spanish (es)**: Secondary language
 - **English (en)**: International support
 
 ### ✅ Modular Structure
+
 Messages are organized by:
+
 1. **Feature/Module**: `common`, `comingSoon`, etc.
 2. **Language**: Separate folders for each language
 
 ### ✅ Easy to Extend
+
 Adding new messages or languages follows a consistent pattern.
 
 ## Usage
@@ -81,7 +86,7 @@ import { common, comingSoon } from '@piar/messages/ca';
 
 // Use specific categories
 console.log(common.actions.save); // "Guardar"
-console.log(comingSoon.title);    // "Properament"
+console.log(comingSoon.title); // "Properament"
 ```
 
 ### Import Types
@@ -99,22 +104,26 @@ function getMessages(lang: string): Messages {
 ```typescript
 import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE, LANGUAGE_NAMES } from '@piar/messages';
 
-console.log(DEFAULT_LANGUAGE);      // "ca"
-console.log(SUPPORTED_LANGUAGES);   // ["es", "ca", "en"]
-console.log(LANGUAGE_NAMES.ca);     // "Català"
+console.log(DEFAULT_LANGUAGE); // "ca"
+console.log(SUPPORTED_LANGUAGES); // ["es", "ca", "en"]
+console.log(LANGUAGE_NAMES.ca); // "Català"
 ```
 
 ## Message Categories
 
 ### Common Messages (`common`)
+
 General-purpose messages used across the application:
+
 - **Navigation**: home, about, programs, contact, login, logout
 - **Actions**: save, cancel, delete, edit, create, confirm, close, back, next, submit, search
 - **Status**: loading, success, error, warning, info
 - **General**: yes, no, ok, notAvailable, required, optional
 
 ### Coming Soon Messages (`comingSoon`)
+
 Messages for features under development:
+
 - title
 - subtitle
 - description
@@ -220,30 +229,37 @@ Translate all message categories to the new language.
 ## Best Practices
 
 ### ✅ Always Use Types
+
 Import and use TypeScript types for type safety:
+
 ```typescript
 import type { CommonMessages } from '@piar/messages';
 ```
 
 ### ✅ Keep Messages Flat
+
 Avoid deeply nested message structures. Two levels max is recommended.
 
 ### ✅ Use Descriptive Keys
+
 Message keys should be self-explanatory:
+
 ```typescript
 // Good
-nav.home
-actions.save
+nav.home;
+actions.save;
 
 // Bad
-n.h
-a.s
+n.h;
+a.s;
 ```
 
 ### ✅ Consistency Across Languages
+
 Ensure all languages have the same structure and keys.
 
 ### ✅ No Hardcoded Strings
+
 All user-facing text should come from this package.
 
 ## Integration with Applications
@@ -256,10 +272,13 @@ import { messages as caMessages } from '@piar/messages/ca';
 import { messages as esMessages } from '@piar/messages/es';
 
 export function getMessages(locale: string) {
-  switch(locale) {
-    case 'es': return esMessages;
-    case 'ca': return caMessages;
-    default: return caMessages;
+  switch (locale) {
+    case 'es':
+      return esMessages;
+    case 'ca':
+      return caMessages;
+    default:
+      return caMessages;
   }
 }
 ```
@@ -271,7 +290,7 @@ import { getMessages } from '@/lib/i18n';
 
 export function MyComponent({ locale }: { locale: string }) {
   const messages = getMessages(locale);
-  
+
   return (
     <div>
       <h1>{messages.common.nav.home}</h1>
@@ -300,6 +319,7 @@ pnpm test
 ## Dependencies
 
 The package has minimal dependencies:
+
 - TypeScript for type checking
 - Vitest for testing
 - ESLint for linting

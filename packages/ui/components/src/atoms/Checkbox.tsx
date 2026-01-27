@@ -1,36 +1,37 @@
-import React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
-import { clsx } from "clsx";
+import React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { clsx } from 'clsx';
 
 /**
  * Checkbox Variants
  */
 const checkboxVariants = cva(
-  "rounded border transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2",
+  'rounded border transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2',
   {
     variants: {
       size: {
-        sm: "h-3 w-3",
-        md: "h-4 w-4",
-        lg: "h-5 w-5",
+        sm: 'h-3 w-3',
+        md: 'h-4 w-4',
+        lg: 'h-5 w-5',
       },
       variant: {
-        default: "border-gray-300 text-[var(--color-primary)] focus:ring-[var(--color-primary)]",
-        error: "border-red-500 text-red-600 focus:ring-red-500",
+        default: 'border-gray-300 text-[var(--color-primary)] focus:ring-[var(--color-primary)]',
+        error: 'border-red-500 text-red-600 focus:ring-red-500',
       },
     },
     defaultVariants: {
-      size: "md",
-      variant: "default",
+      size: 'md',
+      variant: 'default',
     },
-  }
+  },
 );
 
 /**
  * Checkbox Props
  */
 export interface CheckboxProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
+  extends
+    Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>,
     VariantProps<typeof checkboxVariants> {
   /**
    * Label text for the checkbox
@@ -44,9 +45,9 @@ export interface CheckboxProps
 
 /**
  * Checkbox Atom Component
- * 
+ *
  * A checkbox input with optional label and variants.
- * 
+ *
  * @example
  * ```tsx
  * <Checkbox label="Remember me" />
@@ -60,7 +61,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
 
     if (label) {
       return (
-        <div className={clsx("flex items-center gap-2", wrapperClassName)}>
+        <div className={clsx('flex items-center gap-2', wrapperClassName)}>
           <input
             type="checkbox"
             id={checkboxId}
@@ -84,7 +85,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         {...props}
       />
     );
-  }
+  },
 );
 
-Checkbox.displayName = "Checkbox";
+Checkbox.displayName = 'Checkbox';

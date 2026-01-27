@@ -1,18 +1,18 @@
 /**
  * @piar/infra-client-seo
  * Comprehensive SEO infrastructure for client applications
- * 
+ *
  * This package provides professional-grade SEO tools including:
  * - Meta tags builders (Open Graph, Twitter Cards)
  * - Schema.org JSON-LD structured data
  * - Sitemap generators
  * - Robots.txt builders
  * - SEO validators and utilities
- * 
+ *
  * @example
  * ```typescript
  * import { MetaTagsBuilder, SchemaBuilder, createMetaTags } from '@piar/infra-client-seo';
- * 
+ *
  * // Quick meta tags
  * const tags = createMetaTags({
  *   metadata: {
@@ -20,7 +20,7 @@
  *     description: 'Page description'
  *   }
  * });
- * 
+ *
  * // Schema.org structured data
  * const schema = SchemaBuilder.article({
  *   headline: 'Article Title',

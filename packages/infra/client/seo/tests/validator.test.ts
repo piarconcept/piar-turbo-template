@@ -1,5 +1,10 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { SEOValidator, validateSEO, calculateSEOScore } from '../src/validators/seo.validator';
+import type {
+  OpenGraphMetadata,
+  SEOMetadata,
+  TwitterCardMetadata,
+} from '../src/types/common.types';
 
 describe('SEOValidator - Comprehensive', () => {
   let validator: SEOValidator;
@@ -12,11 +17,12 @@ describe('SEOValidator - Comprehensive', () => {
     it('should pass with all good metadata', () => {
       const result = validator.validateMetadata({
         title: 'This is a perfect SEO title with optimal length for search engines',
-        description: 'This is a perfect SEO meta description with optimal length for search engines to display in search results properly and attract clicks from users',
+        description:
+          'This is a perfect SEO meta description with optimal length for search engines to display in search results properly and attract clicks from users',
         canonical: 'https://example.com/page',
         keywords: ['seo', 'meta', 'tags'],
       });
-      
+
       expect(result.valid).toBe(true);
       expect(result.errors.length).toBe(0);
     });
@@ -25,8 +31,8 @@ describe('SEOValidator - Comprehensive', () => {
       const result = validator.validateMetadata({
         title: '',
         description: 'Description',
-      } as any);
-      
+      } satisfies SEOMetadata);
+
       expect(result.valid).toBe(false);
       expect(result.errors).toContain('Title is required');
     });
@@ -35,8 +41,8 @@ describe('SEOValidator - Comprehensive', () => {
       const result = validator.validateMetadata({
         title: 'Valid title that meets all requirements',
         description: '',
-      } as any);
-      
+      } satisfies SEOMetadata);
+
       expect(result.valid).toBe(false);
       expect(result.errors).toContain('Description is required');
     });
@@ -46,7 +52,7 @@ describe('SEOValidator - Comprehensive', () => {
         title: 'Short',
         description: 'This is a good description with proper length for SEO purposes',
       });
-      
+
       expect(result.warnings.length).toBeGreaterThan(0);
     });
 
@@ -55,7 +61,7 @@ describe('SEOValidator - Comprehensive', () => {
         title: 'This is a good title with proper length',
         description: 'Short',
       });
-      
+
       expect(result.warnings.length).toBeGreaterThan(0);
     });
 
@@ -65,9 +71,11 @@ describe('SEOValidator - Comprehensive', () => {
         description: 'Good description with proper length for SEO purposes',
         canonical: 'not-a-valid-url',
       });
-      
+
       // Should have recommendations for invalid canonical
-      expect(result.warnings.length + result.errors.length + result.recommendations.length).toBeGreaterThan(0);
+      expect(
+        result.warnings.length + result.errors.length + result.recommendations.length,
+      ).toBeGreaterThan(0);
     });
   });
 
@@ -80,15 +88,17 @@ describe('SEOValidator - Comprehensive', () => {
         url: 'https://example.com',
         siteName: 'Example Site',
       });
-      
+
       expect(result.valid).toBe(true);
     });
 
     it('should detect missing required fields', () => {
       const result = validator.validateOpenGraph({
         type: 'website',
-      } as any);
-      
+        title: '',
+        url: '',
+      } satisfies OpenGraphMetadata);
+
       expect(result.valid).toBe(false);
       expect(result.errors.length).toBeGreaterThan(0);
     });
@@ -96,11 +106,12 @@ describe('SEOValidator - Comprehensive', () => {
     it('should detect missing title', () => {
       const result = validator.validateOpenGraph({
         type: 'website',
+        title: '',
         description: 'Description',
         url: 'https://example.com',
         siteName: 'Site',
-      } as any);
-      
+      } satisfies OpenGraphMetadata);
+
       expect(result.valid).toBe(false);
     });
 
@@ -110,8 +121,8 @@ describe('SEOValidator - Comprehensive', () => {
         title: 'Title',
         url: 'https://example.com',
         siteName: 'Site',
-      } as any);
-      
+      } satisfies OpenGraphMetadata);
+
       // Just verify it returns a result
       expect(result).toBeDefined();
       expect(result.valid).toBeDefined();
@@ -125,7 +136,7 @@ describe('SEOValidator - Comprehensive', () => {
         url: 'https://example.com',
         siteName: 'Site',
       });
-      
+
       expect(result.recommendations.length).toBeGreaterThan(0);
     });
   });
@@ -139,17 +150,18 @@ describe('SEOValidator - Comprehensive', () => {
         site: '@example',
         creator: '@author',
       });
-      
+
       expect(result).toBeDefined();
       expect(result.valid).toBeDefined();
     });
 
     it('should detect missing card type', () => {
       const result = validator.validateTwitterCard({
+        card: '' as unknown as TwitterCardMetadata['card'],
         title: 'Title',
         description: 'Description',
-      } as any);
-      
+      });
+
       expect(result.valid).toBe(false);
       expect(result.errors).toContain('Twitter card type is required');
     });
@@ -158,8 +170,8 @@ describe('SEOValidator - Comprehensive', () => {
       const result = validator.validateTwitterCard({
         card: 'summary',
         description: 'Description',
-      } as any);
-      
+      } satisfies TwitterCardMetadata);
+
       expect(result).toBeDefined();
       expect(result.valid).toBeDefined();
     });
@@ -168,8 +180,8 @@ describe('SEOValidator - Comprehensive', () => {
       const result = validator.validateTwitterCard({
         card: 'summary',
         title: 'Title',
-      } as any);
-      
+      } satisfies TwitterCardMetadata);
+
       expect(result).toBeDefined();
       expect(result.valid).toBeDefined();
     });
@@ -180,7 +192,7 @@ describe('SEOValidator - Comprehensive', () => {
         title: 'Title',
         description: 'Description',
       });
-      
+
       // Should have recommendations
       expect(result.recommendations).toBeDefined();
     });
@@ -191,7 +203,8 @@ describe('SEOValidator - Comprehensive', () => {
       const score = validator.calculateScore({
         metadata: {
           title: 'Perfect SEO title with optimal length for search engines',
-          description: 'Perfect SEO description with optimal length for search engines to display in search results properly',
+          description:
+            'Perfect SEO description with optimal length for search engines to display in search results properly',
           canonical: 'https://example.com/page',
         },
         openGraph: {
@@ -207,7 +220,7 @@ describe('SEOValidator - Comprehensive', () => {
           description: 'Twitter Description',
         },
       });
-      
+
       expect(score).toBeGreaterThan(50);
       expect(score).toBeLessThanOrEqual(100);
     });
@@ -219,7 +232,7 @@ describe('SEOValidator - Comprehensive', () => {
           description: 'Short',
         },
       });
-      
+
       expect(score).toBeLessThan(100);
     });
 
@@ -228,9 +241,9 @@ describe('SEOValidator - Comprehensive', () => {
         metadata: {
           title: '',
           description: '',
-        } as any,
+        } satisfies SEOMetadata,
       });
-      
+
       expect(score).toBeGreaterThanOrEqual(0);
     });
   });
@@ -243,7 +256,7 @@ describe('SEOValidator - Comprehensive', () => {
           description: 'Short',
         },
       });
-      
+
       expect(Array.isArray(improvements)).toBe(true);
       expect(improvements.length).toBeGreaterThan(0);
     });
@@ -252,7 +265,8 @@ describe('SEOValidator - Comprehensive', () => {
       const improvements = validator.getImprovements({
         metadata: {
           title: 'Perfect SEO title with optimal length for search engines',
-          description: 'Perfect SEO description with optimal length for search engines to display in search results properly and attract user clicks',
+          description:
+            'Perfect SEO description with optimal length for search engines to display in search results properly and attract user clicks',
           canonical: 'https://example.com/page',
         },
         openGraph: {
@@ -268,7 +282,7 @@ describe('SEOValidator - Comprehensive', () => {
           description: 'Twitter Description',
         },
       });
-      
+
       // May still have some recommendations but should be minimal
       expect(improvements).toBeDefined();
     });
@@ -294,7 +308,7 @@ describe('SEOValidator - Comprehensive', () => {
           description: 'Twitter Description',
         },
       });
-      
+
       expect(result).toBeDefined();
       expect(result.valid).toBeDefined();
       expect(result.errors).toBeDefined();
@@ -313,7 +327,7 @@ describe('Helper Functions', () => {
           description: 'Complete SEO description with proper length for search engines',
         },
       });
-      
+
       expect(result).toBeDefined();
       expect(result.valid).toBeDefined();
     });
@@ -337,7 +351,7 @@ describe('Helper Functions', () => {
           description: 'Twitter Description',
         },
       });
-      
+
       expect(result.valid).toBeDefined();
     });
   });
@@ -350,7 +364,7 @@ describe('Helper Functions', () => {
           description: 'Good SEO description with proper length for search engines',
         },
       });
-      
+
       expect(typeof score).toBe('number');
       expect(score).toBeGreaterThanOrEqual(0);
       expect(score).toBeLessThanOrEqual(100);
@@ -375,7 +389,7 @@ describe('Helper Functions', () => {
           description: 'Twitter Description',
         },
       });
-      
+
       expect(score).toBeGreaterThanOrEqual(0);
     });
   });

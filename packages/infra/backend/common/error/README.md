@@ -39,7 +39,11 @@ export class AppModule {}
 import { InvalidCredentialsError } from '@piar/domain-models';
 
 // In your service or repository
-throw new InvalidCredentialsError('Invalid email or password', undefined, 'errors.auth.invalidCredentials');
+throw new InvalidCredentialsError(
+  'Invalid email or password',
+  undefined,
+  'errors.auth.invalidCredentials',
+);
 ```
 
 ### Response Format

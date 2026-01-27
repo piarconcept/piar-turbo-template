@@ -18,7 +18,7 @@ export interface ValidationResult {
 
 /**
  * SEOValidator - Validates SEO metadata
- * 
+ *
  * @example
  * ```typescript
  * const validator = new SEOValidator();
@@ -137,13 +137,13 @@ export class SEOValidator {
         // Image dimensions validation
         if (!image.width || !image.height) {
           warnings.push(
-            `Open Graph image ${index + 1}: Width and height are recommended (recommended: 1200x630)`
+            `Open Graph image ${index + 1}: Width and height are recommended (recommended: 1200x630)`,
           );
         } else {
           // Check for recommended dimensions
           if (image.width < 1200 || image.height < 630) {
             recommendations.push(
-              `Open Graph image ${index + 1}: Consider using at least 1200x630 for better quality`
+              `Open Graph image ${index + 1}: Consider using at least 1200x630 for better quality`,
             );
           }
 
@@ -151,7 +151,7 @@ export class SEOValidator {
           const ratio = image.width / image.height;
           if (ratio < 1.9 || ratio > 1.91) {
             recommendations.push(
-              `Open Graph image ${index + 1}: Recommended aspect ratio is 1.91:1 (1200x630)`
+              `Open Graph image ${index + 1}: Recommended aspect ratio is 1.91:1 (1200x630)`,
             );
           }
         }
@@ -159,7 +159,7 @@ export class SEOValidator {
         // Alt text validation
         if (!image.alt) {
           recommendations.push(
-            `Open Graph image ${index + 1}: Alt text is recommended for accessibility`
+            `Open Graph image ${index + 1}: Alt text is recommended for accessibility`,
           );
         }
       });

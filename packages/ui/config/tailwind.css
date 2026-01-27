@@ -1,18 +1,18 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   /* PIAR Design System Tokens */
-  
+
   /* Color Palette */
   --color-primary: #b22222;
   --color-secondary: #000000;
   --color-tertiary: #ffffff;
   --color-background: #ffffff;
   --color-foreground: #262b50;
-  
+
   /* Typography */
   --font-family-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
-  
+
   /* Spacing scale (extends defaults) */
   /* Tailwind v4 provides default spacing, extend as needed */
 }

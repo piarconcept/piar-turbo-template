@@ -16,7 +16,9 @@ export function PublicHeader({ config, locale: _locale = 'en' }: PublicHeaderPro
         {config.logo && (
           <Link href={config.logo.href} className="flex items-center gap-2">
             <div className="h-8 w-8 rounded-md bg-[var(--color-primary)]" />
-            <Text variant="h3" className="text-white">{config.logo.alt}</Text>
+            <Text variant="h3" className="text-white">
+              {config.logo.alt}
+            </Text>
           </Link>
         )}
 
@@ -25,16 +27,8 @@ export function PublicHeader({ config, locale: _locale = 'en' }: PublicHeaderPro
           {config.navigation.map((section, sectionIdx) => (
             <React.Fragment key={sectionIdx}>
               {section.routes.map((route) => (
-                <Button
-                  key={route.href}
-                  variant="ghost"
-                  size="sm"
-                  asChild
-                >
-                  <Link
-                    href={route.href}
-                    className="text-white hover:text-[var(--color-primary)]"
-                  >
+                <Button key={route.href} variant="ghost" size="sm" asChild>
+                  <Link href={route.href} className="text-white hover:text-[var(--color-primary)]">
                     {route.label}
                   </Link>
                 </Button>
@@ -55,11 +49,7 @@ export function PublicHeader({ config, locale: _locale = 'en' }: PublicHeaderPro
               >
                 <Link href="/login">Login</Link>
               </Button>
-              <Button
-                variant="primary"
-                size="sm"
-                asChild
-              >
+              <Button variant="primary" size="sm" asChild>
                 <Link href="/signup">Sign Up</Link>
               </Button>
             </div>
@@ -72,12 +62,7 @@ export function PublicHeader({ config, locale: _locale = 'en' }: PublicHeaderPro
             className="md:hidden text-white hover:bg-white/10"
             aria-label="Toggle menu"
           >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"

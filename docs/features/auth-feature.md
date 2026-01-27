@@ -40,9 +40,11 @@ packages/features/auth/
 **Purpose**: Define contracts and shared types aligned with the Account domain model.
 
 **Dependencies**:
+
 - `@piar/domain-models`
 
 **Exports**:
+
 - `IAuthRepository`
 - `AccountEntity`, `AuthSession`, `AccountRole`
 - `LoginRequest`, `LoginResponse`
@@ -55,6 +57,7 @@ packages/features/auth/
 **Purpose**: Provide the backend repository implementation that resolves the auth port.
 
 **Exports**:
+
 - `AuthRepository`
 
 ### 3. @piar/auth-api
@@ -62,6 +65,7 @@ packages/features/auth/
 **Purpose**: NestJS implementation with use-cases, controllers, and modules.
 
 **Dependencies**:
+
 - `@nestjs/common`
 - `@nestjs/core`
 - `@piar/auth-configuration`
@@ -69,6 +73,7 @@ packages/features/auth/
 - `@piar/infra-backend-common-security`
 
 #### Use Cases
+
 Use-cases encapsulate the auth flows:
 
 ```typescript
@@ -78,6 +83,7 @@ export interface LoginUseCase {
 ```
 
 #### Controllers
+
 Controllers expose HTTP endpoints:
 
 ```typescript
@@ -91,6 +97,7 @@ export class AuthController {
 ```
 
 #### Module
+
 The module wires up DI:
 
 ```typescript

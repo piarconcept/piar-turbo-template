@@ -98,7 +98,8 @@ describe('SEO Utils - URL Processing', () => {
 describe('SEO Utils - Validation', () => {
   describe('validateMetaDescription', () => {
     it('should validate good description', () => {
-      const desc = 'This is a good meta description with proper length for SEO purposes and search engines';
+      const desc =
+        'This is a good meta description with proper length for SEO purposes and search engines';
       const result = validateMetaDescription(desc);
       expect(result.valid).toBe(true);
     });

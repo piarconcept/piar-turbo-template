@@ -12,12 +12,7 @@ import {
   RegisterUseCase,
   UpdateUserRoleUseCase,
 } from '../use-cases';
-import {
-  LoginDto,
-  RegisterDto,
-  ForgotPasswordDto,
-  UpdateUserRoleDto,
-} from '../dto';
+import { LoginDto, RegisterDto, ForgotPasswordDto, UpdateUserRoleDto } from '../dto';
 
 /**
  * Auth Controller (NestJS)
@@ -34,7 +29,7 @@ export class AuthController {
     @Inject(ForgotPasswordUseCase)
     private readonly forgotPasswordUseCase: ForgotPasswordUseCase,
     @Inject(UpdateUserRoleUseCase)
-    private readonly updateUserRoleUseCase: UpdateUserRoleUseCase
+    private readonly updateUserRoleUseCase: UpdateUserRoleUseCase,
   ) {}
 
   /**
@@ -58,7 +53,10 @@ export class AuthController {
   @ApiOperation({ summary: 'User registration', description: 'Register a new user account' })
   @ApiBody({ type: RegisterDto })
   @ApiResponse({ status: 201, description: 'User registered successfully' })
-  @ApiResponse({ status: 409, description: 'Email or account code already exists (RESOURCE_ALREADY_EXISTS)' })
+  @ApiResponse({
+    status: 409,
+    description: 'Email or account code already exists (RESOURCE_ALREADY_EXISTS)',
+  })
   @ApiResponse({ status: 400, description: 'Validation error (VALIDATION_ERROR)' })
   @ApiResponse({ status: 500, description: 'Internal server error' })
   async register(@Body() payload: RegisterDto): Promise<RegisterResponse> {
@@ -74,9 +72,7 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'Password reset email sent' })
   @ApiResponse({ status: 404, description: 'Email not found (NOT_FOUND)' })
   @ApiResponse({ status: 500, description: 'Internal server error' })
-  async forgotPassword(
-    @Body() payload: ForgotPasswordDto
-  ): Promise<ForgotPasswordResponse> {
+  async forgotPassword(@Body() payload: ForgotPasswordDto): Promise<ForgotPasswordResponse> {
     return this.forgotPasswordUseCase.execute(payload);
   }
 
@@ -84,16 +80,17 @@ export class AuthController {
    * PATCH /auth/roles
    */
   @Patch('roles')
-  @ApiOperation({ summary: 'Update user role', description: 'Update the role of an existing user (admin only)' })
+  @ApiOperation({
+    summary: 'Update user role',
+    description: 'Update the role of an existing user (admin only)',
+  })
   @ApiBody({ type: UpdateUserRoleDto })
   @ApiResponse({ status: 200, description: 'User role updated successfully' })
   @ApiResponse({ status: 404, description: 'User not found (NOT_FOUND)' })
   @ApiResponse({ status: 403, description: 'Insufficient permissions (FORBIDDEN)' })
   @ApiResponse({ status: 400, description: 'Validation error (VALIDATION_ERROR)' })
   @ApiResponse({ status: 500, description: 'Internal server error' })
-  async updateUserRole(
-    @Body() payload: UpdateUserRoleDto
-  ): Promise<UpdateUserRoleResponse> {
+  async updateUserRole(@Body() payload: UpdateUserRoleDto): Promise<UpdateUserRoleResponse> {
     return this.updateUserRoleUseCase.execute(payload);
   }
 }

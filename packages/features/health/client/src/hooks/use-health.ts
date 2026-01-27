@@ -51,7 +51,7 @@ export function useMultipleHealth(serviceUrls: string[], repository?: IHealthRep
     setLoading(true);
     setError(null);
 
-    const promises = urlsRef.current.map(url => repo.getHealthWithTimeout(url, 5010));
+    const promises = urlsRef.current.map((url) => repo.getHealthWithTimeout(url, 5010));
     const results = await Promise.all(promises);
     setStatuses(results);
     setLoading(false);
@@ -61,8 +61,8 @@ export function useMultipleHealth(serviceUrls: string[], repository?: IHealthRep
     fetchHealth();
   }, [fetchHealth]);
 
-  const isAllHealthy = statuses.every(s => s.status === 'ok');
-  const hasError = statuses.some(s => s.status === 'error');
+  const isAllHealthy = statuses.every((s) => s.status === 'ok');
+  const hasError = statuses.some((s) => s.status === 'error');
 
   return {
     statuses,
@@ -80,7 +80,7 @@ export function useMultipleHealth(serviceUrls: string[], repository?: IHealthRep
 export function useHealthPolling(
   serviceUrl: string,
   intervalMs: number = 30000,
-  repository?: IHealthRepository
+  repository?: IHealthRepository,
 ) {
   const [status, setStatus] = useState<HealthStatus | null>(null);
   const [loading, setLoading] = useState<boolean>(true);

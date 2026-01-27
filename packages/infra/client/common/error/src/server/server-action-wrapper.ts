@@ -12,17 +12,17 @@ export type ServerActionResult<T> =
 /**
  * Wrap a Server Action with error handling
  * Ensures errors are properly caught and serialized
- * 
+ *
  * @example
  * ```tsx
  * export const loginAction = wrapServerAction(async (formData: FormData) => {
  *   const email = formData.get('email') as string;
  *   const password = formData.get('password') as string;
- *   
+ *
  *   const result = await authService.login({ email, password });
  *   return { userId: result.userId };
  * });
- * 
+ *
  * // In component:
  * const result = await loginAction(formData);
  * if (result.success) {
@@ -33,7 +33,7 @@ export type ServerActionResult<T> =
  * ```
  */
 export function wrapServerAction<TArgs extends unknown[], TReturn>(
-  action: (...args: TArgs) => Promise<TReturn>
+  action: (...args: TArgs) => Promise<TReturn>,
 ): (...args: TArgs) => Promise<ServerActionResult<TReturn>> {
   return async (...args: TArgs) => {
     try {
@@ -69,7 +69,7 @@ export function wrapServerAction<TArgs extends unknown[], TReturn>(
 /**
  * Unwrap a Server Action result
  * Throws error if not successful, returns data otherwise
- * 
+ *
  * @example
  * ```tsx
  * const data = unwrapServerActionResult(await loginAction(formData));

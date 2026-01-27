@@ -5,7 +5,7 @@ import { ApplicationError, SerializableError } from '@piar/domain-models';
  * Works on both client and server (isomorphic)
  */
 export function deserializeHttpError(
-  response: Response | { data?: unknown; error?: unknown }
+  response: Response | { data?: unknown; error?: unknown },
 ): ApplicationError | Error {
   try {
     // Handle fetch Response
@@ -20,7 +20,7 @@ export function deserializeHttpError(
 
     // Handle axios-like response or error object
     const errorData = response.error || response.data;
-    
+
     if (errorData && isSerializableError(errorData)) {
       return ApplicationError.fromJSON(errorData);
     }

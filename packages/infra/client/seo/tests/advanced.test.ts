@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { MetaTagsBuilder, createMetaTags } from '../src/builders/meta-tags.builder';
 import { SchemaBuilder } from '../src/builders/schema.builder';
-import { SitemapGenerator, generateSitemap } from '../src/generators/sitemap.generator';
+import { SitemapGenerator } from '../src/generators/sitemap.generator';
 import { RobotsGenerator, RobotsTemplates } from '../src/generators/robots.generator';
 
 describe('MetaTagsBuilder - Advanced', () => {
@@ -77,7 +77,7 @@ describe('MetaTagsBuilder - Advanced', () => {
     const builder = new MetaTagsBuilder();
     builder.setViewport('width=device-width, initial-scale=1');
     const result = builder.build();
-    const viewportTag = result.meta.find(tag => tag.name === 'viewport');
+    const viewportTag = result.meta.find((tag) => tag.name === 'viewport');
     expect(viewportTag).toBeDefined();
   });
 });
@@ -141,11 +141,7 @@ describe('SitemapGenerator - Advanced', () => {
 
   it('should add multiple URLs at once', () => {
     const generator = new SitemapGenerator({ baseUrl: 'https://example.com' });
-    generator.addUrls([
-      { loc: '/page1' },
-      { loc: '/page2' },
-      { loc: '/page3' },
-    ]);
+    generator.addUrls([{ loc: '/page1' }, { loc: '/page2' }, { loc: '/page3' }]);
     const xml = generator.toXML();
     expect(xml).toContain('/page1');
     expect(xml).toContain('/page2');
@@ -209,10 +205,7 @@ describe('RobotsGenerator - Advanced', () => {
 
   it('should add multiple sitemaps', () => {
     const generator = new RobotsGenerator();
-    generator.addSitemaps([
-      'https://example.com/sitemap1.xml',
-      'https://example.com/sitemap2.xml',
-    ]);
+    generator.addSitemaps(['https://example.com/sitemap1.xml', 'https://example.com/sitemap2.xml']);
     const result = generator.build();
     expect(result).toContain('sitemap1.xml');
     expect(result).toContain('sitemap2.xml');

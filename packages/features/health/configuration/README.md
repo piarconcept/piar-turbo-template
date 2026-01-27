@@ -34,7 +34,7 @@ class HttpHealthRepository implements IHealthRepository {
   async getHealth(serviceUrl: string): Promise<HealthStatus> {
     // Implementation details
   }
-  
+
   async getHealthWithTimeout(serviceUrl: string, timeout: number): Promise<HealthStatus> {
     // Implementation details
   }

@@ -135,7 +135,8 @@ describe('SEOValidator', () => {
     const validator = new SEOValidator();
     const result = validator.validateMetadata({
       title: 'Good SEO title with proper length for search engines',
-      description: 'Good SEO description with proper length for search engines to display in results',
+      description:
+        'Good SEO description with proper length for search engines to display in results',
       canonical: 'https://example.com',
     });
     expect(result).toBeDefined();
@@ -148,7 +149,8 @@ describe('SEOValidator', () => {
     const score = validator.calculateScore({
       metadata: {
         title: 'Good SEO title with proper length for search engines',
-        description: 'Good SEO description with proper length for search engines to display in results properly with all details',
+        description:
+          'Good SEO description with proper length for search engines to display in results properly with all details',
       },
     });
     expect(typeof score).toBe('number');

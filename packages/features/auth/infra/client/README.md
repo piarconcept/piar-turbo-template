@@ -21,32 +21,30 @@ apps/client/backoffice/auth.ts (NextAuth)
 ```typescript
 import { HttpAuthRepository } from '@piar/auth-infra-client';
 
-const authRepository = new HttpAuthRepository(
-  process.env.NEXT_PUBLIC_BACKOFFICE_BFF_URL
-);
+const authRepository = new HttpAuthRepository(process.env.NEXT_PUBLIC_BACKOFFICE_BFF_URL);
 
 // Login
 const { account, session } = await authRepository.login({
   email: 'admin@piar.com',
-  password: 'admin123'
+  password: 'admin123',
 });
 
 // Register
 const { account, session } = await authRepository.register({
   accountCode: 'ACC-001',
   email: 'user@example.com',
-  password: 'securepassword'
+  password: 'securepassword',
 });
 
 // Forgot password
 const { success, message } = await authRepository.forgotPassword({
-  email: 'user@example.com'
+  email: 'user@example.com',
 });
 
 // Update user role (admin only)
 await authRepository.updateUserRole({
   email: 'user@example.com',
-  role: 'admin'
+  role: 'admin',
 });
 ```
 
@@ -56,9 +54,7 @@ await authRepository.updateUserRole({
 // apps/client/backoffice/src/auth.ts
 import { HttpAuthRepository } from '@piar/auth-infra-client';
 
-const authRepository = new HttpAuthRepository(
-  process.env.NEXT_PUBLIC_BACKOFFICE_BFF_URL!
-);
+const authRepository = new HttpAuthRepository(process.env.NEXT_PUBLIC_BACKOFFICE_BFF_URL!);
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -68,7 +64,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           email: credentials.email as string,
           password: credentials.password as string,
         });
-        
+
         return {
           id: account.id,
           email: account.email!,

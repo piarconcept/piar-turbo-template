@@ -6,11 +6,11 @@ export interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
 
 /**
  * Label Component - Atomic Design: Atom
- * 
+ *
  * @example
  * // Basic label
  * <Label htmlFor="email">Email</Label>
- * 
+ *
  * @example
  * // Required label
  * <Label htmlFor="password" required>Password</Label>
@@ -27,7 +27,7 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>(
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>
     );
-  }
+  },
 );
 
 Label.displayName = 'Label';

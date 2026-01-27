@@ -53,7 +53,19 @@ export interface RobotsDirective {
  */
 export interface OpenGraphMetadata {
   /** The type of your object */
-  type: 'website' | 'article' | 'book' | 'profile' | 'video.movie' | 'video.episode' | 'video.tv_show' | 'video.other' | 'music.song' | 'music.album' | 'music.playlist' | 'music.radio_station';
+  type:
+    | 'website'
+    | 'article'
+    | 'book'
+    | 'profile'
+    | 'video.movie'
+    | 'video.episode'
+    | 'video.tv_show'
+    | 'video.other'
+    | 'music.song'
+    | 'music.album'
+    | 'music.playlist'
+    | 'music.radio_station';
   /** The title of your object */
   title: string;
   /** The description of your object */

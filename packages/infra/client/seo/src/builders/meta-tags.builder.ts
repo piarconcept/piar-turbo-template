@@ -35,7 +35,7 @@ export interface LinkTag {
 
 /**
  * MetaTagsBuilder - Constructs all SEO meta tags
- * 
+ *
  * @example
  * ```typescript
  * const builder = new MetaTagsBuilder();
@@ -62,7 +62,7 @@ export class MetaTagsBuilder {
    */
   setBasicMetadata(metadata: SEOMetadata): this {
     // Title is handled separately in Next.js/HTML
-    
+
     // Description
     if (metadata.description) {
       this.metaTags.push({
@@ -444,11 +444,7 @@ export class MetaTagsBuilder {
   /**
    * Add favicon links
    */
-  setFavicons(options: {
-    icon?: string;
-    appleTouchIcon?: string;
-    manifest?: string;
-  }): this {
+  setFavicons(options: { icon?: string; appleTouchIcon?: string; manifest?: string }): this {
     if (options.icon) {
       this.linkTags.push({
         rel: 'icon',

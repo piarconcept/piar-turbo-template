@@ -1,2 +1,2 @@
 // Export organism components here
-export * from "./AuthPage";
+export * from './AuthPage';

@@ -19,10 +19,7 @@ export default function HomePage() {
             <Shield className="h-20 w-20 text-[var(--color-secondary)]" />
           </div>
         </div>
-        <Text
-          variant="h1"
-          className="mb-4 text-5xl text-[var(--color-secondary)] justify-center"
-        >
+        <Text variant="h1" className="mb-4 text-5xl text-[var(--color-secondary)] justify-center">
           {t('title')}
         </Text>
         <Text
@@ -39,19 +36,14 @@ export default function HomePage() {
             </Link>
           </Button>
           <Button variant="outline" size="lg" asChild>
-            <Link href="/register">
-              {t('requestAccess')}
-            </Link>
+            <Link href="/register">{t('requestAccess')}</Link>
           </Button>
         </div>
       </div>
 
       {/* Features Grid */}
       <div className="mb-16">
-        <Text
-          variant="h2"
-          className="mb-8 text-center text-[var(--color-secondary)]"
-        >
+        <Text variant="h2" className="mb-8 text-center text-[var(--color-secondary)]">
           {t('features.title')}
         </Text>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -82,7 +74,10 @@ export default function HomePage() {
           {t('cta.description')}
         </Text>
         <Button variant="secondary" size="lg" asChild>
-          <Link href="/register" className="text-[var(--color-secondary)] hover:scale-105 text-white">
+          <Link
+            href="/register"
+            className="text-[var(--color-secondary)] hover:scale-105 text-white"
+          >
             {t('cta.button')}
           </Link>
         </Button>

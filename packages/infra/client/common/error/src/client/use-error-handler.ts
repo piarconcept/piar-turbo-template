@@ -13,12 +13,12 @@ export interface UseErrorHandlerReturn {
 
 /**
  * React hook for handling errors in client components
- * 
+ *
  * @example
  * ```tsx
  * function LoginForm() {
  *   const { error, handleError, clearError } = useErrorHandler();
- *   
+ *
  *   const onSubmit = async () => {
  *     try {
  *       await api.login();
@@ -26,7 +26,7 @@ export interface UseErrorHandlerReturn {
  *       handleError(err);
  *     }
  *   };
- *   
+ *
  *   return (
  *     <>
  *       {error && <ErrorMessage error={error} onClose={clearError} />}
@@ -67,27 +67,25 @@ export function useErrorHandler(): UseErrorHandlerReturn {
 
 /**
  * Hook for handling async operations with error handling
- * 
+ *
  * @example
  * ```tsx
  * function DataComponent() {
  *   const { execute, loading, error } = useAsyncError(async () => {
  *     return await api.fetchData();
  *   });
- *   
+ *
  *   useEffect(() => {
  *     execute();
  *   }, []);
- *   
+ *
  *   if (loading) return <Spinner />;
  *   if (error) return <ErrorDisplay error={error} />;
  *   return <div>...</div>;
  * }
  * ```
  */
-export function useAsyncError<T>(
-  asyncFn: () => Promise<T>
-): {
+export function useAsyncError<T>(asyncFn: () => Promise<T>): {
   execute: () => Promise<void>;
   data: T | null;
   loading: boolean;

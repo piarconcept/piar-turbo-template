@@ -5,6 +5,7 @@ Shared Tailwind CSS v4 configuration package for the PIAR monorepo.
 ## Purpose
 
 This package provides:
+
 - Centralized Tailwind CSS v4 configuration
 - PostCSS configuration optimized for monorepo structure
 - Design system tokens defined in `@theme`
@@ -15,6 +16,7 @@ This package provides:
 ### In Next.js Apps
 
 1. Install as dependency:
+
 ```json
 {
   "dependencies": {
@@ -24,14 +26,16 @@ This package provides:
 ```
 
 2. Create `postcss.config.mjs`:
+
 ```js
-import config from "@piar/ui-config/postcss";
+import config from '@piar/ui-config/postcss';
 export default config;
 ```
 
 3. Import CSS in your global styles:
+
 ```css
-@import "@piar/ui-config/tailwind.css";
+@import '@piar/ui-config/tailwind.css';
 ```
 
 ### In Shared Packages
@@ -48,6 +52,7 @@ All design tokens are defined in `tailwind.css` using `@theme`:
 ## Architecture
 
 This package follows Tailwind CSS v4's CSS-first approach:
+
 - No `tailwind.config.js` required
 - Configuration via `@theme` in CSS
 - Automatic class scanning via `base` in PostCSS plugin

@@ -21,19 +21,19 @@ export interface SitemapOptions {
 
 /**
  * SitemapGenerator - Creates XML sitemaps
- * 
+ *
  * @example
  * ```typescript
  * const generator = new SitemapGenerator({
  *   baseUrl: 'https://example.com'
  * });
- * 
+ *
  * generator.addUrl({
  *   loc: '/about',
  *   changefreq: 'monthly',
  *   priority: 0.8
  * });
- * 
+ *
  * const xml = generator.toXML();
  * ```
  */
@@ -118,22 +118,47 @@ export class SitemapGenerator {
       if (url.images && url.images.length > 0) {
         url.images.forEach((image) => {
           xml += indent + indent + '<image:image>' + newline;
-          xml += indent + indent + indent + `<image:loc>${this.escapeXml(image.loc)}</image:loc>` + newline;
+          xml +=
+            indent +
+            indent +
+            indent +
+            `<image:loc>${this.escapeXml(image.loc)}</image:loc>` +
+            newline;
 
           if (image.caption) {
-            xml += indent + indent + indent + `<image:caption>${this.escapeXml(image.caption)}</image:caption>` + newline;
+            xml +=
+              indent +
+              indent +
+              indent +
+              `<image:caption>${this.escapeXml(image.caption)}</image:caption>` +
+              newline;
           }
 
           if (image.title) {
-            xml += indent + indent + indent + `<image:title>${this.escapeXml(image.title)}</image:title>` + newline;
+            xml +=
+              indent +
+              indent +
+              indent +
+              `<image:title>${this.escapeXml(image.title)}</image:title>` +
+              newline;
           }
 
           if (image.geoLocation) {
-            xml += indent + indent + indent + `<image:geo_location>${this.escapeXml(image.geoLocation)}</image:geo_location>` + newline;
+            xml +=
+              indent +
+              indent +
+              indent +
+              `<image:geo_location>${this.escapeXml(image.geoLocation)}</image:geo_location>` +
+              newline;
           }
 
           if (image.license) {
-            xml += indent + indent + indent + `<image:license>${this.escapeXml(image.license)}</image:license>` + newline;
+            xml +=
+              indent +
+              indent +
+              indent +
+              `<image:license>${this.escapeXml(image.license)}</image:license>` +
+              newline;
           }
 
           xml += indent + indent + '</image:image>' + newline;
@@ -263,7 +288,7 @@ export class SitemapIndexGenerator {
  */
 export function generateSitemap(
   urls: Array<Omit<SitemapUrl, 'loc'> & { loc: string }>,
-  options: SitemapOptions
+  options: SitemapOptions,
 ): string {
   const generator = new SitemapGenerator(options);
   generator.addUrls(urls);
@@ -275,7 +300,7 @@ export function generateSitemap(
  */
 export function generateSitemapIndex(
   sitemaps: Array<{ loc: string; lastmod?: string }>,
-  options?: { prettyPrint?: boolean }
+  options?: { prettyPrint?: boolean },
 ): string {
   const generator = new SitemapIndexGenerator(options);
   sitemaps.forEach((sitemap) => generator.addSitemap(sitemap.loc, sitemap.lastmod));

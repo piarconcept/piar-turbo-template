@@ -14,11 +14,7 @@ export function LogoutButton() {
   };
 
   return (
-    <Button
-      onClick={handleLogout}
-      variant="secondary"
-      className="flex items-center gap-2"
-    >
+    <Button onClick={handleLogout} variant="secondary" className="flex items-center gap-2">
       <LogOut className="w-4 h-4" />
       <span>Logout</span>
     </Button>

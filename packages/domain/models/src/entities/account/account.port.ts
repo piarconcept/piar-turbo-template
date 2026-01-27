@@ -1,5 +1,5 @@
-import { BasePort } from "../base/base.port";
-import { AccountEntityProps } from "./account.entity";
+import { BasePort } from '../base/base.port';
+import { AccountEntityProps } from './account.entity';
 
 export interface AccountPort extends BasePort<AccountEntityProps> {
   getByAccountCode(accountCode: string): Promise<AccountEntityProps | null>;
@@ -7,4 +7,4 @@ export interface AccountPort extends BasePort<AccountEntityProps> {
   comparePassword(email: string, password: string): Promise<boolean>;
 }
 
-export const AccountPort = Symbol("AccountPort");
+export const AccountPort = Symbol('AccountPort');

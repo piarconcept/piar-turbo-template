@@ -5,27 +5,27 @@ export interface AuthCardProps {
    * Main title of the card
    */
   title: string;
-  
+
   /**
    * Optional subtitle or description
    */
   description?: string;
-  
+
   /**
    * Optional icon to display at the top
    */
   icon?: ReactNode;
-  
+
   /**
    * Main content - typically a form
    */
   children: ReactNode;
-  
+
   /**
    * Optional footer content - typically links (register, login, etc.)
    */
   footer?: ReactNode;
-  
+
   /**
    * Additional CSS classes
    */
@@ -34,19 +34,19 @@ export interface AuthCardProps {
 
 /**
  * AuthCard Component - Atomic Design: Molecule
- * 
+ *
  * Reusable card container for all authentication pages.
  * Provides consistent styling and layout for login, register, forgot-password, etc.
- * 
+ *
  * @example
  * // Login page
- * <AuthCard 
+ * <AuthCard
  *   title="Sign In"
  *   footer={<>Don't have an account? <Link href="/register">Sign up</Link></>}
  * >
  *   <form>...</form>
  * </AuthCard>
- * 
+ *
  * @example
  * // With icon
  * <AuthCard
@@ -70,9 +70,7 @@ export const AuthCard = ({
       <div className={`rounded-lg border border-gray-200 bg-white p-8 shadow-sm ${className}`}>
         {icon && (
           <div className="mb-6 flex justify-center">
-            <div className="rounded-full bg-[var(--color-primary)]/10 p-4">
-              {icon}
-            </div>
+            <div className="rounded-full bg-[var(--color-primary)]/10 p-4">{icon}</div>
           </div>
         )}
 
@@ -80,21 +78,11 @@ export const AuthCard = ({
           {title}
         </h1>
 
-        {description && (
-          <p className="mb-6 text-center text-gray-600">
-            {description}
-          </p>
-        )}
-        
-        <div className="space-y-4">
-          {children}
-        </div>
+        {description && <p className="mb-6 text-center text-gray-600">{description}</p>}
 
-        {footer && (
-          <div className="mt-6 text-center text-sm text-gray-600">
-            {footer}
-          </div>
-        )}
+        <div className="space-y-4">{children}</div>
+
+        {footer && <div className="mt-6 text-center text-sm text-gray-600">{footer}</div>}
       </div>
     </div>
   );

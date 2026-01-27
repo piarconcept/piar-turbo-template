@@ -1,9 +1,11 @@
 # Error Handling System
 
 ## Purpose
+
 Complete centralized error handling system that ensures consistent, structured error responses across the entire monorepo, from backend to frontend.
 
 ## Status
+
 - [x] Completed - Domain error entities
 - [x] Completed - Backend infrastructure (filters)
 - [x] Completed - Client infrastructure (deserializers, hooks)
@@ -13,27 +15,33 @@ Complete centralized error handling system that ensures consistent, structured e
 ## Key Decisions
 
 ### 1. Domain-First Approach
+
 **Decision**: All errors are domain entities (`ApplicationError`) defined in `@piar/domain-models`
 
-**Why**: 
+**Why**:
+
 - Single source of truth for error structure
 - Shared between backend and frontend (type-safe)
 - Serializable (can travel through HTTP)
 - Framework-agnostic (pure TypeScript)
 
 ### 2. Automatic Error Conversion
+
 **Decision**: The `GlobalExceptionFilter` converts ANY error into a domain error
 
 **Why**:
+
 - Frontend ALWAYS receives the same structured format
 - No need for `try-catch` everywhere
 - Easier to deserialize and display errors
 - Consistent error handling across all endpoints
 
 ### 3. APP_FILTER Provider Pattern
+
 **Decision**: Use NestJS `APP_FILTER` instead of `app.useGlobalFilters()`
 
 **Why**:
+
 - Proper dependency injection support
 - Filters have access to NestJS context
 - Recommended by NestJS documentation
@@ -80,6 +88,7 @@ Complete centralized error handling system that ensures consistent, structured e
 ### Domain Layer: Error Entities
 
 #### ErrorCode Enum (13 codes)
+
 ```typescript
 export enum ErrorCode {
   // General errors (1xxx)
@@ -106,6 +115,7 @@ export enum ErrorCode {
 ```
 
 **HTTP Status Mapping**:
+
 ```typescript
 export const ErrorCodeHttpStatus: Record<ErrorCode, number> = {
   [ErrorCode.INTERNAL_SERVER_ERROR]: 500,
@@ -122,6 +132,7 @@ export const ErrorCodeHttpStatus: Record<ErrorCode, number> = {
 ```
 
 #### ApplicationError (Base Class)
+
 ```typescript
 export class ApplicationError extends Error {
   public readonly code: ErrorCode;
@@ -134,7 +145,7 @@ export class ApplicationError extends Error {
     code: ErrorCode,
     message: string,
     details?: Record<string, unknown>,
-    i18nKey?: string
+    i18nKey?: string,
   ) {
     super(message);
     this.name = 'ApplicationError';
@@ -163,6 +174,7 @@ export class ApplicationError extends Error {
 ```
 
 **Key features**:
+
 - ✅ Extends `Error` (can be thrown)
 - ✅ Serializable via `toJSON()`
 - ✅ Deserializable via `fromJSON()` (isomorphic)
@@ -194,6 +206,7 @@ export class InternalServerError extends ApplicationError
 ```
 
 **Usage example**:
+
 ```typescript
 // In repository
 if (!account) {
@@ -201,7 +214,11 @@ if (!account) {
 }
 
 if (!passwordMatch) {
-  throw new InvalidCredentialsError('Invalid email or password', undefined, 'errors.auth.invalid_credentials');
+  throw new InvalidCredentialsError(
+    'Invalid email or password',
+    undefined,
+    'errors.auth.invalid_credentials',
+  );
 }
 
 // Error automatically includes:
@@ -214,6 +231,7 @@ if (!passwordMatch) {
 ### Infrastructure Layer: Backend
 
 #### ApplicationErrorFilter
+
 ```typescript
 @Catch(ApplicationError)
 export class ApplicationErrorFilter implements ExceptionFilter {
@@ -242,6 +260,7 @@ export class ApplicationErrorFilter implements ExceptionFilter {
 **Purpose**: Catches domain errors and sends them as JSON to the client.
 
 **Flow**:
+
 1. Domain error thrown anywhere in the app
 2. Filter catches it
 3. Logs error details for monitoring
@@ -249,6 +268,7 @@ export class ApplicationErrorFilter implements ExceptionFilter {
 5. Returns HTTP response with correct status code
 
 #### GlobalExceptionFilter
+
 ```typescript
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
@@ -287,12 +307,14 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 **Purpose**: Converts ANY non-domain error into a domain error.
 
 **Key behavior**:
+
 - ✅ NestJS `HttpException` → `InternalServerError` (preserves original status)
 - ✅ Unknown errors → `InternalServerError` with 500 status
 - ✅ Already domain errors → passes through
 - ✅ ALWAYS returns structured JSON
 
 **Why this is important**:
+
 - Frontend receives consistent format ALWAYS
 - No need to handle different error shapes
 - Easy to deserialize and display
@@ -319,10 +341,12 @@ export class AppModule {}
 ```
 
 **Execution order**:
+
 1. `ApplicationErrorFilter` (catches `ApplicationError` first)
 2. `GlobalExceptionFilter` (catches everything else)
 
 **Benefits of APP_FILTER pattern**:
+
 - ✅ Automatic dependency injection
 - ✅ Registered globally for all endpoints
 - ✅ NestJS recommended approach
@@ -337,7 +361,7 @@ export class AppModule {}
  * Deserialize HTTP error response to ApplicationError
  */
 export function deserializeHttpError(
-  response: Response | { data?: any; error?: any }
+  response: Response | { data?: any; error?: any },
 ): ApplicationError | Error {
   // Handle fetch Response
   if (response instanceof Response) {
@@ -365,6 +389,7 @@ export function deserializeJsonError(json: unknown): ApplicationError | Error {
 ```
 
 **Usage in client**:
+
 ```typescript
 // In React component or repository
 try {
@@ -376,7 +401,7 @@ try {
   if (!response.ok) {
     const errorJson = await response.json();
     const error = deserializeJsonError(errorJson);
-    
+
     if (isApplicationError(error)) {
       // Handle domain error with code, i18nKey, etc.
       console.log(error.code); // 'INVALID_CREDENTIALS'
@@ -419,9 +444,7 @@ export function useErrorHandler() {
 /**
  * Wrap Server Actions to return structured results
  */
-export function wrapServerAction<T>(
-  action: () => Promise<T>
-): Promise<ServerActionResult<T>> {
+export function wrapServerAction<T>(action: () => Promise<T>): Promise<ServerActionResult<T>> {
   return action()
     .then((data) => ({ success: true, data }))
     .catch((error) => ({
@@ -459,35 +482,35 @@ export async function loginAction(email: string, password: string) {
 export class AccountRepository implements AccountPort {
   async getByEmail(email: string): Promise<AccountEntityProps | null> {
     const account = this.accounts.find((acc) => acc.email === email);
-    
+
     if (!account) {
       // ✅ Throw domain error
       throw new NotFoundError('Account', email, 'errors.account.not_found');
     }
-    
+
     return AccountFactory.toDomain(account);
   }
 
   async comparePassword(email: string, password: string): Promise<boolean> {
     const account = await this.getByEmail(email);
-    
+
     if (!account) {
       // ✅ Throw domain error
       throw new InvalidCredentialsError(
         'Invalid email or password',
         undefined,
-        'errors.auth.invalid_credentials'
+        'errors.auth.invalid_credentials',
       );
     }
 
     const isValid = await bcrypt.compare(password, account.passwordHash);
-    
+
     if (!isValid) {
       // ✅ Throw domain error
       throw new InvalidCredentialsError(
         'Invalid email or password',
         undefined,
-        'errors.auth.invalid_credentials'
+        'errors.auth.invalid_credentials',
       );
     }
 
@@ -597,6 +620,7 @@ function LoginForm() {
 ```
 
 **Fields**:
+
 - `code`: ErrorCode enum value (for programmatic handling)
 - `message`: Human-readable error message (English, for developers)
 - `statusCode`: HTTP status code (for HTTP layer)
@@ -616,6 +640,7 @@ function LoginForm() {
 ## Best Practices
 
 ### 1. Always Use Domain Errors in Backend
+
 ```typescript
 // ❌ Bad - Generic Error
 throw new Error('User not found');
@@ -625,6 +650,7 @@ throw new NotFoundError('User', userId, 'errors.user.not_found');
 ```
 
 ### 2. Include i18nKey for User-Facing Errors
+
 ```typescript
 // ❌ Bad - No i18n key
 throw new InvalidCredentialsError('Invalid credentials');
@@ -633,23 +659,29 @@ throw new InvalidCredentialsError('Invalid credentials');
 throw new InvalidCredentialsError(
   'Invalid credentials',
   undefined,
-  'errors.auth.invalid_credentials'
+  'errors.auth.invalid_credentials',
 );
 ```
 
 ### 3. Add Details for Debugging
+
 ```typescript
 // ❌ Bad - No context
 throw new ValidationError('Validation failed');
 
 // ✅ Good - With details
-throw new ValidationError('Validation failed', {
-  email: ['Invalid email format'],
-  password: ['Must be at least 8 characters'],
-}, 'errors.validation.failed');
+throw new ValidationError(
+  'Validation failed',
+  {
+    email: ['Invalid email format'],
+    password: ['Must be at least 8 characters'],
+  },
+  'errors.validation.failed',
+);
 ```
 
 ### 4. Don't Catch Errors Unless Necessary
+
 ```typescript
 // ❌ Bad - Unnecessary try-catch
 @Post('login')
@@ -669,6 +701,7 @@ async login(@Body() payload: LoginDto) {
 ```
 
 ### 5. Use Deserializers in Frontend
+
 ```typescript
 // ❌ Bad - Manual parsing
 if (!response.ok) {
@@ -697,6 +730,7 @@ All error responses are documented in Swagger:
 ```
 
 **Benefits**:
+
 - ✅ Developers can see all possible errors
 - ✅ Error codes documented in descriptions
 - ✅ Can test error cases in Swagger UI
@@ -711,17 +745,15 @@ describe('AccountRepository', () => {
   it('should throw NotFoundError when account does not exist', async () => {
     const repository = new AccountRepository();
 
-    await expect(
-      repository.getByEmail('nonexistent@example.com')
-    ).rejects.toThrow(NotFoundError);
+    await expect(repository.getByEmail('nonexistent@example.com')).rejects.toThrow(NotFoundError);
   });
 
   it('should throw InvalidCredentialsError for wrong password', async () => {
     const repository = new AccountRepository();
 
-    await expect(
-      repository.comparePassword('user@example.com', 'wrongpassword')
-    ).rejects.toThrow(InvalidCredentialsError);
+    await expect(repository.comparePassword('user@example.com', 'wrongpassword')).rejects.toThrow(
+      InvalidCredentialsError,
+    );
   });
 });
 ```
@@ -749,31 +781,38 @@ describe('ApplicationErrorFilter', () => {
 ## Common Error Scenarios
 
 ### Authentication Errors
+
 - `InvalidCredentialsError`: Wrong email/password
 - `UnauthorizedError`: Missing or invalid token
 - `TokenExpiredError`: JWT expired
 - `ForbiddenError`: Insufficient permissions
 
 ### Resource Errors
+
 - `NotFoundError`: Resource doesn't exist
 - `ResourceAlreadyExistsError`: Duplicate resource (email, username, etc.)
 
 ### Validation Errors
+
 - `ValidationError`: Input validation failed (email format, password length, etc.)
 
 ### Business Errors
+
 - `BusinessRuleViolationError`: Business logic constraint violated
 - `OperationNotAllowedError`: Operation not permitted in current state
 
 ### Server Errors
+
 - `InternalServerError`: Unexpected error, database error, third-party API error
 
 ## Packages
 
 ### @piar/domain-models
+
 **Location**: `packages/domain/models/src/errors/`
 
 **Contents**:
+
 - `application-error.ts`: Base error class
 - `error-codes.ts`: ErrorCode enum + HTTP status mapping
 - `specific-errors.ts`: 8 specific error classes
@@ -782,22 +821,27 @@ describe('ApplicationErrorFilter', () => {
 **Dependencies**: None (pure TypeScript)
 
 ### @piar/infra-backend-common-error
+
 **Location**: `packages/infra/backend/common/error/`
 
 **Contents**:
+
 - `filters/application-error.filter.ts`: ApplicationErrorFilter + GlobalExceptionFilter
 - `interceptors/error-response.interceptor.ts`: Error logging interceptor
 - `index.ts`: Exports filters and interceptors
 
 **Dependencies**:
+
 - `@nestjs/common`
 - `@piar/domain-models`
 - `@types/express`
 
 ### @piar/infra-client-common-error
+
 **Location**: `packages/infra/client/common/error/`
 
 **Contents**:
+
 - `shared/http-error-deserializer.ts`: Deserialize HTTP errors
 - `shared/error-formatter.ts`: Format error messages
 - `client/use-error-handler.ts`: React hooks for error handling
@@ -807,18 +851,21 @@ describe('ApplicationErrorFilter', () => {
 - `index.ts`: Exports all utilities
 
 **Dependencies**:
+
 - `react` (peer)
 - `@piar/domain-models`
 - `@types/react-dom`
 - `jsdom`
 
 ## Related Documentation
+
 - [Domain Models Package](./domain-models.md)
 - [BFF Architecture](./bff-architecture.md)
 - [Auth Feature](./auth-feature.md)
 - [Creating Features Guide](./creating-features-guide.md)
 
 ## Future Enhancements
+
 - [ ] Add error tracking integration (Sentry, Datadog)
 - [ ] Create error UI components library (`@piar/ui-components`)
 - [ ] Add error retry logic for transient failures
@@ -826,5 +873,5 @@ describe('ApplicationErrorFilter', () => {
 - [ ] Add error analytics dashboard
 
 ## Last Updated
-23 January 2026 - Complete error handling system with domain errors and automatic conversion
 
+23 January 2026 - Complete error handling system with domain errors and automatic conversion

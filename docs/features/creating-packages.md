@@ -1,26 +1,34 @@
 # Creating New Packages
 
 ## Purpose
+
 Step-by-step guide for creating new shared packages in the monorepo. Ensures consistency and proper integration with the workspace.
 
 ## Status
+
 - [x] Completed - Comprehensive guide based on domain-models package
 
 ## Package Types
 
 ### 1. **Shared Libraries** (TypeScript/JavaScript)
+
 Examples: domain-models, utils, validation
+
 - Pure TypeScript/JavaScript code
 - Compiled to dist/
 - Used across multiple apps
 
 ### 2. **Component Libraries** (React/UI)
+
 Examples: ui-components, design-system
+
 - React components
 - Used in web/backoffice apps
 
 ### 3. **Configuration Packages**
+
 Examples: eslint-config, tsconfig
+
 - Shared configurations
 - Minimal or no build step
 
@@ -74,6 +82,7 @@ Create `packages/{category}/{package-name}/package.json`:
 ```
 
 **Key points:**
+
 - **Name**: Must use `@piar/` scope
 - **Private**: `true` for internal packages
 - **Main/Types**: Point to compiled output
@@ -112,6 +121,7 @@ Create `packages/{category}/{package-name}/tsconfig.json`:
 ```
 
 **Adjust if needed:**
+
 - For React packages: add `"jsx": "react-jsx"` and `"dom"` to lib
 - For Node.js packages: adjust target and lib accordingly
 
@@ -128,6 +138,7 @@ touch packages/{category}/{package-name}/src/index.ts
 ```
 
 Example structure:
+
 ```
 packages/{category}/{package-name}/
 ├── src/
@@ -154,6 +165,7 @@ Create `packages/{category}/{package-name}/turbo.json` to extend root configurat
 ```
 
 **Benefits:**
+
 - Explicit cache outputs for this package
 - Can override root turbo configuration if needed
 - Better control over build behavior
@@ -187,19 +199,25 @@ import { Something } from '@piar/{package-name}';
 ## Development
 
 \`\`\`bash
+
 # Build
+
 pnpm turbo build --filter=@piar/{package-name}
 
 # Watch mode
+
 pnpm --filter @piar/{package-name} dev
 
 # Type check
+
 pnpm --filter @piar/{package-name} typecheck
 
 # Lint
+
 pnpm --filter @piar/{package-name} lint
 
 # Test
+
 pnpm --filter @piar/{package-name} test
 \`\`\`
 ```
@@ -210,18 +228,20 @@ The package should automatically be detected by pnpm workspace (configured in `p
 
 ```yaml
 packages:
-  - "apps/**"
-  - "packages/*"      # Matches packages/category/name
+  - 'apps/**'
+  - 'packages/*' # Matches packages/category/name
 ```
 
 If using nested structure like `packages/category/name`, update to:
+
 ```yaml
 packages:
-  - "apps/**"
-  - "packages/**"     # Two asterisks for nested folders
+  - 'apps/**'
+  - 'packages/**' # Two asterisks for nested folders
 ```
 
 **Install dependencies** to register the package:
+
 ```bash
 pnpm install
 ```
@@ -272,6 +292,7 @@ This reuses the root ESLint configuration for consistency.
 ### Step 12: Document the Package
 
 1. Create documentation file:
+
    ```bash
    touch docs/features/{package-name}.md
    ```
@@ -279,8 +300,10 @@ This reuses the root ESLint configuration for consistency.
 2. Use the template in `docs/features/TEMPLATE.md`
 
 3. Update `docs/AI-context.md` to add the new package:
+
    ```markdown
    ## Features
+
    - Your new package: `docs/features/{package-name}.md`
    ```
 
@@ -289,9 +312,10 @@ This reuses the root ESLint configuration for consistency.
 1. Tests dependencies are already in package.json from Step 2
 
 2. Create `vitest.config.ts`:
+
    ```typescript
    import { defineConfig } from 'vitest/config';
-   
+
    export default defineConfig({
      test: {
        globals: true,
@@ -300,27 +324,36 @@ This reuses the root ESLint configuration for consistency.
          provider: 'v8',
          reporter: ['text', 'json', 'html'],
          exclude: [
-           'dist', 'node_modules', 
-           '**/*.d.ts', '**/*.config.*', 
-           '**/tests/**', 'vitest.config.ts', 
-           'package.json', 'tsconfig.json', 'turbo.json', 
-           '.gitignore', 'README.md', 'docs/**', 'coverage/**',
+           'dist',
+           'node_modules',
+           '**/*.d.ts',
+           '**/*.config.*',
+           '**/tests/**',
+           'vitest.config.ts',
+           'package.json',
+           'tsconfig.json',
+           'turbo.json',
+           '.gitignore',
+           'README.md',
+           'docs/**',
+           'coverage/**',
            '**/index.ts',
          ],
          thresholds: {
            lines: 100,
            functions: 100,
            branches: 100,
-           statements: 100
-         }
-       }
-     }
+           statements: 100,
+         },
+       },
+     },
    });
    ```
-   
+
    **Note**: Exclude `**/index.ts` from coverage as they're typically barrel exports
 
 3. Add tes4 scripts to `package.json`:
+
    ```json
    {
      "scripts": {
@@ -332,6 +365,7 @@ This reuses the root ESLint configuration for consistency.
    ```
 
 4. Create tests folder and write tests:
+
    ```bash
    mkdir tests
    touch tests/my-feature.test.ts
@@ -342,6 +376,7 @@ This reuses the root ESLint configuration for consistency.
 ### Step 13: Use in Other Apps
 
 1. Add to consumer's `package.json`:
+
    ```json
    {
      "dependencies": {
@@ -351,6 +386,7 @@ This reuses the root ESLint configuration for consistency.
    ```
 
 2. Install dependencies:
+
    ```bash
    pnpm install
    ```
@@ -363,12 +399,14 @@ This reuses the root ESLint configuration for consistency.
 ## Package Naming Conventions
 
 ### General Rules
+
 - **Scope**: Always use `@piar/` prefix
 - **Kebab-case**: Use hyphens, not underscores or camelCase
 - **Descriptive**: Name should indicate purpose
 - **Short**: Prefer concise names
 
 ### Examples
+
 ```
 @piar/domain-models       ✅ Good
 @piar/ui-components       ✅ Good
@@ -404,15 +442,19 @@ packages/
 ## Common Issues and Solutions
 
 ### Issue: Package not found by turbo
+
 **Solution**: Run `pnpm install` to register the package in workspace
 
 ### Issue: TypeScript errors in consumers
+
 **Solution**: Ensure package is built (`pnpm turbo build --filter=@piar/{package-name}`)
 
 ### Issue: Circular dependencies
+
 **Solution**: Restructure packages or use dependency injection
 
 ### Issue: Changes not reflected
+
 **Solution**: Clear turbo cache: `pnpm turbo build --force`
 
 ## Best Practices
@@ -450,13 +492,15 @@ packages/
 - [ ] Tested in at least one consumer app
 
 ## Related Documentation
+
 - Domain Models Package: `docs/features/domain-models.md` (example)
 - Repository Configuration: `docs/features/repository-configuration.md`
-- Project Setup: `docs/features/setup-proyecto.md`
+- Project Setup: `docs/features/setup-project.md`
 - Testing Guide: `docs/features/testing-guide.md`
 - ESLint Configuration: `docs/features/eslint-configuration.md`
 
 ## Notes
+
 - Follow this guide strictly to maintain consistency
 - When in doubt, reference the `domain-models` package as example
 - **Every package should have turbo.json, .gitignore, eslint.config.mjs, and vitest.config.ts**
@@ -468,4 +512,5 @@ packages/
 - Update this guide if you find improvements or issues
 
 ## Last Updated
-15 January 2026 - Added ESLint configuration step, now includes 14 steps with complete tooling
+
+27 January 2026 - Updated references and link paths

@@ -1,5 +1,5 @@
-import { type ReactNode } from "react";
-import { NextIntlClientProvider } from "next-intl";
+import { type ReactNode } from 'react';
+import { NextIntlClientProvider } from 'next-intl';
 import { Montserrat } from 'next/font/google';
 import { Layout } from '@piar/layout';
 import './globals.css';
@@ -21,17 +21,17 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  
+
   return (
     <html lang={locale}>
       <body className={`${montserrat.variable} font-sans antialiased`}>
         <NextIntlClientProvider>
-          <Layout 
+          <Layout
             config={{
               footer: {
                 sections: [],
                 copyright: '© 2024 Piar Inc.',
-                socialLinks: []
+                socialLinks: [],
               },
               header: {
                 navigation: [],
@@ -39,9 +39,9 @@ export default async function LocaleLayout({
                   src: '/logo.png',
                   alt: 'Piar Logo',
                   href: '/',
-                }
+                },
               },
-              type: 'public'
+              type: 'public',
             }}
             locale={locale}
           >

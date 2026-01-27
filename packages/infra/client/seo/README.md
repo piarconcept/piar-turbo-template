@@ -1,7 +1,7 @@
 # @piar/infra-client-seo
 
 > **Professional SEO Infrastructure for Web Applications**
-> 
+>
 > A comprehensive, type-safe SEO toolkit for building search-engine-optimized applications. Includes meta tags, structured data, sitemaps, and more.
 
 ## ✨ Features
@@ -38,8 +38,8 @@ const { meta, link } = createMetaTags({
     robots: {
       index: true,
       follow: true,
-      maxImagePreview: 'large'
-    }
+      maxImagePreview: 'large',
+    },
   },
   openGraph: {
     type: 'website',
@@ -47,18 +47,20 @@ const { meta, link } = createMetaTags({
     description: 'Share description',
     url: 'https://example.com/page',
     siteName: 'My Site',
-    images: [{
-      url: 'https://example.com/og-image.jpg',
-      width: 1200,
-      height: 630,
-      alt: 'Page preview'
-    }]
+    images: [
+      {
+        url: 'https://example.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Page preview',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     site: '@mysite',
-    creator: '@author'
-  }
+    creator: '@author',
+  },
 });
 
 // In Next.js App Router (app/page.tsx)
@@ -80,26 +82,26 @@ const { meta, link } = builder
   .setBasicMetadata({
     title: 'My Page',
     description: 'Description here',
-    canonical: 'https://example.com/page'
+    canonical: 'https://example.com/page',
   })
   .setOpenGraph({
     type: 'article',
     title: 'My Article',
-    url: 'https://example.com/article'
+    url: 'https://example.com/article',
   })
   .setArticle({
     publishedTime: '2026-01-24T00:00:00Z',
     authors: ['John Doe'],
     section: 'Technology',
-    tags: ['web', 'seo', 'nextjs']
+    tags: ['web', 'seo', 'nextjs'],
   })
   .setTwitterCard({
     card: 'summary_large_image',
-    site: '@mysite'
+    site: '@mysite',
   })
   .addAlternateLanguages([
     { lang: 'en', url: 'https://example.com/en/page' },
-    { lang: 'es', url: 'https://example.com/es/page' }
+    { lang: 'es', url: 'https://example.com/es/page' },
   ])
   .setViewport()
   .setThemeColor('#ec6b38')
@@ -174,7 +176,7 @@ const websiteSchema = SchemaBuilder.websiteWithSearch({
   name: 'My Website',
   url: 'https://example.com',
   searchUrl: 'https://example.com/search?q={search_term_string}',
-  publisher: organization
+  publisher: organization,
 });
 ```
 
@@ -191,13 +193,13 @@ const product = SchemaBuilder.product({
     price: '99.99',
     priceCurrency: 'USD',
     availability: 'https://schema.org/InStock',
-    url: 'https://example.com/product'
+    url: 'https://example.com/product',
   },
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: 4.5,
-    reviewCount: 120
-  }
+    reviewCount: 120,
+  },
 });
 ```
 
@@ -207,12 +209,12 @@ const product = SchemaBuilder.product({
 const faq = SchemaBuilder.faqPage([
   {
     question: 'What is SEO?',
-    answer: 'SEO stands for Search Engine Optimization...'
+    answer: 'SEO stands for Search Engine Optimization...',
   },
   {
     question: 'Why is SEO important?',
-    answer: 'SEO helps your website rank higher in search results...'
-  }
+    answer: 'SEO helps your website rank higher in search results...',
+  },
 ]);
 ```
 
@@ -225,34 +227,36 @@ import { SitemapGenerator, generateSitemap } from '@piar/infra-client-seo';
 const generator = new SitemapGenerator({
   baseUrl: 'https://example.com',
   defaultChangefreq: 'weekly',
-  defaultPriority: 0.7
+  defaultPriority: 0.7,
 });
 
 generator
   .addUrl({
     loc: '/',
     changefreq: 'daily',
-    priority: 1.0
+    priority: 1.0,
   })
   .addUrl({
     loc: '/about',
     changefreq: 'monthly',
-    priority: 0.8
+    priority: 0.8,
   })
   .addUrl({
     loc: '/blog/post-1',
     lastmod: '2026-01-24',
     changefreq: 'weekly',
     priority: 0.6,
-    images: [{
-      loc: 'https://example.com/images/post-1.jpg',
-      caption: 'Featured image',
-      title: 'Post 1 Image'
-    }],
+    images: [
+      {
+        loc: 'https://example.com/images/post-1.jpg',
+        caption: 'Featured image',
+        title: 'Post 1 Image',
+      },
+    ],
     alternates: [
       { hreflang: 'en', href: 'https://example.com/en/blog/post-1' },
-      { hreflang: 'es', href: 'https://example.com/es/blog/post-1' }
-    ]
+      { hreflang: 'es', href: 'https://example.com/es/blog/post-1' },
+    ],
   });
 
 const xml = generator.toXML();
@@ -261,20 +265,20 @@ const xml = generator.toXML();
 const xml2 = generateSitemap(
   [
     { loc: '/', changefreq: 'daily', priority: 1.0 },
-    { loc: '/about', changefreq: 'monthly', priority: 0.8 }
+    { loc: '/about', changefreq: 'monthly', priority: 0.8 },
   ],
-  { baseUrl: 'https://example.com' }
+  { baseUrl: 'https://example.com' },
 );
 
 // In Next.js (app/sitemap.xml/route.ts)
 export async function GET() {
   const sitemap = generateSitemap(urls, { baseUrl: 'https://example.com' });
-  
+
   return new Response(sitemap, {
     headers: {
       'Content-Type': 'application/xml',
-      'Cache-Control': 'public, max-age=3600, s-maxage=3600'
-    }
+      'Cache-Control': 'public, max-age=3600, s-maxage=3600',
+    },
   });
 }
 ```
@@ -303,7 +307,7 @@ import { RobotsGenerator, RobotsTemplates } from '@piar/infra-client-seo';
 const robotsTxt = RobotsTemplates.standardProduction({
   sitemaps: ['https://example.com/sitemap.xml'],
   host: 'https://example.com',
-  disallowPaths: ['/admin', '/api', '/private']
+  disallowPaths: ['/admin', '/api', '/private'],
 });
 
 // Custom configuration
@@ -313,12 +317,12 @@ generator
   .addRule({
     userAgent: '*',
     allow: ['/'],
-    disallow: ['/admin', '/api']
+    disallow: ['/admin', '/api'],
   })
   .addRule({
     userAgent: 'Googlebot',
     allow: ['/'],
-    disallow: ['/admin']
+    disallow: ['/admin'],
   })
   .addSitemap('https://example.com/sitemap.xml')
   .setHost('https://example.com');
@@ -328,13 +332,13 @@ const robotsTxt2 = generator.build();
 // In Next.js (app/robots.txt/route.ts)
 export async function GET() {
   const robots = RobotsTemplates.standardProduction({
-    sitemaps: ['https://example.com/sitemap.xml']
+    sitemaps: ['https://example.com/sitemap.xml'],
   });
-  
+
   return new Response(robots, {
     headers: {
-      'Content-Type': 'text/plain'
-    }
+      'Content-Type': 'text/plain',
+    },
   });
 }
 ```
@@ -351,19 +355,19 @@ RobotsTemplates.disallowAll();
 // E-commerce template
 RobotsTemplates.ecommerce({
   sitemaps: ['https://example.com/sitemap.xml'],
-  host: 'https://example.com'
+  host: 'https://example.com',
 });
 
 // Blog template
 RobotsTemplates.blog({
-  sitemaps: ['https://example.com/sitemap.xml']
+  sitemaps: ['https://example.com/sitemap.xml'],
 });
 
 // Block bad bots
 RobotsTemplates.blockBadBots({
   userAgent: '*',
   allow: ['/'],
-  disallow: ['/admin']
+  disallow: ['/admin'],
 });
 ```
 
@@ -378,13 +382,13 @@ const result = validator.validateAll({
   metadata: {
     title: 'My Page',
     description: 'Short',
-    canonical: 'https://example.com/page'
+    canonical: 'https://example.com/page',
   },
   openGraph: {
     type: 'website',
     title: 'My Page',
-    url: 'https://example.com/page'
-  }
+    url: 'https://example.com/page',
+  },
 });
 
 console.log(result);
@@ -398,14 +402,14 @@ console.log(result);
 // Get SEO score (0-100)
 const score = validator.calculateScore({
   metadata: { title: 'My Page', description: 'A great page...' },
-  openGraph: { type: 'website', title: 'My Page', url: 'https://example.com' }
+  openGraph: { type: 'website', title: 'My Page', url: 'https://example.com' },
 });
 
 console.log(score); // 75
 
 // Get improvement suggestions
 const improvements = validator.getImprovements({
-  metadata: { title: 'My Page', description: 'Short' }
+  metadata: { title: 'My Page', description: 'Short' },
 });
 
 console.log(improvements);
@@ -423,7 +427,7 @@ import {
   createSlug,
   calculateReadingTime,
   validateMetaDescription,
-  validateTitle
+  validateTitle,
 } from '@piar/infra-client-seo';
 
 // Sanitize HTML
@@ -580,24 +584,28 @@ export async function GET() {
 ## 🏆 Best Practices
 
 ### 1. Title Optimization
+
 - Keep between 50-60 characters
 - Include primary keyword near the beginning
 - Make it compelling and unique
 - Include brand name at the end
 
 ### 2. Meta Description
+
 - Keep between 150-160 characters
 - Include target keywords naturally
 - Write compelling copy that encourages clicks
 - Include a call-to-action when appropriate
 
 ### 3. Open Graph Images
+
 - Use 1200x630 pixels (1.91:1 aspect ratio)
 - Keep file size under 8MB
 - Use high-quality, relevant images
 - Include alt text for accessibility
 
 ### 4. Structured Data
+
 - Always include Organization schema on every page
 - Use BreadcrumbList for navigation
 - Add Article schema to blog posts
@@ -605,12 +613,14 @@ export async function GET() {
 - Validate with Google's Rich Results Test
 
 ### 5. Sitemaps
+
 - Update regularly (daily for frequently changing content)
 - Include lastmod dates
 - Use sitemap index for large sites (>50,000 URLs)
 - Submit to Google Search Console
 
 ### 6. Robots.txt
+
 - Be specific with disallow rules
 - Include sitemap URLs
 - Test with Google's robots.txt Tester

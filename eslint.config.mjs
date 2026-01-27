@@ -2,6 +2,8 @@ import { defineConfig } from 'eslint/config';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsparser from '@typescript-eslint/parser';
 import importPlugin from 'eslint-plugin-import';
+import globals from 'globals';
+import eslintConfigPrettier from 'eslint-config-prettier';
 
 /**
  * Root ESLint configuration for PIAR monorepo
@@ -22,7 +24,7 @@ export default defineConfig([
     },
     plugins: {
       '@typescript-eslint': tseslint,
-      'import': importPlugin,
+      import: importPlugin,
     },
     rules: {
       // TypeScript rules (syntax-only, no type information needed)
@@ -49,6 +51,16 @@ export default defineConfig([
     },
   },
   {
+    files: ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.vitest,
+      },
+    },
+  },
+  eslintConfigPrettier,
+  {
     ignores: [
       '**/node_modules/**',
       '**/dist/**',
@@ -64,8 +76,6 @@ export default defineConfig([
       './webpack.config.*',
       './eslint.config.*',
       './**/*.config.*',
-      './**/*.test.*',
-      './**/*.spec.*',
       'apps/**', // Apps have their own eslint configs
     ],
   },

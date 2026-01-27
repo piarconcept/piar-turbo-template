@@ -7,7 +7,9 @@ Shared UI component library for the PIAR monorepo, following **Atomic Design** p
 This package organizes components into three levels:
 
 ### 🔹 Atoms
+
 Basic building blocks - smallest UI elements:
+
 - `Button` - Buttons with variants (primary, secondary, outline, ghost, danger, success)
 - `Checkbox` - Checkbox inputs with optional labels ✅
 - `Input` - Form inputs with validation states
@@ -15,14 +17,18 @@ Basic building blocks - smallest UI elements:
 - `Text` - Typography component for headings and body text
 
 ### 🔸 Molecules
+
 Simple combinations of atoms (to be added):
+
 - `AuthCard` - Authentication card container (login, register, forgot-password) ✅
 - `FormField` - Label + Input + error message
 - `Card` - Reusable card container
 - `NavigationItem` - Link with icon
 
 ### 🔶 Organisms
+
 Complex components combining molecules and atoms (to be added):
+
 - `AuthPage` - Full-page container for authentication pages ✅
 - `LoginForm` - Complete login form
 - `RegisterForm` - Complete registration form
@@ -45,8 +51,8 @@ Then add to `transpilePackages` in `next.config.ts`:
 ```typescript
 transpilePackages: [
   // ... other packages
-  "@piar/ui-components"
-]
+  '@piar/ui-components',
+];
 ```
 
 ## Usage Examples
@@ -115,8 +121,8 @@ import { Checkbox } from '@piar/ui-components';
 <label htmlFor="custom">Custom label</label>
 
 // With wrapper className
-<Checkbox 
-  label="Aligned top" 
+<Checkbox
+  label="Aligned top"
   wrapperClassName="items-start"
 />
 ```
@@ -194,23 +200,19 @@ function LoginForm() {
   return (
     <form className="space-y-4">
       <Text variant="h3">Sign In</Text>
-      
+
       <div>
-        <Label htmlFor="email" required>Email</Label>
-        <Input 
-          id="email"
-          type="email" 
-          placeholder="your@email.com"
-        />
+        <Label htmlFor="email" required>
+          Email
+        </Label>
+        <Input id="email" type="email" placeholder="your@email.com" />
       </div>
 
       <div>
-        <Label htmlFor="password" required>Password</Label>
-        <Input 
-          id="password"
-          type="password" 
-          placeholder="••••••••"
-        />
+        <Label htmlFor="password" required>
+          Password
+        </Label>
+        <Input id="password" type="password" placeholder="••••••••" />
       </div>
 
       <Button fullWidth type="submit">
@@ -291,7 +293,6 @@ import { AuthPage, AuthCard } from '@piar/ui-components';
 </AuthPage>
 ```
 
-
 ## Development
 
 ```bash
@@ -315,6 +316,7 @@ All components use **Tailwind CSS v4** classes from `@piar/ui-config`. Component
 ### Design Tokens
 
 Components use CSS variables from `@piar/ui-config`:
+
 - `var(--color-primary-blue)` - Primary blue color
 - `var(--color-primary-orange)` - Primary orange color
 - `var(--color-secondary)` - Secondary color
@@ -338,12 +340,14 @@ You can customize components using the `className` prop:
 ## Next Steps
 
 ### Planned Molecules:
+
 - [ ] `FormField` - Label + Input + error message wrapper
 - [ ] `Card` - Reusable card container with header/body/footer
 - [ ] `StatCard` - Dashboard metric card
 - [ ] `NavigationItem` - Navigation link with icon
 
 ### Planned Organisms:
+
 - [x] `AuthPage` - Full-page container for authentication pages ✅
 - [ ] `LoginForm` - Complete login form with validation
 - [ ] `RegisterForm` - Complete registration form
@@ -361,4 +365,5 @@ You can customize components using the `className` prop:
 - [Tailwind v4 Implementation](../../../docs/features/tailwind-v4-implementation.md)
 
 ## Last Updated
+
 22 January 2026 - Added `asChild` prop to Button atom for composition with Link components

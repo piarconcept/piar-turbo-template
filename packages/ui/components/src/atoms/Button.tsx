@@ -11,9 +11,12 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary)]/90 focus:ring-[var(--color-primary)]',
-        secondary: 'border-2 border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 focus:ring-[var(--color-primary)]',
-        outline: 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-300',
+        primary:
+          'bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary)]/90 focus:ring-[var(--color-primary)]',
+        secondary:
+          'border-2 border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 focus:ring-[var(--color-primary)]',
+        outline:
+          'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-300',
         ghost: 'text-gray-700 hover:bg-gray-100 focus:ring-gray-300',
         danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-600',
         success: 'bg-green-600 text-white hover:bg-green-700 focus:ring-green-600',
@@ -32,16 +35,15 @@ const buttonVariants = cva(
       variant: 'primary',
       size: 'md',
     },
-  }
+  },
 );
 
 export interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   /**
    * Changes the component to a Slot, allowing it to merge with the child element.
    * Useful for rendering as a Link or other component while maintaining button styles.
-   * 
+   *
    * @example
    * <Button asChild>
    *   <Link href="/login">Sign In</Link>
@@ -52,19 +54,19 @@ export interface ButtonProps
 
 /**
  * Button Component - Atomic Design: Atom
- * 
+ *
  * @example
  * // Primary button
  * <Button>Click me</Button>
- * 
+ *
  * @example
  * // Secondary button
  * <Button variant="secondary" size="lg">Large Secondary</Button>
- * 
+ *
  * @example
  * // Full width button
  * <Button fullWidth>Sign In</Button>
- * 
+ *
  * @example
  * // As Link (asChild pattern)
  * <Button asChild>
@@ -74,10 +76,10 @@ export interface ButtonProps
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, fullWidth, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button';
-    
+
     // Filter out asChild from props to avoid React warning
     const { asChild: _, ...restProps } = props as ButtonProps;
-    
+
     return (
       <Comp
         className={buttonVariants({ variant, size, fullWidth, className })}
@@ -85,7 +87,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...restProps}
       />
     );
-  }
+  },
 );
 
 Button.displayName = 'Button';

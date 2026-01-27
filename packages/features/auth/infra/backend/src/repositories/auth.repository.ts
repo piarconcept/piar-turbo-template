@@ -15,7 +15,7 @@ import {
   InvalidCredentialsError,
   ResourceAlreadyExistsError,
   NotFoundError,
-  AccountPort
+  AccountPort,
 } from '@piar/domain-models';
 import { JwtTokenService } from '@piar/infra-backend-common-security';
 
@@ -36,21 +36,23 @@ const defaultAccounts: AccountEntity[] = [
   }),
 ];
 
-
 export class AuthRepository implements IAuthRepository {
-  private accounts: AccountEntity[] = defaultAccounts
+  private accounts: AccountEntity[] = defaultAccounts;
 
   constructor(
     private readonly accountPort: AccountPort,
     private readonly tokenService: JwtTokenService,
-  ) {
-  }
+  ) {}
 
   async login(payload: LoginRequest): Promise<LoginResponse> {
     const account = await this.accountPort.getByEmail(payload.email);
 
     if (!account || account.passwordHash !== payload.password) {
-      throw new InvalidCredentialsError('Invalid email or password', undefined, 'invalid_credentials');
+      throw new InvalidCredentialsError(
+        'Invalid email or password',
+        undefined,
+        'invalid_credentials',
+      );
     }
     const accountEntity = new AccountEntity(account);
     return {
@@ -92,9 +94,7 @@ export class AuthRepository implements IAuthRepository {
     };
   }
 
-  async updateUserRole(
-    payload: UpdateUserRoleRequest
-  ): Promise<UpdateUserRoleResponse> {
+  async updateUserRole(payload: UpdateUserRoleRequest): Promise<UpdateUserRoleResponse> {
     const account = await this.accountPort.getById(payload.userId);
 
     if (!account) {

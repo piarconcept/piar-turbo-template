@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { FieldType } from '../src';
-import { 
-  accountEntityFieldsConfig, 
-  accountSpecificFields 
+import {
+  accountEntityFieldsConfig,
+  accountSpecificFields,
 } from '../src/entities/account-entity.config';
 
 type ValidationRule = { minLength?: number; maxLength?: number; pattern?: RegExp; message: string };
@@ -18,7 +18,7 @@ describe('Account Entity Fields Configuration', () => {
   });
 
   describe('accountCode field', () => {
-    const field = accountEntityFieldsConfig.fields.find(f => f.key === 'accountCode');
+    const field = accountEntityFieldsConfig.fields.find((f) => f.key === 'accountCode');
 
     it('should be configured correctly', () => {
       expect(field).toBeDefined();
@@ -27,8 +27,8 @@ describe('Account Entity Fields Configuration', () => {
 
     it('should validate pattern', () => {
       const validations = field?.validation as Array<ValidationRule>;
-      const patternRule = validations?.find(v => v.pattern);
-      
+      const patternRule = validations?.find((v) => v.pattern);
+
       if (patternRule?.pattern) {
         expect(patternRule.pattern.test('ACC_001')).toBe(true);
       }

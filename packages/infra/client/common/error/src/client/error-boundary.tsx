@@ -18,13 +18,13 @@ interface ErrorBoundaryState {
  * React ErrorBoundary component (logic only, no UI)
  * Catches errors in the component tree
  * REQUIRES fallback prop to render error UI
- * 
+ *
  * @example
  * ```tsx
  * import { ErrorBoundary } from '@piar/infra-client-common-error/client';
  * import { ErrorAlert } from '@piar/ui-components';
- * 
- * <ErrorBoundary 
+ *
+ * <ErrorBoundary
  *   fallback={(error, reset) => (
  *     <ErrorAlert error={error} onRetry={reset} />
  *   )}

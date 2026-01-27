@@ -3,7 +3,7 @@
  */
 export const SUPPORTED_LANGUAGES = ['es', 'ca', 'en'] as const;
 
-export type SupportedLanguage = typeof SUPPORTED_LANGUAGES[number];
+export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
 /**
  * Default language
