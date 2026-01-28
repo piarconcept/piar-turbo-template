@@ -231,6 +231,9 @@ importers:
       '@piar/coming-soon':
         specifier: workspace:*
         version: link:../../../packages/features/comingSoon
+      '@piar/cookies-client':
+        specifier: workspace:*
+        version: link:../../../packages/features/cookies/client
       '@piar/infra-client-common-error':
         specifier: workspace:*
         version: link:../../../packages/infra/client/common/error
@@ -310,6 +313,9 @@ importers:
       '@piar/coming-soon':
         specifier: workspace:*
         version: link:../../../packages/features/comingSoon
+      '@piar/cookies-client':
+        specifier: workspace:*
+        version: link:../../../packages/features/cookies/client
       '@piar/infra-client-common-error':
         specifier: workspace:*
         version: link:../../../packages/infra/client/common/error
@@ -563,6 +569,31 @@ importers:
         version: 9.39.2(jiti@2.6.1)
       typescript:
         specifier: ^5.7.3
+        version: 5.9.3
+      typescript-eslint:
+        specifier: ^8.31.1
+        version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+
+  packages/features/cookies/client:
+    dependencies:
+      '@piar/ui-components':
+        specifier: workspace:*
+        version: link:../../../ui/components
+      react:
+        specifier: ^19.0.0
+        version: 19.1.0
+    devDependencies:
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.19.7
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.1.0(react@19.1.0)
+      typescript:
+        specifier: ^5.9.3
         version: 5.9.3
       typescript-eslint:
         specifier: ^8.31.1

@@ -12,6 +12,7 @@
   "dependencies": {
     "@piar/auth-infra-client": "workspace:*",
     "@piar/coming-soon": "workspace:*",
+    "@piar/cookies-client": "workspace:*",
     "@piar/infra-client-common-error": "workspace:*",
     "@piar/layout": "workspace:*",
     "@piar/messages": "workspace:*",
