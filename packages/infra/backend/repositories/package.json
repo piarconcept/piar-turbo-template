@@ -23,17 +23,17 @@
     "test:coverage": "echo 'No tests configured yet'"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3",
+    "bcryptjs": "^3.0.3",
     "@piar/domain-models": "workspace:*"
   },
   "devDependencies": {
     "@nestjs/common": "^11.0.16",
     "@nestjs/core": "^11.0.16",
-    "@types/node": "^22.10.5",
-    "@types/bcryptjs": "^2.4.6",
-    "@vitest/coverage-v8": "^2.1.9",
+    "@types/node": "^25.2.0",
+    "@types/bcryptjs": "^3.0.0",
+    "@vitest/coverage-v8": "^4.0.18",
     "typescript": "^5.9.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.18"
   },
   "peerDependencies": {
     "@nestjs/common": "^11.0.0",
