@@ -28,6 +28,7 @@
     "@piar/domain-models": "workspace:*",
     "@piar/infra-backend-common-error": "workspace:*",
     "@piar/infra-backend-common-security": "workspace:*",
+    "@piar/infra-backend-common-typeorm": "workspace:*",
     "@piar/auth-api": "workspace:*",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"

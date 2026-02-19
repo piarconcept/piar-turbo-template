@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER } from '@nestjs/core';
 import { HealthModule } from '@piar/health-api';
 import { ApplicationErrorFilter, GlobalExceptionFilter } from '@piar/infra-backend-common-error';
+import { TypeormModule } from '@piar/infra-backend-common-typeorm';
 import { loadConfigurationParams } from './config';
 
 const ENV_FILE = '.env';
@@ -16,6 +17,7 @@ const ENV_FILE = '.env';
       envFilePath: [ENV_FILE],
     }),
     HealthModule.register(),
+    TypeormModule.forRoot(),
   ],
   controllers: [],
   providers: [

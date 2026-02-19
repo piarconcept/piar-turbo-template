@@ -21,7 +21,7 @@ export const loadConfigurationParams = () => {
     app: {
       port: parseInt(process.env.PORT as string, 10) || 4000,
     },
-    mongoDBconfig: {
+    DBconfig: {
       database_url: process.env.DATABASE_URL,
     },
     jwt: {

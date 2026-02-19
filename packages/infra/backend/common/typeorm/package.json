@@ -1,0 +1,41 @@
+{
+  "name": "@piar/infra-backend-common-typeorm",
+  "version": "0.1.0",
+  "description": "Shared TypeORM database infrastructure for NestJS BFF applications",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "echo 'No tests configured yet'",
+    "test:coverage": "echo 'No tests configured yet'"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.16",
+    "@nestjs/config": "^3.3.0",
+    "@nestjs/core": "^11.0.16",
+    "@nestjs/typeorm": "^11.0.0",
+    "pg": "^8.13.1",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.22"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@vitest/coverage-v8": "^2.1.9",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.31.1",
+    "vitest": "^2.1.9"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/core": "^11.0.0"
+  }
+}

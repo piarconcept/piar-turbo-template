@@ -10,6 +10,7 @@ import {
 import { AuthModule } from '@piar/auth-api';
 import { AccountPort } from '@piar/domain-models';
 import { ApplicationErrorFilter, GlobalExceptionFilter } from '@piar/infra-backend-common-error';
+import { TypeormModule } from '@piar/infra-backend-common-typeorm';
 
 const ENV_FILE = '.env';
 
@@ -24,6 +25,7 @@ const ENV_FILE = '.env';
 
     // Modules
     HealthModule.register(),
+    TypeormModule.forRoot(),
     AuthModule.register({
       accountPort: {
         provide: AccountPort,
