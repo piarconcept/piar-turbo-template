@@ -84,7 +84,7 @@ export function HealthCard({ serviceUrl, serviceName }: HealthCardProps) {
         <p className="text-red-500">Error: {errorCheck.message}</p>
         <button
           onClick={refetch}
-          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+          className="mt-2 rounded bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600 focus:outline-none"
         >
           Retry
         </button>
@@ -124,7 +124,7 @@ export function HealthCard({ serviceUrl, serviceName }: HealthCardProps) {
 
       <button
         onClick={refetch}
-        className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+        className="mt-2 rounded bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600 focus:outline-none"
       >
         Refresh
       </button>

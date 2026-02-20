@@ -41,7 +41,12 @@ export const CookiePreferencesDialog = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
       <Container width="md" padding="md">
-        <button type="button" className="absolute inset-0" aria-label="Close" onClick={onClose} />
+        <button
+          type="button"
+          className="absolute inset-0 focus:outline-none"
+          aria-label="Close"
+          onClick={onClose}
+        />
         <div className="relative w-full max-w-2xl rounded-2xl border border-white/40 bg-white/90 p-6 shadow-xl backdrop-blur">
           <div className="space-y-2">
             <Text as="h2" variant="h4" className="text-gray-900">

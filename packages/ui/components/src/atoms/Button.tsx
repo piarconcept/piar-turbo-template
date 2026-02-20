@@ -7,19 +7,19 @@ import { Slot } from '@radix-ui/react-slot';
  */
 const buttonVariants = cva(
   // Base styles
-  'inline-flex items-center justify-center gap-2 rounded-md font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center gap-2 rounded-md font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
         primary:
-          'bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary)]/90 focus:ring-[var(--color-primary)]',
+          'bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary)]/90 focus-visible:ring-[var(--color-primary)]',
         secondary:
-          'border-2 border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 focus:ring-[var(--color-primary)]',
+          'border-2 border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 focus-visible:ring-[var(--color-primary)]',
         outline:
-          'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-300',
-        ghost: 'text-gray-700 hover:bg-gray-100 focus:ring-gray-300',
-        danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-600',
-        success: 'bg-green-600 text-white hover:bg-green-700 focus:ring-green-600',
+          'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus-visible:ring-gray-300',
+        ghost: 'text-gray-700 hover:bg-gray-100 focus-visible:ring-gray-300',
+        danger: 'bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-600',
+        success: 'bg-green-600 text-white hover:bg-green-700 focus-visible:ring-green-600',
       },
       size: {
         sm: 'h-9 px-3 text-sm',

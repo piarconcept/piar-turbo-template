@@ -38,7 +38,11 @@ pnpm --filter @piar/web-bff test:coverage
 Copy `.env.example` to `.env` and configure:
 
 - `PORT`: Server port (default: 5010)
+- `APP_ENV`: App environment flag used by config (recommended: `local` in dev)
 - `NODE_ENV`: Environment (development/production)
+- `DATABASE_URL`: PostgreSQL connection string
+- `JWT_SECRET`: Secret used to sign JWT tokens
+- `JWT_EXPIRES_IN`: JWT expiration (for example `1h`)
 - `WEB_CLIENT_URL`: Web client URL for CORS configuration
 
 ## API Endpoints
