@@ -1,0 +1,36 @@
+{
+  "name": "@piar/domain-dynamic-form",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Generic dynamic form/table port and query types (domain contracts)",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "dynamic-form",
+    "dynamic-table",
+    "port",
+    "domain"
+  ],
+  "author": "Piar Concept <polribasrovira@gmail.com> (https://piarconcept.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.17.10",
+    "@vitest/coverage-v8": "^2.1.8",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.31.1",
+    "vitest": "^2.1.8"
+  }
+}
