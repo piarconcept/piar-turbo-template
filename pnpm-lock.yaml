@@ -935,6 +935,19 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/infra/client/dynamic-table:
+    dependencies:
+      '@piar/domain-dynamic-form':
+        specifier: workspace:*
+        version: link:../../../domain/dynamic-form
+      '@piar/infra-client-common-http':
+        specifier: workspace:*
+        version: link:../common/http
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   packages/infra/client/seo:
     devDependencies:
       '@types/node':
