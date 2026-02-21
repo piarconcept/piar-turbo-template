@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import { Button, Container, Text } from '@piar/ui-components';
 import type { FooterConfig } from '../types';
+import { withLocale } from '../utils/with-locale';
 
 export interface PublicFooterProps {
   config: FooterConfig;
   locale?: string;
 }
 
-export function PublicFooter({ config, locale: _locale = 'en' }: PublicFooterProps) {
+export function PublicFooter({ config, locale = 'en' }: PublicFooterProps) {
   return (
     <footer className="border-t border-gray-200 bg-gray-50">
       <Container className="py-12" width="7xl" padding="md">
@@ -30,7 +31,7 @@ export function PublicFooter({ config, locale: _locale = 'en' }: PublicFooterPro
                       size="inline"
                       className="px-0 text-gray-600 hover:bg-transparent hover:text-[var(--color-secondary)]"
                     >
-                      <Link href={route.href}>
+                      <Link href={withLocale(route.href, locale)}>
                         <Text as="span" variant="bodySmall" className="text-gray-600">
                           {route.label}
                         </Text>

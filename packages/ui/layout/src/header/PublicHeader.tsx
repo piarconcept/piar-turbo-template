@@ -4,13 +4,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Button, Container, Text } from '@piar/ui-components';
 import type { HeaderConfig } from '../types';
+import { withLocale } from '../utils/with-locale';
 
 export interface PublicHeaderProps {
   config: HeaderConfig;
   locale?: string;
 }
 
-export function PublicHeader({ config, locale: _locale = 'en' }: PublicHeaderProps) {
+export function PublicHeader({ config, locale = 'en' }: PublicHeaderProps) {
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
@@ -53,7 +54,7 @@ export function PublicHeader({ config, locale: _locale = 'en' }: PublicHeaderPro
             size="inline"
             className="px-0 text-white hover:bg-white/10"
           >
-            <Link href={config.logo.href} className="flex items-center gap-2">
+            <Link href={withLocale(config.logo.href, locale)} className="flex items-center gap-2">
               <div className="h-9 w-9 rounded-lg bg-[var(--color-primary)]/90 shadow-sm" />
               <Text as="span" variant="h5" className="text-white">
                 {config.logo.alt}
@@ -74,7 +75,7 @@ export function PublicHeader({ config, locale: _locale = 'en' }: PublicHeaderPro
                   asChild
                   className="text-white hover:bg-white/10 hover:text-white"
                 >
-                  <Link href={route.href}>
+                  <Link href={withLocale(route.href, locale)}>
                     <Text as="span" variant="label" className="text-white">
                       {route.label}
                     </Text>

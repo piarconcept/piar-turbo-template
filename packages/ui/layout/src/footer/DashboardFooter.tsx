@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import { Button, Text } from '@piar/ui-components';
 import type { FooterConfig } from '../types';
+import { withLocale } from '../utils/with-locale';
 
 export interface DashboardFooterProps {
   config: FooterConfig;
   locale?: string;
 }
 
-export function DashboardFooter({ config, locale: _locale = 'en' }: DashboardFooterProps) {
+export function DashboardFooter({ config, locale = 'en' }: DashboardFooterProps) {
   return (
     <footer className="border-t border-gray-200 bg-white">
       <div className="px-6 py-4">
@@ -23,7 +24,7 @@ export function DashboardFooter({ config, locale: _locale = 'en' }: DashboardFoo
                   size="inline"
                   className="px-0 text-gray-600 hover:bg-transparent hover:text-[var(--color-secondary)]"
                 >
-                  <Link href={route.href}>
+                  <Link href={withLocale(route.href, locale)}>
                     <Text as="span" variant="bodySmall" className="text-gray-600">
                       {route.label}
                     </Text>

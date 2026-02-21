@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button, Text } from '@piar/ui-components';
 import type { AsideConfig, NavigationSection, RouteItem } from '../types';
+import { withLocale } from '../utils/with-locale';
 
 export interface DashboardAsideProps {
   config: AsideConfig;
   locale?: string;
 }
 
-export function DashboardAside({ config, locale: _locale = 'en' }: DashboardAsideProps) {
+export function DashboardAside({ config, locale = 'en' }: DashboardAsideProps) {
   const [isCollapsed, setIsCollapsed] = useState(config.defaultCollapsed || false);
   const widthClass = isCollapsed ? 'w-16' : 'w-64';
   const widthValue = isCollapsed ? '4rem' : '16rem';
@@ -79,7 +80,10 @@ export function DashboardAside({ config, locale: _locale = 'en' }: DashboardAsid
                       className="justify-start px-3 text-gray-700 hover:bg-gray-100 hover:text-[var(--color-secondary)]"
                       title={isCollapsed ? route.label : undefined}
                     >
-                      <Link href={route.href} className="flex items-center gap-3">
+                      <Link
+                        href={withLocale(route.href, locale)}
+                        className="flex items-center gap-3"
+                      >
                         {route.icon && (
                           <span className="flex h-5 w-5 items-center justify-center">
                             {route.icon}
@@ -112,7 +116,10 @@ export function DashboardAside({ config, locale: _locale = 'en' }: DashboardAsid
                               fullWidth
                               className="justify-start px-3 text-gray-600 hover:bg-gray-100 hover:text-[var(--color-secondary)]"
                             >
-                              <Link href={child.href} className="flex items-center gap-2">
+                              <Link
+                                href={withLocale(child.href, locale)}
+                                className="flex items-center gap-2"
+                              >
                                 <Text as="span" variant="bodySmall" className="text-gray-600">
                                   {child.label}
                                 </Text>

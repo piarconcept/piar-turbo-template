@@ -10,8 +10,7 @@ import {
 import { Home } from 'lucide-react';
 import { auth } from '@/auth';
 
-// Extend dashboard aside config with minimal navigation
-const dashboardNav: AsideConfig = {
+const createDashboardNav = (locale: string): AsideConfig => ({
   ...dashboardAsideConfig,
   navigation: [
     {
@@ -19,13 +18,13 @@ const dashboardNav: AsideConfig = {
       routes: [
         {
           label: 'Dashboard',
-          href: '/dashboard',
+          href: `/${locale}/dashboard`,
           icon: <Home />,
         },
       ],
     },
   ],
-};
+});
 
 /**
  * Dashboard Layout - Private area with sidebar navigation
@@ -51,7 +50,7 @@ export default async function DashboardLayout({
       config={{
         type: 'dashboard',
         header: dashboardHeaderConfig,
-        aside: dashboardNav,
+        aside: createDashboardNav(locale),
         footer: dashboardFooterConfig,
       }}
       locale={locale}
