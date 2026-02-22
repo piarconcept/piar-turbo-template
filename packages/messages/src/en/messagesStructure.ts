@@ -5,6 +5,8 @@ import { comingSoon } from './comingSoon';
 import { cookies } from './cookies';
 import { home } from './home';
 import { legal } from './legal';
+import { dashboard } from './dashboard';
+import { modules } from './modules';
 
 export const messages: Messages = {
   auth,
@@ -13,4 +15,6 @@ export const messages: Messages = {
   cookies,
   home,
   legal,
+  dashboard,
+  modules,
 };

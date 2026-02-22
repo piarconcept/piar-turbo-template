@@ -6,11 +6,16 @@ Production-ready monorepo template for building modern web applications with Nex
 
 Prerequisites:
 
-- Node.js 20.x
+- Node.js 20.x (recommended via `nvm` — see `.nvmrc`)
 - pnpm 10.28.0
 
 ```bash
+# Optional but recommended
+nvm use
+
 pnpm install
+cp .env.example .env
+
 pnpm verify
 ```
 

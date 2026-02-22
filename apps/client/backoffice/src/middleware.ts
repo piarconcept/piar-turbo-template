@@ -2,8 +2,10 @@ import createMiddleware from 'next-intl/middleware';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth';
 
-const locales = ['es', 'ca', 'en'] as const;
-const defaultLocale = 'ca';
+import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES, type SupportedLanguage } from '@piar/messages';
+
+const locales = SUPPORTED_LANGUAGES;
+const defaultLocale: SupportedLanguage = DEFAULT_LANGUAGE;
 
 const intlMiddleware = createMiddleware({
   locales: [...locales],
@@ -23,7 +25,7 @@ export default async function middleware(request: NextRequest) {
 
   const segments = pathname.split('/').filter(Boolean);
   const maybeLocale = segments[0];
-  const hasLocale = locales.includes(maybeLocale as (typeof locales)[number]);
+  const hasLocale = (locales as readonly string[]).includes(maybeLocale as string);
   const locale = hasLocale ? maybeLocale : defaultLocale;
   const pathnameWithoutLocale = hasLocale ? `/${segments.slice(1).join('/')}` || '/' : pathname;
 

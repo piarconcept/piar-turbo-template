@@ -240,9 +240,15 @@ importers:
       '@piar/cookies-client':
         specifier: workspace:*
         version: link:../../../packages/features/cookies/client
+      '@piar/domain-fields':
+        specifier: workspace:*
+        version: link:../../../packages/domain/fields
       '@piar/infra-client-common-error':
         specifier: workspace:*
         version: link:../../../packages/infra/client/common/error
+      '@piar/infra-client-dynamic-form':
+        specifier: workspace:*
+        version: link:../../../packages/infra/client/dynamic-form
       '@piar/layout':
         specifier: workspace:*
         version: link:../../../packages/ui/layout

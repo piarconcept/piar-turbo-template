@@ -1,10 +1,36 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import { HttpAuthRepository } from '@piar/auth-infra-client';
 
-const authRepository = new HttpAuthRepository(
-  process.env.NEXT_PUBLIC_BACKOFFICE_BFF_URL || 'http://localhost:5050',
-);
+const BACKOFFICE_BFF_URL = process.env.BACKOFFICE_BFF_URL || 'http://localhost:5050';
+
+type BackendLoginResponse = {
+  account: { id: string; email?: string; role?: string };
+  token: string;
+};
+
+async function loginWithFetch(email: string, password: string): Promise<BackendLoginResponse> {
+  const res = await fetch(`${BACKOFFICE_BFF_URL}/auth/login`, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({ email, password }),
+    cache: 'no-store',
+  });
+
+  const text = await res.text();
+  if (!res.ok) {
+    throw new Error(
+      JSON.stringify({
+        i18n: 'login_failed',
+        message: text || 'Login failed',
+        statusCode: res.status,
+      }),
+    );
+  }
+
+  return JSON.parse(text) as BackendLoginResponse;
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -17,18 +43,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       async authorize(credentials) {
         try {
-          // Use repository instead of direct fetch
-          const { account, session } = await authRepository.login({
-            email: credentials.email as string,
-            password: credentials.password as string,
-          });
+          const email = credentials.email as string;
+          const password = credentials.password as string;
+
+          const { account, token } = await loginWithFetch(email, password);
 
           return {
             id: account.id,
-            email: account.email ?? '',
-            name: account.email ?? 'User', // Use email as name since AccountEntity doesn't have name
+            email: account.email ?? email,
+            name: account.email ?? email,
             role: account.role ?? 'user',
-            accessToken: session.token,
+            accessToken: token,
           };
         } catch (error) {
           // Error is already structured by repository

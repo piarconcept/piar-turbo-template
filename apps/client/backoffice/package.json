@@ -14,6 +14,8 @@
     "@piar/coming-soon": "workspace:*",
     "@piar/cookies-client": "workspace:*",
     "@piar/infra-client-common-error": "workspace:*",
+    "@piar/domain-fields": "workspace:*",
+    "@piar/infra-client-dynamic-form": "workspace:*",
     "@piar/layout": "workspace:*",
     "@piar/messages": "workspace:*",
     "@piar/ui-components": "workspace:*",

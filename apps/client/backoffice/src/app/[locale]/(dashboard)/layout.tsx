@@ -7,7 +7,7 @@ import {
   dashboardFooterConfig,
   AsideConfig,
 } from '@piar/layout';
-import { Home } from 'lucide-react';
+import { Home, Puzzle } from 'lucide-react';
 import { auth } from '@/auth';
 
 const createDashboardNav = (locale: string): AsideConfig => ({
@@ -20,6 +20,11 @@ const createDashboardNav = (locale: string): AsideConfig => ({
           label: 'Dashboard',
           href: `/${locale}/dashboard`,
           icon: <Home />,
+        },
+        {
+          label: 'Modules',
+          href: `/${locale}/modules`,
+          icon: <Puzzle />,
         },
       ],
     },

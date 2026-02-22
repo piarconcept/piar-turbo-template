@@ -31,6 +31,9 @@ Start with `AI-context.md`.
 
 - `features/domain-models.md`
 - `features/domain-fields.md`
+- `features/domain-dynamic-form.md`
+- `features/infra-client-dynamic-table.md`
+- `features/typeorm-migrations.md`
 - `features/ui-components-atomic-design.md`
 - `features/auth-card-refactoring.md`
 - `features/health-feature.md`
