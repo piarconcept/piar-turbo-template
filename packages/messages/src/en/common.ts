@@ -13,6 +13,7 @@ export const common: CommonMessages = {
     save: 'Save',
     cancel: 'Cancel',
     delete: 'Delete',
+    view: 'View',
     edit: 'Edit',
     create: 'Create',
     confirm: 'Confirm',
@@ -21,6 +22,7 @@ export const common: CommonMessages = {
     next: 'Next',
     submit: 'Submit',
     search: 'Search',
+    clear: 'Clear',
   },
   status: {
     loading: 'Loading...',

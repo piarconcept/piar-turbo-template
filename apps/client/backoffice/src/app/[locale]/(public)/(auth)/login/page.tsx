@@ -33,6 +33,7 @@ export default function LoginPage() {
       const result = await signIn('credentials', {
         email,
         password,
+        rememberMe,
         redirect: false,
         callbackUrl,
       });

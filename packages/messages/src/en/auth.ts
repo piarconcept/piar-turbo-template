@@ -24,6 +24,10 @@ export const auth: AuthMessages = {
     acceptTerms: 'I accept the',
     termsAndConditions: 'terms and conditions',
     submit: 'Create account',
+    loading: 'Creating account...',
+    error: 'Unable to create account. Please try again.',
+    passwordMismatch: 'Passwords do not match.',
+    termsRequired: 'You must accept the terms and conditions.',
   },
   forgotPassword: {
     title: 'Reset password',

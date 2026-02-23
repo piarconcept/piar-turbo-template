@@ -7,6 +7,7 @@ import { home } from './home';
 import { legal } from './legal';
 import { dashboard } from './dashboard';
 import { modules } from './modules';
+import { fields } from './fields';
 
 export const messages: Messages = {
   auth,
@@ -17,4 +18,5 @@ export const messages: Messages = {
   legal,
   dashboard,
   modules,
+  fields,
 };

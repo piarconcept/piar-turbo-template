@@ -6,11 +6,19 @@ import { loadConfigurationParams } from './config';
 import {
   AccountRepository,
   AccountRepositoryProviderModule,
+  ContactSubmissionRepository,
+  ContactSubmissionRepositoryProviderModule,
+  DynamicPageRepository,
+  DynamicPageRepositoryProviderModule,
 } from '@piar/infra-backend-repositories';
 import { AuthModule } from '@piar/auth-api';
-import { AccountPort } from '@piar/domain-models';
+import { ContactSubmissionModule } from '@piar/contact-api';
+import { DynamicPageModule } from '@piar/dynamic-page-api';
+import { AccountPort, ContactSubmissionPort, DynamicPagePort } from '@piar/domain-models';
 import { ApplicationErrorFilter, GlobalExceptionFilter } from '@piar/infra-backend-common-error';
 import { TypeormModule } from '@piar/infra-backend-common-typeorm';
+import { AccountsModule } from './accounts/accounts.module';
+import { SearchModule } from './search/search.module';
 
 const ENV_FILE = '.env';
 
@@ -32,9 +40,25 @@ const ENV_FILE = '.env';
         useClass: AccountRepository,
       },
     }),
+    ContactSubmissionModule.register({
+      contactSubmissionPort: {
+        provide: ContactSubmissionPort,
+        useClass: ContactSubmissionRepository,
+      },
+    }),
+    DynamicPageModule.register({
+      dynamicPagePort: {
+        provide: DynamicPagePort,
+        useClass: DynamicPageRepository,
+      },
+    }),
+    AccountsModule,
+    SearchModule,
 
     // Providers
     AccountRepositoryProviderModule,
+    ContactSubmissionRepositoryProviderModule,
+    DynamicPageRepositoryProviderModule,
   ],
   providers: [
     {

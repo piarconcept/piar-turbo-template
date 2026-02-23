@@ -1,4 +1,15 @@
 import { clsx } from 'clsx';
+import * as React from 'react';
+
+function toEditorText(value: unknown): string {
+  if (value == null) return '';
+  if (typeof value === 'string') return value;
+  try {
+    return JSON.stringify(value, null, 2);
+  } catch {
+    return String(value);
+  }
+}
 
 export function JsonEditorField({
   value,
@@ -11,10 +22,30 @@ export function JsonEditorField({
   disabled?: boolean;
   rows?: number;
 }) {
+  const [text, setText] = React.useState(() => toEditorText(value));
+
+  React.useEffect(() => {
+    setText(toEditorText(value));
+  }, [value]);
+
+  const handleChange = (nextText: string) => {
+    setText(nextText);
+    const trimmed = nextText.trim();
+    if (!trimmed) {
+      onChange('');
+      return;
+    }
+    try {
+      onChange(JSON.parse(nextText));
+    } catch {
+      onChange(nextText);
+    }
+  };
+
   return (
     <textarea
-      value={value == null ? '' : String(value)}
-      onChange={(e) => onChange(e.target.value)}
+      value={text}
+      onChange={(e) => handleChange(e.target.value)}
       rows={rows ?? 6}
       disabled={disabled}
       className={clsx(

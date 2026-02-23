@@ -1,23 +1,37 @@
 import { AccountEntityProps } from '@piar/domain-models';
-import { AccountMockData } from './schema';
+import type { DeepPartial } from 'typeorm';
+import type { AccountOrmEntity } from './orm.entity';
+
+export type AccountRecord = DeepPartial<AccountOrmEntity>;
 
 /**
  * Account Factory
  * Converts raw data (MockData, Prisma, TypeORM, etc.) into domain entities
  */
 export class AccountFactory {
+  private static toDate(value: unknown): Date | undefined {
+    if (!value) {
+      return undefined;
+    }
+    if (value instanceof Date) {
+      return value;
+    }
+    const date = new Date(value as string);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+  }
+
   /**
    * Convert raw data to domain entity props
    */
-  static toDomain(data: AccountMockData): AccountEntityProps {
+  static toDomain(data: AccountRecord): AccountEntityProps {
     return {
-      id: data.id,
-      accountCode: data.accountCode,
-      email: data.email,
-      passwordHash: data.passwordHash,
-      role: data.role,
-      createdAt: new Date(data.createdAt),
-      updatedAt: new Date(data.updatedAt),
+      id: data.id ?? '',
+      accountCode: data.accountCode ?? '',
+      email: data.email ?? undefined,
+      passwordHash: data.passwordHash ?? undefined,
+      role: (data.role as AccountEntityProps['role']) ?? undefined,
+      createdAt: AccountFactory.toDate(data.createdAt) ?? new Date(),
+      updatedAt: AccountFactory.toDate(data.updatedAt) ?? new Date(),
     };
   }
 
@@ -25,22 +39,22 @@ export class AccountFactory {
    * Convert domain entity props to raw data
    * Used when creating or updating records
    */
-  static fromDomain(entity: AccountEntityProps): AccountMockData {
+  static fromDomain(entity: AccountEntityProps): AccountRecord {
     return {
       id: entity.id,
       accountCode: entity.accountCode,
-      email: entity.email,
-      passwordHash: entity.passwordHash,
-      role: entity.role,
-      createdAt: entity.createdAt?.toISOString() || new Date().toISOString(),
-      updatedAt: entity.updatedAt?.toISOString() || new Date().toISOString(),
+      email: entity.email ?? undefined,
+      passwordHash: entity.passwordHash ?? undefined,
+      role: entity.role ?? undefined,
+      createdAt: entity.createdAt ?? new Date(),
+      updatedAt: entity.updatedAt ?? new Date(),
     };
   }
 
   /**
    * Convert multiple raw data items to domain entities
    */
-  static toDomainList(dataList: AccountMockData[]): AccountEntityProps[] {
+  static toDomainList(dataList: AccountRecord[]): AccountEntityProps[] {
     return dataList.map((data) => AccountFactory.toDomain(data));
   }
 }

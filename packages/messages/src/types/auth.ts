@@ -25,6 +25,10 @@ export interface AuthMessages {
     acceptTerms: string;
     termsAndConditions: string;
     submit: string;
+    loading: string;
+    error: string;
+    passwordMismatch: string;
+    termsRequired: string;
   };
   forgotPassword: {
     title: string;

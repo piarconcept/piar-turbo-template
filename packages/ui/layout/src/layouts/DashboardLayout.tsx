@@ -2,6 +2,8 @@ import React from 'react';
 import { HeaderDispatcher } from '../header';
 import { AsideDispatcher } from '../aside';
 import { FooterDispatcher } from '../footer';
+import { LayoutProvider } from '../context/LayoutContext';
+import { Breadcrumbs } from '../breadcrumbs';
 import type { HeaderConfig, AsideConfig, FooterConfig } from '../types';
 
 export interface DashboardLayoutProps {
@@ -13,8 +15,16 @@ export interface DashboardLayoutProps {
 }
 
 /**
- * DashboardLayout - Layout for dashboard/admin pages
- * Structure: Header + (Aside + Main Content) + Footer
+ * DashboardLayout - Professional layout for dashboard/admin pages
+ * Structure: Fixed Header + Fixed Sidebar + Scrollable Main Content + Footer
+ *
+ * Features:
+ * - Fixed header at top (h-16)
+ * - Fixed sidebar on left (collapsible on desktop, overlay on mobile)
+ * - Main content area with proper scrolling
+ * - Footer at bottom of content
+ * - Responsive design with burger menu on mobile
+ * - Centralized state management via LayoutContext
  */
 export function DashboardLayout({
   children,
@@ -24,17 +34,31 @@ export function DashboardLayout({
   locale = 'en',
 }: DashboardLayoutProps) {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <HeaderDispatcher config={headerConfig} layoutType="dashboard" locale={locale} />
+    <LayoutProvider>
+      <div className="relative h-screen overflow-hidden bg-gray-50 pt-16">
+        {/* Fixed Header - Always visible at top */}
+        <HeaderDispatcher config={headerConfig} layoutType="dashboard" locale={locale} />
 
-      <div className="flex pt-16">
-        <AsideDispatcher config={asideConfig} layoutType="dashboard" locale={locale} />
+        {/* Main Container - Below header */}
+        <div className="flex h-full">
+          {/* Fixed Sidebar - Scrollable if content overflows */}
+          <AsideDispatcher config={asideConfig} layoutType="dashboard" locale={locale} />
 
-        <div className="flex min-h-[calc(100vh-4rem)] flex-1 flex-col pl-[var(--layout-aside-width,16rem)]">
-          <main className="flex-1 px-6 py-6">{children}</main>
-          <FooterDispatcher config={footerConfig} layoutType="dashboard" locale={locale} />
+          {/* Main Content Area - Scrollable, takes remaining space */}
+          <div className="flex min-h-0 flex-1 flex-col transition-all duration-300 lg:pl-[var(--layout-aside-width,16rem)]">
+            {/* Main Content */}
+            <main className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 lg:px-8">
+              <div className="mx-auto max-w-7xl">
+                <Breadcrumbs asideConfig={asideConfig} locale={locale} />
+                {children}
+              </div>
+            </main>
+
+            {/* Footer - At bottom of content */}
+            <FooterDispatcher config={footerConfig} layoutType="dashboard" locale={locale} />
+          </div>
         </div>
       </div>
-    </div>
+    </LayoutProvider>
   );
 }

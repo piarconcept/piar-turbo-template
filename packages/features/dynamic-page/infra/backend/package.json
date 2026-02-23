@@ -1,0 +1,33 @@
+{
+  "name": "@piar/dynamic-page-infra-backend",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "dev": "tsc --watch",
+    "test": "echo 'No tests yet'",
+    "test:coverage": "echo 'No tests yet'"
+  },
+  "dependencies": {
+    "@piar/domain-dynamic-form": "workspace:*",
+    "@piar/dynamic-page-configuration": "workspace:*",
+    "@piar/domain-models": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@vitest/coverage-v8": "^2.1.9",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.31.1",
+    "vitest": "^2.1.9"
+  }
+}

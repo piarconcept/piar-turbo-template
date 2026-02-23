@@ -19,6 +19,9 @@ export class JwtAuthGuard implements CanActivate {
     }
 
     const payload = await this.tokenService.verify(token);
+    if (payload?.tokenType === 'refresh') {
+      throw new UnauthorizedException('Invalid token type');
+    }
     request.user = payload;
 
     return true;

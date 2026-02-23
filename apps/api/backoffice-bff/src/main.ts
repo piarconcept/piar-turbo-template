@@ -5,9 +5,17 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Enable CORS for backoffice client
+  // Enable CORS for backoffice client(s). Supports comma-separated origins.
+  const configuredOrigins = (process.env.BACKOFFICE_CLIENT_URL ?? '')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+  const allowedOrigins = Array.from(
+    new Set([...configuredOrigins, 'http://localhost:3000', 'http://localhost:3001']),
+  );
+
   app.enableCors({
-    origin: process.env.BACKOFFICE_CLIENT_URL || 'http://localhost:3001',
+    origin: allowedOrigins,
     credentials: true,
   });
 

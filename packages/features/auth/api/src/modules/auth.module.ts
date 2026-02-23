@@ -7,6 +7,8 @@ import {
   ForgotPasswordUseCaseExecuter,
   LoginUseCase,
   LoginUseCaseExecuter,
+  RefreshSessionUseCase,
+  RefreshSessionUseCaseExecuter,
   RegisterUseCase,
   RegisterUseCaseExecuter,
   UpdateUserRoleUseCase,
@@ -44,6 +46,11 @@ export class AuthModule {
           inject: [AuthRepository],
         },
         {
+          provide: RefreshSessionUseCase,
+          useFactory: (repository: AuthRepository) => new RefreshSessionUseCaseExecuter(repository),
+          inject: [AuthRepository],
+        },
+        {
           provide: RegisterUseCase,
           useFactory: (repository: AuthRepository) => new RegisterUseCaseExecuter(repository),
           inject: [AuthRepository],
@@ -58,7 +65,7 @@ export class AuthModule {
           useFactory: (repository: AuthRepository) => new UpdateUserRoleUseCaseExecuter(repository),
           inject: [AuthRepository],
         },
-        ...Object.values(options),
+        options.accountPort,
       ],
       exports: [],
     };

@@ -9,13 +9,14 @@ import {
   UpdateUserRoleRequest,
   UpdateUserRoleResponse,
   AuthSession,
+  RefreshSessionRequest,
 } from '@piar/auth-configuration';
 import { AccountEntity, AccountEntityProps } from '@piar/domain-models';
 import { HttpClient } from '@piar/infra-client-common-http';
 
 interface BackendLoginResponse {
   account: AccountEntityProps;
-  token: string;
+  session: AuthSession;
 }
 
 interface BackendRegisterResponse {
@@ -44,6 +45,20 @@ export class HttpAuthRepository implements IAuthRepository {
     const response = await this.httpClient.post<BackendLoginResponse>('/auth/login', payload);
 
     return this.mapBackendLoginResponseToDomain(response);
+  }
+
+  async refresh(payload: RefreshSessionRequest): Promise<AuthSession> {
+    if (!payload.refreshToken) {
+      throw new Error(
+        JSON.stringify({
+          i18n: 'missing_refresh_token',
+          message: 'Refresh token is required',
+          statusCode: 400,
+        }),
+      );
+    }
+
+    return this.httpClient.post<AuthSession>('/auth/refresh', payload);
   }
 
   async register(payload: RegisterRequest): Promise<RegisterResponse> {
@@ -95,10 +110,7 @@ export class HttpAuthRepository implements IAuthRepository {
       );
     }
 
-    const response = await this.httpClient.patch<BackendRegisterResponse>(
-      '/auth/update-role',
-      payload,
-    );
+    const response = await this.httpClient.patch<BackendRegisterResponse>('/auth/roles', payload);
 
     return {
       account: new AccountEntity(response.account),
@@ -107,18 +119,6 @@ export class HttpAuthRepository implements IAuthRepository {
 
   private mapBackendLoginResponseToDomain(response: BackendLoginResponse): LoginResponse {
     const account = new AccountEntity(response.account);
-    const session = this.createAuthSession(response.token);
-
-    return { account, session };
-  }
-
-  private createAuthSession(token: string): AuthSession {
-    const expiresAt = new Date();
-    expiresAt.setHours(expiresAt.getHours() + 24);
-
-    return {
-      token,
-      expiresAt: expiresAt.toISOString(),
-    };
+    return { account, session: response.session };
   }
 }

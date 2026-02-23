@@ -30,6 +30,8 @@
     "@piar/infra-backend-common-security": "workspace:*",
     "@piar/infra-backend-common-typeorm": "workspace:*",
     "@piar/auth-api": "workspace:*",
+    "@piar/contact-api": "workspace:*",
+    "@piar/dynamic-page-api": "workspace:*",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },

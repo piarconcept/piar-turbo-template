@@ -19,4 +19,12 @@ export class LoginDto implements LoginRequest {
     format: 'password',
   })
   password!: string;
+
+  @ApiProperty({
+    description: 'Persist session with refresh token',
+    example: true,
+    type: Boolean,
+    required: false,
+  })
+  rememberMe?: boolean;
 }

@@ -24,6 +24,10 @@ export const auth: AuthMessages = {
     acceptTerms: 'Accepto els',
     termsAndConditions: 'termes i condicions',
     submit: "Registra't",
+    loading: 'Creant compte...',
+    error: 'No s’ha pogut crear el compte. Torna-ho a provar.',
+    passwordMismatch: 'Les contrasenyes no coincideixen.',
+    termsRequired: 'Has d’acceptar els termes i condicions.',
   },
   forgotPassword: {
     title: 'Recuperar contrasenya',

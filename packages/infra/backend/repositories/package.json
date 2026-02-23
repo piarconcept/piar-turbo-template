@@ -12,6 +12,14 @@
     "./account": {
       "types": "./dist/account/index.d.ts",
       "default": "./dist/account/index.js"
+    },
+    "./contact-submission": {
+      "types": "./dist/contact-submission/index.d.ts",
+      "default": "./dist/contact-submission/index.js"
+    },
+    "./dynamic-page": {
+      "types": "./dist/dynamic-page/index.d.ts",
+      "default": "./dist/dynamic-page/index.js"
     }
   },
   "scripts": {
@@ -23,8 +31,11 @@
     "test:coverage": "echo 'No tests configured yet'"
   },
   "dependencies": {
+    "@nestjs/typeorm": "^11.0.0",
+    "typeorm": "^0.3.24",
     "bcryptjs": "^2.4.3",
-    "@piar/domain-models": "workspace:*"
+    "@piar/domain-models": "workspace:*",
+    "@piar/domain-dynamic-form": "workspace:*"
   },
   "devDependencies": {
     "@nestjs/common": "^11.0.16",

@@ -85,9 +85,15 @@ importers:
       '@piar/auth-api':
         specifier: workspace:*
         version: link:../../../packages/features/auth/api
+      '@piar/contact-api':
+        specifier: workspace:*
+        version: link:../../../packages/features/contact/api
       '@piar/domain-models':
         specifier: workspace:*
         version: link:../../../packages/domain/models
+      '@piar/dynamic-page-api':
+        specifier: workspace:*
+        version: link:../../../packages/features/dynamic-page/api
       '@piar/health-api':
         specifier: workspace:*
         version: link:../../../packages/features/health/api
@@ -170,6 +176,15 @@ importers:
       '@nestjs/swagger':
         specifier: ^8.0.7
         version: 8.1.1(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12)(reflect-metadata@0.2.2)
+      '@piar/contact-api':
+        specifier: workspace:*
+        version: link:../../../packages/features/contact/api
+      '@piar/domain-models':
+        specifier: workspace:*
+        version: link:../../../packages/domain/models
+      '@piar/dynamic-page-api':
+        specifier: workspace:*
+        version: link:../../../packages/features/dynamic-page/api
       '@piar/health-api':
         specifier: workspace:*
         version: link:../../../packages/features/health/api
@@ -179,6 +194,9 @@ importers:
       '@piar/infra-backend-common-typeorm':
         specifier: workspace:*
         version: link:../../../packages/infra/backend/common/typeorm
+      '@piar/infra-backend-repositories':
+        specifier: workspace:*
+        version: link:../../../packages/infra/backend/repositories
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -240,15 +258,27 @@ importers:
       '@piar/cookies-client':
         specifier: workspace:*
         version: link:../../../packages/features/cookies/client
+      '@piar/domain-dynamic-form':
+        specifier: workspace:*
+        version: link:../../../packages/domain/dynamic-form
       '@piar/domain-fields':
         specifier: workspace:*
         version: link:../../../packages/domain/fields
+      '@piar/domain-models':
+        specifier: workspace:*
+        version: link:../../../packages/domain/models
       '@piar/infra-client-common-error':
         specifier: workspace:*
         version: link:../../../packages/infra/client/common/error
+      '@piar/infra-client-common-http':
+        specifier: workspace:*
+        version: link:../../../packages/infra/client/common/http
       '@piar/infra-client-dynamic-form':
         specifier: workspace:*
         version: link:../../../packages/infra/client/dynamic-form
+      '@piar/infra-client-dynamic-table':
+        specifier: workspace:*
+        version: link:../../../packages/infra/client/dynamic-table
       '@piar/layout':
         specifier: workspace:*
         version: link:../../../packages/ui/layout
@@ -604,6 +634,105 @@ importers:
         specifier: ^8.31.1
         version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
 
+  packages/features/contact/api:
+    dependencies:
+      '@nestjs/common':
+        specifier: ^11.0.16
+        version: 11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@nestjs/core':
+        specifier: ^11.0.16
+        version: 11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.1.12)(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@piar/contact-configuration':
+        specifier: workspace:*
+        version: link:../configuration
+      '@piar/contact-infra-backend':
+        specifier: workspace:*
+        version: link:../infra/backend
+      '@piar/domain-dynamic-form':
+        specifier: workspace:*
+        version: link:../../../domain/dynamic-form
+      '@piar/domain-models':
+        specifier: workspace:*
+        version: link:../../../domain/models
+      '@piar/infra-backend-common-security':
+        specifier: workspace:*
+        version: link:../../../infra/backend/common/security
+    devDependencies:
+      '@nestjs/swagger':
+        specifier: ^8.0.7
+        version: 8.1.1(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12)(reflect-metadata@0.2.2)
+      '@nestjs/testing':
+        specifier: ^11.0.16
+        version: 11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12)(@nestjs/platform-express@11.1.12)
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.19.7
+      '@vitest/coverage-v8':
+        specifier: ^2.1.9
+        version: 2.1.9(vitest@2.1.9)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      typescript-eslint:
+        specifier: ^8.31.1
+        version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@22.19.7)(@vitest/ui@2.1.9)(happy-dom@20.3.9)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)
+
+  packages/features/contact/configuration:
+    dependencies:
+      '@piar/domain-dynamic-form':
+        specifier: workspace:*
+        version: link:../../../domain/dynamic-form
+      '@piar/domain-models':
+        specifier: workspace:*
+        version: link:../../../domain/models
+    devDependencies:
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.19.7
+      '@vitest/coverage-v8':
+        specifier: ^2.1.9
+        version: 2.1.9(vitest@2.1.9)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      typescript-eslint:
+        specifier: ^8.31.1
+        version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@22.19.7)(@vitest/ui@2.1.9)(happy-dom@20.3.9)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)
+
+  packages/features/contact/infra/backend:
+    dependencies:
+      '@piar/contact-configuration':
+        specifier: workspace:*
+        version: link:../../configuration
+      '@piar/domain-dynamic-form':
+        specifier: workspace:*
+        version: link:../../../../domain/dynamic-form
+      '@piar/domain-models':
+        specifier: workspace:*
+        version: link:../../../../domain/models
+    devDependencies:
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.19.7
+      '@vitest/coverage-v8':
+        specifier: ^2.1.9
+        version: 2.1.9(vitest@2.1.9)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      typescript-eslint:
+        specifier: ^8.31.1
+        version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@22.19.7)(@vitest/ui@2.1.9)(happy-dom@20.3.9)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)
+
   packages/features/cookies/client:
     dependencies:
       '@piar/ui-components':
@@ -628,6 +757,105 @@ importers:
       typescript-eslint:
         specifier: ^8.31.1
         version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+
+  packages/features/dynamic-page/api:
+    dependencies:
+      '@nestjs/common':
+        specifier: ^11.0.16
+        version: 11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@nestjs/core':
+        specifier: ^11.0.16
+        version: 11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.1.12)(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@piar/domain-dynamic-form':
+        specifier: workspace:*
+        version: link:../../../domain/dynamic-form
+      '@piar/domain-models':
+        specifier: workspace:*
+        version: link:../../../domain/models
+      '@piar/dynamic-page-configuration':
+        specifier: workspace:*
+        version: link:../configuration
+      '@piar/dynamic-page-infra-backend':
+        specifier: workspace:*
+        version: link:../infra/backend
+      '@piar/infra-backend-common-security':
+        specifier: workspace:*
+        version: link:../../../infra/backend/common/security
+    devDependencies:
+      '@nestjs/swagger':
+        specifier: ^8.0.7
+        version: 8.1.1(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12)(reflect-metadata@0.2.2)
+      '@nestjs/testing':
+        specifier: ^11.0.16
+        version: 11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12)(@nestjs/platform-express@11.1.12)
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.19.7
+      '@vitest/coverage-v8':
+        specifier: ^2.1.9
+        version: 2.1.9(vitest@2.1.9)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      typescript-eslint:
+        specifier: ^8.31.1
+        version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@22.19.7)(@vitest/ui@2.1.9)(happy-dom@20.3.9)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)
+
+  packages/features/dynamic-page/configuration:
+    dependencies:
+      '@piar/domain-dynamic-form':
+        specifier: workspace:*
+        version: link:../../../domain/dynamic-form
+      '@piar/domain-models':
+        specifier: workspace:*
+        version: link:../../../domain/models
+    devDependencies:
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.19.7
+      '@vitest/coverage-v8':
+        specifier: ^2.1.9
+        version: 2.1.9(vitest@2.1.9)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      typescript-eslint:
+        specifier: ^8.31.1
+        version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@22.19.7)(@vitest/ui@2.1.9)(happy-dom@20.3.9)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)
+
+  packages/features/dynamic-page/infra/backend:
+    dependencies:
+      '@piar/domain-dynamic-form':
+        specifier: workspace:*
+        version: link:../../../../domain/dynamic-form
+      '@piar/domain-models':
+        specifier: workspace:*
+        version: link:../../../../domain/models
+      '@piar/dynamic-page-configuration':
+        specifier: workspace:*
+        version: link:../../configuration
+    devDependencies:
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.19.7
+      '@vitest/coverage-v8':
+        specifier: ^2.1.9
+        version: 2.1.9(vitest@2.1.9)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      typescript-eslint:
+        specifier: ^8.31.1
+        version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@22.19.7)(@vitest/ui@2.1.9)(happy-dom@20.3.9)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)
 
   packages/features/health/api:
     dependencies:
@@ -822,12 +1050,21 @@ importers:
 
   packages/infra/backend/repositories:
     dependencies:
+      '@nestjs/typeorm':
+        specifier: ^11.0.0
+        version: 11.0.0(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(pg@8.18.0)(ts-node@10.9.2(@swc/core@1.15.10)(@types/node@22.19.7)(typescript@5.9.3)))
+      '@piar/domain-dynamic-form':
+        specifier: workspace:*
+        version: link:../../../domain/dynamic-form
       '@piar/domain-models':
         specifier: workspace:*
         version: link:../../../domain/models
       bcryptjs:
         specifier: ^2.4.3
         version: 2.4.3
+      typeorm:
+        specifier: ^0.3.24
+        version: 0.3.28(pg@8.18.0)(ts-node@10.9.2(@swc/core@1.15.10)(@types/node@22.19.7)(typescript@5.9.3))
     devDependencies:
       '@nestjs/common':
         specifier: ^11.0.16
@@ -918,12 +1155,18 @@ importers:
       '@piar/domain-models':
         specifier: workspace:*
         version: link:../../../domain/models
+      '@piar/messages':
+        specifier: workspace:*
+        version: link:../../../messages
       '@piar/ui-components':
         specifier: workspace:*
         version: link:../../../ui/components
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      next:
+        specifier: 15.5.9
+        version: 15.5.9(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react:
         specifier: ^19.0.0
         version: 19.1.0

@@ -7,29 +7,9 @@ import {
   dashboardFooterConfig,
   AsideConfig,
 } from '@piar/layout';
-import { Home, Puzzle } from 'lucide-react';
+import { FileText, LayoutDashboard, Mail, Puzzle, User } from 'lucide-react';
+import { getTranslations } from '@piar/messages';
 import { auth } from '@/auth';
-
-const createDashboardNav = (locale: string): AsideConfig => ({
-  ...dashboardAsideConfig,
-  navigation: [
-    {
-      title: 'Main',
-      routes: [
-        {
-          label: 'Dashboard',
-          href: `/${locale}/dashboard`,
-          icon: <Home />,
-        },
-        {
-          label: 'Modules',
-          href: `/${locale}/modules`,
-          icon: <Puzzle />,
-        },
-      ],
-    },
-  ],
-});
 
 /**
  * Dashboard Layout - Private area with sidebar navigation
@@ -50,12 +30,55 @@ export default async function DashboardLayout({
     redirect(`/${locale}/unauthorized`);
   }
 
+  const messages = getTranslations(locale);
+  const t = messages.dashboard.nav;
+  const dashboardNav: AsideConfig = {
+    ...dashboardAsideConfig,
+    navigation: [
+      {
+        title: 'Dashboard',
+        routes: [
+          {
+            label: t.dashboard,
+            href: `/${locale}/dashboard`,
+            icon: <LayoutDashboard />,
+          },
+          {
+            label: t.modules,
+            href: `/${locale}/modules`,
+            icon: <Puzzle />,
+          },
+        ],
+      },
+      {
+        title: 'Management',
+        routes: [
+          {
+            label: t.accounts,
+            href: `/${locale}/accounts`,
+            icon: <User />,
+          },
+          {
+            label: t.contactSubmissions,
+            href: `/${locale}/contact-submissions`,
+            icon: <Mail />,
+          },
+          {
+            label: t.dynamicPages,
+            href: `/${locale}/dynamic-pages`,
+            icon: <FileText />,
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <Layout
       config={{
         type: 'dashboard',
         header: dashboardHeaderConfig,
-        aside: createDashboardNav(locale),
+        aside: dashboardNav,
         footer: dashboardFooterConfig,
       }}
       locale={locale}

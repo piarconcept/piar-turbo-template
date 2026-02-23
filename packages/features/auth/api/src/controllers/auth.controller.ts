@@ -3,16 +3,24 @@ import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import type {
   ForgotPasswordResponse,
   LoginResponse,
+  AuthSession,
   RegisterResponse,
   UpdateUserRoleResponse,
 } from '@piar/auth-configuration';
 import {
   ForgotPasswordUseCase,
   LoginUseCase,
+  RefreshSessionUseCase,
   RegisterUseCase,
   UpdateUserRoleUseCase,
 } from '../use-cases';
-import { LoginDto, RegisterDto, ForgotPasswordDto, UpdateUserRoleDto } from '../dto';
+import {
+  LoginDto,
+  RefreshSessionDto,
+  RegisterDto,
+  ForgotPasswordDto,
+  UpdateUserRoleDto,
+} from '../dto';
 
 /**
  * Auth Controller (NestJS)
@@ -24,6 +32,8 @@ export class AuthController {
   constructor(
     @Inject(LoginUseCase)
     private readonly loginUseCase: LoginUseCase,
+    @Inject(RefreshSessionUseCase)
+    private readonly refreshSessionUseCase: RefreshSessionUseCase,
     @Inject(RegisterUseCase)
     private readonly registerUseCase: RegisterUseCase,
     @Inject(ForgotPasswordUseCase)
@@ -44,6 +54,18 @@ export class AuthController {
   @ApiResponse({ status: 500, description: 'Internal server error' })
   async login(@Body() payload: LoginDto): Promise<LoginResponse> {
     return this.loginUseCase.execute(payload);
+  }
+
+  /**
+   * POST /auth/refresh
+   */
+  @Post('refresh')
+  @ApiOperation({ summary: 'Refresh session token', description: 'Refresh access token' })
+  @ApiBody({ type: RefreshSessionDto })
+  @ApiResponse({ status: 200, description: 'Session refreshed' })
+  @ApiResponse({ status: 401, description: 'Invalid refresh token (INVALID_REFRESH_TOKEN)' })
+  async refresh(@Body() payload: RefreshSessionDto): Promise<AuthSession> {
+    return this.refreshSessionUseCase.execute(payload);
   }
 
   /**

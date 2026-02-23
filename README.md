@@ -9,6 +9,14 @@ Prerequisites:
 - Node.js 20.x (recommended via `nvm` — see `.nvmrc`)
 - pnpm 10.28.0
 
+Database requirements:
+
+- This template is designed to run with **PostgreSQL** (`DATABASE_URL`).
+- You can migrate to **MongoDB** (or another database), but you must adapt the data layer first:
+  - Replace TypeORM setup and repository implementations.
+  - Update feature modules, ports/adapters, and queries where needed.
+- For a fast, production-ready setup, we recommend **[Neon](https://neon.tech)** as managed PostgreSQL (quick start, serverless, scalable).
+
 ```bash
 # Optional but recommended
 nvm use

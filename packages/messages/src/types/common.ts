@@ -17,6 +17,7 @@ export interface CommonMessages {
     save: string;
     cancel: string;
     delete: string;
+    view: string;
     edit: string;
     create: string;
     confirm: string;
@@ -25,6 +26,7 @@ export interface CommonMessages {
     next: string;
     submit: string;
     search: string;
+    clear: string;
   };
 
   // Status

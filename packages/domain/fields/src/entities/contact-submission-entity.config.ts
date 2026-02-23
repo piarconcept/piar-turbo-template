@@ -1,0 +1,181 @@
+import { ContactSubmissionEntityProps } from '@piar/domain-models';
+import { baseEntityFieldsConfig } from './base-entity.config';
+import { EntityFieldsConfig, FieldType } from '../common/types';
+
+const contactSubmissionStatusOptions = [
+  { value: 'new', label: 'options.contactSubmission.status.new.label' },
+  { value: 'archived', label: 'options.contactSubmission.status.archived.label' },
+];
+
+/**
+ * Contact submission entity fields configuration
+ */
+export const contactSubmissionEntityFieldsConfig: EntityFieldsConfig<ContactSubmissionEntityProps> =
+  {
+    entityName: 'ContactSubmissionEntity',
+    fields: [
+      ...baseEntityFieldsConfig.fields,
+      {
+        key: 'name',
+        type: FieldType.String,
+        label: 'fields.contactSubmission.name.label',
+        description: 'fields.contactSubmission.name.description',
+        required: true,
+        editable: false,
+        visible: true,
+        ui: {
+          component: 'input',
+          placeholder: 'fields.contactSubmission.name.placeholder',
+        },
+        permissions: { view: ['admin'], edit: [] },
+      },
+      {
+        key: 'email',
+        type: FieldType.Email,
+        label: 'fields.contactSubmission.email.label',
+        description: 'fields.contactSubmission.email.description',
+        required: true,
+        editable: false,
+        visible: true,
+        ui: {
+          component: 'input',
+          placeholder: 'fields.contactSubmission.email.placeholder',
+        },
+        permissions: { view: ['admin'], edit: [] },
+      },
+      {
+        key: 'message',
+        type: FieldType.Text,
+        label: 'fields.contactSubmission.message.label',
+        description: 'fields.contactSubmission.message.description',
+        required: true,
+        editable: false,
+        visible: true,
+        ui: {
+          component: 'textarea',
+          rows: 6,
+          placeholder: 'fields.contactSubmission.message.placeholder',
+        },
+        permissions: { view: ['admin'], edit: [] },
+      },
+      {
+        key: 'consent',
+        type: FieldType.Boolean,
+        label: 'fields.contactSubmission.consent.label',
+        description: 'fields.contactSubmission.consent.description',
+        required: false,
+        editable: false,
+        visible: true,
+        ui: { component: 'switch' },
+        permissions: { view: ['admin'], edit: [] },
+      },
+      {
+        key: 'lastPages',
+        type: FieldType.JSON,
+        label: 'fields.contactSubmission.lastPages.label',
+        description: 'fields.contactSubmission.lastPages.description',
+        required: false,
+        editable: false,
+        visible: true,
+        ui: { component: 'json-editor', rows: 4 },
+        permissions: { view: ['admin'], edit: [] },
+      },
+      {
+        key: 'locale',
+        type: FieldType.String,
+        label: 'fields.contactSubmission.locale.label',
+        description: 'fields.contactSubmission.locale.description',
+        required: false,
+        editable: false,
+        visible: true,
+        ui: { component: 'input', placeholder: 'fields.contactSubmission.locale.placeholder' },
+        permissions: { view: ['admin'], edit: [] },
+      },
+      {
+        key: 'source',
+        type: FieldType.String,
+        label: 'fields.contactSubmission.source.label',
+        description: 'fields.contactSubmission.source.description',
+        required: false,
+        editable: false,
+        visible: true,
+        ui: { component: 'input', placeholder: 'fields.contactSubmission.source.placeholder' },
+        permissions: { view: ['admin'], edit: [] },
+      },
+      {
+        key: 'status',
+        type: FieldType.Select,
+        label: 'fields.contactSubmission.status.label',
+        description: 'fields.contactSubmission.status.description',
+        required: false,
+        editable: true,
+        visible: true,
+        defaultValue: 'new',
+        options: contactSubmissionStatusOptions,
+        ui: { component: 'select' },
+        permissions: { view: ['admin'], edit: ['admin'] },
+      },
+      {
+        key: 'metadata',
+        type: FieldType.JSON,
+        label: 'fields.contactSubmission.metadata.label',
+        description: 'fields.contactSubmission.metadata.description',
+        required: false,
+        editable: false,
+        visible: true,
+        ui: { component: 'json-editor', rows: 4 },
+        permissions: { view: ['admin'], edit: [] },
+      },
+    ],
+    groups: [
+      {
+        id: 'basic',
+        label: 'Contact',
+        description: 'Sender information',
+        fields: ['name', 'email', 'consent'],
+        collapsible: false,
+        order: 1,
+      },
+      {
+        id: 'message',
+        label: 'Message',
+        description: 'Submitted message',
+        fields: ['message'],
+        collapsible: true,
+        defaultCollapsed: false,
+        order: 2,
+      },
+      {
+        id: 'context',
+        label: 'Context',
+        description: 'Request context',
+        fields: ['lastPages', 'locale', 'source'],
+        collapsible: true,
+        defaultCollapsed: false,
+        order: 3,
+      },
+      {
+        id: 'status',
+        label: 'Status',
+        description: 'Submission status',
+        fields: ['status'],
+        collapsible: true,
+        defaultCollapsed: false,
+        order: 4,
+      },
+      {
+        id: 'metadata',
+        label: 'Metadata',
+        description: 'Additional metadata',
+        fields: ['metadata'],
+        collapsible: true,
+        defaultCollapsed: true,
+        order: 5,
+      },
+      ...(baseEntityFieldsConfig.groups || []),
+    ],
+  };
+
+export const contactSubmissionSpecificFields = contactSubmissionEntityFieldsConfig.fields.filter(
+  (field) => !['id', 'createdAt', 'updatedAt'].includes(field.key as string),
+);

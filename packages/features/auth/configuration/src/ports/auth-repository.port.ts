@@ -12,6 +12,7 @@ export interface AuthSession {
   token: string;
   refreshToken?: string;
   expiresAt: string;
+  refreshExpiresAt?: string;
 }
 
 /**
@@ -20,6 +21,14 @@ export interface AuthSession {
 export interface LoginRequest {
   email: string;
   password: string;
+  rememberMe?: boolean;
+}
+
+/**
+ * Refresh session request payload.
+ */
+export interface RefreshSessionRequest {
+  refreshToken: string;
 }
 
 /**
@@ -85,6 +94,11 @@ export interface IAuthRepository {
    * Authenticate a user with credentials.
    */
   login(payload: LoginRequest): Promise<LoginResponse>;
+
+  /**
+   * Refresh an access token using a refresh token.
+   */
+  refresh(payload: RefreshSessionRequest): Promise<AuthSession>;
 
   /**
    * Register a new user.

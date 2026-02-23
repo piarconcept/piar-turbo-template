@@ -5,6 +5,8 @@ export interface I18nTextEntityProps {
   value: string;
 }
 
+export type I18nText = I18nTextEntityProps[];
+
 export class I18nTextEntity implements I18nTextEntityProps {
   language: SupportedLanguage;
   value: string;

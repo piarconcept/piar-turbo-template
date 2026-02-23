@@ -22,9 +22,11 @@
   "dependencies": {
     "@piar/domain-dynamic-form": "workspace:*",
     "@piar/domain-fields": "workspace:*",
+    "@piar/messages": "workspace:*",
     "@piar/ui-components": "workspace:*",
     "@piar/domain-models": "workspace:*",
-    "clsx": "^2.1.1"
+    "clsx": "^2.1.1",
+    "next": "15.5.9"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",

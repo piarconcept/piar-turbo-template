@@ -14,6 +14,9 @@ export { PublicHeader, DashboardHeader } from './header';
 export { DashboardAside } from './aside';
 export { PublicFooter, DashboardFooter } from './footer';
 
+// Context
+export { LayoutProvider, useLayout } from './context/LayoutContext';
+
 // Types and Interfaces
 export type {
   LayoutType,
@@ -37,3 +40,6 @@ export {
   dashboardAsideConfig,
   dashboardFooterConfig,
 } from './config';
+
+// Breadcrumbs
+export { Breadcrumbs } from './breadcrumbs';

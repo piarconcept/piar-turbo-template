@@ -6,6 +6,7 @@ import { LegalMessages } from './legal';
 import { CookiesMessages } from './cookies';
 import { DashboardMessages } from './dashboard';
 import { ModulesMessages } from './modules';
+import { FieldsMessages } from './fields';
 
 export type { AuthMessages } from './auth';
 export type { HomeMessages } from './home';
@@ -14,6 +15,7 @@ export type { LegalTemplateMessages, LegalTemplateSectionMessages } from './lega
 export type { CookiesMessages } from './cookies';
 export type { DashboardMessages } from './dashboard';
 export type { ModulesMessages } from './modules';
+export type { FieldsMessages } from './fields';
 
 /**
  * Complete message structure for the application
@@ -27,4 +29,5 @@ export interface Messages {
   cookies: CookiesMessages;
   dashboard: DashboardMessages;
   modules: ModulesMessages;
+  fields: FieldsMessages;
 }

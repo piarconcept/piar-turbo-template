@@ -18,6 +18,7 @@ export const createTypeOrmModuleOptions = (
   params: CreateTypeOrmModuleOptionsParams,
 ): TypeOrmModuleOptions => {
   const { env, entities, migrations, schema, extra } = params;
+  const hasMigrations = Array.isArray(migrations) && migrations.length > 0;
 
   if (!env.databaseUrl) {
     throw new Error('DATABASE_URL is required when database is enabled');
@@ -29,8 +30,9 @@ export const createTypeOrmModuleOptions = (
     schema,
     entities,
     migrations,
-    migrationsRun: true,
-    synchronize: false,
+    autoLoadEntities: true,
+    migrationsRun: hasMigrations,
+    synchronize: !hasMigrations,
     logging: false,
     ...extra,
   } as TypeOrmModuleOptions;

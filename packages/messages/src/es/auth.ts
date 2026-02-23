@@ -24,6 +24,10 @@ export const auth: AuthMessages = {
     acceptTerms: 'Acepto los',
     termsAndConditions: 'términos y condiciones',
     submit: 'Registrarse',
+    loading: 'Creando cuenta...',
+    error: 'No se pudo crear la cuenta. Inténtalo de nuevo.',
+    passwordMismatch: 'Las contraseñas no coinciden.',
+    termsRequired: 'Debes aceptar los términos y condiciones.',
   },
   forgotPassword: {
     title: 'Recuperar contraseña',

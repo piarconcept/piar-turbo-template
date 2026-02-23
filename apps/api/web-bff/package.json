@@ -24,7 +24,11 @@
     "@piar/health-api": "workspace:*",
     "@piar/infra-backend-common-error": "workspace:*",
     "@piar/infra-backend-common-typeorm": "workspace:*",
+    "@piar/infra-backend-repositories": "workspace:*",
     "@nestjs/swagger": "^8.0.7",
+    "@piar/contact-api": "workspace:*",
+    "@piar/dynamic-page-api": "workspace:*",
+    "@piar/domain-models": "workspace:*",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },

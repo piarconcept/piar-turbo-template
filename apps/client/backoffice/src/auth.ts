@@ -1,36 +1,10 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
+import { HttpAuthRepository } from '@piar/auth-infra-client';
 
-const BACKOFFICE_BFF_URL = process.env.BACKOFFICE_BFF_URL || 'http://localhost:5050';
-
-type BackendLoginResponse = {
-  account: { id: string; email?: string; role?: string };
-  token: string;
-};
-
-async function loginWithFetch(email: string, password: string): Promise<BackendLoginResponse> {
-  const res = await fetch(`${BACKOFFICE_BFF_URL}/auth/login`, {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify({ email, password }),
-    cache: 'no-store',
-  });
-
-  const text = await res.text();
-  if (!res.ok) {
-    throw new Error(
-      JSON.stringify({
-        i18n: 'login_failed',
-        message: text || 'Login failed',
-        statusCode: res.status,
-      }),
-    );
-  }
-
-  return JSON.parse(text) as BackendLoginResponse;
-}
+const authRepository = new HttpAuthRepository(
+  process.env.NEXT_PUBLIC_BACKOFFICE_BFF_URL || 'http://localhost:5050',
+);
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -40,20 +14,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       credentials: {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
+        rememberMe: { label: 'Remember me', type: 'checkbox' },
       },
       async authorize(credentials) {
         try {
-          const email = credentials.email as string;
-          const password = credentials.password as string;
-
-          const { account, token } = await loginWithFetch(email, password);
+          // Use repository instead of direct fetch
+          const { account, session } = await authRepository.login({
+            email: credentials.email as string,
+            password: credentials.password as string,
+            rememberMe:
+              credentials.rememberMe === true ||
+              credentials.rememberMe === 'true' ||
+              credentials.rememberMe === 'on',
+          });
 
           return {
             id: account.id,
-            email: account.email ?? email,
-            name: account.email ?? email,
+            email: account.email ?? '',
+            name: account.email ?? 'User', // Use email as name since AccountEntity doesn't have name
             role: account.role ?? 'user',
-            accessToken: token,
+            accessToken: session.token,
+            refreshToken: session.refreshToken,
+            refreshExpiresAt: session.refreshExpiresAt,
+            expiresAt: session.expiresAt,
           };
         } catch (error) {
           // Error is already structured by repository
@@ -70,7 +53,33 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.email = user.email;
         token.role = user.role;
         token.accessToken = user.accessToken;
+        token.refreshToken = (user as { refreshToken?: string }).refreshToken;
+        const refreshExpiresAt = (user as { refreshExpiresAt?: string }).refreshExpiresAt;
+        token.refreshExpiresAt = refreshExpiresAt
+          ? new Date(refreshExpiresAt).getTime()
+          : undefined;
+        const sessionExpiresAt = (user as { expiresAt?: string }).expiresAt;
+        token.expiresAt = sessionExpiresAt ? new Date(sessionExpiresAt).getTime() : undefined;
       }
+
+      // Refresh session when backend token expires
+      if (typeof token.expiresAt === 'number' && Date.now() >= token.expiresAt) {
+        const refreshToken = token.refreshToken as string | undefined;
+        if (!refreshToken) return null;
+
+        try {
+          const session = await authRepository.refresh({ refreshToken });
+          token.accessToken = session.token;
+          token.expiresAt = new Date(session.expiresAt).getTime();
+          token.refreshToken = session.refreshToken ?? refreshToken;
+          token.refreshExpiresAt = session.refreshExpiresAt
+            ? new Date(session.refreshExpiresAt).getTime()
+            : token.refreshExpiresAt;
+        } catch {
+          return null;
+        }
+      }
+
       return token;
     },
     async session({ session, token }) {
@@ -90,7 +99,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   session: {
     strategy: 'jwt',
-    maxAge: 24 * 60 * 60, // 24 hours
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   secret: process.env.NEXTAUTH_SECRET,
 });
