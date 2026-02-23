@@ -58,6 +58,22 @@ piar-repo/
 - `@piar/web-bff` - Web BFF API (NestJS)
 - `@piar/backoffice-bff` - Backoffice BFF API (NestJS)
 
+## Current Template Baseline
+
+Integrated and validated in this template:
+
+- Auth with access + refresh session flow
+- Accounts admin module (CRUD + admin safety rules)
+- Backoffice search (accounts collection)
+- Contact submissions (public web + backoffice admin)
+- Dynamic pages (public web + backoffice admin)
+- Backoffice profile page with logout
+- TypeORM repositories for account/contact-submission/dynamic-page
+
+Implementation and migration guide:
+
+- `docs/features/template-baseline-and-feature-migration.md`
+
 ## Shared Packages (highlights)
 
 - `@piar/domain-models` - Domain entities

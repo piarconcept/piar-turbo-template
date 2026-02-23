@@ -20,6 +20,7 @@ Start with `AI-context.md`.
 
 - `features/creating-packages.md`
 - `features/creating-features-guide.md`
+- `features/template-baseline-and-feature-migration.md`
 - `features/component-library-development-guide.md`
 - `features/testing-guide.md`
 - `features/eslint-configuration.md`
@@ -61,4 +62,4 @@ Start with `AI-context.md`.
 
 ## Last Updated
 
-27 January 2026 - Added code of conduct
+23 February 2026 - Added template baseline and migration guide, updated feature docs

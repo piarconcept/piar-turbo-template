@@ -29,34 +29,35 @@ Start here. This file is the canonical index and rules for documentation and dev
 
 5. `features/creating-packages.md` - 14-step guide for creating packages
 6. `features/creating-features-guide.md` - Feature creation with Clean Architecture
-7. `features/component-library-development-guide.md` - Component library workflow
-8. `features/testing-guide.md` - Testing standards and examples
-9. `features/eslint-configuration.md` - ESLint configuration and linting
-10. `features/quality-gates.md` - Formatting, commit hooks, and commit rules
-11. `features/styling-configuration.md` - Styling approach overview
-12. `features/tailwind-v4-implementation.md` - Tailwind v4 implementation details
+7. `features/template-baseline-and-feature-migration.md` - Current baseline and migration workflow
+8. `features/component-library-development-guide.md` - Component library workflow
+9. `features/testing-guide.md` - Testing standards and examples
+10. `features/eslint-configuration.md` - ESLint configuration and linting
+11. `features/quality-gates.md` - Formatting, commit hooks, and commit rules
+12. `features/styling-configuration.md` - Styling approach overview
+13. `features/tailwind-v4-implementation.md` - Tailwind v4 implementation details
 
 ### Package Documentation
 
-13. `features/domain-models.md` - `@piar/domain-models`
-14. `features/domain-fields.md` - `@piar/domain-fields`
-15. `features/ui-components-atomic-design.md` - `@piar/ui-components`
-16. `features/auth-card-refactoring.md` - AuthCard refactor notes
-17. `features/health-feature.md` - Health feature architecture
-18. `features/auth-feature.md` - Auth feature architecture
-19. `features/infra-backend-security.md` - Backend security package
-20. `features/infra-client-seo.md` - SEO infrastructure
-21. `features/error-handling-system.md` - Error handling system
-22. `features/nextauth-authentication.md` - NextAuth v5 in backoffice
+14. `features/domain-models.md` - `@piar/domain-models`
+15. `features/domain-fields.md` - `@piar/domain-fields`
+16. `features/ui-components-atomic-design.md` - `@piar/ui-components`
+17. `features/auth-card-refactoring.md` - AuthCard refactor notes
+18. `features/health-feature.md` - Health feature architecture
+19. `features/auth-feature.md` - Auth feature architecture
+20. `features/infra-backend-security.md` - Backend security package
+21. `features/infra-client-seo.md` - SEO infrastructure
+22. `features/error-handling-system.md` - Error handling system
+23. `features/nextauth-authentication.md` - NextAuth v5 in backoffice
 
 ### Applications
 
-23. `features/web-bff-application.md` - Web BFF documentation
-24. `features/backoffice-bff-application.md` - Backoffice BFF documentation
+24. `features/web-bff-application.md` - Web BFF documentation
+25. `features/backoffice-bff-application.md` - Backoffice BFF documentation
 
 ### Templates
 
-25. `features/TEMPLATE.md` - Template for new docs
+26. `features/TEMPLATE.md` - Template for new docs
 
 ## Repository Governance
 
@@ -79,10 +80,11 @@ Start here. This file is the canonical index and rules for documentation and dev
 ### Creating a New Feature
 
 1. Read `features/creating-features-guide.md`
-2. Create three packages: `configuration/`, `api/`, `client/`
-3. Follow Clean Architecture
-4. Document in `docs/features/`
-5. Update this index
+2. Read `features/template-baseline-and-feature-migration.md`
+3. Create required layers (`domain`, `fields`, `repositories`, feature packages, BFF wiring)
+4. Follow Clean Architecture
+5. Document in `docs/features/`
+6. Update this index
 
 ### Creating a New Package
 
@@ -99,4 +101,4 @@ Start here. This file is the canonical index and rules for documentation and dev
 
 ## Last Updated
 
-27 January 2026 - Added code of conduct
+23 February 2026 - Added migration baseline and refreshed feature/application references

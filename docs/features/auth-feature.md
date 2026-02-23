@@ -1,162 +1,107 @@
 # Auth Feature
 
-## Description
+## Purpose
 
-The `auth` feature provides authentication endpoints for the BFF APIs. It exposes login, registration, forgot-password, and user role update flows using Clean Architecture.
+The `auth` feature provides authentication for backoffice flows, including:
 
-## Architecture
+- Login with credentials
+- Session refresh with refresh token
+- Registration
+- Forgot password (placeholder response)
+- Admin role updates
 
-This feature follows **Clean Architecture** with the following layer structure:
+It is integrated in `apps/api/backoffice-bff`.
 
-```
+## Package Structure
+
+```text
 packages/features/auth/
-├── configuration/          # Domain Layer (Ports & Types)
-│   └── src/
-│       └── ports/
-│           └── auth-repository.port.ts
-├── infra/                  # Infrastructure implementations
-│   └── backend/
-│       └── src/
-│           └── repositories/
-│               └── auth.repository.ts
-└── api/                    # Infrastructure Layer (NestJS)
-    └── src/
-        ├── controllers/    # Presentation layer
-        ├── use-cases/      # Use cases (business logic)
-        ├── modules/        # NestJS modules (DI)
-        └── index.ts
+├── configuration/          # contracts and request/response types
+├── infra/
+│   ├── backend/            # AuthRepository implementation
+│   └── client/             # HttpAuthRepository for Next.js clients
+└── api/                    # NestJS controllers, use-cases, module wiring
 ```
 
-### Layers
+## Main Endpoints
 
-1. **Configuration (Domain)**: Interfaces and types with zero dependencies
-2. **Infra Backend**: Port implementation for authentication flows
-3. **API (NestJS)**: Backend implementation with use-cases, controllers, and modules
-
-## Packages
-
-### 1. @piar/auth-configuration
-
-**Purpose**: Define contracts and shared types aligned with the Account domain model.
-
-**Dependencies**:
-
-- `@piar/domain-models`
-
-**Exports**:
-
-- `IAuthRepository`
-- `AccountEntity`, `AuthSession`, `AccountRole`
-- `LoginRequest`, `LoginResponse`
-- `RegisterRequest`, `RegisterResponse`
-- `ForgotPasswordRequest`, `ForgotPasswordResponse`
-- `UpdateUserRoleRequest`, `UpdateUserRoleResponse`
-
-### 2. @piar/auth-infra-backend
-
-**Purpose**: Provide the backend repository implementation that resolves the auth port.
-
-**Exports**:
-
-- `AuthRepository`
-
-### 3. @piar/auth-api
-
-**Purpose**: NestJS implementation with use-cases, controllers, and modules.
-
-**Dependencies**:
-
-- `@nestjs/common`
-- `@nestjs/core`
-- `@piar/auth-configuration`
-- `@piar/auth-infra-backend`
-- `@piar/infra-backend-common-security`
-
-#### Use Cases
-
-Use-cases encapsulate the auth flows:
-
-```typescript
-export interface LoginUseCase {
-  execute(payload: LoginRequest): Promise<LoginResponse>;
-}
-```
-
-#### Controllers
-
-Controllers expose HTTP endpoints:
-
-```typescript
-@Controller('auth')
-export class AuthController {
-  @Post('login')
-  login(@Body() payload: LoginRequest) {
-    return this.loginUseCase.execute(payload);
-  }
-}
-```
-
-#### Module
-
-The module wires up DI:
-
-```typescript
-@Module({ controllers: [AuthController] })
-export class AuthModule {
-  static register(): DynamicModule {
-    return {
-      module: AuthModule,
-      providers: [{ provide: LoginUseCase, useFactory: () => new LoginUseCaseExecuter() }],
-    };
-  }
-}
-```
-
-## Integration in BFFs
-
-### 1. Add dependency
-
-```json
-// apps/api/web-bff/package.json
-{
-  "dependencies": {
-    "@piar/auth-api": "workspace:*"
-  }
-}
-```
-
-### 2. Import module in AppModule
-
-```typescript
-// apps/api/web-bff/src/app.module.ts
-import { Module } from '@nestjs/common';
-import { AuthModule } from '@piar/auth-api';
-
-@Module({
-  imports: [AuthModule.register()],
-})
-export class AppModule {}
-```
-
-### 3. Available endpoints
+Base path: `/auth`
 
 - `POST /auth/login`
+- `POST /auth/refresh`
 - `POST /auth/register`
 - `POST /auth/forgot-password`
 - `PATCH /auth/roles`
 
-## Scripts
+## Session Model
+
+### Access token
+
+- Signed JWT with `tokenType: 'access'`
+- Expiration configured by `JWT_EXPIRES_IN` (default `1h`)
+
+### Refresh token
+
+- Signed JWT with `tokenType: 'refresh'`
+- Expiration configured by `JWT_REFRESH_EXPIRES_IN` (default `30d`)
+- Returned when `rememberMe` is true at login
+- Used by `POST /auth/refresh`
+
+### Refresh behavior
+
+- Valid refresh token generates a new access token.
+- Refresh may also rotate refresh token.
+- Invalid refresh token returns auth error (`invalid_refresh_token`).
+
+## Integration with Backoffice Client
+
+`apps/client/backoffice/src/auth.ts` uses `@piar/auth-infra-client`:
+
+- `login` on sign-in
+- automatic token refresh in NextAuth `jwt` callback when access token expires
+- session invalidation when refresh fails
+
+## Important Business Rules (Current Implementation)
+
+Even though they live in account repository/service, they directly affect auth flows:
+
+- The first registered account is forced to `admin`.
+- The platform must keep at least one admin account.
+- Self-demotion and self-delete are blocked from admin account management endpoints.
+
+## Environment Variables
+
+- `JWT_SECRET`
+- `JWT_EXPIRES_IN`
+- `JWT_REFRESH_EXPIRES_IN`
+- `NEXT_PUBLIC_BACKOFFICE_BFF_URL` (client-side auth repository)
+- `NEXTAUTH_SECRET`
+
+## Wiring in Backoffice BFF
+
+`AuthModule.register(...)` is imported in:
+
+- `apps/api/backoffice-bff/src/app.module.ts`
+
+with `AccountPort` bound to `AccountRepository`.
+
+## Operational Notes
+
+- `forgot-password` is currently a placeholder flow.
+- Role update endpoint should stay admin-protected at the BFF/security layer.
+- Keep auth DTOs and configuration package types aligned.
+
+## Verification Commands
 
 ```bash
-# Build all auth packages
-pnpm turbo build --filter=@piar/auth-*
-
-# Test all auth packages
-pnpm turbo test --filter=@piar/auth-*
+pnpm -C packages/features/auth/configuration typecheck && pnpm -C packages/features/auth/configuration build
+pnpm -C packages/features/auth/infra/backend typecheck && pnpm -C packages/features/auth/infra/backend build
+pnpm -C packages/features/auth/infra/client typecheck && pnpm -C packages/features/auth/infra/client build
+pnpm -C packages/features/auth/api typecheck && pnpm -C packages/features/auth/api build
+pnpm -C apps/api/backoffice-bff typecheck && pnpm -C apps/api/backoffice-bff build
+pnpm -C apps/client/backoffice typecheck && pnpm -C apps/client/backoffice build
 ```
 
-## Next Steps
+## Last Updated
 
-- Add validation and error handling for auth payloads
-- Implement persistence adapters and repository implementations
-- Add tests for use cases and controllers
+23 February 2026 - Updated with refresh token flow and current backoffice integration.

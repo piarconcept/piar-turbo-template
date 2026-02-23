@@ -1,301 +1,194 @@
 # Feature Creation Guide
 
-This guide explains how to create new features following the PIAR Clean Architecture approach.
+## Purpose
 
-## Feature Architecture
+This guide defines the current standard to add a feature in this template.
+It reflects the architecture already implemented in:
 
-Each feature is split into **three packages**:
+- Auth + refresh sessions
+- Accounts admin module
+- Backoffice search (accounts)
+- Contact submissions
+- Dynamic pages
 
-```
-packages/features/{feature-name}/
-├── configuration/    # Domain (ports & types)
-├── api/              # NestJS API (use-cases, controllers)
-└── client/           # React client (hooks, components)
-```
+## Required Reading Before Starting
 
-### Principles
+- `docs/features/template-baseline-and-feature-migration.md`
+- `docs/features/bff-architecture.md`
+- `docs/features/domain-models.md`
+- `docs/features/domain-fields.md`
 
-1. **Clean Architecture**: Clear separation between domain, application, and infrastructure
-2. **Dependency Inversion**: Dependencies point inward to the domain
-3. **Reuse**: Shared types across API and client
-4. **Type Safety**: End-to-end TypeScript
-5. **Testability**: Each layer is independently testable
+## Architecture Pattern
 
-## Step 1: Create the Configuration Package
+A feature is composed of these layers:
 
-The configuration package defines the **contracts** for the feature (ports, types).
-
-### Structure
-
-```
-packages/features/{feature-name}/configuration/
-├── package.json
-├── tsconfig.json
-├── vitest.config.ts
-├── eslint.config.mjs
-├── README.md
-└── src/
-    ├── index.ts
-    ├── ports/
-    │   └── {name}-repository.port.ts
-    └── common/
-        └── types.ts
+```text
+domain-models entity/port
+  -> domain-fields config
+  -> infra-backend-repositories (TypeORM)
+  -> features/{feature}/configuration
+  -> features/{feature}/infra/backend
+  -> features/{feature}/api
+  -> apps/api/{bff}/app.module.ts wiring
+  -> apps/client/backoffice pages (if admin feature)
+  -> messages (en/es/ca + types)
 ```
 
-### Example Port
+Optional client package:
 
-```ts
-export interface IFeatureRepository {
-  findById(id: string): Promise<FeatureEntity | null>;
-  save(entity: FeatureEntity): Promise<void>;
-  delete(id: string): Promise<void>;
-}
+- Add `features/{feature}/infra/client` only when you need a reusable client SDK in multiple apps.
+
+## Step-by-Step
+
+### 1. Create domain entity and port
+
+Path:
+
+- `packages/domain/models/src/entities/{feature}/`
+
+Minimum files:
+
+- `{feature}.entity.ts`
+- `{feature}.port.ts`
+- `index.ts`
+
+Then export from:
+
+- `packages/domain/models/src/entities/index.ts`
+
+### 2. Create dynamic field config
+
+Path:
+
+- `packages/domain/fields/src/entities/{feature}-entity.config.ts`
+
+Then export from:
+
+- `packages/domain/fields/src/index.ts`
+
+Guideline:
+
+- Use field types already supported by `@piar/infra-client-dynamic-form`.
+- For nested content, prefer `FieldType.JSON` with `ui.component = 'json-editor'`.
+
+### 3. Create TypeORM repository package block
+
+Path:
+
+- `packages/infra/backend/repositories/src/{feature}/`
+
+Minimum files:
+
+- `orm.entity.ts`
+- `factory.ts`
+- `repository.ts`
+- `provider.module.ts`
+- `index.ts`
+
+Then export from:
+
+- `packages/infra/backend/repositories/src/index.ts`
+- `packages/infra/backend/repositories/package.json` (subpath exports if needed)
+
+### 4. Create feature packages
+
+Path:
+
+- `packages/features/{feature}/configuration`
+- `packages/features/{feature}/infra/backend`
+- `packages/features/{feature}/api`
+
+API package should include:
+
+- DTOs
+- Use cases
+- Controllers
+- Module with `register()` and DI bindings
+
+### 5. Wire feature into BFF(s)
+
+Update:
+
+- `apps/api/backoffice-bff/src/app.module.ts`
+- `apps/api/web-bff/src/app.module.ts`
+
+Rules:
+
+- Bind port tokens to concrete repository classes.
+- Add repository provider modules to imports.
+- Protect admin endpoints using `JwtAuthGuard` + `AdminGuard`.
+
+### 6. Add backoffice UI pages (if needed)
+
+Path:
+
+- `apps/client/backoffice/src/app/[locale]/(dashboard)/{feature}/...`
+
+Standard implementation:
+
+- List page: `DynamicTable`
+- Create/edit page: `DynamicForm`
+- Data access: app-level hooks (`useDynamicTableResource`, `useDynamicFormResource`)
+
+### 7. Add translation keys
+
+Always update:
+
+- `packages/messages/src/types/*.ts`
+- `packages/messages/src/en/*.ts`
+- `packages/messages/src/es/*.ts`
+- `packages/messages/src/ca/*.ts`
+
+Then build messages package:
+
+```bash
+pnpm -C packages/messages build
 ```
 
-### Example Types
+### 8. Update documentation
 
-```ts
-export interface FeatureEntity {
-  id: string;
-  name: string;
-  status: 'active' | 'inactive';
-  createdAt: string;
-  updatedAt: string;
-}
+- Add or update feature docs under `docs/features/`.
+- If a new doc is created, update indexes:
+  - `docs/README.md`
+  - `docs/AI-context.md`
 
-export type CreateFeatureDTO = Omit<FeatureEntity, 'id' | 'createdAt' | 'updatedAt'>;
-export type UpdateFeatureDTO = Partial<CreateFeatureDTO>;
+## Quality Gates
+
+Run this minimum set before finishing:
+
+```bash
+pnpm -C packages/domain/models typecheck && pnpm -C packages/domain/models build
+pnpm -C packages/domain/fields typecheck && pnpm -C packages/domain/fields build
+pnpm -C packages/infra/backend/repositories typecheck && pnpm -C packages/infra/backend/repositories build
+pnpm -C packages/features/{feature}/configuration typecheck && pnpm -C packages/features/{feature}/configuration build
+pnpm -C packages/features/{feature}/infra/backend typecheck && pnpm -C packages/features/{feature}/infra/backend build
+pnpm -C packages/features/{feature}/api typecheck && pnpm -C packages/features/{feature}/api build
+pnpm -C apps/api/backoffice-bff typecheck && pnpm -C apps/api/backoffice-bff build
+pnpm -C apps/api/web-bff typecheck && pnpm -C apps/api/web-bff build
+pnpm -C apps/client/backoffice typecheck && pnpm -C apps/client/backoffice build
 ```
 
-### src/index.ts
+## Common Errors to Avoid
 
-```ts
-export * from './ports/{feature}-repository.port';
-export * from './common/types';
-```
+- Copying code without updating package exports.
+- Forgetting message keys and getting raw `fields.*` labels in UI.
+- Using unsupported dynamic form components.
+- Updating dependencies without refreshing lockfile.
+- Missing role guards in admin endpoints.
+- Not enforcing business invariants (for example: minimum one admin account).
 
-## Step 2: Create the API Package (NestJS)
+## Feature Done Checklist
 
-This package implements backend logic using NestJS.
-
-### Structure
-
-```
-packages/features/{feature-name}/api/
-├── package.json
-├── tsconfig.json
-├── vitest.config.ts
-├── eslint.config.mjs
-├── README.md
-└── src/
-    ├── index.ts
-    ├── controllers/
-    │   └── {feature}.controller.ts
-    ├── use-cases/
-    │   ├── create-{feature}.use-case.ts
-    │   ├── get-{feature}.use-case.ts
-    │   └── index.ts
-    ├── modules/
-    │   └── {feature}.module.ts
-    └── repositories/
-        └── {feature}.repository.ts
-```
-
-### Use Cases
-
-```ts
-export interface CreateFeatureUseCase {
-  execute(dto: CreateFeatureDTO): Promise<FeatureEntity>;
-}
-
-export class CreateFeatureUseCaseExecutor implements CreateFeatureUseCase {
-  constructor(private readonly repository: IFeatureRepository) {}
-
-  async execute(dto: CreateFeatureDTO): Promise<FeatureEntity> {
-    const entity = { ...dto, id: crypto.randomUUID(), createdAt: new Date().toISOString() };
-    await this.repository.save(entity);
-    return entity;
-  }
-}
-```
-
-### Controller
-
-```ts
-@Controller('features')
-export class FeatureController {
-  constructor(
-    @Inject(CreateFeatureUseCase)
-    private readonly createFeature: CreateFeatureUseCase,
-  ) {}
-
-  @Post()
-  create(@Body() dto: CreateFeatureDTO): Promise<FeatureEntity> {
-    return this.createFeature.execute(dto);
-  }
-}
-```
-
-### Module
-
-```ts
-@Module({
-  controllers: [FeatureController],
-})
-export class FeatureModule {
-  static register(): DynamicModule {
-    return {
-      module: FeatureModule,
-      providers: [
-        {
-          provide: CreateFeatureUseCase,
-          useFactory: (repo: IFeatureRepository) => new CreateFeatureUseCaseExecutor(repo),
-          inject: [IFeatureRepository],
-        },
-      ],
-      exports: [CreateFeatureUseCase],
-    };
-  }
-}
-```
-
-### src/index.ts
-
-```ts
-export * from './modules/{feature}.module';
-export * from './controllers/{feature}.controller';
-export * from './use-cases';
-```
-
-## Step 3: Create the Client Package (React)
-
-This package implements client-side hooks, repositories, and UI.
-
-### Structure
-
-```
-packages/features/{feature-name}/client/
-├── package.json
-├── tsconfig.json
-├── vitest.config.ts
-├── eslint.config.mjs
-├── README.md
-└── src/
-    ├── index.ts
-    ├── repositories/
-    │   └── http-{feature}.repository.ts
-    ├── hooks/
-    │   └── use-{feature}.ts
-    └── components/
-        └── {Feature}Card.tsx
-```
-
-### Repository
-
-```ts
-export class HttpFeatureRepository implements IFeatureRepository {
-  constructor(private readonly baseUrl: string) {}
-
-  async findById(id: string): Promise<FeatureEntity | null> {
-    const res = await fetch(`${this.baseUrl}/features/${id}`);
-    if (!res.ok) return null;
-    return res.json();
-  }
-
-  async save(entity: FeatureEntity): Promise<void> {
-    await fetch(`${this.baseUrl}/features`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(entity),
-    });
-  }
-
-  async delete(id: string): Promise<void> {
-    await fetch(`${this.baseUrl}/features/${id}`, { method: 'DELETE' });
-  }
-}
-```
-
-### Hook
-
-```ts
-export function useFeature(id: string, repo: IFeatureRepository) {
-  const [data, setData] = useState<FeatureEntity | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let mounted = true;
-    repo.findById(id).then((value) => {
-      if (mounted) {
-        setData(value);
-        setLoading(false);
-      }
-    });
-    return () => {
-      mounted = false;
-    };
-  }, [id, repo]);
-
-  return { data, loading };
-}
-```
-
-## Step 4: Wire the Feature into a BFF
-
-1. Add dependency to `apps/api/{bff}/package.json`:
-
-```json
-{
-  "dependencies": {
-    "@piar/{feature-name}-api": "workspace:*"
-  }
-}
-```
-
-2. Import module in `apps/api/{bff}/src/app.module.ts`:
-
-```ts
-import { FeatureModule } from '@piar/{feature-name}-api';
-
-@Module({
-  imports: [FeatureModule.register()],
-})
-export class AppModule {}
-```
-
-## Step 5: Wire the Feature into a Client App
-
-1. Add dependency to the app `package.json`:
-
-```json
-{
-  "dependencies": {
-    "@piar/{feature-name}-client": "workspace:*"
-  }
-}
-```
-
-2. Use the hook or components in your pages.
-
-## Step 6: Tests
-
-- **Configuration**: pure type tests
-- **API**: unit test use-cases and controllers
-- **Client**: test hooks and components
-
-## Step 7: Documentation
-
-1. Create a new doc in `docs/features/{feature-name}.md`
-2. Update `docs/AI-context.md` and `docs/README.md`
-
-## Checklist
-
-- [ ] configuration package created
-- [ ] api package created
-- [ ] client package created
-- [ ] tests added
-- [ ] docs updated
+- [ ] Domain entity/port exported
+- [ ] Field config exported
+- [ ] TypeORM repository + provider module exported
+- [ ] Feature api/configuration/infra wired
+- [ ] BFF modules imported and DI bound
+- [ ] Backoffice pages integrated (if applicable)
+- [ ] EN/ES/CA translations complete
+- [ ] Typecheck/build green
+- [ ] Docs updated
 
 ## Last Updated
 
-27 January 2026 - English rewrite and cleanup
+23 February 2026 - Rewritten to match current integrated architecture and migration workflow.
