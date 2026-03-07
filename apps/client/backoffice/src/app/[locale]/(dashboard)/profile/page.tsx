@@ -3,7 +3,7 @@
 import { useParams, useRouter } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import { LogOut, Mail, Shield, User } from 'lucide-react';
-import { Button, Container, Text } from '@piar/ui-components';
+import { AsyncState, Button, Container, Text } from '@piar/ui-components';
 import { useBackofficeTranslations } from '@/lib/backofficeTranslations';
 
 export default function ProfilePage() {
@@ -22,16 +22,16 @@ export default function ProfilePage() {
 
   if (status === 'loading') {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center">
-        <Text variant="body">{tCommon('status.loading')}</Text>
+      <div className="min-h-[60vh]">
+        <AsyncState variant="loading" title={tCommon('status.loading')} className="min-h-[60vh]" />
       </div>
     );
   }
 
   if (!session?.user) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center">
-        <Text variant="body">{tCommon('status.error')}</Text>
+      <div className="min-h-[60vh]">
+        <AsyncState variant="error" title={tCommon('status.error')} className="min-h-[60vh]" />
       </div>
     );
   }

@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
-import { Button, Container, Text } from '@piar/ui-components';
+import { AsyncState, Button, Container, Text } from '@piar/ui-components';
 import { DynamicForm } from '@piar/infra-client-dynamic-form';
 import { dynamicPageEntityFieldsConfig } from '@piar/domain-fields';
 import { useDynamicFormResource } from '@/hooks/useDynamicFormResource';
@@ -14,7 +14,7 @@ export function DynamicPageEditView({ id }: { id: string }) {
   const router = useRouter();
   const locale = params.locale as string;
   const { t, tCommon, tDashboard } = useBackofficeTranslations();
-  const { update, remove, entity } = useDynamicFormResource({
+  const { update, remove, entity, loading, error, findById } = useDynamicFormResource({
     path: '/dynamic-pages',
     accessToken: session?.accessToken,
     id,
@@ -22,14 +22,20 @@ export function DynamicPageEditView({ id }: { id: string }) {
 
   if (status === 'loading') {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--color-primary)] mx-auto"></div>
-          <p className="mt-4 text-gray-600">{tCommon('status.loading')}</p>
-        </div>
+      <div className="min-h-[60vh]">
+        <AsyncState variant="loading" title={tCommon('status.loading')} className="min-h-[60vh]" />
       </div>
     );
   }
+
+  const resolvedErrorMessage = (() => {
+    if (!error) return null;
+    try {
+      return tCommon(error.i18nKey ?? 'server_error');
+    } catch {
+      return error.message;
+    }
+  })();
 
   return (
     <Container className="py-8 px-0" padding="none">
@@ -59,15 +65,32 @@ export function DynamicPageEditView({ id }: { id: string }) {
         </div>
       </div>
 
-      <DynamicForm
-        mode="edit"
-        config={dynamicPageEntityFieldsConfig}
-        values={entity ?? {}}
-        t={t}
-        onSubmit={async (values) => {
-          await update(id, values);
-        }}
-      />
+      {loading ? (
+        <AsyncState variant="loading" title={tCommon('status.loading')} />
+      ) : resolvedErrorMessage ? (
+        <AsyncState
+          variant="error"
+          title={tCommon('status.error')}
+          description={resolvedErrorMessage}
+          actionLabel="Retry"
+          onAction={() => {
+            void findById();
+          }}
+        />
+      ) : !entity ? (
+        <AsyncState variant="empty" title={tCommon('general.notAvailable')} />
+      ) : (
+        <DynamicForm
+          mode="edit"
+          config={dynamicPageEntityFieldsConfig}
+          values={entity}
+          t={t}
+          autosave={{ enabled: true, storageKey: `dynamic-form:dynamic-pages:edit:${id}` }}
+          onSubmit={async (values) => {
+            await update(id, values);
+          }}
+        />
+      )}
     </Container>
   );
 }

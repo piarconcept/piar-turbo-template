@@ -2,10 +2,12 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { SUPPORTED_LANGUAGES, type SupportedLanguage } from '@piar/messages';
 import type { DynamicQuery } from '@piar/domain-dynamic-form';
 import type { EntityFieldsConfig, FieldConfig } from '@piar/domain-fields';
 import {
+  AsyncState,
   Button,
   Pagination,
   SearchInput,
@@ -15,7 +17,6 @@ import {
   TableHead,
   TableHeaderCell,
   TableRow,
-  Text,
 } from '@piar/ui-components';
 import { clsx } from 'clsx';
 import { translateWithFallback } from './fields/utils';
@@ -33,6 +34,11 @@ export interface FilterDefinition {
 }
 
 export type QueryState = DynamicQuery;
+export interface DynamicRowAction {
+  label: string;
+  href?: string;
+  onClick?: () => void;
+}
 
 export interface DynamicTableColumn {
   key: string;
@@ -58,6 +64,8 @@ export interface DynamicTableProps<TEntity = unknown> {
   query: QueryState;
   /** Loading state to show an inline indicator without unmounting the page */
   loading?: boolean;
+  /** Error message for table state */
+  error?: string | null;
 
   /** If missing or empty, search input is hidden */
   searchKeys?: string[];
@@ -78,9 +86,15 @@ export interface DynamicTableProps<TEntity = unknown> {
     onClick?: () => void;
   };
 
-  rowActions?: (
-    row: Record<string, unknown>,
-  ) => Array<{ label: string; href?: string; onClick?: () => void }>;
+  rowActions?: (row: Record<string, unknown>) => DynamicRowAction[];
+  rowClickable?: boolean;
+  showActionsColumn?: boolean;
+  tableClassName?: string;
+  tableContainerClassName?: string;
+  stickyHeader?: boolean;
+  emptyDescription?: string;
+  errorDescription?: string;
+  onRetry?: () => void;
 
   getRowId?: (row: Record<string, unknown>, index: number) => string;
   className?: string;
@@ -195,6 +209,19 @@ function isSameQuery(a: QueryState, b: QueryState) {
   return true;
 }
 
+function isInteractiveElement(target: EventTarget | null) {
+  if (!(target instanceof Element)) return false;
+  return Boolean(
+    target.closest(
+      'a,button,input,select,textarea,label,[role="button"],[data-row-click-ignore="true"]',
+    ),
+  );
+}
+
+function isValidRowAction(action: DynamicRowAction) {
+  return Boolean(action.href || action.onClick);
+}
+
 export function DynamicTable<TEntity>({
   config,
   locale,
@@ -203,6 +230,7 @@ export function DynamicTable<TEntity>({
   total,
   query,
   loading,
+  error,
   searchKeys,
   searchPlaceholder,
   filters,
@@ -210,9 +238,18 @@ export function DynamicTable<TEntity>({
   onQueryChange,
   newButton,
   rowActions,
+  rowClickable = true,
+  showActionsColumn,
+  tableClassName,
+  tableContainerClassName,
+  stickyHeader = true,
+  emptyDescription,
+  errorDescription,
+  onRetry,
   getRowId,
   className,
 }: DynamicTableProps<TEntity>) {
+  const router = useRouter();
   const hasSearch = Array.isArray(searchKeys) && searchKeys.length > 0;
 
   const setQuery = (patch: Partial<QueryState>) => {
@@ -248,13 +285,35 @@ export function DynamicTable<TEntity>({
   const noLabel = translateWithFallback(t, 'common.general.no', 'No');
   const allLabel = translateWithFallback(t, 'common.general.all', 'All');
   const actionsLabel = translateWithFallback(t, 'common.table.actions', 'Actions');
+  const retryLabel = translateWithFallback(t, 'common.actions.retry', 'Retry');
   const noResultsLabel = translateWithFallback(t, 'common.general.noResults', 'No results.');
+  const loadingLabel = translateWithFallback(t, 'common.status.loading', 'Loading...');
+  const errorLabel = translateWithFallback(t, 'common.status.error', 'Error');
   const searchLabel = translateWithFallback(t, 'common.actions.search', 'Search');
   const resolvedSearchPlaceholder =
     searchPlaceholder ??
     (searchKeys && searchKeys.length > 0
       ? `${searchLabel}: ${searchKeys.join(', ')}`
       : searchLabel);
+  const actionsByRow = React.useMemo(
+    () => rows.map((row) => (rowActions?.(row) ?? []).filter(isValidRowAction)),
+    [rows, rowActions],
+  );
+  const shouldShowActionsColumn = rowActions
+    ? (showActionsColumn ?? (!rowClickable || actionsByRow.some((actions) => actions.length > 1)))
+    : false;
+
+  const runAction = React.useCallback(
+    (action?: DynamicRowAction) => {
+      if (!action) return;
+      if (action.href) {
+        router.push(action.href);
+        return;
+      }
+      action.onClick?.();
+    },
+    [router],
+  );
 
   const renderCellValue = (col: DynamicTableColumn, row: Record<string, unknown>) => {
     const raw = row[col.key];
@@ -398,8 +457,14 @@ export function DynamicTable<TEntity>({
       </div>
 
       <div className="rounded-2xl border border-gray-200 bg-white">
-        <Table>
-          <TableHead>
+        <Table
+          className={clsx('min-w-[760px] md:min-w-full', tableClassName)}
+          containerClassName={clsx(
+            'max-h-[70vh] overflow-auto overscroll-contain',
+            tableContainerClassName,
+          )}
+        >
+          <TableHead className={clsx(stickyHeader && 'sticky top-0 z-10')}>
             <TableRow className="hover:bg-gray-50">
               {columns.map((col) => {
                 const field = findField(config, col.key);
@@ -420,46 +485,88 @@ export function DynamicTable<TEntity>({
                   </TableHeaderCell>
                 );
               })}
-              {rowActions ? (
+              {shouldShowActionsColumn ? (
                 <TableHeaderCell className="text-right">{actionsLabel}</TableHeaderCell>
               ) : null}
             </TableRow>
           </TableHead>
 
           <TableBody>
-            {loading ? (
+            {error ? (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length + (rowActions ? 1 : 0)}
+                  colSpan={columns.length + (shouldShowActionsColumn ? 1 : 0)}
                   className="py-4 text-center"
                 >
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-[var(--color-primary)]" />
+                  <AsyncState
+                    variant="error"
+                    title={errorLabel}
+                    description={errorDescription ?? error}
+                    actionLabel={onRetry ? retryLabel : undefined}
+                    onAction={onRetry}
+                    className="border-0 bg-transparent p-4"
+                  />
+                </TableCell>
+              </TableRow>
+            ) : loading ? (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length + (shouldShowActionsColumn ? 1 : 0)}
+                  className="py-4 text-center"
+                >
+                  <AsyncState
+                    variant="loading"
+                    title={loadingLabel}
+                    className="border-0 bg-transparent p-4"
+                  />
                 </TableCell>
               </TableRow>
             ) : rows.length === 0 ? (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length + (rowActions ? 1 : 0)}
+                  colSpan={columns.length + (shouldShowActionsColumn ? 1 : 0)}
                   className="py-4 text-center"
                 >
-                  <Text as="p" variant="bodySmall" className="text-gray-600">
-                    {noResultsLabel}
-                  </Text>
+                  <AsyncState
+                    variant="empty"
+                    title={noResultsLabel}
+                    description={emptyDescription}
+                    className="border-0 bg-transparent p-4"
+                  />
                 </TableCell>
               </TableRow>
             ) : (
               rows.map((row, index) => {
                 const id = getRowId ? getRowId(row, index) : String(row.id ?? index);
-                const actions = rowActions?.(row) ?? [];
+                const actions = actionsByRow[index] ?? [];
+                const primaryAction = actions[0];
+                const canClickRow = rowClickable && Boolean(primaryAction);
 
                 return (
-                  <TableRow key={id}>
+                  <TableRow
+                    key={id}
+                    className={clsx(canClickRow && 'cursor-pointer')}
+                    role={canClickRow ? 'link' : undefined}
+                    tabIndex={canClickRow ? 0 : undefined}
+                    onClick={(event) => {
+                      if (!canClickRow) return;
+                      if (isInteractiveElement(event.target)) return;
+                      runAction(primaryAction);
+                    }}
+                    onKeyDown={(event) => {
+                      if (!canClickRow) return;
+                      if (isInteractiveElement(event.target)) return;
+                      if (event.key !== 'Enter' && event.key !== ' ') return;
+                      event.preventDefault();
+                      runAction(primaryAction);
+                    }}
+                  >
                     {columns.map((col) => (
                       <TableCell key={`${id}-${col.key}`} className={col.className}>
                         {renderCellValue(col, row)}
                       </TableCell>
                     ))}
-                    {rowActions ? (
+                    {shouldShowActionsColumn ? (
                       <TableCell className="text-right">
                         <div className="flex justify-end gap-2">
                           {actions.map((a, actionIndex) =>

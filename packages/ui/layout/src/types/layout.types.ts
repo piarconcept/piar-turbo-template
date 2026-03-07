@@ -16,6 +16,7 @@ export interface RouteItem {
   href: string;
   icon?: React.ReactNode;
   badge?: string | number;
+  activeMatch?: 'exact' | 'prefix';
   children?: RouteItem[];
 }
 

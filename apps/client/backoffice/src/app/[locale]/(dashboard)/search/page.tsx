@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useLocale } from 'next-intl';
-import { Button, Container, Input, Text } from '@piar/ui-components';
+import { AsyncState, Button, Container, Input, Text } from '@piar/ui-components';
 import { Search, User } from 'lucide-react';
 import { useBackofficeSearch } from '@/hooks/useBackofficeSearch';
 import { useBackofficeTranslations } from '@/lib/backofficeTranslations';
@@ -121,40 +121,31 @@ function SearchResults() {
         ) : null}
 
         {showSessionLoading || (queryFromUrl && loading) ? (
-          <div className="rounded-lg border border-gray-200 bg-white p-10 text-center">
-            <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-b-2 border-[var(--color-primary)]" />
-            <Text variant="body">{tDashboard('search.loading')}</Text>
-          </div>
+          <AsyncState variant="loading" title={tDashboard('search.loading')} />
         ) : null}
 
         {error ? (
-          <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-            {renderErrorMessage()}
-          </div>
+          <AsyncState
+            variant="error"
+            title={tCommon('status.error')}
+            description={renderErrorMessage() ?? undefined}
+          />
         ) : null}
 
         {showQueryPrompt ? (
-          <div className="rounded-lg border border-gray-200 bg-white p-12 text-center">
-            <Search className="mx-auto mb-4 h-16 w-16 text-gray-300" />
-            <Text variant="h6" className="mb-2 text-gray-700">
-              {tDashboard('search.emptyTitle')}
-            </Text>
-            <Text variant="body" className="text-gray-600">
-              {tDashboard('search.emptyDescription')}
-            </Text>
-          </div>
+          <AsyncState
+            variant="empty"
+            title={tDashboard('search.emptyTitle')}
+            description={tDashboard('search.emptyDescription')}
+          />
         ) : null}
 
         {showNoResults ? (
-          <div className="rounded-lg border border-gray-200 bg-white p-10 text-center">
-            <Search className="mx-auto mb-4 h-12 w-12 text-gray-400" />
-            <Text variant="h6" className="mb-2 text-gray-700">
-              {tDashboard('search.noResultsFor')} &ldquo;{queryFromUrl}&rdquo;
-            </Text>
-            <Text variant="body" className="text-gray-600">
-              {tDashboard('search.adjustHint')}
-            </Text>
-          </div>
+          <AsyncState
+            variant="empty"
+            title={`${tDashboard('search.noResultsFor')} "${queryFromUrl}"`}
+            description={tDashboard('search.adjustHint')}
+          />
         ) : null}
 
         {showResults ? (

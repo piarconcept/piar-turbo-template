@@ -153,6 +153,7 @@ export function useDynamicTableResource<TEntity>({
   const [data, setData] = useState<PaginatedResult<TEntity>>({ rows: [], total: 0 });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<HttpClientError | null>(null);
+  const [refetchVersion, setRefetchVersion] = useState(0);
 
   // Use ref to track last fetched query to prevent duplicate fetches
   const lastQueryRef = useRef<string>('');
@@ -194,7 +195,7 @@ export function useDynamicTableResource<TEntity>({
     };
 
     void fetchData();
-  }, [query, accessToken, http, path]);
+  }, [query, accessToken, http, path, refetchVersion]);
 
   // Update URL when query changes
   const onQueryChange = useCallback(
@@ -213,12 +214,9 @@ export function useDynamicTableResource<TEntity>({
 
   // Manual refetch function
   const refetch = useCallback(() => {
-    // Reset last query to force refetch
     lastQueryRef.current = '';
-    // Trigger the effect by creating a new query reference
-    const queryString = JSON.stringify(query);
-    lastQueryRef.current = queryString;
-  }, [query]);
+    setRefetchVersion((current) => current + 1);
+  }, []);
 
   return {
     query,

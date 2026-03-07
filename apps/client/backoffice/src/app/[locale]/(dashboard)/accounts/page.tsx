@@ -16,7 +16,7 @@ export default function AccountsPage() {
   const locale = useLocale() as SupportedLanguage;
   const { t, tCommon, tDashboard } = useBackofficeTranslations();
 
-  const { query, onQueryChange, rows, total, loading, error } = useDynamicTableResource({
+  const { query, onQueryChange, rows, total, loading, error, refetch } = useDynamicTableResource({
     path: '/accounts',
     accessToken: session?.accessToken,
     initialQuery: {
@@ -47,6 +47,15 @@ export default function AccountsPage() {
     };
   });
 
+  const resolvedErrorMessage = (() => {
+    if (!error) return null;
+    try {
+      return tCommon(error.i18nKey ?? 'server_error');
+    } catch {
+      return error.message;
+    }
+  })();
+
   return (
     <Container className="py-8 px-0" padding="none">
       <div className="mb-4 flex items-center gap-3">
@@ -55,18 +64,6 @@ export default function AccountsPage() {
           {tDashboard('nav.accounts')}
         </Text>
       </div>
-
-      {error ? (
-        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-          {(() => {
-            try {
-              return tCommon(error.i18nKey ?? 'server_error');
-            } catch {
-              return error.message;
-            }
-          })()}
-        </div>
-      ) : null}
 
       <DynamicTable
         config={accountEntityFieldsConfig}
@@ -81,6 +78,8 @@ export default function AccountsPage() {
         total={total}
         query={query}
         loading={loading || status === 'loading'}
+        error={resolvedErrorMessage}
+        onRetry={refetch}
         searchKeys={['accountCode', 'email']}
         filters={filters}
         t={t}

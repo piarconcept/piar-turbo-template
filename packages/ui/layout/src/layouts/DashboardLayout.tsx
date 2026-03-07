@@ -35,20 +35,20 @@ export function DashboardLayout({
 }: DashboardLayoutProps) {
   return (
     <LayoutProvider>
-      <div className="relative h-screen overflow-hidden bg-gray-50 pt-16">
+      <div className="relative h-dvh min-h-[100svh] overflow-hidden bg-gray-50 pt-16">
         {/* Fixed Header - Always visible at top */}
         <HeaderDispatcher config={headerConfig} layoutType="dashboard" locale={locale} />
 
         {/* Main Container - Below header */}
-        <div className="flex h-full">
+        <div className="flex h-full min-w-0">
           {/* Fixed Sidebar - Scrollable if content overflows */}
           <AsideDispatcher config={asideConfig} layoutType="dashboard" locale={locale} />
 
           {/* Main Content Area - Scrollable, takes remaining space */}
-          <div className="flex min-h-0 flex-1 flex-col transition-all duration-300 lg:pl-[var(--layout-aside-width,16rem)]">
+          <div className="flex min-h-0 min-w-0 flex-1 flex-col transition-all duration-300 lg:pl-[var(--layout-aside-width,16rem)]">
             {/* Main Content */}
-            <main className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 lg:px-8">
-              <div className="mx-auto max-w-7xl">
+            <main className="flex-1 overflow-x-auto overflow-y-auto px-4 py-6 sm:px-6 lg:px-8">
+              <div className="mx-auto max-w-7xl min-w-0">
                 <Breadcrumbs asideConfig={asideConfig} locale={locale} />
                 {children}
               </div>

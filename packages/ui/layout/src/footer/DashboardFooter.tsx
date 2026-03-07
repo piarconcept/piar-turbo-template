@@ -11,8 +11,8 @@ export interface DashboardFooterProps {
 export function DashboardFooter({ config, locale = 'en' }: DashboardFooterProps) {
   return (
     <footer className="border-t border-gray-200 bg-white">
-      <div className="px-6 py-4">
-        <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="px-4 py-4 sm:px-6">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           {/* Quick Links */}
           <nav className="flex flex-wrap items-center gap-4">
             {config.sections.map((section) =>
@@ -36,7 +36,7 @@ export function DashboardFooter({ config, locale = 'en' }: DashboardFooterProps)
 
           {/* Copyright */}
           {config.copyright && (
-            <Text as="p" variant="bodySmall" className="text-gray-500">
+            <Text as="p" variant="bodySmall" className="text-gray-500 sm:text-right">
               {config.copyright}
             </Text>
           )}

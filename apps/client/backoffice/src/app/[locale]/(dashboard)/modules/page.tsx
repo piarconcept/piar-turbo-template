@@ -61,6 +61,7 @@ export default function ModulesPage() {
               config={exampleConfig}
               mode="create"
               t={(k) => k}
+              autosave={{ enabled: true, storageKey: 'dynamic-form:modules:example' }}
               onSubmit={async (values) => {
                 // Example: no backend connected yet.
                 // eslint-disable-next-line no-console

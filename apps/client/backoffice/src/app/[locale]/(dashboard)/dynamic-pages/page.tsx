@@ -16,7 +16,7 @@ export default function DynamicPagesPage() {
   const locale = useLocale() as SupportedLanguage;
   const { t, tCommon, tDashboard } = useBackofficeTranslations();
 
-  const { query, onQueryChange, rows, total, loading, error } = useDynamicTableResource({
+  const { query, onQueryChange, rows, total, loading, error, refetch } = useDynamicTableResource({
     path: '/dynamic-pages',
     accessToken: session?.accessToken,
     initialQuery: {
@@ -51,6 +51,15 @@ export default function DynamicPagesPage() {
     },
   ];
 
+  const resolvedErrorMessage = (() => {
+    if (!error) return null;
+    try {
+      return tCommon(error.i18nKey ?? 'server_error');
+    } catch {
+      return error.message;
+    }
+  })();
+
   return (
     <Container className="py-8 px-0" padding="none">
       <div className="mb-4 flex items-center gap-3">
@@ -59,18 +68,6 @@ export default function DynamicPagesPage() {
           {tDashboard('nav.dynamicPages')}
         </Text>
       </div>
-
-      {error ? (
-        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-          {(() => {
-            try {
-              return tCommon(error.i18nKey ?? 'server_error');
-            } catch {
-              return error.message;
-            }
-          })()}
-        </div>
-      ) : null}
 
       <DynamicTable
         config={dynamicPageEntityFieldsConfig}
@@ -88,6 +85,8 @@ export default function DynamicPagesPage() {
         searchKeys={['pageCode', 'slug']}
         filters={filters}
         loading={loading || status === 'loading'}
+        error={resolvedErrorMessage}
+        onRetry={refetch}
         t={t}
         onQueryChange={onQueryChange}
         newButton={{ label: tCommon('actions.create'), href: '/dynamic-pages/new' }}

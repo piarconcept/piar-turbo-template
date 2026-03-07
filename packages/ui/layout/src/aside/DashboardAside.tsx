@@ -27,7 +27,7 @@ export function DashboardAside({ config, locale: _locale = 'en' }: DashboardAsid
   const pathname = usePathname();
   const { isSidebarOpen, isSidebarCollapsed, closeSidebar } = useLayout();
 
-  const widthClass = isSidebarCollapsed ? 'w-16' : 'w-64';
+  const desktopWidthClass = isSidebarCollapsed ? 'lg:w-16' : 'lg:w-64';
   const widthValue = isSidebarCollapsed ? '4rem' : '16rem';
 
   // Update CSS variable for main content padding (desktop only)
@@ -39,8 +39,9 @@ export function DashboardAside({ config, locale: _locale = 'en' }: DashboardAsid
   }, [widthValue]);
 
   // Check if route is active
-  const isActiveRoute = (href: string) => {
-    return pathname === href || pathname?.startsWith(`${href}/`);
+  const isActiveRoute = (route: RouteItem) => {
+    if (route.activeMatch === 'exact') return pathname === route.href;
+    return pathname === route.href || pathname?.startsWith(`${route.href}/`);
   };
 
   // Close sidebar when route changes on mobile
@@ -62,13 +63,13 @@ export function DashboardAside({ config, locale: _locale = 'en' }: DashboardAsid
       {/* Sidebar */}
       <aside
         className={`
-          fixed left-0 top-16 z-50 h-[calc(100vh-4rem)] border-r border-gray-200 bg-white shadow-lg transition-all duration-300
+          fixed left-0 top-16 z-50 h-[calc(100dvh-4rem)] w-[min(18rem,85vw)] border-r border-gray-200 bg-white shadow-lg transition-all duration-300
           lg:z-40 lg:shadow-sm
-          ${widthClass}
+          ${desktopWidthClass}
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}
       >
-        <div className="flex h-full flex-col">
+        <div className="flex h-full min-w-0 flex-col">
           {/* Navigation - Scrollable */}
           <nav className="flex-1 overflow-y-auto p-3">
             {config.navigation.map((section: NavigationSection, sectionIdx: number) => (
@@ -87,7 +88,7 @@ export function DashboardAside({ config, locale: _locale = 'en' }: DashboardAsid
                 {/* Section Routes */}
                 <ul className="space-y-1">
                   {section.routes.map((route: RouteItem) => {
-                    const isActive = isActiveRoute(route.href);
+                    const isActive = isActiveRoute(route);
 
                     return (
                       <li key={route.href}>
@@ -142,7 +143,7 @@ export function DashboardAside({ config, locale: _locale = 'en' }: DashboardAsid
                         {route.children && route.children.length > 0 && !isSidebarCollapsed && (
                           <ul className="ml-8 mt-1 space-y-1 border-l-2 border-gray-200 pl-3">
                             {route.children.map((child: RouteItem) => {
-                              const isChildActive = isActiveRoute(child.href);
+                              const isChildActive = isActiveRoute(child);
 
                               return (
                                 <li key={child.href}>

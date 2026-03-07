@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
-import { Container, Text } from '@piar/ui-components';
+import { AsyncState, Container, Text } from '@piar/ui-components';
 import { DynamicForm } from '@piar/infra-client-dynamic-form';
 import { dynamicPageEntityFieldsConfig } from '@piar/domain-fields';
 import { useDynamicFormResource } from '@/hooks/useDynamicFormResource';
@@ -21,11 +21,8 @@ export default function NewDynamicPage() {
 
   if (status === 'loading') {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--color-primary)] mx-auto"></div>
-          <p className="mt-4 text-gray-600">{tCommon('status.loading')}</p>
-        </div>
+      <div className="min-h-[60vh]">
+        <AsyncState variant="loading" title={tCommon('status.loading')} className="min-h-[60vh]" />
       </div>
     );
   }
@@ -44,6 +41,7 @@ export default function NewDynamicPage() {
         mode="create"
         config={dynamicPageEntityFieldsConfig}
         t={t}
+        autosave={{ enabled: true, storageKey: 'dynamic-form:dynamic-pages:create' }}
         onSubmit={async (values) => {
           const created = await create(values);
           if (created) router.push(`/${locale}/dynamic-pages`);

@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
-import { Button, Container, Text } from '@piar/ui-components';
+import { AsyncState, Button, Container, Text } from '@piar/ui-components';
 import { DynamicForm } from '@piar/infra-client-dynamic-form';
 import { accountEntityFieldsConfig } from '@piar/domain-fields';
 import type { AccountEntityProps } from '@piar/domain-models';
@@ -15,24 +15,31 @@ export function AccountEditView({ id }: { id: string }) {
   const router = useRouter();
   const locale = params.locale as string;
   const { t, tCommon } = useBackofficeTranslations();
-  const { update, remove, entity } = useDynamicFormResource<AccountEntityProps>({
-    path: '/accounts',
-    accessToken: session?.accessToken,
-    id,
-  });
+  const { update, remove, entity, loading, error, findById } =
+    useDynamicFormResource<AccountEntityProps>({
+      path: '/accounts',
+      accessToken: session?.accessToken,
+      id,
+    });
 
   const isCurrentAccount = session?.user?.id === id;
 
   if (status === 'loading') {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-b-2 border-[var(--color-primary)]" />
-          <p className="mt-4 text-gray-600">{tCommon('status.loading')}</p>
-        </div>
+      <div className="min-h-[60vh]">
+        <AsyncState variant="loading" title={tCommon('status.loading')} className="min-h-[60vh]" />
       </div>
     );
   }
+
+  const resolvedErrorMessage = (() => {
+    if (!error) return null;
+    try {
+      return tCommon(error.i18nKey ?? 'server_error');
+    } catch {
+      return error.message;
+    }
+  })();
 
   return (
     <Container className="py-8 px-0" padding="none">
@@ -53,15 +60,32 @@ export function AccountEditView({ id }: { id: string }) {
         </div>
       ) : null}
 
-      <DynamicForm
-        mode="edit"
-        config={accountEntityFieldsConfig}
-        values={entity ?? {}}
-        t={t}
-        onSubmit={async (values) => {
-          await update(id, values);
-        }}
-      />
+      {loading ? (
+        <AsyncState variant="loading" title={tCommon('status.loading')} />
+      ) : resolvedErrorMessage ? (
+        <AsyncState
+          variant="error"
+          title={tCommon('status.error')}
+          description={resolvedErrorMessage}
+          actionLabel="Retry"
+          onAction={() => {
+            void findById();
+          }}
+        />
+      ) : !entity ? (
+        <AsyncState variant="empty" title={tCommon('general.notAvailable')} />
+      ) : (
+        <DynamicForm
+          mode="edit"
+          config={accountEntityFieldsConfig}
+          values={entity}
+          t={t}
+          autosave={{ enabled: true, storageKey: `dynamic-form:accounts:edit:${id}` }}
+          onSubmit={async (values) => {
+            await update(id, values);
+          }}
+        />
+      )}
 
       {!isCurrentAccount ? (
         <div className="mt-4 flex justify-end">

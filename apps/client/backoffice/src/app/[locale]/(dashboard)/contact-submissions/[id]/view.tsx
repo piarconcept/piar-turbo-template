@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react';
 import type { ContactSubmissionEntityProps } from '@piar/domain-models';
 import { contactSubmissionEntityFieldsConfig } from '@piar/domain-fields';
 import { DynamicForm } from '@piar/infra-client-dynamic-form';
-import { Button, Container, Text } from '@piar/ui-components';
+import { AsyncState, Button, Container, Text } from '@piar/ui-components';
 import { useDynamicFormResource } from '@/hooks/useDynamicFormResource';
 import { useBackofficeTranslations } from '@/lib/backofficeTranslations';
 
@@ -17,22 +17,29 @@ export function ContactSubmissionDetailView({ id }: { id: string }) {
   const locale = params.locale as string;
   const { t, tCommon, tDashboard } = useBackofficeTranslations();
 
-  const { entity, update, remove, error } = useDynamicFormResource<ContactSubmissionEntityProps>({
-    path: '/contact-submissions',
-    accessToken: session?.accessToken,
-    id,
-  });
+  const { entity, update, remove, error, loading, findById } =
+    useDynamicFormResource<ContactSubmissionEntityProps>({
+      path: '/contact-submissions',
+      accessToken: session?.accessToken,
+      id,
+    });
 
   if (status === 'loading') {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-b-2 border-[var(--color-primary)]" />
-          <p className="mt-4 text-gray-600">{tCommon('status.loading')}</p>
-        </div>
+      <div className="min-h-[60vh]">
+        <AsyncState variant="loading" title={tCommon('status.loading')} className="min-h-[60vh]" />
       </div>
     );
   }
+
+  const resolvedErrorMessage = (() => {
+    if (!error) return null;
+    try {
+      return tCommon(error.i18nKey ?? 'server_error');
+    } catch {
+      return error.message;
+    }
+  })();
 
   return (
     <Container className="py-8 px-0" padding="none">
@@ -65,28 +72,27 @@ export function ContactSubmissionDetailView({ id }: { id: string }) {
         </div>
       </div>
 
-      {error ? (
-        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-          {(() => {
-            try {
-              return tCommon(error.i18nKey ?? 'server_error');
-            } catch {
-              return error.message;
-            }
-          })()}
-        </div>
-      ) : null}
-
-      {!entity ? (
-        <Text as="p" variant="bodySmall" className="text-gray-600">
-          {tCommon('general.notAvailable')}
-        </Text>
+      {loading ? (
+        <AsyncState variant="loading" title={tCommon('status.loading')} />
+      ) : resolvedErrorMessage ? (
+        <AsyncState
+          variant="error"
+          title={tCommon('status.error')}
+          description={resolvedErrorMessage}
+          actionLabel="Retry"
+          onAction={() => {
+            void findById();
+          }}
+        />
+      ) : !entity ? (
+        <AsyncState variant="empty" title={tCommon('general.notAvailable')} />
       ) : (
         <DynamicForm
           mode="edit"
           config={contactSubmissionEntityFieldsConfig}
           values={entity}
           t={t}
+          autosave={{ enabled: true, storageKey: `dynamic-form:contact-submissions:edit:${id}` }}
           onSubmit={async (values) => {
             await update(id, values);
           }}

@@ -6,9 +6,13 @@ import type {
   TdHTMLAttributes,
 } from 'react';
 
-export function Table({ className, ...props }: TableHTMLAttributes<HTMLTableElement>) {
+export interface TableProps extends TableHTMLAttributes<HTMLTableElement> {
+  containerClassName?: string;
+}
+
+export function Table({ className, containerClassName, ...props }: TableProps) {
   return (
-    <div className="w-full overflow-x-auto">
+    <div className={clsx('w-full overflow-x-auto', containerClassName)}>
       <table
         className={clsx('w-full border-collapse text-left text-sm text-gray-900', className)}
         {...props}

@@ -12,9 +12,9 @@ export function PublicFooter({ config, locale = 'en' }: PublicFooterProps) {
   return (
     <footer className="border-t border-gray-200 bg-gray-50">
       <Container className="py-12" width="7xl" padding="md">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {config.sections.map((section, sectionIdx) => (
-            <div key={sectionIdx}>
+            <div key={sectionIdx} className="min-w-0">
               <Text
                 as="h3"
                 variant="caption"
@@ -29,10 +29,10 @@ export function PublicFooter({ config, locale = 'en' }: PublicFooterProps) {
                       asChild
                       variant="ghost"
                       size="inline"
-                      className="px-0 text-gray-600 hover:bg-transparent hover:text-[var(--color-secondary)]"
+                      className="min-w-0 px-0 text-gray-600 hover:bg-transparent hover:text-[var(--color-secondary)]"
                     >
                       <Link href={withLocale(route.href, locale)}>
-                        <Text as="span" variant="bodySmall" className="text-gray-600">
+                        <Text as="span" variant="bodySmall" className="truncate text-gray-600">
                           {route.label}
                         </Text>
                       </Link>

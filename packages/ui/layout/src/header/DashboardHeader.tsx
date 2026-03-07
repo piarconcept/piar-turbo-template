@@ -26,9 +26,9 @@ export function DashboardHeader({ config, locale: _locale = 'en' }: DashboardHea
 
   return (
     <header className="fixed top-0 z-50 w-full border-b border-gray-200 bg-white/95 shadow-sm backdrop-blur">
-      <div className="flex h-16 items-center justify-between px-4 sm:px-6">
+      <div className="flex h-16 min-w-0 items-center justify-between gap-3 px-4 sm:px-6">
         {/* Left section: Menu buttons + Logo */}
-        <div className="flex items-center gap-3">
+        <div className="flex min-w-0 items-center gap-3">
           {/* Mobile: Burger Menu */}
           <Button
             type="button"
@@ -78,11 +78,11 @@ export function DashboardHeader({ config, locale: _locale = 'en' }: DashboardHea
           {/* Logo */}
           {config.logo && (
             <Button asChild variant="ghost" size="inline" className="px-0 hover:bg-transparent">
-              <Link href={config.logo.href} className="flex items-center gap-2">
+              <Link href={config.logo.href} className="flex min-w-0 items-center gap-2">
                 <Text
                   as="span"
                   variant="h5"
-                  className="hidden sm:inline text-[var(--color-secondary)]"
+                  className="hidden truncate text-[var(--color-secondary)] sm:inline"
                 >
                   {config.logo.alt}
                 </Text>
@@ -93,7 +93,7 @@ export function DashboardHeader({ config, locale: _locale = 'en' }: DashboardHea
 
         {/* Search (if enabled) */}
         {config.actions?.showSearch && (
-          <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-md mx-8">
+          <form onSubmit={handleSearch} className="mx-4 hidden min-w-0 flex-1 max-w-xl lg:flex">
             <div className="relative w-full">
               <svg
                 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none"
@@ -120,7 +120,7 @@ export function DashboardHeader({ config, locale: _locale = 'en' }: DashboardHea
         )}
 
         {/* Actions */}
-        <div className="flex items-center gap-4">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-4">
           {/* Notifications */}
           {config.actions?.showNotifications && (
             <Button

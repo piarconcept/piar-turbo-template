@@ -13,6 +13,7 @@ export interface PublicHeaderProps {
 
 export function PublicHeader({ config, locale = 'en' }: PublicHeaderProps) {
   const [isVisible, setIsVisible] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
 
@@ -39,13 +40,37 @@ export function PublicHeader({ config, locale = 'en' }: PublicHeaderProps) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isMobileMenuOpen]);
+
+  const mobileRoutes = config.navigation.flatMap((section) => section.routes);
+
   return (
     <header
       className={`fixed top-0 z-50 w-full border-b border-white/10 bg-[var(--color-secondary)]/95 shadow-lg backdrop-blur transition-transform duration-300 ${
         isVisible ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
-      <Container className="flex h-16 items-center justify-between" width="7xl" padding="md">
+      <Container
+        className="flex h-16 min-w-0 items-center justify-between gap-3"
+        width="7xl"
+        padding="md"
+      >
         {/* Logo */}
         {config.logo && (
           <Button
@@ -54,9 +79,12 @@ export function PublicHeader({ config, locale = 'en' }: PublicHeaderProps) {
             size="inline"
             className="px-0 text-white hover:bg-white/10"
           >
-            <Link href={withLocale(config.logo.href, locale)} className="flex items-center gap-2">
+            <Link
+              href={withLocale(config.logo.href, locale)}
+              className="flex min-w-0 items-center gap-2"
+            >
               <div className="h-9 w-9 rounded-lg bg-[var(--color-primary)]/90 shadow-sm" />
-              <Text as="span" variant="h5" className="text-white">
+              <Text as="span" variant="h5" className="truncate text-white">
                 {config.logo.alt}
               </Text>
             </Link>
@@ -64,7 +92,7 @@ export function PublicHeader({ config, locale = 'en' }: PublicHeaderProps) {
         )}
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-2">
+        <nav className="hidden min-w-0 items-center gap-2 lg:flex">
           {config.navigation.map((section, sectionIdx) => (
             <React.Fragment key={sectionIdx}>
               {section.routes.map((route) => (
@@ -87,14 +115,14 @@ export function PublicHeader({ config, locale = 'en' }: PublicHeaderProps) {
         </nav>
 
         {/* Actions */}
-        <div className="flex items-center gap-4">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-4">
           {config.actions?.showUserMenu && (
             <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
                 size="sm"
                 asChild
-                className="hidden md:inline-flex text-white hover:bg-white/10"
+                className="hidden lg:inline-flex text-white hover:bg-white/10"
               >
                 <Link href="/login">Login</Link>
               </Button>
@@ -110,6 +138,8 @@ export function PublicHeader({ config, locale = 'en' }: PublicHeaderProps) {
             size="sm"
             className="md:hidden text-white hover:bg-white/10"
             aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
+            onClick={() => setIsMobileMenuOpen((current) => !current)}
           >
             <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -122,6 +152,51 @@ export function PublicHeader({ config, locale = 'en' }: PublicHeaderProps) {
           </Button>
         </div>
       </Container>
+
+      {isMobileMenuOpen && (
+        <div className="md:hidden">
+          <button
+            type="button"
+            className="fixed inset-0 top-16 z-40 bg-black/50"
+            aria-label="Close menu"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+
+          <nav className="absolute left-0 top-16 z-50 w-full border-b border-white/10 bg-[var(--color-secondary)]/95 px-4 py-4 backdrop-blur">
+            <div className="flex flex-col gap-2">
+              {mobileRoutes.map((route) => (
+                <Link
+                  key={route.href}
+                  href={withLocale(route.href, locale)}
+                  className="rounded-lg px-3 py-2 text-sm font-medium text-white hover:bg-white/10"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {route.label}
+                </Link>
+              ))}
+
+              {config.actions?.showUserMenu && (
+                <div className="mt-2 grid grid-cols-2 gap-2 border-t border-white/10 pt-3">
+                  <Link
+                    href="/login"
+                    className="rounded-lg border border-white/20 px-3 py-2 text-center text-sm font-medium text-white hover:bg-white/10"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/signup"
+                    className="rounded-lg bg-[var(--color-primary)] px-3 py-2 text-center text-sm font-medium text-white"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Sign Up
+                  </Link>
+                </div>
+              )}
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
