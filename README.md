@@ -172,10 +172,10 @@ MIT License. See `LICENSE`.
 
 This template is created and maintained by Piar Concept.
 
-Template page: `https://www.piarconcept.com/resources/piar-turbo-template`
-Website: `https://www.piarconcept.com`
-Contact: `support@piarconcept.com`
+- Template page: [piar-turbo-template](https://www.piarconcept.com/resources/piar-turbo-template)
+- Website: [piarconcept.com](https://www.piarconcept.com)
+- Support: [support@piarconcept.com](mailto:support@piarconcept.com)
 
-If you want to help us keep building and sharing ambitious open-source tooling, you can support us here:
+If you want to help us keep building and sharing ambitious open-source tooling:
 
-Donations: `https://www.piarconcept.com/donations`
+- Contribute here: [Donations](https://www.piarconcept.com/donations)
