@@ -2,6 +2,16 @@
 
 Production-ready monorepo template for building modern web applications with Next.js, NestJS, and shared TypeScript packages.
 
+## Used in Production
+
+This fast-start template has already been used to launch production projects:
+
+- [traips-events.com](https://www.traips-events.com)
+- [piarconcept.com](https://www.piarconcept.com)
+- [outsidecanvas.com](https://www.outsidecanvas.com)
+
+We still use this template as the base for all our MVPs and for projects that we expect to scale hard. We keep feeding lessons learned from those repos back into this template, and we will keep improving it with what we learn across the rest of our production codebases.
+
 ## Quick Start
 
 Prerequisites:
@@ -91,8 +101,9 @@ Implementation and migration guide:
 pnpm turbo build        # Build all packages/apps
 pnpm typecheck          # Type check all packages/apps
 pnpm lint               # Lint all packages/apps
-pnpm test               # Run all tests with coverage
-pnpm verify             # Install, build, typecheck, test, lint, format check
+pnpm test               # Run all tests without coverage
+pnpm test:coverage      # Run all tests with coverage
+pnpm verify             # Non-mutating repo verification in an isolated copy
 ```
 
 ## Ports (defaults)
@@ -161,5 +172,10 @@ MIT License. See `LICENSE`.
 
 This template is created and maintained by Piar Concept.
 
-Website: `https://piarconcept.com`
-Contact: `polribasrovira@gmail.com`
+Template page: `https://www.piarconcept.com/resources/piar-turbo-template`
+Website: `https://www.piarconcept.com`
+Contact: `support@piarconcept.com`
+
+If you want to help us keep building and sharing ambitious open-source tooling, you can support us here:
+
+Donations: `https://www.piarconcept.com/donations`

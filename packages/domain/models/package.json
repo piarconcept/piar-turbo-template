@@ -15,9 +15,9 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "dev": "tsc --watch",
-    "test": "vitest",
+    "test": "vitest --run",
     "test:watch": "vitest --watch",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --run --coverage"
   },
   "dependencies": {
     "@piar/messages": "workspace:*"

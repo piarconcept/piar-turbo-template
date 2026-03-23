@@ -15,8 +15,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "dev": "tsc --watch",
-    "test": "echo 'No tests yet'",
-    "test:coverage": "echo 'No tests yet'"
+    "test": "vitest --run --passWithNoTests",
+    "test:coverage": "vitest --run --coverage --passWithNoTests"
   },
   "dependencies": {
     "@piar/auth-configuration": "workspace:*",

@@ -15,8 +15,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "dev": "tsc --watch",
-    "test": "echo 'No tests needed for type definitions'",
-    "test:coverage": "echo 'No tests needed for type definitions'"
+    "test": "vitest --run --passWithNoTests",
+    "test:coverage": "vitest --run --coverage --passWithNoTests"
   },
   "dependencies": {
     "@piar/domain-models": "workspace:*"

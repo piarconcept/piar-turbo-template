@@ -27,6 +27,7 @@ Start with `AI-context.md`.
 - `features/quality-gates.md`
 - `features/styling-configuration.md`
 - `features/tailwind-v4-implementation.md`
+- `features/context-engineering-protocol.md`
 
 ### Package Docs
 
@@ -53,13 +54,19 @@ Start with `AI-context.md`.
 
 - `features/TEMPLATE.md`
 
+### Operational Learning
+
+- `learning-log/README.md`
+- `learning-log/TEMPLATE.md`
+
 ## Maintenance Rules
 
 1. Keep docs in English.
 2. Update `AI-context.md` when adding/removing docs.
 3. Add a Last Updated line to new docs.
 4. Keep `CHANGELOG.md`, `CONTRIBUTING.md`, `SECURITY.md`, and `CODE_OF_CONDUCT.md` updated when relevant.
+5. Log non-trivial fixes and reusable debugging learnings in `docs/learning-log/`.
 
 ## Last Updated
 
-23 February 2026 - Added template baseline and migration guide, updated feature docs
+10 March 2026 - Aligned the context engineering docs with the learning-log workflow

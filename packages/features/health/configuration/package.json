@@ -15,8 +15,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "dev": "tsc --watch",
-    "test": "echo 'No tests needed for type definitions'",
-    "test:coverage": "echo 'No tests needed for type definitions'"
+    "test": "vitest --run",
+    "test:coverage": "vitest --run --coverage"
   },
   "devDependencies": {
     "@types/node": "^22.10.5",

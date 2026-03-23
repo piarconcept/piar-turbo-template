@@ -15,8 +15,8 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test": "vitest --run",
+    "test:coverage": "vitest --run --coverage"
   },
   "keywords": [
     "dynamic-form",

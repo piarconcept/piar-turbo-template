@@ -15,8 +15,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "dev": "tsc --watch",
-    "test": "echo 'No tests configured yet for dynamic-page-api'",
-    "test:coverage": "echo 'No tests configured yet for dynamic-page-api'"
+    "test": "vitest --run --passWithNoTests",
+    "test:coverage": "vitest --run --coverage --passWithNoTests"
   },
   "dependencies": {
     "@piar/domain-dynamic-form": "workspace:*",

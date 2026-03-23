@@ -13,8 +13,10 @@ Start here. This file is the canonical index and rules for documentation and dev
 3. **Structure**:
    - `docs/AI-context.md` = master index and rules
    - `docs/features/` = detailed docs per topic
+   - `docs/learning-log/` = resolved incidents, regressions, and non-obvious fixes
 4. **Naming**: Use kebab-case filenames (e.g., `authentication-flow.md`).
 5. **Index maintenance**: Update this index whenever a doc is added/removed.
+6. **Learning capture**: Any non-trivial fix, incident, workaround, or reusable debugging lesson must be logged in `docs/learning-log/`.
 
 ## Documentation Index
 
@@ -36,28 +38,34 @@ Start here. This file is the canonical index and rules for documentation and dev
 11. `features/quality-gates.md` - Formatting, commit hooks, and commit rules
 12. `features/styling-configuration.md` - Styling approach overview
 13. `features/tailwind-v4-implementation.md` - Tailwind v4 implementation details
+14. `features/context-engineering-protocol.md` - Rules for documenting important fixes and learnings
 
 ### Package Documentation
 
-14. `features/domain-models.md` - `@piar/domain-models`
-15. `features/domain-fields.md` - `@piar/domain-fields`
-16. `features/ui-components-atomic-design.md` - `@piar/ui-components`
-17. `features/auth-card-refactoring.md` - AuthCard refactor notes
-18. `features/health-feature.md` - Health feature architecture
-19. `features/auth-feature.md` - Auth feature architecture
-20. `features/infra-backend-security.md` - Backend security package
-21. `features/infra-client-seo.md` - SEO infrastructure
-22. `features/error-handling-system.md` - Error handling system
-23. `features/nextauth-authentication.md` - NextAuth v5 in backoffice
+15. `features/domain-models.md` - `@piar/domain-models`
+16. `features/domain-fields.md` - `@piar/domain-fields`
+17. `features/ui-components-atomic-design.md` - `@piar/ui-components`
+18. `features/auth-card-refactoring.md` - AuthCard refactor notes
+19. `features/health-feature.md` - Health feature architecture
+20. `features/auth-feature.md` - Auth feature architecture
+21. `features/infra-backend-security.md` - Backend security package
+22. `features/infra-client-seo.md` - SEO infrastructure
+23. `features/error-handling-system.md` - Error handling system
+24. `features/nextauth-authentication.md` - NextAuth v5 in backoffice
 
 ### Applications
 
-24. `features/web-bff-application.md` - Web BFF documentation
-25. `features/backoffice-bff-application.md` - Backoffice BFF documentation
+25. `features/web-bff-application.md` - Web BFF documentation
+26. `features/backoffice-bff-application.md` - Backoffice BFF documentation
 
 ### Templates
 
-26. `features/TEMPLATE.md` - Template for new docs
+27. `features/TEMPLATE.md` - Template for new docs
+
+### Operational Learning
+
+28. `learning-log/README.md` - Index of resolved incidents and important fixes
+29. `learning-log/TEMPLATE.md` - Template for learning-log entries
 
 ## Repository Governance
 
@@ -93,12 +101,21 @@ Start here. This file is the canonical index and rules for documentation and dev
 3. Document in `docs/features/`
 4. Update this index
 
+### Documenting an Important Fix
+
+1. Read `features/context-engineering-protocol.md`
+2. Create or update a note in `docs/learning-log/`
+3. Use `learning-log/TEMPLATE.md`
+4. Update the relevant feature doc if the fix changes long-term behavior
+5. Update this index only when docs are added or removed
+
 ## Before Making Changes
 
 1. Check `features/repository-configuration.md`
 2. Review relevant docs in `docs/features/`
-3. Update docs after changes
+3. Review `docs/learning-log/` when working on a repeated or unclear failure
+4. Update docs after changes
 
 ## Last Updated
 
-23 February 2026 - Added migration baseline and refreshed feature/application references
+10 March 2026 - Aligned context engineering docs with the learning-log workflow

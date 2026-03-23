@@ -1,0 +1,160 @@
+{
+  "version": 1,
+  "allowedNoTestPatterns": [
+    {
+      "pattern": "packages/features/*/configuration",
+      "kind": "exception",
+      "reason": "Feature configuration packages may omit direct tests only when they stay limited to type definitions or static configuration values."
+    }
+  ],
+  "packages": {
+    "apps/api/backoffice-bff": {
+      "kind": "risk-gap",
+      "reason": "The backoffice BFF still lacks automated tests.",
+      "risk": "Nest module wiring, authentication flows, and endpoint contracts can regress without a fast signal.",
+      "mitigation": "Verify still runs reproducible install, build, typecheck, format check, and lint in an isolated copy."
+    },
+    "apps/api/web-bff": {
+      "kind": "risk-gap",
+      "reason": "The web BFF still lacks automated tests.",
+      "risk": "Dependency injection, route composition, and API module wiring can break without coverage.",
+      "mitigation": "Verify still runs reproducible install, build, typecheck, format check, and lint in an isolated copy."
+    },
+    "apps/client/backoffice": {
+      "kind": "risk-gap",
+      "reason": "The backoffice Next.js app has no automated test suite yet.",
+      "risk": "Page integration, routing, and UI regressions can ship without detection.",
+      "mitigation": "Verify still checks buildability, types, formatting, and linting while the gap remains documented."
+    },
+    "apps/client/web": {
+      "kind": "risk-gap",
+      "reason": "The web Next.js app has no automated test suite yet.",
+      "risk": "Page integration, metadata handling, and UI regressions can ship without detection.",
+      "mitigation": "Verify still checks buildability, types, formatting, and linting while the gap remains documented."
+    },
+    "packages/features/auth/api": {
+      "kind": "risk-gap",
+      "reason": "The auth API package has runtime behavior but no direct tests yet.",
+      "risk": "Use-case wiring and auth-facing logic can regress without package-level assertions.",
+      "mitigation": "Downstream build, typecheck, and lint still run on every verify while tests are pending."
+    },
+    "packages/features/auth/infra/backend": {
+      "kind": "risk-gap",
+      "reason": "The auth backend infrastructure package has runtime behavior but no tests yet.",
+      "risk": "Repository adapters and backend auth integration can drift without detection.",
+      "mitigation": "Verify still exercises install, build, typecheck, format check, and lint against the current worktree snapshot."
+    },
+    "packages/features/auth/infra/client": {
+      "kind": "risk-gap",
+      "reason": "The auth client infrastructure package has no automated tests yet.",
+      "risk": "Client-side auth integration and request handling can regress silently.",
+      "mitigation": "Verify still enforces build, typecheck, format check, and lint while the package is tracked as a gap."
+    },
+    "packages/features/comingSoon": {
+      "kind": "risk-gap",
+      "reason": "The coming-soon feature package exposes runtime UI with no tests.",
+      "risk": "Rendering and prop-level regressions can slip through without component coverage.",
+      "mitigation": "Verify still runs static quality gates and keeps the gap inventory explicit."
+    },
+    "packages/features/contact/api": {
+      "kind": "risk-gap",
+      "reason": "The contact API package has runtime behavior but no direct tests yet.",
+      "risk": "DTO handling and backend orchestration can regress without assertions.",
+      "mitigation": "Verify still covers install, build, typecheck, format check, and lint while this gap is open."
+    },
+    "packages/features/contact/infra/backend": {
+      "kind": "risk-gap",
+      "reason": "The contact backend infrastructure package has no tests yet.",
+      "risk": "Persistence and backend integration logic can break without a package-level signal.",
+      "mitigation": "Verify still checks the package through build, typecheck, format check, and lint."
+    },
+    "packages/features/cookies/client": {
+      "kind": "risk-gap",
+      "reason": "The cookies client package contains runtime client logic without tests.",
+      "risk": "Cookie parsing and browser interaction regressions can escape review.",
+      "mitigation": "Verify still enforces build, typecheck, formatting, and lint until direct tests are added."
+    },
+    "packages/features/dynamic-page/api": {
+      "kind": "risk-gap",
+      "reason": "The dynamic-page API package has runtime behavior but no direct tests yet.",
+      "risk": "API orchestration and module contracts can regress unnoticed.",
+      "mitigation": "Verify still exercises reproducible install, build, typecheck, format check, and lint."
+    },
+    "packages/features/dynamic-page/infra/backend": {
+      "kind": "risk-gap",
+      "reason": "The dynamic-page backend infrastructure package has no tests yet.",
+      "risk": "Data access and backend integration logic can regress without package-level coverage.",
+      "mitigation": "Verify still enforces static quality gates while this gap remains documented."
+    },
+    "packages/features/health/client": {
+      "kind": "risk-gap",
+      "reason": "The health client package exposes runtime behavior without automated tests.",
+      "risk": "Client-side health consumption and rendering contracts can regress silently.",
+      "mitigation": "Verify still checks the package with build, typecheck, format check, and lint."
+    },
+    "packages/infra/backend/common/error": {
+      "kind": "risk-gap",
+      "reason": "The backend common error package has runtime helpers without tests.",
+      "risk": "Error mapping and serialization logic can break without assertions.",
+      "mitigation": "Verify still covers build, typecheck, format check, and lint for every change."
+    },
+    "packages/infra/backend/common/security": {
+      "kind": "risk-gap",
+      "reason": "The backend common security package has runtime helpers without tests.",
+      "risk": "Security-related utilities and guards can regress without fast feedback.",
+      "mitigation": "Verify still runs reproducible install plus static quality gates while the gap is tracked."
+    },
+    "packages/infra/backend/common/typeorm": {
+      "kind": "risk-gap",
+      "reason": "The shared TypeORM infrastructure package has no automated tests yet.",
+      "risk": "Database configuration and persistence helpers can regress without package-level checks.",
+      "mitigation": "Verify still enforces build, typecheck, format check, and lint."
+    },
+    "packages/infra/backend/repositories": {
+      "kind": "risk-gap",
+      "reason": "The repository package has runtime persistence behavior but no tests yet.",
+      "risk": "Repository contracts and query behavior can break without detection.",
+      "mitigation": "Verify still checks install, build, typecheck, format check, and lint for the package."
+    },
+    "packages/infra/client/common/error": {
+      "kind": "risk-gap",
+      "reason": "The client common error package has runtime UI and error helpers without tests.",
+      "risk": "Client error rendering and helper behavior can regress unnoticed.",
+      "mitigation": "Verify still enforces build, typecheck, format check, and lint."
+    },
+    "packages/infra/client/common/http": {
+      "kind": "risk-gap",
+      "reason": "The shared client HTTP package has runtime networking helpers without tests.",
+      "risk": "Request and response handling regressions can escape review.",
+      "mitigation": "Verify still checks buildability, types, formatting, and linting while the gap is explicit."
+    },
+    "packages/infra/client/dynamic-form": {
+      "kind": "risk-gap",
+      "reason": "The dynamic-form client infrastructure package has no tests yet.",
+      "risk": "Adapter behavior between domain forms and UI components can regress silently.",
+      "mitigation": "Verify still runs build, typecheck, format check, and lint on every change."
+    },
+    "packages/infra/client/dynamic-table": {
+      "kind": "risk-gap",
+      "reason": "The dynamic-table client infrastructure package has no tests yet.",
+      "risk": "Table adapter behavior and rendering contracts can regress without coverage.",
+      "mitigation": "Verify still enforces build, typecheck, formatting, and linting."
+    },
+    "packages/ui/components": {
+      "kind": "risk-gap",
+      "reason": "The shared UI component package has no automated tests yet.",
+      "risk": "Component rendering and prop contracts can regress without direct assertions.",
+      "mitigation": "Verify still checks build, typecheck, format check, and lint while the gap remains open."
+    },
+    "packages/ui/config": {
+      "kind": "exception",
+      "reason": "The UI config package only exposes static styling configuration and has no runtime behavior to exercise directly."
+    },
+    "packages/ui/layout": {
+      "kind": "risk-gap",
+      "reason": "The shared layout package has runtime UI behavior without automated tests.",
+      "risk": "Layout composition and rendering regressions can slip through without component coverage.",
+      "mitigation": "Verify still checks buildability, types, formatting, and linting while the gap stays documented."
+    }
+  }
+}

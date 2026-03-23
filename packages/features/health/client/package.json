@@ -15,8 +15,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "dev": "tsc --watch",
-    "test": "echo 'No tests for client package'",
-    "test:coverage": "echo 'No tests for client package'"
+    "test": "vitest --run --passWithNoTests",
+    "test:coverage": "vitest --run --coverage --passWithNoTests"
   },
   "dependencies": {
     "@piar/health-configuration": "workspace:*",

@@ -19,8 +19,11 @@
     "typecheck": "turbo typecheck",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
+    "artifacts:check": "node scripts/generated-artifacts.mjs check",
+    "artifacts:clean": "node scripts/generated-artifacts.mjs clean",
     "lint": "turbo lint",
-    "test": "pnpm test:coverage -- --run",
+    "test:policy": "node scripts/check-test-participation.mjs",
+    "test": "turbo test",
     "test:coverage": "turbo test:coverage",
     "verify": "bash scripts/verify-all.sh",
     "prepare": "husky"

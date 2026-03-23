@@ -15,8 +15,8 @@
     "dev": "tsc --watch",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "test": "echo 'No tests configured yet'",
-    "test:coverage": "echo 'No tests configured yet'"
+    "test": "vitest --run --passWithNoTests",
+    "test:coverage": "vitest --run --coverage --passWithNoTests"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.16",

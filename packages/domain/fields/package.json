@@ -14,8 +14,8 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "test": "vitest",
-    "test:coverage": "vitest --coverage"
+    "test": "vitest --run",
+    "test:coverage": "vitest --run --coverage"
   },
   "keywords": [
     "fields",

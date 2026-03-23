@@ -12,6 +12,8 @@ coverage/
 .next/
 out/
 .serverless/
+.runtime/
+cdk.out/
 
 .env
 .env.*

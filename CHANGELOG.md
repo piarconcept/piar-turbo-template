@@ -7,3 +7,4 @@ This project follows Conventional Commits and keeps a single "Unreleased" sectio
 ## Unreleased
 
 - Initial template baseline.
+- Added a context engineering protocol and learning-log template for documenting important errors and resolutions.
