@@ -93,12 +93,16 @@ pnpm verify
 
 This executes:
 
-1. Install dependencies
-2. Build all packages
-3. Type check
-4. Run all tests with coverage
-5. Check formatting
-6. Lint all code
+1. Clean generated artifacts
+2. Check generated artifact hygiene
+3. Install dependencies in an isolated scratch copy
+4. Build all packages
+5. Type check
+6. Check formatting
+7. Check test participation policy
+8. Run all tests without coverage
+9. Lint all code
+10. Verify local worktree status does not drift after artifact hygiene
 
 ### Pre-commit Checklist
 
@@ -108,6 +112,7 @@ pnpm format:check
 pnpm lint
 pnpm test
 pnpm build
+pnpm clean
 ```
 
 ### CI Pipeline Example
@@ -130,16 +135,10 @@ jobs:
           node-version: '20'
       - name: Install dependencies
         run: pnpm install
-      - name: Type check
-        run: pnpm typecheck
-      - name: Format check
-        run: pnpm format:check
-      - name: Lint
-        run: pnpm lint
-      - name: Tests
-        run: pnpm test:coverage -- --run
-      - name: Build
-        run: pnpm build
+      - name: Verify
+        run: pnpm verify
+      - name: Coverage
+        run: pnpm test:coverage
 ```
 
 ## Related Documentation
@@ -149,4 +148,4 @@ jobs:
 
 ## Last Updated
 
-27 January 2026 - Updated commands and verification steps
+7 May 2026 - Updated verification and cleanup commands

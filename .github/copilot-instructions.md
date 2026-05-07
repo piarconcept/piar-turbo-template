@@ -59,15 +59,18 @@ pnpm --filter @piar/web-bff dev
 pnpm build                # Build all via Turbo (respects dependencies)
 pnpm typecheck            # TypeScript validation across workspace
 pnpm lint                 # ESLint (apps have own configs, packages use root)
-pnpm test                 # Run tests with coverage
-pnpm verify               # Full CI check: install + build + typecheck + test
+pnpm test                 # Run tests without coverage
+pnpm test:coverage        # Run tests with coverage
+pnpm verify               # Full CI check in an isolated scratch copy
+pnpm clean                # Format, clean artifacts, and finish with verify
 ```
 
 ### Key Turbo Configuration ([turbo.json](../turbo.json))
 
 - `dev`: No cache, persistent (servers)
 - `build`: Cached, depends on `^build` (upstream packages first)
-- `test`: No cache, depends on `^build`, outputs to `coverage/`
+- `test`: No cache, depends on `^build`
+- `test:coverage`: No cache, depends on `^build`, outputs to `coverage/`
 
 ## Testing with Vitest
 
@@ -160,7 +163,8 @@ See [docs/features/testing-guide.md](../docs/features/testing-guide.md) for comp
 1. **Before changes**: Check existing docs in `docs/features/` for patterns/conventions
 2. **After changes**: Update or create docs reflecting what was done
 3. **New features**: Use [docs/features/TEMPLATE.md](../docs/features/TEMPLATE.md), update index in AI-context.md
-4. **Single source of truth**: Document all architectural decisions, never assume/invent
+4. **Wave plans**: Use [docs/waves/README.md](../docs/waves/README.md) for feature work, multi-agent execution, and staged migrations
+5. **Single source of truth**: Document all architectural decisions, never assume/invent
 
 ## Key Files Reference
 
@@ -169,6 +173,8 @@ See [docs/features/testing-guide.md](../docs/features/testing-guide.md) for comp
 - [docs/features/repository-configuration.md](../docs/features/repository-configuration.md) - Critical monorepo rules
 - [docs/features/bff-architecture.md](../docs/features/bff-architecture.md) - BFF pattern explained
 - [docs/features/creating-features-guide.md](../docs/features/creating-features-guide.md) - Feature creation (Spanish, comprehensive)
+- [docs/features/waves-workflow.md](../docs/features/waves-workflow.md) - Wave-first planning workflow
+- [docs/waves/README.md](../docs/waves/README.md) - Execution wave contract and templates
 - [docs/features/testing-guide.md](../docs/features/testing-guide.md) - Testing patterns and setup
 - [package.json](../package.json) - Workspace scripts and package manager
 - [turbo.json](../turbo.json) - Build orchestration and caching
@@ -176,6 +182,7 @@ See [docs/features/testing-guide.md](../docs/features/testing-guide.md) for comp
 ## Common Pitfalls to Avoid
 
 - ❌ Creating features without the 3-package structure
+- ❌ Starting non-trivial feature work without a wave plan
 - ❌ Skipping documentation updates
 - ❌ Adding pnpm-workspace.yaml in subdirectories
 - ❌ Using packages without `@piar/` scope

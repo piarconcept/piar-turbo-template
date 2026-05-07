@@ -31,6 +31,7 @@ Document critical repository configuration decisions and conventions that must b
   - `build`: Production builds with dependency ordering
   - `typecheck`: TypeScript validation across workspace
   - `lint`: Linting across workspace
+  - `test`: Tests without coverage
   - `test:coverage`: Tests with coverage
 
 ### Node Version
@@ -88,9 +89,11 @@ Defines task dependencies and caching:
 
 - `dev`: no cache, persistent
 - `build`: cached, depends on upstream builds
-- `typecheck`: depends on upstream typechecks
+- `typecheck`: depends on upstream builds and upstream typechecks
 - `lint`: cached, depends on upstream linting
 - `test:coverage`: no cache, outputs coverage
+
+App `build` and `dev` scripts should include `build:prepare` or `dev:prepare` steps that build workspace dependencies first. This keeps local Next.js and NestJS startup aligned with package output requirements.
 
 ## Usage
 
@@ -116,7 +119,8 @@ pnpm turbo typecheck
 pnpm turbo lint
 pnpm test
 pnpm test:coverage -- --run
-pnpm verify               # install, build, typecheck, format check, test, lint
+pnpm verify               # artifact hygiene, install, build, typecheck, format check, test policy, test, lint
+pnpm clean                # format, clean artifacts, check artifacts, verify
 ```
 
 ## Related Documentation
@@ -125,7 +129,9 @@ pnpm verify               # install, build, typecheck, format check, test, lint
 - `docs/features/setup-project.md`
 - `docs/features/testing-guide.md`
 - `docs/features/eslint-configuration.md`
+- `docs/features/quality-gates.md`
+- `docs/features/waves-workflow.md`
 
 ## Last Updated
 
-27 January 2026 - Added Next.js Link navigation rule
+7 May 2026 - Added clean command and current verification contract

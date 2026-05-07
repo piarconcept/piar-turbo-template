@@ -103,7 +103,8 @@ pnpm typecheck          # Type check all packages/apps
 pnpm lint               # Lint all packages/apps
 pnpm test               # Run all tests without coverage
 pnpm test:coverage      # Run all tests with coverage
-pnpm verify             # Non-mutating repo verification in an isolated copy
+pnpm verify             # Full verification in an isolated copy with artifact hygiene
+pnpm clean              # Format, clean generated artifacts, and finish with verify
 ```
 
 ## Ports (defaults)
@@ -122,6 +123,8 @@ Key docs:
 - `docs/features/repository-configuration.md`
 - `docs/features/creating-packages.md`
 - `docs/features/creating-features-guide.md`
+- `docs/features/waves-workflow.md`
+- `docs/waves/README.md`
 - `docs/features/testing-guide.md`
 - `docs/features/tailwind-v4-implementation.md`
 

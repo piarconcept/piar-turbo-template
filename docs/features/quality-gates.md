@@ -14,9 +14,27 @@ Define formatting, commit rules, and local hooks that keep the template consiste
 Commands:
 
 ```bash
-pnpm format        # auto-format
-pnpm format:check  # verify formatting
+pnpm format        # auto-format tracked and unignored files
+pnpm format:check  # verify formatting for tracked and unignored files
+pnpm clean         # format, clean generated artifacts, and finish with verify
 ```
+
+`pnpm format` and `pnpm format:check` operate on `git ls-files --cached --others --exclude-standard` so ignored generated files are not formatted accidentally.
+
+When the command runs in a scratch copy without `.git`, it falls back to `prettier .`; generated directories are still excluded through `.prettierignore`.
+
+## Generated Artifact Hygiene
+
+Generated artifacts must not be committed.
+
+Commands:
+
+```bash
+pnpm artifacts:clean  # remove generated artifacts
+pnpm artifacts:check  # fail if generated artifacts are present
+```
+
+The artifact checker covers generated directories such as `build`, `coverage`, `.runtime`, `cdk.out`, `dist`, `.next`, `out`, and `.serverless`. It also detects untracked `.js`, `.js.map`, `.d.ts`, and `.d.ts.map` files emitted next to TypeScript sources under `src/`.
 
 ## Commit Rules
 
@@ -54,13 +72,21 @@ Only formats staged files to keep commits fast.
 
 `pnpm verify` includes:
 
-- install
+- local generated artifact cleanup
+- generated artifact check
+- reproducible install in an isolated scratch copy
 - build
 - typecheck
 - format check
-- tests with coverage
+- test participation policy
+- tests without coverage
 - lint
+- final local generated artifact cleanup
+- final generated artifact check
+- visible worktree drift check after artifact hygiene
+
+`pnpm verify` is the CI parity command. Use `pnpm clean` before final handoff when files were edited locally because it also formats before running `verify`.
 
 ## Last Updated
 
-27 January 2026 - Added formatting and commit hooks
+7 May 2026 - Added clean command, artifact hygiene, and current verify contract

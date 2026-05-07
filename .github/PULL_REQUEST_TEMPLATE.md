@@ -6,13 +6,11 @@
 
 ## Testing
 
-- [ ] pnpm typecheck
-- [ ] pnpm format:check
-- [ ] pnpm lint
-- [ ] pnpm test
-- [ ] pnpm build
+- [ ] pnpm clean
+- [ ] Targeted checks documented if `pnpm clean` was not practical
 
 ## Checklist
 
 - [ ] Docs updated (if needed)
+- [ ] Wave plan linked or not needed for this change
 - [ ] No breaking changes without documentation

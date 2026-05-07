@@ -7,11 +7,13 @@ import { spawnSync } from 'node:child_process';
 const mode = process.argv[2];
 const repoRoot = process.cwd();
 const generatedDirectoryNames = new Set([
+  'build',
   'coverage',
   '.runtime',
   'cdk.out',
   'dist',
   '.next',
+  'out',
   '.serverless',
 ]);
 const skippedDirectoryNames = new Set(['.git', 'node_modules', '.pnpm-store', '.turbo']);
@@ -35,6 +37,7 @@ const trackedFiles = gitLsFiles.stdout
   .split('\n')
   .filter(Boolean)
   .map((entry) => entry.trim());
+const trackedFileSet = new Set(trackedFiles);
 
 function toPosixPath(value) {
   return value.split(path.sep).join('/');
@@ -47,6 +50,38 @@ function hasTrackedFiles(relativeDirectoryPath) {
   return trackedFiles.some(
     (trackedFile) => trackedFile === normalizedDirectoryPath || trackedFile.startsWith(prefix),
   );
+}
+
+function isTrackedFile(relativeFilePath) {
+  return trackedFileSet.has(toPosixPath(relativeFilePath));
+}
+
+function hasSiblingSourceFile(relativeFilePath) {
+  const normalizedPath = toPosixPath(relativeFilePath);
+
+  if (!normalizedPath.includes('/src/')) {
+    return false;
+  }
+
+  const candidatePaths = [];
+
+  if (normalizedPath.endsWith('.d.ts.map')) {
+    const basePath = normalizedPath.slice(0, -'.d.ts.map'.length);
+    candidatePaths.push(`${basePath}.ts`, `${basePath}.tsx`);
+  } else if (normalizedPath.endsWith('.d.ts')) {
+    const basePath = normalizedPath.slice(0, -'.d.ts'.length);
+    candidatePaths.push(`${basePath}.ts`, `${basePath}.tsx`);
+  } else if (normalizedPath.endsWith('.js.map')) {
+    const basePath = normalizedPath.slice(0, -'.js.map'.length);
+    candidatePaths.push(`${basePath}.ts`, `${basePath}.tsx`);
+  } else if (normalizedPath.endsWith('.js')) {
+    const basePath = normalizedPath.slice(0, -'.js'.length);
+    candidatePaths.push(`${basePath}.ts`, `${basePath}.tsx`);
+  } else {
+    return false;
+  }
+
+  return candidatePaths.some((candidatePath) => fs.existsSync(path.join(repoRoot, candidatePath)));
 }
 
 function collectGeneratedDirectories(directoryPath, results) {
@@ -74,8 +109,36 @@ function collectGeneratedDirectories(directoryPath, results) {
   }
 }
 
+function collectGeneratedSourceArtifacts(directoryPath, results) {
+  for (const entry of fs.readdirSync(directoryPath, { withFileTypes: true })) {
+    const fullPath = path.join(directoryPath, entry.name);
+
+    if (entry.isDirectory()) {
+      if (skippedDirectoryNames.has(entry.name) || generatedDirectoryNames.has(entry.name)) {
+        continue;
+      }
+
+      collectGeneratedSourceArtifacts(fullPath, results);
+      continue;
+    }
+
+    const relativePath = path.relative(repoRoot, fullPath);
+
+    if (isTrackedFile(relativePath)) {
+      continue;
+    }
+
+    if (!hasSiblingSourceFile(relativePath)) {
+      continue;
+    }
+
+    results.add(toPosixPath(relativePath));
+  }
+}
+
 const discoveredArtifacts = new Set();
 collectGeneratedDirectories(repoRoot, discoveredArtifacts);
+collectGeneratedSourceArtifacts(repoRoot, discoveredArtifacts);
 
 const artifacts = [...discoveredArtifacts].sort();
 

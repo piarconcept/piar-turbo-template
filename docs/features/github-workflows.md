@@ -2,7 +2,7 @@
 
 **Status**: ✅ Active  
 **Created**: 2026-01-15  
-**Last Updated**: 2026-01-27
+**Last Updated**: 2026-05-07
 
 ## Overview
 
@@ -27,13 +27,16 @@ This document describes the GitHub Actions workflows configured for continuous i
 4. **Setup pnpm cache** - Caches pnpm store for faster subsequent runs
 5. **Install dependencies** - Runs `pnpm install --frozen-lockfile`
 6. **Run verification** - Executes `pnpm verify` which runs:
-   - Install dependencies
+   - Local generated artifact cleanup and check
+   - Install dependencies in an isolated scratch copy
    - Build all packages
    - Type checking
    - Formatting check
-   - Tests with coverage
+   - Test participation policy
+   - Tests without coverage
    - Linting
-7. **Upload coverage** - Uploads coverage reports as artifacts (30 days retention)
+   - Final generated artifact cleanup and worktree drift check
+7. **Upload coverage** - Uploads coverage reports when the workflow runs coverage as a separate step
 
 **Environment**:
 
@@ -49,7 +52,7 @@ This document describes the GitHub Actions workflows configured for continuous i
 
 **Artifacts**:
 
-- Coverage reports stored for 30 days
+- Coverage reports are stored only when a workflow step generates coverage output
 - Accessible from workflow run summary
 
 ## Usage
@@ -59,10 +62,10 @@ This document describes the GitHub Actions workflows configured for continuous i
 To run the same checks that CI runs:
 
 ```bash
-pnpm verify
+pnpm clean
 ```
 
-This executes the `scripts/verify-all.sh` script which performs all verification steps.
+This formats tracked and unignored files, cleans generated artifacts, checks artifact hygiene, and executes the `scripts/verify-all.sh` verification flow.
 
 ### Monitoring CI
 
@@ -83,10 +86,10 @@ All pull requests to `main` will automatically trigger the CI workflow. The PR c
 
 ## Best Practices
 
-1. **Always run `pnpm verify` locally** before pushing to ensure CI will pass
+1. **Always run `pnpm clean` locally** before pushing to ensure formatting, artifact hygiene, and CI verification pass
 2. **Check CI logs** if a build fails to understand what went wrong
 3. **Keep dependencies updated** to avoid security vulnerabilities
-4. **Monitor coverage reports** to maintain code quality
+4. **Monitor coverage reports** when coverage jobs are enabled
 
 ## Troubleshooting
 
@@ -104,7 +107,7 @@ All pull requests to `main` will automatically trigger the CI workflow. The PR c
 
 ### CI Fails on Tests
 
-- Run `pnpm test:coverage -- --run` locally
+- Run `pnpm test` locally
 - Check test failures in the logs
 - Ensure tests don't depend on local environment
 
@@ -137,3 +140,7 @@ Potential improvements to consider:
 - Update Node.js and pnpm versions as needed
 - Adjust caching strategy if build times increase
 - Monitor artifact storage usage
+
+## Last Updated
+
+7 May 2026 - Aligned CI documentation with current verify and clean commands

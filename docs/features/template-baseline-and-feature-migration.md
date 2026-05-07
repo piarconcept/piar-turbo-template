@@ -141,6 +141,8 @@ Web (public):
 
 ## Standard Feature Implementation Pattern
 
+Plan non-trivial migrations as waves before copying code. Use `docs/features/waves-workflow.md` and `docs/waves/README.md` to split ownership, integration, QA, and cleanup.
+
 For each new business feature, implement in this order:
 
 1. Domain model and port
@@ -189,6 +191,7 @@ For each new business feature, implement in this order:
 8. Documentation
 
 - Update relevant docs in `docs/features`.
+- Update wave docs in `docs/waves` when the migration used staged or multi-agent execution.
 - Update `docs/README.md` and `docs/AI-context.md` when adding new docs.
 
 ## Common Migration Mistakes and Correct Approach
@@ -267,12 +270,18 @@ pnpm -C apps/api/web-bff typecheck && pnpm -C apps/api/web-bff build
 pnpm -C apps/client/backoffice typecheck && pnpm -C apps/client/backoffice build
 ```
 
+Before final handoff:
+
+```bash
+pnpm clean
+```
+
 ## Source-to-Template Copy Rules
 
 When copying from `piar-concept-platform`:
 
 - Copy source code only.
-- Do not copy `node_modules`, `dist`, `.turbo`, `.next`, `coverage`.
+- Do not copy `node_modules`, `build`, `dist`, `.turbo`, `.next`, `out`, `coverage`.
 - Adapt imports and app wiring, do not assume plug-and-play.
 - Prioritize matching contracts (ports, DTOs, entity props) over line-by-line code parity.
 
@@ -286,7 +295,9 @@ A feature is done only if all are true:
 - i18n labels are complete for EN/ES/CA.
 - Typecheck and build pass for packages and apps.
 - Documentation updated.
+- Wave QA or equivalent integration review completed for non-trivial migrations.
+- `pnpm clean` passes or any blocker is documented.
 
 ## Last Updated
 
-23 February 2026 - Baseline updated after auth/accounts/search/contact-submission/dynamic-page/profile integration.
+7 May 2026 - Added waves workflow and clean verification requirements.

@@ -4,9 +4,9 @@
     "dev": { "cache": false, "persistent": true },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "dist/**", ".serverless/**"]
+      "outputs": [".next/**", "build/**", "dist/**", "out/**", ".serverless/**"]
     },
-    "typecheck": { "dependsOn": ["^typecheck"] },
+    "typecheck": { "dependsOn": ["^build", "^typecheck"] },
     "lint": {
       "dependsOn": ["^lint"],
       "cache": true

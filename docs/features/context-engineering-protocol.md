@@ -8,7 +8,7 @@ The goal is simple: if the team had to spend time understanding a problem once, 
 
 ## When Documentation Is Mandatory
 
-Create or update a learning-log entry when any of the following is true:
+Create or update an architecture fix note or learning-log entry when any of the following is true:
 
 - A bug, regression, or incident reached a shared branch, staging, or production.
 - The fix required non-obvious debugging across multiple files, layers, or services.
@@ -21,14 +21,18 @@ Documentation is optional for clearly trivial changes such as typos, copy fixes,
 
 ## Where To Document
 
-- Store reusable fix notes in `docs/learning-log/`.
+- Store architecture root causes in `docs/architecture/fixes/`.
+- Store reusable operational fix notes in `docs/learning-log/`.
 - Create one file per root cause or incident using `YYYY-MM-DD-short-slug.md`.
-- Start from `docs/learning-log/TEMPLATE.md`.
+- Start from the matching template in that directory.
+- If the work was planned or executed through waves, update the relevant `docs/waves/` plan or implementation report.
 - If the fix changes a permanent workflow or architecture rule, update the relevant document in `docs/features/` as well and cross-link both documents.
+
+Use `docs/architecture/fixes/` when the root cause is structural: package boundaries, BFF/client ownership, layering, contracts, monorepo wiring, persistence, migrations, or repeated architecture decisions.
 
 ## Required Content For Each Entry
 
-Every learning-log note must include:
+Every architecture fix or learning-log note must include:
 
 - Summary: what broke and why this note exists.
 - Symptoms: what engineers or users saw.
@@ -43,9 +47,10 @@ Every learning-log note must include:
 
 1. Fix the code.
 2. Add or update tests when appropriate.
-3. Write the learning-log entry before merging.
-4. Update the canonical feature or architecture doc if the fix changed long-term behavior.
-5. Add the new entry to `docs/learning-log/README.md`.
+3. Update the relevant wave plan or implementation report if the work was wave-based.
+4. Write the architecture fix note or learning-log entry before merging.
+5. Update the canonical feature or architecture doc if the fix changed long-term behavior.
+6. Add the new entry to the relevant README index.
 
 ## Review Standard
 
@@ -66,11 +71,14 @@ If the note only says what changed in code, it is incomplete.
 
 ## Related Documentation
 
+- `../architecture/fixes/README.md`
+- `../architecture/fixes/TEMPLATE.md`
 - `../learning-log/README.md`
 - `../learning-log/TEMPLATE.md`
+- `../waves/README.md`
 - `quality-gates.md`
 - `error-handling-system.md`
 
 ## Last Updated
 
-10 March 2026 - Aligned the protocol with the learning-log workflow used in piar-concept-platform
+7 May 2026 - Connected reusable learning capture with wave execution docs

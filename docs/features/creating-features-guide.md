@@ -14,6 +14,7 @@ It reflects the architecture already implemented in:
 ## Required Reading Before Starting
 
 - `docs/features/template-baseline-and-feature-migration.md`
+- `docs/features/waves-workflow.md`
 - `docs/features/bff-architecture.md`
 - `docs/features/domain-models.md`
 - `docs/features/domain-fields.md`
@@ -37,6 +38,21 @@ domain-models entity/port
 Optional client package:
 
 - Add `features/{feature}/infra/client` only when you need a reusable client SDK in multiple apps.
+
+## Wave-First Planning
+
+Before implementing a non-trivial feature, create or update a wave plan under `docs/waves/`.
+
+Use `docs/features/waves-workflow.md` for the default wave shape:
+
+- scope and ownership,
+- contracts and shared domain work,
+- backend/API wiring,
+- client surfaces,
+- tests/docs,
+- final cleanup with `pnpm clean`.
+
+Tiny linear fixes can skip wave docs, but feature work should not start as an unbounded chat prompt.
 
 ## Step-by-Step
 
@@ -148,6 +164,7 @@ pnpm -C packages/messages build
 ### 8. Update documentation
 
 - Add or update feature docs under `docs/features/`.
+- Add or update wave docs under `docs/waves/` when the feature was planned or executed as waves.
 - If a new doc is created, update indexes:
   - `docs/README.md`
   - `docs/AI-context.md`
@@ -166,6 +183,12 @@ pnpm -C packages/features/{feature}/api typecheck && pnpm -C packages/features/{
 pnpm -C apps/api/backoffice-bff typecheck && pnpm -C apps/api/backoffice-bff build
 pnpm -C apps/api/web-bff typecheck && pnpm -C apps/api/web-bff build
 pnpm -C apps/client/backoffice typecheck && pnpm -C apps/client/backoffice build
+```
+
+Before final handoff, run:
+
+```bash
+pnpm clean
 ```
 
 ## Common Errors to Avoid
@@ -188,7 +211,8 @@ pnpm -C apps/client/backoffice typecheck && pnpm -C apps/client/backoffice build
 - [ ] EN/ES/CA translations complete
 - [ ] Typecheck/build green
 - [ ] Docs updated
+- [ ] Wave QA or equivalent integration review completed for non-trivial feature work
 
 ## Last Updated
 
-23 February 2026 - Rewritten to match current integrated architecture and migration workflow.
+7 May 2026 - Added wave-first planning and final cleanup workflow.

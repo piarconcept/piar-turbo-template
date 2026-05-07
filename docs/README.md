@@ -28,6 +28,7 @@ Start with `AI-context.md`.
 - `features/styling-configuration.md`
 - `features/tailwind-v4-implementation.md`
 - `features/context-engineering-protocol.md`
+- `features/waves-workflow.md`
 
 ### Package Docs
 
@@ -54,6 +55,19 @@ Start with `AI-context.md`.
 
 - `features/TEMPLATE.md`
 
+### Execution Waves
+
+- `waves/README.md`
+- `waves/template-day.md`
+- `waves/template-wave.md`
+- `waves/template-prompt.md`
+
+### Architecture Fix Memory
+
+- `architecture/fixes/README.md`
+- `architecture/fixes/TEMPLATE.md`
+- `architecture/fixes/2026-05-07-template-wave-clean-baseline.md`
+
 ### Operational Learning
 
 - `learning-log/README.md`
@@ -65,8 +79,10 @@ Start with `AI-context.md`.
 2. Update `AI-context.md` when adding/removing docs.
 3. Add a Last Updated line to new docs.
 4. Keep `CHANGELOG.md`, `CONTRIBUTING.md`, `SECURITY.md`, and `CODE_OF_CONDUCT.md` updated when relevant.
-5. Log non-trivial fixes and reusable debugging learnings in `docs/learning-log/`.
+5. Document resolved architecture bugs in `docs/architecture/fixes/`.
+6. Log non-trivial operational fixes and reusable debugging learnings in `docs/learning-log/`.
+7. New feature work and multi-agent execution plans should use `docs/waves/`.
 
 ## Last Updated
 
-10 March 2026 - Aligned the context engineering docs with the learning-log workflow
+7 May 2026 - Added execution waves and architecture fix memory

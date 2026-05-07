@@ -13,10 +13,13 @@ Start here. This file is the canonical index and rules for documentation and dev
 3. **Structure**:
    - `docs/AI-context.md` = master index and rules
    - `docs/features/` = detailed docs per topic
+   - `docs/waves/` = multi-agent execution wave plans, templates, and dated prompt batches
+   - `docs/architecture/fixes/` = resolved architecture bugs and structural lessons
    - `docs/learning-log/` = resolved incidents, regressions, and non-obvious fixes
 4. **Naming**: Use kebab-case filenames (e.g., `authentication-flow.md`).
 5. **Index maintenance**: Update this index whenever a doc is added/removed.
-6. **Learning capture**: Any non-trivial fix, incident, workaround, or reusable debugging lesson must be logged in `docs/learning-log/`.
+6. **Architecture learning capture**: Every resolved architecture bug must be documented in `docs/architecture/fixes/`.
+7. **Operational learning capture**: Any non-trivial fix, incident, workaround, or reusable debugging lesson that is not primarily architectural must be logged in `docs/learning-log/`.
 
 ## Documentation Index
 
@@ -39,37 +42,52 @@ Start here. This file is the canonical index and rules for documentation and dev
 12. `features/styling-configuration.md` - Styling approach overview
 13. `features/tailwind-v4-implementation.md` - Tailwind v4 implementation details
 14. `features/context-engineering-protocol.md` - Rules for documenting important fixes and learnings
+15. `features/waves-workflow.md` - Wave-first planning workflow for feature work and multi-agent execution
+
+### Execution Waves
+
+16. `waves/README.md` - Canonical execution waves contract
+17. `waves/template-day.md` - Template for day-level wave orchestration
+18. `waves/template-wave.md` - Template for a single wave definition
+19. `waves/template-prompt.md` - Template for a standalone wave prompt
 
 ### Package Documentation
 
-15. `features/domain-models.md` - `@piar/domain-models`
-16. `features/domain-fields.md` - `@piar/domain-fields`
-17. `features/ui-components-atomic-design.md` - `@piar/ui-components`
-18. `features/auth-card-refactoring.md` - AuthCard refactor notes
-19. `features/health-feature.md` - Health feature architecture
-20. `features/auth-feature.md` - Auth feature architecture
-21. `features/infra-backend-security.md` - Backend security package
-22. `features/infra-client-seo.md` - SEO infrastructure
-23. `features/error-handling-system.md` - Error handling system
-24. `features/nextauth-authentication.md` - NextAuth v5 in backoffice
+20. `features/domain-models.md` - `@piar/domain-models`
+21. `features/domain-fields.md` - `@piar/domain-fields`
+22. `features/ui-components-atomic-design.md` - `@piar/ui-components`
+23. `features/auth-card-refactoring.md` - AuthCard refactor notes
+24. `features/health-feature.md` - Health feature architecture
+25. `features/auth-feature.md` - Auth feature architecture
+26. `features/infra-backend-security.md` - Backend security package
+27. `features/infra-client-seo.md` - SEO infrastructure
+28. `features/error-handling-system.md` - Error handling system
+29. `features/nextauth-authentication.md` - NextAuth v5 in backoffice
 
 ### Applications
 
-25. `features/web-bff-application.md` - Web BFF documentation
-26. `features/backoffice-bff-application.md` - Backoffice BFF documentation
+30. `features/web-bff-application.md` - Web BFF documentation
+31. `features/backoffice-bff-application.md` - Backoffice BFF documentation
 
 ### Templates
 
-27. `features/TEMPLATE.md` - Template for new docs
+32. `features/TEMPLATE.md` - Template for new docs
+
+### Architecture Fix Memory
+
+33. `architecture/fixes/README.md` - Index and rules for architecture fix notes
+34. `architecture/fixes/TEMPLATE.md` - Template for architecture fix notes
+35. `architecture/fixes/2026-05-07-template-wave-clean-baseline.md` - Wave workflow, clean command, and verification hardening baseline
 
 ### Operational Learning
 
-28. `learning-log/README.md` - Index of resolved incidents and important fixes
-29. `learning-log/TEMPLATE.md` - Template for learning-log entries
+36. `learning-log/README.md` - Index of resolved incidents and important fixes
+37. `learning-log/TEMPLATE.md` - Template for learning-log entries
 
 ## Repository Governance
 
 - `CONTRIBUTING.md` - Contribution workflow and commit rules
+- `AGENTS.md` - Agent entrypoint that redirects to this file and the wave workflow
 - `SECURITY.md` - Vulnerability reporting
 - `CHANGELOG.md` - Template change history
 - `CODE_OF_CONDUCT.md` - Community standards
@@ -89,10 +107,12 @@ Start here. This file is the canonical index and rules for documentation and dev
 
 1. Read `features/creating-features-guide.md`
 2. Read `features/template-baseline-and-feature-migration.md`
-3. Create required layers (`domain`, `fields`, `repositories`, feature packages, BFF wiring)
-4. Follow Clean Architecture
-5. Document in `docs/features/`
-6. Update this index
+3. Read `features/waves-workflow.md`
+4. Create or update `docs/waves/` when the feature is larger than a tiny linear fix
+5. Create required layers (`domain`, `fields`, `repositories`, feature packages, BFF wiring)
+6. Follow Clean Architecture
+7. Document in `docs/features/`
+8. Update this index
 
 ### Creating a New Package
 
@@ -104,18 +124,22 @@ Start here. This file is the canonical index and rules for documentation and dev
 ### Documenting an Important Fix
 
 1. Read `features/context-engineering-protocol.md`
-2. Create or update a note in `docs/learning-log/`
-3. Use `learning-log/TEMPLATE.md`
-4. Update the relevant feature doc if the fix changes long-term behavior
-5. Update this index only when docs are added or removed
+2. If the root cause is architectural, create or update a note in `docs/architecture/fixes/`
+3. If the fix is non-architectural but reusable, create or update a note in `docs/learning-log/`
+4. Use the matching template in that directory
+5. Update the relevant wave plan if the work was executed through multi-agent prompts
+6. Update the relevant feature doc if the fix changes long-term behavior
+7. Update this index only when docs are added or removed
 
 ## Before Making Changes
 
 1. Check `features/repository-configuration.md`
 2. Review relevant docs in `docs/features/`
-3. Review `docs/learning-log/` when working on a repeated or unclear failure
-4. Update docs after changes
+3. Review `docs/waves/` when planning or resuming feature work, multi-agent execution, or staged migrations
+4. Review `docs/architecture/fixes/` when working on a repeated or structural failure
+5. Review `docs/learning-log/` when working on a repeated or unclear operational failure
+6. Update docs after changes
 
 ## Last Updated
 
-10 March 2026 - Aligned context engineering docs with the learning-log workflow
+7 May 2026 - Added wave-first execution docs, architecture fix memory, and agent entrypoint
