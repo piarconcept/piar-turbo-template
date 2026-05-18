@@ -77,12 +77,13 @@ Start here. This file is the canonical index and rules for documentation and dev
 
 33. `architecture/fixes/README.md` - Index and rules for architecture fix notes
 34. `architecture/fixes/TEMPLATE.md` - Template for architecture fix notes
-35. `architecture/fixes/2026-05-07-template-wave-clean-baseline.md` - Wave workflow, clean command, and verification hardening baseline
+35. `architecture/fixes/2026-05-08-bounded-list-contract.md` - Bounded collection-query contract and removal of whole-table `getAll` reads
+36. `architecture/fixes/2026-05-07-template-wave-clean-baseline.md` - Wave workflow, clean command, and verification hardening baseline
 
 ### Operational Learning
 
-36. `learning-log/README.md` - Index of resolved incidents and important fixes
-37. `learning-log/TEMPLATE.md` - Template for learning-log entries
+37. `learning-log/README.md` - Index of resolved incidents and important fixes
+38. `learning-log/TEMPLATE.md` - Template for learning-log entries
 
 ## Repository Governance
 
@@ -142,4 +143,4 @@ Start here. This file is the canonical index and rules for documentation and dev
 
 ## Last Updated
 
-7 May 2026 - Added wave-first execution docs, architecture fix memory, and agent entrypoint
+8 May 2026 - Added bounded list contract architecture fix to the index

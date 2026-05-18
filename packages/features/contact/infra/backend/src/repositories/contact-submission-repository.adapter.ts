@@ -1,5 +1,4 @@
 import type { DynamicQuery, PaginatedResult } from '@piar/domain-dynamic-form';
-import { applyDynamicQuery } from '@piar/domain-dynamic-form';
 import type {
   CreateContactSubmissionPayload,
   IContactSubmissionRepository,
@@ -17,12 +16,12 @@ export class ContactSubmissionRepositoryAdapter implements IContactSubmissionRep
   constructor(private readonly contactSubmissionPort: ContactSubmissionPort) {}
 
   async list(query: DynamicQuery): Promise<PaginatedResult<ContactSubmissionEntity>> {
-    const records = await this.contactSubmissionPort.getAll();
-    const entities = records.map((record) => new ContactSubmissionEntity(record));
+    const result = await this.contactSubmissionPort.list(query);
 
-    return applyDynamicQuery(entities as unknown as Array<Record<string, unknown>>, query, {
-      searchKeys: ['name', 'email', 'message', 'source'],
-    }) as unknown as PaginatedResult<ContactSubmissionEntity>;
+    return {
+      rows: result.rows.map((record) => new ContactSubmissionEntity(record)),
+      total: result.total,
+    };
   }
 
   async getById(id: string): Promise<ContactSubmissionEntity | null> {

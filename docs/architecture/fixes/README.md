@@ -28,8 +28,9 @@ Create an entry here when the real root cause was related to:
 
 ## Index
 
+- `2026-05-08-bounded-list-contract.md` - Removed whole-table `getAll` contracts and moved list/search behavior to bounded repository queries.
 - `2026-05-07-template-wave-clean-baseline.md` - Added wave execution docs, cleanup verification, generated artifact hygiene, and app dependency preparation.
 
 ## Last Updated
 
-7 May 2026 - Added template wave and clean baseline entry
+8 May 2026 - Added bounded list contract architecture fix

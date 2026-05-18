@@ -101,6 +101,19 @@ Business-rule protections implemented in accounts domain/service layer:
 - cannot self-delete from admin account endpoints
 - cannot self-demote from admin to user
 
+## Data Access Guardrails
+
+Backoffice list and search endpoints must stay bounded:
+
+- Domain ports expose `list(query)` for paginated reads; they must not expose
+  whole-table methods such as `getAll`.
+- Accounts, contact submissions, dynamic pages, and search must apply pagination,
+  supported filters, and supported sorting in the TypeORM repository query.
+- Search endpoints must request only the configured page/window they need from
+  each collection.
+- Business-rule existence checks should use `LIMIT 1` or `LIMIT 2` style queries
+  when they only need to know whether records exist.
+
 ## Environment Variables
 
 Typical required values:
@@ -134,4 +147,4 @@ pnpm -C apps/api/backoffice-bff typecheck && pnpm -C apps/api/backoffice-bff bui
 
 ## Last Updated
 
-23 February 2026 - Updated from initial scaffold to current integrated module set.
+8 May 2026 - Added bounded data access guardrails for list/search endpoints.

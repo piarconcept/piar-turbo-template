@@ -4,24 +4,14 @@ export type Id = string;
 
 /**
  * Generic CRUD port used by dynamic forms/tables.
- *
- * Note: domain model ports in this monorepo historically exposed a BasePort with
- * methods like `getAll/getById/create/update/delete/upsert`.
- *
- * This interface is shaped to be compatible with that style while also
- * supporting a query-based `list` for dynamic tables.
  */
 export interface DynamicCrudPort<TEntity, TId = Id, TQuery extends DynamicQuery = DynamicQuery> {
   /**
-   * Simple list operation.
-   * Prefer `list(query)` when building dynamic tables.
+   * Query-based list operation (pagination/search/sort/filters). Implementations
+   * must apply this at the persistence boundary instead of loading the full
+   * collection and slicing in memory.
    */
-  getAll(): Promise<TEntity[]>;
-
-  /**
-   * Query-based list operation (pagination/search/sort/filters).
-   */
-  list?(query: TQuery): Promise<PaginatedResult<TEntity>>;
+  list(query: TQuery): Promise<PaginatedResult<TEntity>>;
 
   getById(id: TId): Promise<TEntity | null>;
 

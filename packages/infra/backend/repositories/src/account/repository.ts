@@ -6,12 +6,13 @@ import { AccountFactory } from './factory';
 import * as bcrypt from 'bcryptjs';
 import { AccountOrmEntity } from './orm.entity';
 import { DynamicQuery, type PaginatedResult } from '@piar/domain-dynamic-form';
+import {
+  applyAllowedFilters,
+  applyAllowedSort,
+  applyTextSearch,
+  resolveListWindow,
+} from '../common/dynamic-query';
 
-/**
- * Account Repository Implementation
- * Implements AccountPort interface from domain
- * Uses in-memory MockData for now, can be replaced with real database
- */
 @Injectable()
 export class AccountRepository implements AccountPort {
   constructor(
@@ -20,26 +21,33 @@ export class AccountRepository implements AccountPort {
   ) {}
 
   async list(query: DynamicQuery): Promise<PaginatedResult<AccountEntityProps>> {
-    const page = query.page ?? 1;
-    const limit = query.limit ?? 10;
-    const skip = (page - 1) * limit;
+    const { skip, limit } = resolveListWindow(query);
+    const queryBuilder = this.accountRepository.createQueryBuilder('account');
 
-    const [rows, total] = await this.accountRepository.findAndCount({
-      skip,
-      take: limit,
+    applyTextSearch(queryBuilder, 'account', ['accountCode', 'email', 'role'], query.searchQuery);
+    applyAllowedFilters(queryBuilder, 'account', query.filters, {
+      role: 'role',
     });
+    applyAllowedSort(
+      queryBuilder,
+      'account',
+      query.sort,
+      {
+        accountCode: 'accountCode',
+        email: 'email',
+        role: 'role',
+        createdAt: 'createdAt',
+        updatedAt: 'updatedAt',
+      },
+      { key: 'updatedAt', direction: 'DESC' },
+    );
+
+    const [rows, total] = await queryBuilder.skip(skip).take(limit).getManyAndCount();
 
     return {
       rows: AccountFactory.toDomainList(rows),
       total,
     };
-  }
-  /**
-   * Get all accounts
-   */
-  async getAll(): Promise<AccountEntityProps[]> {
-    const accounts = await this.accountRepository.find();
-    return AccountFactory.toDomainList(accounts);
   }
 
   /**
@@ -77,12 +85,23 @@ export class AccountRepository implements AccountPort {
     return bcrypt.compare(password, account.passwordHash);
   }
 
+  async hasMultipleByRole(role: NonNullable<AccountEntityProps['role']>): Promise<boolean> {
+    const rows = await this.accountRepository
+      .createQueryBuilder('account')
+      .select('account.id')
+      .where('account.role = :role', { role })
+      .take(2)
+      .getRawMany();
+
+    return rows.length > 1;
+  }
+
   /**
    * Create new account
    */
   async create(entity: AccountEntityProps): Promise<AccountEntityProps> {
-    const accountCount = await this.accountRepository.count();
-    const role: 'admin' | 'user' = accountCount === 0 ? 'admin' : 'user';
+    const hasExistingAccount = await this.hasAnyAccount();
+    const role: 'admin' | 'user' = hasExistingAccount ? 'user' : 'admin';
     const passwordHash = entity.passwordHash
       ? await bcrypt.hash(entity.passwordHash, 10)
       : undefined;
@@ -118,11 +137,12 @@ export class AccountRepository implements AccountPort {
     const existing = entity.id
       ? await this.accountRepository.findOne({ where: { id: entity.id } })
       : null;
-    const accountCount = existing ? undefined : await this.accountRepository.count();
+    const hasExistingAccount = existing ? true : await this.hasAnyAccount();
     const existingRole: AccountEntityProps['role'] =
       existing?.role === 'admin' || existing?.role === 'user' ? existing.role : undefined;
-    const role: AccountEntityProps['role'] =
-      accountCount === 0 ? 'admin' : (entity.role ?? existingRole);
+    const role: AccountEntityProps['role'] = hasExistingAccount
+      ? (entity.role ?? existingRole)
+      : 'admin';
 
     if (existing?.role === 'admin' && role !== 'admin') {
       await this.ensureAtLeastOneAdminRemains();
@@ -146,13 +166,23 @@ export class AccountRepository implements AccountPort {
   }
 
   private async ensureAtLeastOneAdminRemains(): Promise<void> {
-    const adminCount = await this.accountRepository.count({ where: { role: 'admin' } });
-    if (adminCount <= 1) {
+    const hasAnotherAdmin = await this.hasMultipleByRole('admin');
+    if (!hasAnotherAdmin) {
       throw new BusinessRuleViolationError(
         'last_admin',
         'At least one admin account is required',
         'account_last_admin_required',
       );
     }
+  }
+
+  private async hasAnyAccount(): Promise<boolean> {
+    const row = await this.accountRepository
+      .createQueryBuilder('account')
+      .select('account.id')
+      .take(1)
+      .getRawOne();
+
+    return Boolean(row);
   }
 }

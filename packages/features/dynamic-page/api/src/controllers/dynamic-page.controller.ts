@@ -34,6 +34,21 @@ import {
 } from '../use-cases';
 import { CreateDynamicPageDto, UpdateDynamicPageDto } from '../dto';
 
+function parseFilters(filters?: string): DynamicQuery['filters'] | undefined {
+  if (!filters) return undefined;
+
+  try {
+    const parsed = JSON.parse(filters) as unknown;
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+      return parsed as DynamicQuery['filters'];
+    }
+  } catch {
+    return undefined;
+  }
+
+  return undefined;
+}
+
 @ApiBearerAuth()
 @ApiTags('Dynamic Pages')
 @UseGuards(JwtAuthGuard, AdminGuard)
@@ -79,7 +94,7 @@ export class DynamicPageController {
             direction: sortDirection === 'desc' ? 'desc' : 'asc',
           }
         : undefined,
-      filters: filters ? (JSON.parse(filters) as DynamicQuery['filters']) : undefined,
+      filters: parseFilters(filters),
     };
 
     return this.listDynamicPagesUseCase.execute(query);

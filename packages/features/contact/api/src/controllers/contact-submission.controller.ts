@@ -21,6 +21,21 @@ import {
 } from '../use-cases';
 import { UpdateContactSubmissionDto } from '../dto';
 
+function parseFilters(filters?: string): DynamicQuery['filters'] | undefined {
+  if (!filters) return undefined;
+
+  try {
+    const parsed = JSON.parse(filters) as unknown;
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+      return parsed as DynamicQuery['filters'];
+    }
+  } catch {
+    return undefined;
+  }
+
+  return undefined;
+}
+
 @ApiBearerAuth()
 @ApiTags('Contact Submissions')
 @UseGuards(JwtAuthGuard, AdminGuard)
@@ -58,7 +73,7 @@ export class ContactSubmissionController {
             direction: sortDirection === 'desc' ? 'desc' : 'asc',
           }
         : undefined,
-      filters: filters ? (JSON.parse(filters) as DynamicQuery['filters']) : undefined,
+      filters: parseFilters(filters),
     };
 
     return this.listContactSubmissionsUseCase.execute(query);

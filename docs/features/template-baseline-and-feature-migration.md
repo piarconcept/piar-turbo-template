@@ -250,6 +250,24 @@ Correct approach:
 - Keep checks at repository/service level.
 - Enforce at both API and repository side when possible.
 
+### Mistake 6: Loading whole tables for admin lists or search
+
+Symptom:
+
+- A controller, use case, adapter, or repository calls a whole-collection method
+  and then filters, sorts, searches, or paginates in memory.
+
+Correct approach:
+
+- Domain ports must expose `list(query)` for collection reads.
+- TypeORM repositories must apply `skip`, `take`, search, filters, and sorting
+  in SQL using allowlisted columns.
+- Search endpoints should request only the limited result window they need.
+- Existence checks should use bounded queries instead of full counts when they
+  only need to know whether any or multiple records exist.
+- Do not add new `getAll` methods to controllers, use cases, adapters, ports, or
+  repositories.
+
 ## Validation Checklist (Required)
 
 Run after each feature migration:
@@ -300,4 +318,4 @@ A feature is done only if all are true:
 
 ## Last Updated
 
-7 May 2026 - Added waves workflow and clean verification requirements.
+8 May 2026 - Added bounded collection-query rules for list and search endpoints.

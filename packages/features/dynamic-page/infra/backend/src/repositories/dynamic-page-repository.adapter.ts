@@ -1,5 +1,4 @@
 import type { DynamicQuery, PaginatedResult } from '@piar/domain-dynamic-form';
-import { applyDynamicQuery } from '@piar/domain-dynamic-form';
 import type {
   CreateDynamicPagePayload,
   IDynamicPageRepository,
@@ -17,12 +16,12 @@ export class DynamicPageRepositoryAdapter implements IDynamicPageRepository {
   constructor(private readonly dynamicPagePort: DynamicPagePort) {}
 
   async list(query: DynamicQuery): Promise<PaginatedResult<DynamicPageEntity>> {
-    const records = await this.dynamicPagePort.getAll();
-    const entities = records.map((record) => new DynamicPageEntity(record));
+    const result = await this.dynamicPagePort.list(query);
 
-    return applyDynamicQuery(entities as unknown as Array<Record<string, unknown>>, query, {
-      searchKeys: ['pageCode', 'slug'],
-    }) as unknown as PaginatedResult<DynamicPageEntity>;
+    return {
+      rows: result.rows.map((record) => new DynamicPageEntity(record)),
+      total: result.total,
+    };
   }
 
   async getById(id: string): Promise<DynamicPageEntity | null> {

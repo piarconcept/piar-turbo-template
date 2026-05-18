@@ -44,3 +44,11 @@ const config: EntityFieldsConfig<{ name: string }> = {
 
 - Validation is intentionally minimal (required fields + optional per-field rules).
 - Real backends should store metadata in a DB and deliver it to the client.
+- `DynamicCrudPort.list(query)` is required for collection reads and must be
+  implemented as a bounded persistence query when backed by a database.
+- Avoid whole-collection reads for dynamic tables; pagination, search, filters,
+  and sorting belong at the repository boundary.
+
+## Last Updated
+
+8 May 2026 - Documented bounded list contract requirements for dynamic CRUD ports.

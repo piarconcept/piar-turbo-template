@@ -66,6 +66,7 @@ Start with `AI-context.md`.
 
 - `architecture/fixes/README.md`
 - `architecture/fixes/TEMPLATE.md`
+- `architecture/fixes/2026-05-08-bounded-list-contract.md`
 - `architecture/fixes/2026-05-07-template-wave-clean-baseline.md`
 
 ### Operational Learning
@@ -85,4 +86,4 @@ Start with `AI-context.md`.
 
 ## Last Updated
 
-7 May 2026 - Added execution waves and architecture fix memory
+8 May 2026 - Added bounded list contract architecture fix

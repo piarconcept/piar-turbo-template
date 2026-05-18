@@ -5,6 +5,12 @@ import { Repository } from 'typeorm';
 import { ContactSubmissionFactory } from './factory';
 import { ContactSubmissionOrmEntity } from './orm.entity';
 import { DynamicQuery, type PaginatedResult } from '@piar/domain-dynamic-form';
+import {
+  applyAllowedFilters,
+  applyAllowedSort,
+  applyTextSearch,
+  resolveListWindow,
+} from '../common/dynamic-query';
 
 @Injectable()
 export class ContactSubmissionRepository implements ContactSubmissionPort {
@@ -14,27 +20,42 @@ export class ContactSubmissionRepository implements ContactSubmissionPort {
   ) {}
 
   async list(query: DynamicQuery): Promise<PaginatedResult<ContactSubmissionEntityProps>> {
-    const page = query.page ?? 1;
-    const limit = query.limit ?? 10;
-    const skip = (page - 1) * limit;
+    const { skip, limit } = resolveListWindow(query);
+    const queryBuilder = this.contactRepository.createQueryBuilder('contactSubmission');
 
-    const [rows, total] = await this.contactRepository.findAndCount({
-      skip,
-      take: limit,
-      order: { createdAt: 'DESC' },
+    applyTextSearch(
+      queryBuilder,
+      'contactSubmission',
+      ['name', 'email', 'message', 'source'],
+      query.searchQuery,
+    );
+    applyAllowedFilters(queryBuilder, 'contactSubmission', query.filters, {
+      consent: 'consent',
+      locale: 'locale',
+      source: 'source',
+      status: 'status',
     });
+    applyAllowedSort(
+      queryBuilder,
+      'contactSubmission',
+      query.sort,
+      {
+        createdAt: 'createdAt',
+        email: 'email',
+        name: 'name',
+        source: 'source',
+        status: 'status',
+        updatedAt: 'updatedAt',
+      },
+      { key: 'createdAt', direction: 'DESC' },
+    );
+
+    const [rows, total] = await queryBuilder.skip(skip).take(limit).getManyAndCount();
 
     return {
       rows: ContactSubmissionFactory.toDomainList(rows),
       total,
     };
-  }
-
-  async getAll(): Promise<ContactSubmissionEntityProps[]> {
-    const contacts = await this.contactRepository.find({
-      order: { createdAt: 'DESC' },
-    });
-    return ContactSubmissionFactory.toDomainList(contacts);
   }
 
   async getById(id: string): Promise<ContactSubmissionEntityProps | null> {

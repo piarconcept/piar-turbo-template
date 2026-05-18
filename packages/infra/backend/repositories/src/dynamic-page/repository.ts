@@ -3,6 +3,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DynamicPageEntityProps, DynamicPagePort } from '@piar/domain-models';
 import { Repository } from 'typeorm';
 import { DynamicQuery, type PaginatedResult } from '@piar/domain-dynamic-form';
+import {
+  applyAllowedFilters,
+  applyAllowedSort,
+  applyTextSearch,
+  resolveListWindow,
+} from '../common/dynamic-query';
 import { DynamicPageFactory } from './factory';
 import { DynamicPageOrmEntity } from './orm.entity';
 
@@ -14,24 +20,38 @@ export class DynamicPageRepository implements DynamicPagePort {
   ) {}
 
   async list(query: DynamicQuery): Promise<PaginatedResult<DynamicPageEntityProps>> {
-    const page = query.page ?? 1;
-    const limit = query.limit ?? 10;
-    const skip = (page - 1) * limit;
+    const { skip, limit } = resolveListWindow(query);
+    const queryBuilder = this.dynamicPageRepository.createQueryBuilder('dynamicPage');
 
-    const [rows, total] = await this.dynamicPageRepository.findAndCount({
-      skip,
-      take: limit,
+    applyTextSearch(queryBuilder, 'dynamicPage', ['pageCode', 'slug', 'status'], query.searchQuery);
+    applyAllowedFilters(queryBuilder, 'dynamicPage', query.filters, {
+      isActive: 'isActive',
+      showOnPublicWeb: 'showOnPublicWeb',
+      status: 'status',
     });
+    applyAllowedSort(
+      queryBuilder,
+      'dynamicPage',
+      query.sort,
+      {
+        createdAt: 'createdAt',
+        isActive: 'isActive',
+        pageCode: 'pageCode',
+        showOnPublicWeb: 'showOnPublicWeb',
+        slug: 'slug',
+        status: 'status',
+        updatedAt: 'updatedAt',
+        webPriority: 'webPriority',
+      },
+      { key: 'updatedAt', direction: 'DESC' },
+    );
+
+    const [rows, total] = await queryBuilder.skip(skip).take(limit).getManyAndCount();
 
     return {
       rows: DynamicPageFactory.toDomainList(rows),
       total,
     };
-  }
-
-  async getAll(): Promise<DynamicPageEntityProps[]> {
-    const pages = await this.dynamicPageRepository.find();
-    return DynamicPageFactory.toDomainList(pages);
   }
 
   async getById(id: string): Promise<DynamicPageEntityProps | null> {

@@ -57,23 +57,24 @@ export class SearchBackofficeUseCaseExecuter implements SearchBackofficeUseCase 
     limitPerCollection: number,
   ): Promise<BackofficeSearchCollection> {
     try {
-      const accounts = await this.accountPort.getAll();
-      const normalizedQuery = query.toLowerCase();
+      const result = await this.accountPort.list({
+        page: 1,
+        limit: limitPerCollection,
+        searchQuery: query,
+        sort: {
+          key: 'updatedAt',
+          direction: 'desc',
+        },
+      });
 
-      const matches = accounts
-        .filter((account) => this.matchesAccount(account, normalizedQuery))
+      const items = result.rows
         .map((account) => this.toAccountSearchItem(account))
-        .filter((item): item is BackofficeSearchItem => Boolean(item))
-        .sort((left, right) => {
-          const leftTime = left.updatedAt ? new Date(left.updatedAt).getTime() : 0;
-          const rightTime = right.updatedAt ? new Date(right.updatedAt).getTime() : 0;
-          return rightTime - leftTime;
-        });
+        .filter((item): item is BackofficeSearchItem => Boolean(item));
 
       return {
         key: 'accounts',
-        total: matches.length,
-        items: matches.slice(0, limitPerCollection),
+        total: result.total,
+        items,
       };
     } catch (error) {
       this.logger.error('Search failed for accounts collection', error);
@@ -83,13 +84,6 @@ export class SearchBackofficeUseCaseExecuter implements SearchBackofficeUseCase 
         items: [],
       };
     }
-  }
-
-  private matchesAccount(account: AccountEntityProps, query: string): boolean {
-    return [account.accountCode, account.email, account.role]
-      .filter((value): value is string => typeof value === 'string')
-      .map((value) => value.toLowerCase())
-      .some((value) => value.includes(query));
   }
 
   private toAccountSearchItem(account: AccountEntityProps): BackofficeSearchItem | null {

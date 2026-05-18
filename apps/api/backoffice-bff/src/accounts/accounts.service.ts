@@ -34,13 +34,6 @@ export interface PaginatedAccounts {
 }
 
 const ALLOWED_ROLES: AccountRole[] = ['admin', 'user'];
-const SORTABLE_KEYS = new Set<keyof AccountPublic>([
-  'accountCode',
-  'email',
-  'role',
-  'createdAt',
-  'updatedAt',
-]);
 
 @Injectable()
 export class AccountsService {
@@ -50,34 +43,18 @@ export class AccountsService {
   ) {}
 
   async list(query: AccountListQuery): Promise<PaginatedAccounts> {
-    const allAccounts = await this.accountPort.getAll();
-
-    const normalizedSearch = query.searchQuery?.trim().toLowerCase();
     const roleFilter = this.getRoleFilter(query.filters);
-
-    const filtered = allAccounts
-      .filter((account) => (roleFilter ? account.role === roleFilter : true))
-      .filter((account) => {
-        if (!normalizedSearch) return true;
-        const searchableValues = [account.accountCode, account.email, account.role]
-          .filter((value): value is string => typeof value === 'string')
-          .map((value) => value.toLowerCase());
-
-        return searchableValues.some((value) => value.includes(normalizedSearch));
-      })
-      .map((account) => this.toPublicAccount(account));
-
-    const sorted = this.sortAccounts(filtered, query.sort);
-    const page = Number.isFinite(query.page) && query.page > 0 ? Math.floor(query.page) : 1;
-    const limit =
-      Number.isFinite(query.limit) && query.limit > 0 ? Math.min(Math.floor(query.limit), 100) : 10;
-
-    const start = (page - 1) * limit;
-    const rows = sorted.slice(start, start + limit);
+    const result = await this.accountPort.list({
+      page: query.page,
+      limit: query.limit,
+      searchQuery: query.searchQuery?.trim() || undefined,
+      sort: query.sort,
+      filters: roleFilter ? { role: roleFilter } : undefined,
+    });
 
     return {
-      rows,
-      total: sorted.length,
+      rows: result.rows.map((account) => this.toPublicAccount(account)),
+      total: result.total,
     };
   }
 
@@ -155,9 +132,8 @@ export class AccountsService {
     }
 
     if (existing.role === 'admin') {
-      const accounts = await this.accountPort.getAll();
-      const adminCount = accounts.filter((account) => account.role === 'admin').length;
-      if (adminCount <= 1) {
+      const hasAnotherAdmin = await this.accountPort.hasMultipleByRole('admin');
+      if (!hasAnotherAdmin) {
         throw new BusinessRuleViolationError(
           'last_admin',
           'At least one admin account is required',
@@ -183,31 +159,6 @@ export class AccountsService {
       return rawRole as AccountRole;
     }
     return undefined;
-  }
-
-  private sortAccounts(accounts: AccountPublic[], sort?: AccountSort): AccountPublic[] {
-    if (!sort || !SORTABLE_KEYS.has(sort.key as keyof AccountPublic)) {
-      return accounts;
-    }
-
-    const direction = sort.direction === 'desc' ? -1 : 1;
-    const key = sort.key as keyof AccountPublic;
-
-    return [...accounts].sort((left, right) => {
-      const leftValue = this.toComparableValue(left[key]);
-      const rightValue = this.toComparableValue(right[key]);
-
-      if (leftValue === rightValue) return 0;
-      return leftValue > rightValue ? direction : -direction;
-    });
-  }
-
-  private toComparableValue(value: unknown): number | string {
-    if (value instanceof Date) return value.getTime();
-    if (typeof value === 'number') return value;
-    if (typeof value === 'string') return value.toLowerCase();
-    if (typeof value === 'boolean') return value ? 1 : 0;
-    return '';
   }
 
   private resolveRole(

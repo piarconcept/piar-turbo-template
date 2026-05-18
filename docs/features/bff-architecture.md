@@ -149,6 +149,20 @@ BFFs are designed **from the client's perspective**:
 - Data structures match component requirements
 - No unnecessary data transformation in the client
 
+### 2.1. Bounded Data Access
+
+BFF list and search endpoints must use bounded query contracts all the way down
+to the persistence adapter.
+
+- Do not expose or call repository methods that return a whole collection, such as
+  `getAll`.
+- List endpoints must accept page, limit, search, sort, and filters where relevant.
+- Repositories must apply pagination and supported filters in the database query.
+- In-memory filtering or slicing is acceptable only for already bounded, non-DB
+  data sets.
+- Free-text search should use an explicit allowlist of searchable columns.
+- Requested sort and filter keys must be allowlisted before they reach SQL.
+
 ### 3. Independent Deployment
 
 Each BFF can be:
@@ -381,8 +395,11 @@ Use guards to protect routes:
 export class AdminController {
   @Get('users')
   @Roles('admin')
-  async getUsers() {
-    return this.userService.getAllUsers();
+  async listUsers(@Query('page') page = '1', @Query('limit') limit = '10') {
+    return this.userService.listUsers({
+      page: Number(page),
+      limit: Number(limit),
+    });
   }
 }
 ```
@@ -719,4 +736,4 @@ server {
 
 ## Last Updated
 
-16 January 2026 - Initial BFF architecture documentation
+8 May 2026 - Added bounded data access rules for BFF list and search endpoints.
