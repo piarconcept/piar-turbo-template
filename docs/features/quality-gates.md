@@ -19,7 +19,7 @@ pnpm format:check  # verify formatting for tracked and unignored files
 pnpm clean         # format, clean generated artifacts, and finish with verify
 ```
 
-`pnpm format` and `pnpm format:check` operate on `git ls-files --cached --others --exclude-standard` so ignored generated files are not formatted accidentally.
+`pnpm format` and `pnpm format:check` operate on `git ls-files --cached --others --exclude-standard` so ignored generated files are not formatted accidentally. The formatting helper filters out paths that no longer exist in the visible worktree, so pending tracked-file deletions do not make Prettier fail before the deletion is committed.
 
 When the command runs in a scratch copy without `.git`, it falls back to `prettier .`; generated directories are still excluded through `.prettierignore`.
 
@@ -89,4 +89,4 @@ Only formats staged files to keep commits fast.
 
 ## Last Updated
 
-7 May 2026 - Added clean command, artifact hygiene, and current verify contract
+5 June 2026 - Documented deleted-file-safe formatting helper

@@ -12,6 +12,7 @@ Start here. This file is the canonical index and rules for documentation and dev
 2. **Mandatory updates**: When you change structure, architecture, workflows, tooling, or conventions, update the relevant docs.
 3. **Structure**:
    - `docs/AI-context.md` = master index and rules
+   - `docs/concept/` = folder-based product concept, discovery questions, app ownership, product decisions, and build-plan inputs
    - `docs/features/` = detailed docs per topic
    - `docs/waves/` = multi-agent execution wave plans, templates, and dated prompt batches
    - `docs/architecture/fixes/` = resolved architecture bugs and structural lessons
@@ -23,67 +24,75 @@ Start here. This file is the canonical index and rules for documentation and dev
 
 ## Documentation Index
 
+### Product Concept
+
+1. `concept/Readme.md` - Product concept entrypoint, folder tree, app ownership contract, discovery questions, and build-plan workflow
+2. `concept/initial-questions/README.md` - Required initial question gate before template personalization
+3. `concept/apps/README.md` - Concept app discovery, app map template, and app ownership rules
+4. `concept/apps/example-app/README.md` - Example app contract only, not a required product app
+
 ### Setup & Configuration
 
-1. `features/setup-project.md` - Initial setup and project structure
-2. `features/repository-configuration.md` - Monorepo rules and conventions
-3. `features/github-workflows.md` - CI/CD workflows
-4. `features/bff-architecture.md` - BFF architecture patterns
+5. `features/setup-project.md` - Initial setup and project structure
+6. `features/repository-configuration.md` - Monorepo rules and conventions
+7. `features/github-workflows.md` - CI/CD workflows
+8. `features/bff-architecture.md` - BFF architecture patterns
 
 ### Development Guides
 
-5. `features/creating-packages.md` - 14-step guide for creating packages
-6. `features/creating-features-guide.md` - Feature creation with Clean Architecture
-7. `features/template-baseline-and-feature-migration.md` - Current baseline and migration workflow
-8. `features/component-library-development-guide.md` - Component library workflow
-9. `features/testing-guide.md` - Testing standards and examples
-10. `features/eslint-configuration.md` - ESLint configuration and linting
-11. `features/quality-gates.md` - Formatting, commit hooks, and commit rules
-12. `features/styling-configuration.md` - Styling approach overview
-13. `features/tailwind-v4-implementation.md` - Tailwind v4 implementation details
-14. `features/context-engineering-protocol.md` - Rules for documenting important fixes and learnings
-15. `features/waves-workflow.md` - Wave-first planning workflow for feature work and multi-agent execution
+9. `features/creating-packages.md` - 14-step guide for creating packages
+10. `features/creating-features-guide.md` - Feature creation with Clean Architecture
+11. `features/template-baseline-and-feature-migration.md` - Current baseline and migration workflow
+12. `features/component-library-development-guide.md` - Component library workflow
+13. `features/testing-guide.md` - Testing standards and examples
+14. `features/eslint-configuration.md` - ESLint configuration and linting
+15. `features/quality-gates.md` - Formatting, commit hooks, and commit rules
+16. `features/styling-configuration.md` - Styling approach overview
+17. `features/tailwind-v4-implementation.md` - Tailwind v4 implementation details
+18. `features/context-engineering-protocol.md` - Rules for documenting important fixes and learnings
+19. `features/waves-workflow.md` - Wave-first planning workflow for feature work and multi-agent execution
 
 ### Execution Waves
 
-16. `waves/README.md` - Canonical execution waves contract
-17. `waves/template-day.md` - Template for day-level wave orchestration
-18. `waves/template-wave.md` - Template for a single wave definition
-19. `waves/template-prompt.md` - Template for a standalone wave prompt
+20. `waves/README.md` - Canonical execution waves contract
+21. `waves/template-day.md` - Template for day-level wave orchestration
+22. `waves/template-wave.md` - Template for a single wave definition
+23. `waves/template-prompt.md` - Template for a standalone wave prompt
 
 ### Package Documentation
 
-20. `features/domain-models.md` - `@piar/domain-models`
-21. `features/domain-fields.md` - `@piar/domain-fields`
-22. `features/ui-components-atomic-design.md` - `@piar/ui-components`
-23. `features/auth-card-refactoring.md` - AuthCard refactor notes
-24. `features/health-feature.md` - Health feature architecture
-25. `features/auth-feature.md` - Auth feature architecture
-26. `features/infra-backend-security.md` - Backend security package
-27. `features/infra-client-seo.md` - SEO infrastructure
-28. `features/error-handling-system.md` - Error handling system
-29. `features/nextauth-authentication.md` - NextAuth v5 in backoffice
+24. `features/domain-models.md` - `@piar/domain-models`
+25. `features/domain-fields.md` - `@piar/domain-fields`
+26. `features/ui-components-atomic-design.md` - `@piar/ui-components`
+27. `features/auth-card-refactoring.md` - AuthCard refactor notes
+28. `features/health-feature.md` - Health feature architecture
+29. `features/auth-feature.md` - Auth feature architecture
+30. `features/infra-backend-security.md` - Backend security package
+31. `features/infra-client-seo.md` - SEO infrastructure
+32. `features/error-handling-system.md` - Error handling system
+33. `features/nextauth-authentication.md` - NextAuth v5 in backoffice
 
 ### Applications
 
-30. `features/web-bff-application.md` - Web BFF documentation
-31. `features/backoffice-bff-application.md` - Backoffice BFF documentation
+34. `features/web-bff-application.md` - Web BFF documentation
+35. `features/backoffice-bff-application.md` - Backoffice BFF documentation
 
 ### Templates
 
-32. `features/TEMPLATE.md` - Template for new docs
+36. `features/TEMPLATE.md` - Template for new docs
 
 ### Architecture Fix Memory
 
-33. `architecture/fixes/README.md` - Index and rules for architecture fix notes
-34. `architecture/fixes/TEMPLATE.md` - Template for architecture fix notes
-35. `architecture/fixes/2026-05-08-bounded-list-contract.md` - Bounded collection-query contract and removal of whole-table `getAll` reads
-36. `architecture/fixes/2026-05-07-template-wave-clean-baseline.md` - Wave workflow, clean command, and verification hardening baseline
+37. `architecture/fixes/README.md` - Index and rules for architecture fix notes
+38. `architecture/fixes/TEMPLATE.md` - Template for architecture fix notes
+39. `architecture/fixes/2026-05-08-bounded-list-contract.md` - Bounded collection-query contract and removal of whole-table `getAll` reads
+40. `architecture/fixes/2026-05-07-template-wave-clean-baseline.md` - Wave workflow, clean command, and verification hardening baseline
 
 ### Operational Learning
 
-37. `learning-log/README.md` - Index of resolved incidents and important fixes
-38. `learning-log/TEMPLATE.md` - Template for learning-log entries
+41. `learning-log/README.md` - Index of resolved incidents and important fixes
+42. `learning-log/2026-06-05-format-check-deleted-files.md` - Format check failed on tracked files deleted in the working tree
+43. `learning-log/TEMPLATE.md` - Template for learning-log entries
 
 ## Repository Governance
 
@@ -94,6 +103,16 @@ Start here. This file is the canonical index and rules for documentation and dev
 - `CODE_OF_CONDUCT.md` - Community standards
 
 ## Quick Reference
+
+### Defining a Product Concept
+
+1. Read `concept/initial-questions/README.md`
+2. Ask unanswered initial questions before changing template identity or product assumptions
+3. Read `concept/Readme.md`
+4. Fill the concept folders from product idea to build plan
+5. Track unresolved product questions in `concept/questions/open-questions.md`
+6. Create implementation waves only after the first build scope is clear
+7. Keep concept docs aligned when product intent changes during implementation
 
 ### Creating a New Component
 
@@ -106,14 +125,15 @@ Start here. This file is the canonical index and rules for documentation and dev
 
 ### Creating a New Feature
 
-1. Read `features/creating-features-guide.md`
-2. Read `features/template-baseline-and-feature-migration.md`
-3. Read `features/waves-workflow.md`
-4. Create or update `docs/waves/` when the feature is larger than a tiny linear fix
-5. Create required layers (`domain`, `fields`, `repositories`, feature packages, BFF wiring)
-6. Follow Clean Architecture
-7. Document in `docs/features/`
-8. Update this index
+1. Read `concept/Readme.md` when the feature depends on product assumptions
+2. Read `features/creating-features-guide.md`
+3. Read `features/template-baseline-and-feature-migration.md`
+4. Read `features/waves-workflow.md`
+5. Create or update `docs/waves/` when the feature is larger than a tiny linear fix
+6. Create required layers (`domain`, `fields`, `repositories`, feature packages, BFF wiring)
+7. Follow Clean Architecture
+8. Document in `docs/features/`
+9. Update this index
 
 ### Creating a New Package
 
@@ -135,12 +155,14 @@ Start here. This file is the canonical index and rules for documentation and dev
 ## Before Making Changes
 
 1. Check `features/repository-configuration.md`
-2. Review relevant docs in `docs/features/`
-3. Review `docs/waves/` when planning or resuming feature work, multi-agent execution, or staged migrations
-4. Review `docs/architecture/fixes/` when working on a repeated or structural failure
-5. Review `docs/learning-log/` when working on a repeated or unclear operational failure
-6. Update docs after changes
+2. Read `concept/initial-questions/README.md` and ask unanswered required questions before initializing a product, replacing template identity, choosing apps, changing database configuration, or starting product features
+3. Review `docs/concept/` when changing product assumptions, app surfaces, domain language, or build scope
+4. Review relevant docs in `docs/features/`
+5. Review `docs/waves/` when planning or resuming feature work, multi-agent execution, or staged migrations
+6. Review `docs/architecture/fixes/` when working on a repeated or structural failure
+7. Review `docs/learning-log/` when working on a repeated or unclear operational failure
+8. Update docs after changes
 
 ## Last Updated
 
-8 May 2026 - Added bounded list contract architecture fix to the index
+5 June 2026 - Added deleted-file-safe format check learning log

@@ -9,6 +9,13 @@ Start with `AI-context.md`.
 
 ## Core Documents
 
+### Product Concept
+
+- `concept/Readme.md`
+- `concept/initial-questions/README.md`
+- `concept/apps/README.md`
+- `concept/apps/example-app/README.md`
+
 ### Setup & Configuration
 
 - `features/setup-project.md`
@@ -72,6 +79,7 @@ Start with `AI-context.md`.
 ### Operational Learning
 
 - `learning-log/README.md`
+- `learning-log/2026-06-05-format-check-deleted-files.md`
 - `learning-log/TEMPLATE.md`
 
 ## Maintenance Rules
@@ -82,8 +90,9 @@ Start with `AI-context.md`.
 4. Keep `CHANGELOG.md`, `CONTRIBUTING.md`, `SECURITY.md`, and `CODE_OF_CONDUCT.md` updated when relevant.
 5. Document resolved architecture bugs in `docs/architecture/fixes/`.
 6. Log non-trivial operational fixes and reusable debugging learnings in `docs/learning-log/`.
-7. New feature work and multi-agent execution plans should use `docs/waves/`.
+7. Use `docs/concept/` to define product intent before implementation waves.
+8. New feature work and multi-agent execution plans should use `docs/waves/`.
 
 ## Last Updated
 
-8 May 2026 - Added bounded list contract architecture fix
+5 June 2026 - Added deleted-file-safe format check learning log

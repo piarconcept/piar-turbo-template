@@ -18,8 +18,8 @@ Architecture root causes belong in `docs/architecture/fixes/`. Use this director
 
 ## Index
 
-No entries yet.
+- `2026-06-05-format-check-deleted-files.md` - Format check failed on tracked files deleted in the working tree
 
 ## Last Updated
 
-7 May 2026 - Clarified relationship with architecture fix notes
+5 June 2026 - Added deleted-file-safe formatting incident
