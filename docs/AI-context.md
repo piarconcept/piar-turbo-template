@@ -55,44 +55,48 @@ Start here. This file is the canonical index and rules for documentation and dev
 ### Execution Waves
 
 20. `waves/README.md` - Canonical execution waves contract
-21. `waves/template-day.md` - Template for day-level wave orchestration
-22. `waves/template-wave.md` - Template for a single wave definition
-23. `waves/template-prompt.md` - Template for a standalone wave prompt
+21. `waves/2026-06-07/README.md` - Backoffice accounts/search feature-boundary refactor day plan
+22. `waves/2026-06-07/2026-06-07_wave_1/README.md` - Accounts/search API package migration wave
+23. `waves/2026-06-07/2026-06-07_wave_1/2026-06-07_wave_1_prompt_AA.md` - Accounts/search feature-boundary implementation prompt
+24. `waves/template-day.md` - Template for day-level wave orchestration
+25. `waves/template-wave.md` - Template for a single wave definition
+26. `waves/template-prompt.md` - Template for a standalone wave prompt
 
 ### Package Documentation
 
-24. `features/domain-models.md` - `@piar/domain-models`
-25. `features/domain-fields.md` - `@piar/domain-fields`
-26. `features/ui-components-atomic-design.md` - `@piar/ui-components`
-27. `features/auth-card-refactoring.md` - AuthCard refactor notes
-28. `features/health-feature.md` - Health feature architecture
-29. `features/auth-feature.md` - Auth feature architecture
-30. `features/infra-backend-security.md` - Backend security package
-31. `features/infra-client-seo.md` - SEO infrastructure
-32. `features/error-handling-system.md` - Error handling system
-33. `features/nextauth-authentication.md` - NextAuth v5 in backoffice
+27. `features/domain-models.md` - `@piar/domain-models`
+28. `features/domain-fields.md` - `@piar/domain-fields`
+29. `features/ui-components-atomic-design.md` - `@piar/ui-components`
+30. `features/auth-card-refactoring.md` - AuthCard refactor notes
+31. `features/health-feature.md` - Health feature architecture
+32. `features/auth-feature.md` - Auth feature architecture
+33. `features/infra-backend-security.md` - Backend security package
+34. `features/infra-client-seo.md` - SEO infrastructure
+35. `features/error-handling-system.md` - Error handling system
+36. `features/nextauth-authentication.md` - NextAuth v5 in backoffice
 
 ### Applications
 
-34. `features/web-bff-application.md` - Web BFF documentation
-35. `features/backoffice-bff-application.md` - Backoffice BFF documentation
+37. `features/web-bff-application.md` - Web BFF documentation
+38. `features/backoffice-bff-application.md` - Backoffice BFF documentation
 
 ### Templates
 
-36. `features/TEMPLATE.md` - Template for new docs
+39. `features/TEMPLATE.md` - Template for new docs
 
 ### Architecture Fix Memory
 
-37. `architecture/fixes/README.md` - Index and rules for architecture fix notes
-38. `architecture/fixes/TEMPLATE.md` - Template for architecture fix notes
-39. `architecture/fixes/2026-05-08-bounded-list-contract.md` - Bounded collection-query contract and removal of whole-table `getAll` reads
-40. `architecture/fixes/2026-05-07-template-wave-clean-baseline.md` - Wave workflow, clean command, and verification hardening baseline
+40. `architecture/fixes/README.md` - Index and rules for architecture fix notes
+41. `architecture/fixes/TEMPLATE.md` - Template for architecture fix notes
+42. `architecture/fixes/2026-06-07-backoffice-feature-boundaries.md` - Backoffice accounts/search feature package boundary fix
+43. `architecture/fixes/2026-05-08-bounded-list-contract.md` - Bounded collection-query contract and removal of whole-table `getAll` reads
+44. `architecture/fixes/2026-05-07-template-wave-clean-baseline.md` - Wave workflow, clean command, and verification hardening baseline
 
 ### Operational Learning
 
-41. `learning-log/README.md` - Index of resolved incidents and important fixes
-42. `learning-log/2026-06-05-format-check-deleted-files.md` - Format check failed on tracked files deleted in the working tree
-43. `learning-log/TEMPLATE.md` - Template for learning-log entries
+45. `learning-log/README.md` - Index of resolved incidents and important fixes
+46. `learning-log/2026-06-05-format-check-deleted-files.md` - Format check failed on tracked files deleted in the working tree
+47. `learning-log/TEMPLATE.md` - Template for learning-log entries
 
 ## Repository Governance
 
@@ -165,4 +169,4 @@ Start here. This file is the canonical index and rules for documentation and dev
 
 ## Last Updated
 
-5 June 2026 - Added deleted-file-safe format check learning log
+7 June 2026 - Added backoffice feature boundary wave and architecture fix

@@ -82,6 +82,9 @@ importers:
       '@nestjs/swagger':
         specifier: ^8.0.7
         version: 8.1.1(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12)(reflect-metadata@0.2.2)
+      '@piar/accounts-api':
+        specifier: workspace:*
+        version: link:../../../packages/features/accounts/api
       '@piar/auth-api':
         specifier: workspace:*
         version: link:../../../packages/features/auth/api
@@ -109,6 +112,9 @@ importers:
       '@piar/infra-backend-repositories':
         specifier: workspace:*
         version: link:../../../packages/infra/backend/repositories
+      '@piar/search-api':
+        specifier: workspace:*
+        version: link:../../../packages/features/search/api
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -486,6 +492,46 @@ importers:
         version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       vitest:
         specifier: ^2.1.8
+        version: 2.1.9(@types/node@22.19.7)(@vitest/ui@2.1.9)(happy-dom@20.3.9)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)
+
+  packages/features/accounts/api:
+    dependencies:
+      '@nestjs/common':
+        specifier: ^11.0.16
+        version: 11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@nestjs/core':
+        specifier: ^11.0.16
+        version: 11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.1.12)(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@piar/domain-models':
+        specifier: workspace:*
+        version: link:../../../domain/models
+      '@piar/infra-backend-common-security':
+        specifier: workspace:*
+        version: link:../../../infra/backend/common/security
+    devDependencies:
+      '@nestjs/swagger':
+        specifier: ^8.0.7
+        version: 8.1.1(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12)(reflect-metadata@0.2.2)
+      '@nestjs/testing':
+        specifier: ^11.0.16
+        version: 11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12)(@nestjs/platform-express@11.1.12)
+      '@types/express':
+        specifier: ^5.0.0
+        version: 5.0.6
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.19.7
+      '@vitest/coverage-v8':
+        specifier: ^2.1.9
+        version: 2.1.9(vitest@2.1.9)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      typescript-eslint:
+        specifier: ^8.31.1
+        version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+      vitest:
+        specifier: ^2.1.9
         version: 2.1.9(@types/node@22.19.7)(@vitest/ui@2.1.9)(happy-dom@20.3.9)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)
 
   packages/features/auth/api:
@@ -933,6 +979,43 @@ importers:
 
   packages/features/health/configuration:
     devDependencies:
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.19.7
+      '@vitest/coverage-v8':
+        specifier: ^2.1.9
+        version: 2.1.9(vitest@2.1.9)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      typescript-eslint:
+        specifier: ^8.31.1
+        version: 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@22.19.7)(@vitest/ui@2.1.9)(happy-dom@20.3.9)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.46.0)
+
+  packages/features/search/api:
+    dependencies:
+      '@nestjs/common':
+        specifier: ^11.0.16
+        version: 11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@nestjs/core':
+        specifier: ^11.0.16
+        version: 11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.1.12)(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@piar/domain-models':
+        specifier: workspace:*
+        version: link:../../../domain/models
+      '@piar/infra-backend-common-security':
+        specifier: workspace:*
+        version: link:../../../infra/backend/common/security
+    devDependencies:
+      '@nestjs/swagger':
+        specifier: ^8.0.7
+        version: 8.1.1(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12)(reflect-metadata@0.2.2)
+      '@nestjs/testing':
+        specifier: ^11.0.16
+        version: 11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12)(@nestjs/platform-express@11.1.12)
       '@types/node':
         specifier: ^22.10.5
         version: 22.19.7

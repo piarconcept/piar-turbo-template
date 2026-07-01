@@ -63,7 +63,7 @@ Base path: `/auth`
 
 ## Important Business Rules (Current Implementation)
 
-Even though they live in account repository/service, they directly affect auth flows:
+Even though they live in account feature use cases and repository behavior, they directly affect auth flows:
 
 - The first registered account is forced to `admin`.
 - The platform must keep at least one admin account.
@@ -104,4 +104,4 @@ pnpm -C apps/client/backoffice typecheck && pnpm -C apps/client/backoffice build
 
 ## Last Updated
 
-23 February 2026 - Updated with refresh token flow and current backoffice integration.
+7 June 2026 - Updated account business-rule ownership after feature package refactor.

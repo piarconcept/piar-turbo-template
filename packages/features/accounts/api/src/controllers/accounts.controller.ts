@@ -1,9 +1,31 @@
-import { Body, Controller, Delete, Get, Param, Patch, Query, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Param,
+  Patch,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AdminGuard, JwtAuthGuard, type JwtPayload } from '@piar/infra-backend-common-security';
 import type { Request } from 'express';
-import { AccountsService, type AccountPublic, type PaginatedAccounts } from './accounts.service';
-import { UpdateAccountDto } from './dto/update-account.dto';
+import { UpdateAccountDto } from '../dto';
+import {
+  DeleteAccountUseCase,
+  GetAccountUseCase,
+  ListAccountsUseCase,
+  UpdateAccountUseCase,
+  type AccountPublic,
+  type PaginatedAccounts,
+  type DeleteAccountUseCase as DeleteAccountUseCaseContract,
+  type GetAccountUseCase as GetAccountUseCaseContract,
+  type ListAccountsUseCase as ListAccountsUseCaseContract,
+  type UpdateAccountUseCase as UpdateAccountUseCaseContract,
+} from '../use-cases';
 
 interface RequestWithUser extends Request {
   user?: JwtPayload;
@@ -42,7 +64,16 @@ function parseFilters(filters?: string): Record<string, unknown> | undefined {
 @UseGuards(JwtAuthGuard, AdminGuard)
 @Controller('accounts')
 export class AccountsController {
-  constructor(private readonly accountsService: AccountsService) {}
+  constructor(
+    @Inject(ListAccountsUseCase)
+    private readonly listAccountsUseCase: ListAccountsUseCaseContract,
+    @Inject(GetAccountUseCase)
+    private readonly getAccountUseCase: GetAccountUseCaseContract,
+    @Inject(UpdateAccountUseCase)
+    private readonly updateAccountUseCase: UpdateAccountUseCaseContract,
+    @Inject(DeleteAccountUseCase)
+    private readonly deleteAccountUseCase: DeleteAccountUseCaseContract,
+  ) {}
 
   @Get()
   @ApiOperation({ summary: 'List accounts' })
@@ -68,7 +99,7 @@ export class AccountsController {
       filters: parseFilters(filters),
     };
 
-    return this.accountsService.list(query);
+    return this.listAccountsUseCase.execute(query);
   }
 
   @Get(':id')
@@ -77,7 +108,7 @@ export class AccountsController {
   @ApiResponse({ status: 200, description: 'Account found' })
   @ApiResponse({ status: 404, description: 'Account not found' })
   async getById(@Param('id') id: string): Promise<AccountPublic> {
-    return this.accountsService.getById(id);
+    return this.getAccountUseCase.execute(id);
   }
 
   @Patch(':id')
@@ -91,7 +122,11 @@ export class AccountsController {
     @Body() payload: UpdateAccountDto,
     @Req() request: RequestWithUser,
   ): Promise<AccountPublic> {
-    return this.accountsService.update(id, payload, request.user?.accountId);
+    return this.updateAccountUseCase.execute({
+      id,
+      payload,
+      currentAccountId: request.user?.accountId,
+    });
   }
 
   @Delete(':id')
@@ -101,6 +136,6 @@ export class AccountsController {
   @ApiResponse({ status: 404, description: 'Account not found' })
   @ApiResponse({ status: 403, description: 'Forbidden action' })
   async delete(@Param('id') id: string, @Req() request: RequestWithUser): Promise<void> {
-    await this.accountsService.delete(id, request.user?.accountId);
+    await this.deleteAccountUseCase.execute({ id, currentAccountId: request.user?.accountId });
   }
 }

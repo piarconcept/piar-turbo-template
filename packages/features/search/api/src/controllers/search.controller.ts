@@ -1,11 +1,11 @@
 import { Controller, Get, Inject, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AdminGuard, JwtAuthGuard } from '@piar/infra-backend-common-security';
-import type { BackofficeSearchResponse } from './types';
+import type { BackofficeSearchResponse } from '../types';
 import {
   SearchBackofficeUseCase,
   type SearchBackofficeUseCase as SearchUseCase,
-} from './use-cases/search-backoffice.use-case';
+} from '../use-cases';
 
 @ApiBearerAuth()
 @ApiTags('Search')

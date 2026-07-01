@@ -8,69 +8,36 @@ import {
   NotFoundError,
   ResourceAlreadyExistsError,
 } from '@piar/domain-models';
-import type { UpdateAccountDto } from './dto/update-account.dto';
-
-type AccountRole = NonNullable<AccountEntityProps['role']>;
-type SortDirection = 'asc' | 'desc';
-
-interface AccountSort {
-  key: string;
-  direction: SortDirection;
-}
-
-interface AccountListQuery {
-  page: number;
-  limit: number;
-  searchQuery?: string;
-  sort?: AccountSort;
-  filters?: Record<string, unknown>;
-}
-
-export type AccountPublic = Omit<AccountEntityProps, 'passwordHash'>;
-
-export interface PaginatedAccounts {
-  rows: AccountPublic[];
-  total: number;
-}
+import type { UpdateAccountDto } from '../dto/update-account.dto';
+import { toPublicAccount } from './account-presenter';
+import type { AccountPublic, AccountRole } from './account.types';
 
 const ALLOWED_ROLES: AccountRole[] = ['admin', 'user'];
 
+export interface UpdateAccountUseCaseInput {
+  id: string;
+  payload: UpdateAccountDto;
+  currentAccountId?: string;
+}
+
+export interface UpdateAccountUseCase {
+  execute(input: UpdateAccountUseCaseInput): Promise<AccountPublic>;
+}
+
+export const UpdateAccountUseCase = Symbol('UpdateAccountUseCase');
+
 @Injectable()
-export class AccountsService {
+export class UpdateAccountUseCaseExecuter implements UpdateAccountUseCase {
   constructor(
     @Inject(AccountPortToken)
     private readonly accountPort: AccountPort,
   ) {}
 
-  async list(query: AccountListQuery): Promise<PaginatedAccounts> {
-    const roleFilter = this.getRoleFilter(query.filters);
-    const result = await this.accountPort.list({
-      page: query.page,
-      limit: query.limit,
-      searchQuery: query.searchQuery?.trim() || undefined,
-      sort: query.sort,
-      filters: roleFilter ? { role: roleFilter } : undefined,
-    });
-
-    return {
-      rows: result.rows.map((account) => this.toPublicAccount(account)),
-      total: result.total,
-    };
-  }
-
-  async getById(id: string): Promise<AccountPublic> {
-    const existing = await this.accountPort.getById(id);
-    if (!existing) {
-      throw new NotFoundError('Account', id, 'account_not_found');
-    }
-    return this.toPublicAccount(existing);
-  }
-
-  async update(
-    id: string,
-    payload: UpdateAccountDto,
-    currentAccountId?: string,
-  ): Promise<AccountPublic> {
+  async execute({
+    id,
+    payload,
+    currentAccountId,
+  }: UpdateAccountUseCaseInput): Promise<AccountPublic> {
     const existing = await this.accountPort.getById(id);
     if (!existing) {
       throw new NotFoundError('Account', id, 'account_not_found');
@@ -114,51 +81,7 @@ export class AccountsService {
       updatedAt: new Date(),
     });
 
-    return this.toPublicAccount(updated);
-  }
-
-  async delete(id: string, currentAccountId?: string): Promise<void> {
-    if (id === currentAccountId) {
-      throw new ForbiddenError(
-        'You cannot delete your own account',
-        { id },
-        'account_cannot_delete_self',
-      );
-    }
-
-    const existing = await this.accountPort.getById(id);
-    if (!existing) {
-      throw new NotFoundError('Account', id, 'account_not_found');
-    }
-
-    if (existing.role === 'admin') {
-      const hasAnotherAdmin = await this.accountPort.hasMultipleByRole('admin');
-      if (!hasAnotherAdmin) {
-        throw new BusinessRuleViolationError(
-          'last_admin',
-          'At least one admin account is required',
-          'account_last_admin_required',
-        );
-      }
-    }
-
-    await this.accountPort.delete(id);
-  }
-
-  private toPublicAccount(account: AccountEntityProps): AccountPublic {
-    // Keep API responses safe by never exposing password hashes.
-    const { passwordHash: _passwordHash, ...safeAccount } = account;
-    return safeAccount;
-  }
-
-  private getRoleFilter(filters?: Record<string, unknown>): AccountRole | undefined {
-    if (!filters) return undefined;
-    const rawRole = filters.role;
-    if (typeof rawRole !== 'string') return undefined;
-    if ((ALLOWED_ROLES as string[]).includes(rawRole)) {
-      return rawRole as AccountRole;
-    }
-    return undefined;
+    return toPublicAccount(updated);
   }
 
   private resolveRole(

@@ -41,8 +41,8 @@ Integrated modules:
 
 - `HealthModule`
 - `AuthModule`
-- `AccountsModule`
-- `SearchModule`
+- `AccountsModule` from `@piar/accounts-api`
+- `SearchModule` from `@piar/search-api`
 - `ContactSubmissionModule`
 - `DynamicPageModule`
 
@@ -173,6 +173,7 @@ For each new business feature, implement in this order:
 
 - Register module in `apps/api/backoffice-bff/src/app.module.ts` and/or `apps/api/web-bff/src/app.module.ts`.
 - Inject proper port binding using repository class.
+- Keep feature controllers, DTOs, and use cases in `packages/features/{feature}/api`; app folders should only wire modules and infrastructure providers.
 
 6. Backoffice pages
 
@@ -318,4 +319,4 @@ A feature is done only if all are true:
 
 ## Last Updated
 
-8 May 2026 - Added bounded collection-query rules for list and search endpoints.
+7 June 2026 - Documented accounts/search feature package boundary.

@@ -25,6 +25,7 @@
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/platform-express": "^11.0.16",
     "@nestjs/swagger": "^8.0.7",
+    "@piar/accounts-api": "workspace:*",
     "@piar/health-api": "workspace:*",
     "@piar/infra-backend-repositories": "workspace:*",
     "@piar/domain-models": "workspace:*",
@@ -34,6 +35,7 @@
     "@piar/auth-api": "workspace:*",
     "@piar/contact-api": "workspace:*",
     "@piar/dynamic-page-api": "workspace:*",
+    "@piar/search-api": "workspace:*",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },

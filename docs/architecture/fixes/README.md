@@ -28,9 +28,10 @@ Create an entry here when the real root cause was related to:
 
 ## Index
 
+- `2026-06-07-backoffice-feature-boundaries.md` - Moved backoffice accounts and search implementation from app-local folders into feature API packages.
 - `2026-05-08-bounded-list-contract.md` - Removed whole-table `getAll` contracts and moved list/search behavior to bounded repository queries.
 - `2026-05-07-template-wave-clean-baseline.md` - Added wave execution docs, cleanup verification, generated artifact hygiene, and app dependency preparation.
 
 ## Last Updated
 
-8 May 2026 - Added bounded list contract architecture fix
+7 June 2026 - Added backoffice feature boundary architecture fix

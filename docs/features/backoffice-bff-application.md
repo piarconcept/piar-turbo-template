@@ -33,10 +33,10 @@ Core imports currently include:
 
 - `TypeormModule.forRoot()`
 - `AuthModule.register(...)`
+- `AccountsModule.register(...)`
+- `SearchModule.register(...)`
 - `ContactSubmissionModule.register(...)`
 - `DynamicPageModule.register(...)`
-- `AccountsModule`
-- `SearchModule`
 
 Repository provider modules:
 
@@ -94,7 +94,7 @@ Admin endpoints use:
 - `JwtAuthGuard`
 - `AdminGuard`
 
-Business-rule protections implemented in accounts domain/service layer:
+Business-rule protections implemented in accounts feature use cases and repository layer:
 
 - first account forced to `admin`
 - cannot remove last admin
@@ -107,6 +107,10 @@ Backoffice list and search endpoints must stay bounded:
 
 - Domain ports expose `list(query)` for paginated reads; they must not expose
   whole-table methods such as `getAll`.
+- Accounts endpoint behavior lives in `@piar/accounts-api`; search endpoint
+  behavior lives in `@piar/search-api`.
+- `apps/api/backoffice-bff` should only register these feature modules and bind
+  repository providers.
 - Accounts, contact submissions, dynamic pages, and search must apply pagination,
   supported filters, and supported sorting in the TypeORM repository query.
 - Search endpoints must request only the configured page/window they need from
@@ -140,6 +144,8 @@ Before release, validate together with dependencies:
 ```bash
 pnpm -C packages/infra/backend/repositories typecheck && pnpm -C packages/infra/backend/repositories build
 pnpm -C packages/features/auth/api typecheck && pnpm -C packages/features/auth/api build
+pnpm -C packages/features/accounts/api typecheck && pnpm -C packages/features/accounts/api build
+pnpm -C packages/features/search/api typecheck && pnpm -C packages/features/search/api build
 pnpm -C packages/features/contact/api typecheck && pnpm -C packages/features/contact/api build
 pnpm -C packages/features/dynamic-page/api typecheck && pnpm -C packages/features/dynamic-page/api build
 pnpm -C apps/api/backoffice-bff typecheck && pnpm -C apps/api/backoffice-bff build
@@ -147,4 +153,4 @@ pnpm -C apps/api/backoffice-bff typecheck && pnpm -C apps/api/backoffice-bff bui
 
 ## Last Updated
 
-8 May 2026 - Added bounded data access guardrails for list/search endpoints.
+7 June 2026 - Documented accounts/search feature API package ownership.

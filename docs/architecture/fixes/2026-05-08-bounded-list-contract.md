@@ -131,9 +131,9 @@ kept UI behavior working while hiding the persistence cost.
   - `packages/domain/models/src/entities/base/base.port.ts`
   - `packages/domain/dynamic-form/src/ports.ts`
   - `packages/infra/backend/repositories/src/common/dynamic-query.ts`
-  - `apps/api/backoffice-bff/src/accounts/accounts.service.ts`
-  - `apps/api/backoffice-bff/src/search/use-cases/search-backoffice.use-case.ts`
+  - `packages/features/accounts/api/src/use-cases/list-accounts.use-case.ts`
+  - `packages/features/search/api/src/use-cases/search-backoffice.use-case.ts`
 
 ## Last Updated
 
-2026-05-08 - Created entry
+2026-06-07 - Updated account/search feature package file references
