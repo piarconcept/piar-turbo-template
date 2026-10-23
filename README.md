@@ -19,7 +19,7 @@ the template and improving it with what we learn across our production codebases
 
 Prerequisites:
 
-- Node.js 24.20.0 (required via `nvm` — see `.nvmrc`)
+- Node.js 24.22.1 (required via `nvm` — see `.nvmrc`)
 - pnpm 10.28.0
 
 Database requirements:
@@ -77,7 +77,7 @@ piar-repo/
 
 Integrated and validated in this template:
 
-- Node.js 24.20.0 with `.nvmrc`-driven local and CI runtime checks
+- Node.js 24.22.1 with `.nvmrc`-driven local and CI runtime checks
 - Next.js 15.5.25, React 19.1.0, NestJS 11, TypeScript 5.9, and pnpm 10.28.0
 - Auth with access + refresh session flow
 - Accounts admin module (CRUD + admin safety rules)

@@ -40,8 +40,8 @@ Document critical repository configuration decisions and conventions that must b
 
 ### Node Version
 
-- **Node.js 24.20.0**: Exact local runtime in `.nvmrc`
-- **Engine range**: `>=24.20.0 <25` in every manifest that owns a runtime
+- **Node.js 24.22.1**: Exact local runtime in `.nvmrc`
+- **Engine range**: `>=24.22.1 <25` in every manifest that owns a runtime
 - **CI ownership**: GitHub Actions uses `node-version-file: '.nvmrc'`
 - **Validation**: `pnpm runtime:check` rejects process, manifest, package-manager, and workflow
   drift before expensive verification starts
@@ -161,4 +161,4 @@ pnpm clean                # format, clean artifacts, check artifacts, verify
 
 ## Last Updated
 
-9 September 2026 - Added Node.js 24, dependency alignment, and single-owner build contracts
+23 October 2026 - Updated the exact Node.js contract to the Brotli security release 24.22.1

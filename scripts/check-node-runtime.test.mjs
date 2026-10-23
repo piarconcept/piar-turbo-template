@@ -35,7 +35,7 @@ test('the runtime guard rejects process, engine, package-manager, and CI drift',
       ['.nvmrc', '20.19.6\n', /Current Node\.js/],
       [
         'package.json',
-        files['package.json'].replace('>=24.20.0 <25', '>=20.19.6 <21'),
+        files['package.json'].replace('>=24.22.1 <25', '>=20.19.6 <21'),
         /engines\.node/,
       ],
       [

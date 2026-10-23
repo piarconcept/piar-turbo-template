@@ -112,7 +112,7 @@ The PIAR monorepo implements the **Backend for Frontend (BFF)** pattern, which p
 
 - **Framework**: NestJS 11.x
 - **Language**: TypeScript 5.9.x
-- **Runtime**: Node.js 24.20.0
+- **Runtime**: Node.js 24.22.1
 - **Testing**: Vitest 2.1.x
 - **Module System**: CommonJS (NestJS standard)
 - **Build**: NestJS CLI with TypeScript compiler
@@ -564,7 +564,7 @@ API_KEY=your-api-key
 Example Dockerfile:
 
 ```dockerfile
-FROM node:24.20.0-alpine AS builder
+FROM node:24.22.1-alpine AS builder
 
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
@@ -573,7 +573,7 @@ RUN npm install -g pnpm@10.28.0 && pnpm install --frozen-lockfile
 COPY . .
 RUN pnpm turbo build --filter=@piar/web-bff
 
-FROM node:24.20.0-alpine
+FROM node:24.22.1-alpine
 
 WORKDIR /app
 COPY --from=builder /app/apps/api/web-bff/dist ./dist
@@ -736,6 +736,6 @@ server {
 
 ## Last Updated
 
-9 September 2026 - Updated the BFF runtime contract to Node.js 24.20.0
+23 October 2026 - Updated the BFF runtime and container example to Node.js 24.22.1
 
 8 May 2026 - Added bounded data access rules for BFF list and search endpoints.

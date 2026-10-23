@@ -38,6 +38,14 @@ items. The neutral Terraform profile remains Wave 2: the initial-question gate n
 explicit yes/no retention answer, but the infrastructure boilerplate, ownership manifest, persisted
 selection, and tested removal command have not yet been added.
 
+### Security Follow-Up - 23 October 2026
+
+The parent template runtime moved from Node.js `24.20.0` to the fixed `24.22.1` LTS release after
+the Node.js project disclosed CVE-2026-111497, a high-severity Brotli decoder out-of-bounds write.
+The exact `.nvmrc`, runtime engine declarations, CI, current setup documentation, and container
+examples now use the patched runtime. The September version references below remain historical
+migration evidence rather than the active runtime contract.
+
 ### Exact Shared Baseline
 
 The Catalonia OS initial commit, `1cbed95` from 22 June 2026, has tree
@@ -603,4 +611,4 @@ follow-up above for the repository-correctness subset completed afterward.
 
 ## Last Updated
 
-9 September 2026 - Recorded the completed Node.js 24 repository-correctness backport and remaining Terraform wave.
+23 October 2026 - Recorded the Node.js 24.22.1 security follow-up to the original backport

@@ -18,9 +18,11 @@ Architecture root causes belong in `docs/architecture/fixes/`. Use this director
 
 ## Index
 
+- `2026-10-23-node-brotli-security-release.md` - Updated the exact Node.js runtime to remediate the
+  high-severity Brotli decoder vulnerability
 - `2026-09-09-node24-runtime-compatibility.md` - Migrated the exact Node.js runtime without framework drift and added native compatibility tests
 - `2026-06-05-format-check-deleted-files.md` - Format check failed on tracked files deleted in the working tree
 
 ## Last Updated
 
-9 September 2026 - Added Node.js 24 runtime compatibility learning
+23 October 2026 - Added the Node.js Brotli security release remediation

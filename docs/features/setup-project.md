@@ -13,7 +13,7 @@ Document the initial project setup, structure, and baseline steps for new agents
 - **Monorepo structure**: Share code between multiple apps
 - **Package manager**: pnpm with workspaces
 - **Build tool**: Turbo for caching and orchestration
-- **Runtime**: exact Node.js `24.20.0` from `.nvmrc`
+- **Runtime**: exact Node.js `24.22.1` from `.nvmrc`
 - **Apps structure**: `api`, `client` (backoffice & web), and `sqs`
 
 ## Technical Details
@@ -155,4 +155,4 @@ jobs:
 
 ## Last Updated
 
-9 September 2026 - Documented the exact Node.js 24 runtime and compatibility preflights
+23 October 2026 - Updated setup to the exact Node.js 24.22.1 security runtime

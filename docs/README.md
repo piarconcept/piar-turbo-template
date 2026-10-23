@@ -95,6 +95,7 @@ Start with `AI-context.md`.
 ### Operational Learning
 
 - `learning-log/README.md`
+- `learning-log/2026-10-23-node-brotli-security-release.md`
 - `learning-log/2026-09-09-node24-runtime-compatibility.md`
 - `learning-log/2026-06-05-format-check-deleted-files.md`
 - `learning-log/TEMPLATE.md`
@@ -112,4 +113,4 @@ Start with `AI-context.md`.
 
 ## Last Updated
 
-9 September 2026 - Indexed the Node.js 24 migration and its architecture/learning records
+23 October 2026 - Indexed the Node.js Brotli security release remediation

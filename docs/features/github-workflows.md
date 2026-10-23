@@ -2,7 +2,7 @@
 
 **Status**: ✅ Active  
 **Created**: 2026-01-15  
-**Last Updated**: 2026-09-09
+**Last Updated**: 2026-10-23
 
 ## Overview
 
@@ -43,7 +43,7 @@ in this repository.
 **Environment**:
 
 - Runner: `ubuntu-latest`
-- Node.js: `24.20.0`, sourced from `.nvmrc`
+- Node.js: `24.22.1`, sourced from `.nvmrc`
 - pnpm: `10.28.0`
 
 **Caching Strategy**:
@@ -103,7 +103,7 @@ the result is pushed to `main`, avoiding duplicate runs for both the pull reques
 ### CI Fails on Install
 
 - Check if `pnpm-lock.yaml` is committed
-- Ensure Node.js version exactly matches `.nvmrc` (`24.20.0`)
+- Ensure Node.js version exactly matches `.nvmrc` (`24.22.1`)
 - Verify pnpm version matches (10.28.0)
 
 ### CI Fails on Build
@@ -148,5 +148,4 @@ Potential improvements to consider:
 
 ## Last Updated
 
-9 September 2026 - Reduced Actions to one push/manual Verify workflow and removed duplicate
-coverage, PR, scheduled security, and custom-cache runs
+23 October 2026 - Updated CI to the Node.js 24.22.1 Brotli security release through `.nvmrc`

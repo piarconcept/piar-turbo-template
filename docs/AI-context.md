@@ -103,13 +103,14 @@ Start here. This file is the canonical index and rules for documentation and dev
 ### Operational Learning
 
 53. `learning-log/README.md` - Index of resolved incidents and important fixes
-54. `learning-log/2026-09-09-node24-runtime-compatibility.md` - Exact Node.js 24 migration and native compatibility guardrails
-55. `learning-log/2026-06-05-format-check-deleted-files.md` - Format check failed on tracked files deleted in the working tree
-56. `learning-log/TEMPLATE.md` - Template for learning-log entries
+54. `learning-log/2026-10-23-node-brotli-security-release.md` - Node.js 24.22.1 remediation for the high-severity Brotli decoder vulnerability
+55. `learning-log/2026-09-09-node24-runtime-compatibility.md` - Exact Node.js 24 migration and native compatibility guardrails
+56. `learning-log/2026-06-05-format-check-deleted-files.md` - Format check failed on tracked files deleted in the working tree
+57. `learning-log/TEMPLATE.md` - Template for learning-log entries
 
 ### Template Evolution Audits
 
-57. `features/catalonia-os-template-backport-audit.md` - Selective backport audit, fixed-bug inventory, and Terraform extraction roadmap from Catalonia OS
+58. `features/catalonia-os-template-backport-audit.md` - Selective backport audit, fixed-bug inventory, and Terraform extraction roadmap from Catalonia OS
 
 ## Repository Governance
 
@@ -182,4 +183,4 @@ Start here. This file is the canonical index and rules for documentation and dev
 
 ## Last Updated
 
-9 September 2026 - Indexed the Node.js 24 migration wave, architecture fixes, and compatibility learning
+23 October 2026 - Indexed the Node.js Brotli security release remediation

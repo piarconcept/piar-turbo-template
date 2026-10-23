@@ -6,10 +6,11 @@ This project follows Conventional Commits and keeps a single "Unreleased" sectio
 
 ## Unreleased
 
+- Updated Node.js to the `24.22.1` security release, remediating the Brotli decoder
+  out-of-bounds write tracked as CVE-2026-111497.
 - Reduced GitHub Actions to one push/manual verification workflow and fixed the Linux process
   preflight self-match that made valid CI runs fail.
-- Migrated local development, CI, hooks, engines, and the frozen dependency graph to Node.js
-  24.20.0.
+- Migrated local development, CI, hooks, engines, and the frozen dependency graph to Node.js 24 LTS.
 - Added executable runtime and dependency-alignment guards plus Node 24 Tailwind/jsdom regressions.
 - Aligned Next.js 15, React 19.1, Node typings, and NestJS 11 integration packages.
 - Made Turbo the single owner of scheduled shared dependency builds.
