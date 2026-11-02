@@ -1,21 +1,26 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
+import { resolveAllowedOrigins } from '@piar/infra-backend-common-security';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Enable CORS for backoffice client(s). Supports comma-separated origins.
-  const configuredOrigins = (process.env.BACKOFFICE_CLIENT_URL ?? '')
-    .split(',')
-    .map((origin) => origin.trim())
-    .filter(Boolean);
-  const allowedOrigins = Array.from(
-    new Set([...configuredOrigins, 'http://localhost:3000', 'http://localhost:3001']),
+  app.useGlobalPipes(
+    new ValidationPipe({
+      forbidNonWhitelisted: true,
+      transform: true,
+      validationError: { target: false, value: false },
+      whitelist: true,
+    }),
   );
 
   app.enableCors({
-    origin: allowedOrigins,
+    origin: resolveAllowedOrigins(process.env.BACKOFFICE_CLIENT_URL, [
+      'http://localhost:3000',
+      'http://localhost:3001',
+    ]),
     credentials: true,
   });
 

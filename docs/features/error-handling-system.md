@@ -27,11 +27,13 @@ Complete centralized error handling system that ensures consistent, structured e
 
 ### 2. Automatic Error Conversion
 
-**Decision**: The `GlobalExceptionFilter` converts ANY error into a domain error
+**Decision**: The `GlobalExceptionFilter` converts errors into a safe stable response
 
 **Why**:
 
-- Frontend ALWAYS receives the same structured format
+- Frontend always receives the same structured format
+- Internal exception messages, identifiers, details, stacks, and raw URLs are not reflected
+- A random event ID supports correlation with metadata-only application logs
 - No need for `try-catch` everywhere
 - Easier to deserialize and display errors
 - Consistent error handling across all endpoints
@@ -240,31 +242,28 @@ export class ApplicationErrorFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest();
 
-    const errorResponse = exception.toJSON();
-
-    // Log for monitoring
-    this.logger.error(`${request.method} ${request.url} - ${exception.message}`, {
+    const eventId = randomUUID();
+    const errorResponse = serializeApplicationError(exception, eventId);
+    this.logger.error({
+      eventId,
+      method: request.method,
+      route: request.route?.path ?? 'unmatched',
       code: exception.code,
       statusCode: exception.statusCode,
-      details: exception.details,
-      i18nKey: exception.i18nKey,
-      stack: exception.stack,
     });
-
-    // Send structured response
     response.status(exception.statusCode).json(errorResponse);
   }
 }
 ```
 
-**Purpose**: Catches domain errors and sends them as JSON to the client.
+**Purpose**: Catches domain errors and sends a redacted stable JSON response to the client.
 
 **Flow**:
 
 1. Domain error thrown anywhere in the app
 2. Filter catches it
-3. Logs error details for monitoring
-4. Converts to JSON via `toJSON()`
+3. Logs only event ID, route template, code, and status
+4. Converts to a safe response without original details or identifiers
 5. Returns HTTP response with correct status code
 
 #### GlobalExceptionFilter
@@ -276,41 +275,33 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
-    // HttpException → InternalServerError (domain)
+    const eventId = randomUUID();
+
     if (exception instanceof HttpException) {
-      const message = /* extract message */;
-      const domainError = new InternalServerError(message, {
-        originalStatus: exception.getStatus(),
-        originalResponse: exception.getResponse(),
-      });
-      response.status(exception.getStatus()).json(domainError.toJSON());
+      const status = exception.getStatus();
+      response.status(status).json(serializeHttpError(status, eventId));
       return;
     }
 
     // ApplicationError → already handled by ApplicationErrorFilter
     if (exception instanceof ApplicationError) {
-      const errorResponse = exception.toJSON();
+      const errorResponse = serializeApplicationError(exception, eventId);
       response.status(exception.statusCode).json(errorResponse);
       return;
     }
 
-    // Unknown error → InternalServerError (domain)
-    const domainError = new InternalServerError(
-      exception instanceof Error ? exception.message : 'An unexpected error occurred',
-      { originalError: exception instanceof Error ? exception.name : 'UnknownError' }
-    );
-    response.status(500).json(domainError.toJSON());
+    response.status(500).json(serializeHttpError(500, eventId));
   }
 }
 ```
 
-**Purpose**: Converts ANY non-domain error into a domain error.
+**Purpose**: Converts non-domain errors into safe stable responses.
 
 **Key behavior**:
 
-- ✅ NestJS `HttpException` → `InternalServerError` (preserves original status)
-- ✅ Unknown errors → `InternalServerError` with 500 status
-- ✅ Already domain errors → passes through
+- ✅ NestJS `HttpException` → generic message with the original safe status
+- ✅ Unknown errors → generic 500 response
+- ✅ Domain errors → stable code/i18n key without raw details
 - ✅ ALWAYS returns structured JSON
 
 **Why this is important**:

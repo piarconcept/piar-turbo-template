@@ -58,6 +58,13 @@ Start with `AI-context.md`.
 - `features/web-bff-application.md`
 - `features/backoffice-bff-application.md`
 
+### Security and Privacy
+
+- `security/README.md`
+- `security/control-evidence-register.md`
+- `security/operations-runbook.md`
+- `security/security-best-practices-report.md`
+
 ### Templates
 
 - `features/TEMPLATE.md`
@@ -77,6 +84,7 @@ Start with `AI-context.md`.
 - `waves/2026-09-09/2026-09-09_wave_1/2026-09-09_wave_1_prompt_AA.md`
 - `waves/2026-09-09/2026-09-09_wave_1/2026-09-09_wave_1_prompt_QA.md`
 - `waves/2026-09-09/2026-09-09_wave_1/implementation-report.md`
+- `waves/2026-11-02/README.md`
 - `waves/template-day.md`
 - `waves/template-wave.md`
 - `waves/template-prompt.md`
@@ -88,6 +96,7 @@ Start with `AI-context.md`.
 - `architecture/fixes/2026-09-09-ci-process-preflight-self-match.md`
 - `architecture/fixes/2026-09-09-framework-dependency-alignment.md`
 - `architecture/fixes/2026-09-09-single-owner-dependency-builds.md`
+- `architecture/fixes/2026-11-02-security-boundaries.md`
 - `architecture/fixes/2026-06-07-backoffice-feature-boundaries.md`
 - `architecture/fixes/2026-05-08-bounded-list-contract.md`
 - `architecture/fixes/2026-05-07-template-wave-clean-baseline.md`
@@ -96,6 +105,7 @@ Start with `AI-context.md`.
 
 - `learning-log/README.md`
 - `learning-log/2026-10-23-node-brotli-security-release.md`
+- `learning-log/2026-11-02-nextjs-auth-dependency-security-release.md`
 - `learning-log/2026-09-09-node24-runtime-compatibility.md`
 - `learning-log/2026-06-05-format-check-deleted-files.md`
 - `learning-log/TEMPLATE.md`
@@ -113,4 +123,4 @@ Start with `AI-context.md`.
 
 ## Last Updated
 
-23 October 2026 - Indexed the Node.js Brotli security release remediation
+2 November 2026 - Indexed the security/privacy baseline and dependency remediation evidence

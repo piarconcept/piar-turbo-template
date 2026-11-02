@@ -46,6 +46,13 @@ The exact `.nvmrc`, runtime engine declarations, CI, current setup documentation
 examples now use the patched runtime. The September version references below remain historical
 migration evidence rather than the active runtime contract.
 
+### Security Follow-Up - 2 November 2026
+
+The parent template moved the guarded Next.js 15.5 line to `15.5.28`, forced sharp `0.35.5`, and
+updated Auth.js and compatible production dependencies after official critical/high advisories.
+The September version references remain historical evidence. This follow-up changes only the parent
+template; Catalonia OS must evaluate and publish its own dependency remediation independently.
+
 ### Exact Shared Baseline
 
 The Catalonia OS initial commit, `1cbed95` from 22 June 2026, has tree
@@ -611,4 +618,4 @@ follow-up above for the repository-correctness subset completed afterward.
 
 ## Last Updated
 
-23 October 2026 - Recorded the Node.js 24.22.1 security follow-up to the original backport
+2 November 2026 - Recorded the parent-template Next.js/Auth.js security follow-up

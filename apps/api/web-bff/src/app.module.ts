@@ -1,6 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
+import { minutes, ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { HealthModule } from '@piar/health-api';
 import { ApplicationErrorFilter, GlobalExceptionFilter } from '@piar/infra-backend-common-error';
 import { TypeormModule } from '@piar/infra-backend-common-typeorm';
@@ -25,6 +26,10 @@ const ENV_FILE = '.env';
       load: [() => loadConfigurationParams()],
       envFilePath: [ENV_FILE],
     }),
+    ThrottlerModule.forRoot([
+      { name: 'short', ttl: minutes(1), limit: 60 },
+      { name: 'long', ttl: minutes(15), limit: 500 },
+    ]),
     HealthModule.register(),
     TypeormModule.forRoot(),
     ContactSubmissionRepositoryProviderModule,
@@ -44,6 +49,10 @@ const ENV_FILE = '.env';
   ],
   controllers: [],
   providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
     {
       provide: APP_FILTER,
       useClass: ApplicationErrorFilter,

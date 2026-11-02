@@ -1,9 +1,11 @@
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
+import headers from './src/app/headers';
 
 const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
+  headers,
   reactStrictMode: true,
   transpilePackages: [
     '@piar/layout',

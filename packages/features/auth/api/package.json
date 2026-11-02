@@ -15,8 +15,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "dev": "tsc --watch",
-    "test": "vitest --run --passWithNoTests",
-    "test:coverage": "vitest --run --coverage --passWithNoTests"
+    "test": "vitest --run",
+    "test:coverage": "vitest --run --coverage"
   },
   "dependencies": {
     "@piar/auth-configuration": "workspace:*",
@@ -24,7 +24,9 @@
     "@piar/infra-backend-common-security": "workspace:*",
     "@piar/domain-models": "workspace:*",
     "@nestjs/common": "^11.0.16",
-    "@nestjs/core": "^11.0.16"
+    "@nestjs/core": "^11.0.16",
+    "@nestjs/throttler": "6.7.1",
+    "class-validator": "0.15.1"
   },
   "devDependencies": {
     "@nestjs/swagger": "^11.4.7",

@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@piar/messages": "workspace:*",
-    "next-intl": "^4.3.9",
+    "next-intl": "^4.14.9",
     "react": "^19.0.0"
   },
   "devDependencies": {
@@ -32,6 +32,6 @@
     "typescript-eslint": "^8.31.1"
   },
   "peerDependencies": {
-    "next": ">=15.5.25 <16"
+    "next": ">=15.5.28 <16"
   }
 }

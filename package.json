@@ -29,6 +29,8 @@
     "test:coverage": "turbo test:coverage",
     "dependencies:check": "node scripts/check-dependency-alignment.mjs",
     "runtime:check": "node scripts/check-node-runtime.mjs",
+    "security:check": "node scripts/check-security-baseline.mjs",
+    "security:audit": "pnpm audit --prod --audit-level high",
     "verify": "bash scripts/verify-all.sh",
     "prepare": "husky"
   },

@@ -112,6 +112,16 @@ Start here. This file is the canonical index and rules for documentation and dev
 
 58. `features/catalonia-os-template-backport-audit.md` - Selective backport audit, fixed-bug inventory, and Terraform extraction roadmap from Catalonia OS
 
+### Security and Privacy Baseline
+
+59. `security/README.md` - System/data inventory, implemented secure defaults, access matrix, privacy baseline, and residual risks
+60. `security/control-evidence-register.md` - Non-certification mapping from control objectives to repository evidence
+61. `security/operations-runbook.md` - Credential rotation, incident response, release/rollback, recovery, upload, and AI gates
+62. `security/security-best-practices-report.md` - Repository-grounded findings, remediations, open risks, and verification summary
+63. `waves/2026-11-02/README.md` - Security baseline execution and rollback wave
+64. `architecture/fixes/2026-11-02-security-boundaries.md` - Runtime binding and negative-evidence architecture fix
+65. `learning-log/2026-11-02-nextjs-auth-dependency-security-release.md` - Next.js/Auth.js production dependency remediation
+
 ## Repository Governance
 
 - `CONTRIBUTING.md` - Contribution workflow and commit rules
@@ -183,4 +193,4 @@ Start here. This file is the canonical index and rules for documentation and dev
 
 ## Last Updated
 
-23 October 2026 - Indexed the Node.js Brotli security release remediation
+2 November 2026 - Indexed the security/privacy baseline and dependency remediation evidence

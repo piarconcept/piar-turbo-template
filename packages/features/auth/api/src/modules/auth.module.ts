@@ -15,6 +15,7 @@ import {
   UpdateUserRoleUseCaseExecuter,
 } from '../use-cases';
 import { AccountPort } from '@piar/domain-models';
+import { resolveJwtSecret } from '../security/resolve-jwt-secret';
 
 export interface AuthModuleOptions {
   accountPort: Provider<AccountPort>;
@@ -29,7 +30,7 @@ export class AuthModule {
       module: AuthModule,
       imports: [
         SecurityModule.register({
-          secret: process.env.JWT_SECRET ?? 'change-me',
+          secret: resolveJwtSecret(),
           expiresIn: process.env.JWT_EXPIRES_IN ?? '1h',
         }),
       ],

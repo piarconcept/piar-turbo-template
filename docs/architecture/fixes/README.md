@@ -28,6 +28,8 @@ Create an entry here when the real root cause was related to:
 
 ## Index
 
+- `2026-11-02-security-boundaries.md` - Required runtime bindings and negative evidence for
+  authorization, validation, headers, CORS and secret controls.
 - `2026-09-09-ci-process-preflight-self-match.md` - Prevented the verification process classifier from matching its own command line on Linux runners.
 - `2026-09-09-framework-dependency-alignment.md` - Established one compatible Next, React, Nest integration, and pnpm override contract.
 - `2026-09-09-single-owner-dependency-builds.md` - Made Turbo the sole owner of scheduled shared builds while preserving direct app preparation.
@@ -37,4 +39,4 @@ Create an entry here when the real root cause was related to:
 
 ## Last Updated
 
-9 September 2026 - Added the CI process-preflight self-match fix
+2 November 2026 - Added the executable security-boundary fix

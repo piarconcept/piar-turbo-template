@@ -1,4 +1,4 @@
-import { Injectable, NestInterceptor, ExecutionContext, CallHandler, Logger } from '@nestjs/common';
+import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApplicationError } from '@piar/domain-models';
@@ -9,9 +9,7 @@ import { ApplicationError } from '@piar/domain-models';
  */
 @Injectable()
 export class ErrorResponseInterceptor implements NestInterceptor {
-  private readonly logger = new Logger(ErrorResponseInterceptor.name);
-
-  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+  intercept(_context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
       catchError((error) => {
         // If it's already an ApplicationError, just re-throw it
@@ -20,14 +18,6 @@ export class ErrorResponseInterceptor implements NestInterceptor {
           return throwError(() => error);
         }
 
-        // Log unexpected errors
-        const request = context.switchToHttp().getRequest();
-        this.logger.error(
-          `Unexpected error in ${request.method} ${request.url}`,
-          error instanceof Error ? error.stack : error,
-        );
-
-        // Re-throw to let GlobalExceptionFilter handle it
         return throwError(() => error);
       }),
     );

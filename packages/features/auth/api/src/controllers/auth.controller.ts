@@ -1,5 +1,10 @@
-import { Body, Controller, Inject, Patch, Post } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
+import { Body, Controller, Inject, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
+import { AdminGuard, JwtAuthGuard } from '@piar/infra-backend-common-security';
+import { minutes, Throttle } from '@nestjs/throttler';
+import type { JwtPayload } from '@piar/infra-backend-common-security';
+
+type AuthenticatedRequest = { user?: JwtPayload };
 import type {
   ForgotPasswordResponse,
   LoginResponse,
@@ -46,6 +51,7 @@ export class AuthController {
    * POST /auth/login
    */
   @Post('login')
+  @Throttle({ short: { limit: 5, ttl: minutes(1) }, long: { limit: 20, ttl: minutes(15) } })
   @ApiOperation({ summary: 'User login', description: 'Authenticate user with email and password' })
   @ApiBody({ type: LoginDto })
   @ApiResponse({ status: 200, description: 'Login successful, returns account and session token' })
@@ -60,6 +66,7 @@ export class AuthController {
    * POST /auth/refresh
    */
   @Post('refresh')
+  @Throttle({ short: { limit: 10, ttl: minutes(1) }, long: { limit: 60, ttl: minutes(15) } })
   @ApiOperation({ summary: 'Refresh session token', description: 'Refresh access token' })
   @ApiBody({ type: RefreshSessionDto })
   @ApiResponse({ status: 200, description: 'Session refreshed' })
@@ -72,6 +79,7 @@ export class AuthController {
    * POST /auth/register
    */
   @Post('register')
+  @Throttle({ short: { limit: 3, ttl: minutes(1) }, long: { limit: 10, ttl: minutes(15) } })
   @ApiOperation({ summary: 'User registration', description: 'Register a new user account' })
   @ApiBody({ type: RegisterDto })
   @ApiResponse({ status: 201, description: 'User registered successfully' })
@@ -89,10 +97,10 @@ export class AuthController {
    * POST /auth/forgot-password
    */
   @Post('forgot-password')
+  @Throttle({ short: { limit: 3, ttl: minutes(1) }, long: { limit: 10, ttl: minutes(15) } })
   @ApiOperation({ summary: 'Forgot password', description: 'Request password reset for a user' })
   @ApiBody({ type: ForgotPasswordDto })
-  @ApiResponse({ status: 200, description: 'Password reset email sent' })
-  @ApiResponse({ status: 404, description: 'Email not found (NOT_FOUND)' })
+  @ApiResponse({ status: 200, description: 'Password reset request accepted' })
   @ApiResponse({ status: 500, description: 'Internal server error' })
   async forgotPassword(@Body() payload: ForgotPasswordDto): Promise<ForgotPasswordResponse> {
     return this.forgotPasswordUseCase.execute(payload);
@@ -102,17 +110,26 @@ export class AuthController {
    * PATCH /auth/roles
    */
   @Patch('roles')
+  @ApiBearerAuth('JWT-auth')
+  @UseGuards(JwtAuthGuard, AdminGuard)
   @ApiOperation({
     summary: 'Update user role',
     description: 'Update the role of an existing user (admin only)',
   })
   @ApiBody({ type: UpdateUserRoleDto })
   @ApiResponse({ status: 200, description: 'User role updated successfully' })
+  @ApiResponse({ status: 401, description: 'Missing or invalid access token' })
   @ApiResponse({ status: 404, description: 'User not found (NOT_FOUND)' })
   @ApiResponse({ status: 403, description: 'Insufficient permissions (FORBIDDEN)' })
   @ApiResponse({ status: 400, description: 'Validation error (VALIDATION_ERROR)' })
   @ApiResponse({ status: 500, description: 'Internal server error' })
-  async updateUserRole(@Body() payload: UpdateUserRoleDto): Promise<UpdateUserRoleResponse> {
-    return this.updateUserRoleUseCase.execute(payload);
+  async updateUserRole(
+    @Body() payload: UpdateUserRoleDto,
+    @Req() request: AuthenticatedRequest,
+  ): Promise<UpdateUserRoleResponse> {
+    return this.updateUserRoleUseCase.execute({
+      ...payload,
+      actorAccountId: request.user?.accountId,
+    });
   }
 }

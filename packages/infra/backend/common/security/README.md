@@ -18,17 +18,21 @@ This package centralizes JWT handling for backend services. It exposes a securit
 
 ```typescript
 import { SecurityModule } from '@piar/infra-backend-common-security';
+import { resolveJwtSecret } from '@piar/auth-api';
 
 @Module({
   imports: [
     SecurityModule.register({
-      secret: process.env.JWT_SECRET ?? 'change-me',
+      secret: resolveJwtSecret(),
       expiresIn: '1h',
     }),
   ],
 })
 export class AuthModule {}
 ```
+
+The auth feature's `resolveJwtSecret()` fails startup for missing, short, or known-placeholder
+values. Production CORS origins can be validated with `resolveAllowedOrigins()`.
 
 ## Development
 

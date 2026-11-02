@@ -76,6 +76,8 @@ export interface ForgotPasswordResponse {
 export interface UpdateUserRoleRequest {
   userId: string;
   role: AccountRole;
+  /** Populated by trusted server code after JWT verification. Never accept this from a client body. */
+  actorAccountId?: string;
 }
 
 /**

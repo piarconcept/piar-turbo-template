@@ -113,14 +113,14 @@ if [[ -n "${active_dev_processes}" ]]; then
   exit 1
 fi
 
-run_step "1/13 local artifact clean" pnpm artifacts:clean
+run_step "1/14 local artifact clean" pnpm artifacts:clean
 
 status_before_file="$(mktemp "${TMPDIR:-/tmp}/piar-verify-status-before.XXXXXX")"
 status_after_file="$(mktemp "${TMPDIR:-/tmp}/piar-verify-status-after.XXXXXX")"
 
 capture_status_snapshot "${status_before_file}"
 
-run_step "2/13 generated artifact check" pnpm artifacts:check
+run_step "2/14 generated artifact check" pnpm artifacts:check
 
 scratch_dir="$(mktemp -d "${TMPDIR:-/tmp}/piar-verify.XXXXXX")"
 mkdir -p "${scratch_dir}/repo"
@@ -142,23 +142,24 @@ rsync \
   "${repo_root}/" \
   "${scratch_dir}/repo/"
 
-run_in_scratch "3/13 reproducible install" pnpm install --frozen-lockfile
-run_in_scratch "4/13 build" pnpm build
-run_in_scratch "5/13 typecheck" pnpm typecheck
-run_in_scratch "6/13 format check" pnpm format:check
-run_in_scratch "7/13 test participation policy" pnpm test:policy
-run_in_scratch "8/13 tooling script tests" pnpm test:scripts
-run_in_scratch "9/13 workspace tests without coverage" pnpm test
-run_in_scratch "10/13 lint" pnpm lint
+run_in_scratch "3/14 reproducible install" pnpm install --frozen-lockfile
+run_in_scratch "4/14 security baseline" pnpm security:check
+run_in_scratch "5/14 build" pnpm build
+run_in_scratch "6/14 typecheck" pnpm typecheck
+run_in_scratch "7/14 format check" pnpm format:check
+run_in_scratch "8/14 test participation policy" pnpm test:policy
+run_in_scratch "9/14 tooling script tests" pnpm test:scripts
+run_in_scratch "10/14 workspace tests without coverage" pnpm test
+run_in_scratch "11/14 lint" pnpm lint
 
-run_step "11/13 final local artifact clean" pnpm artifacts:clean
-run_step "12/13 generated artifact check" pnpm artifacts:check
+run_step "12/14 final local artifact clean" pnpm artifacts:clean
+run_step "13/14 generated artifact check" pnpm artifacts:check
 
 capture_status_snapshot "${status_after_file}"
 
 if ! cmp -s "${status_before_file}" "${status_after_file}"; then
   echo
-  echo "13/13 git status drift detected"
+  echo "14/14 git status drift detected"
   echo "verify must not change the visible worktree after local artifact hygiene."
   echo
   echo "Before verify:"
@@ -181,5 +182,5 @@ if ! cmp -s "${status_before_file}" "${status_after_file}"; then
 fi
 
 echo
-echo "13/13 git status unchanged"
+echo "14/14 git status unchanged"
 echo "verify completed successfully and left the worktree artifact-free."

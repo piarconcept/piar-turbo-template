@@ -48,7 +48,7 @@ Document critical repository configuration decisions and conventions that must b
 
 ### Compatible Framework Contract
 
-- Next.js and `eslint-config-next`: `15.5.25`
+- Next.js and `eslint-config-next`: `15.5.28`
 - React and React DOM runtime: `19.1.0`
 - NestJS core: `11.x`
 - `@nestjs/config`: `4.x`; `@nestjs/swagger`: `11.x`

@@ -1,6 +1,15 @@
+import { randomUUID } from 'node:crypto';
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, Logger } from '@nestjs/common';
 import { Response } from 'express';
-import { ApplicationError, InternalServerError } from '@piar/domain-models';
+import { ApplicationError } from '@piar/domain-models';
+import { serializeApplicationError, serializeHttpError } from './safe-error-response';
+
+function requestContext(request: { method?: string; route?: { path?: string } }) {
+  return {
+    method: request.method ?? 'UNKNOWN',
+    route: request.route?.path ?? 'unmatched',
+  };
+}
 
 /**
  * Global exception filter for ApplicationError
@@ -15,18 +24,16 @@ export class ApplicationErrorFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest();
 
-    const errorResponse = exception.toJSON();
+    const eventId = randomUUID();
+    const errorResponse = serializeApplicationError(exception, eventId);
 
-    // Log the error for monitoring
-    this.logger.error(`${request.method} ${request.url} - ${exception.message}`, {
+    this.logger.error({
+      eventId,
+      ...requestContext(request),
       code: exception.code,
       statusCode: exception.statusCode,
-      details: exception.details,
-      i18nKey: exception.i18nKey,
-      stack: exception.stack,
     });
 
-    // Send error response to client
     response.status(exception.statusCode).json(errorResponse);
   }
 }
@@ -44,29 +51,17 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest();
+    const eventId = randomUUID();
 
     // Check if it's an HttpException (NestJS built-in)
     if (exception instanceof HttpException) {
       const status = exception.getStatus();
-      const exceptionResponse = exception.getResponse();
-
-      this.logger.error(`${request.method} ${request.url} - HTTP Exception`, {
+      this.logger.error({
+        eventId,
+        ...requestContext(request),
         status,
-        response: exceptionResponse,
       });
-
-      // Convert HttpException to domain error
-      const message =
-        typeof exceptionResponse === 'string'
-          ? exceptionResponse
-          : (exceptionResponse as any).message || 'HTTP Exception';
-
-      const domainError = new InternalServerError(message, {
-        originalStatus: status,
-        originalResponse: exceptionResponse,
-      });
-
-      response.status(status).json(domainError.toJSON());
+      response.status(status).json(serializeHttpError(status, eventId));
       return;
     }
 
@@ -76,34 +71,26 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       ((exception as ApplicationError).code !== undefined &&
         (exception as ApplicationError).message !== undefined)
     ) {
-      const errorResponse = (exception as ApplicationError).toJSON();
       const exc = exception as ApplicationError;
+      const errorResponse = serializeApplicationError(exc, eventId);
 
-      this.logger.error(`${request.method} ${request.url} - Application Error`, {
+      this.logger.error({
+        eventId,
+        ...requestContext(request),
         code: exc.code,
         statusCode: exc.statusCode,
-        details: exc.details,
-        i18nKey: exc.i18nKey,
-        stack: exc.stack,
       });
 
       response.status(exc.statusCode).json(errorResponse);
       return;
     }
 
-    // Unknown error - convert to InternalServerError (domain error)
-    const errorMessage =
-      exception instanceof Error ? exception.message : 'An unexpected error occurred';
-
-    this.logger.error(
-      `${request.method} ${request.url} - Unexpected error`,
-      exception instanceof Error ? exception.stack : exception,
-    );
-
-    const domainError = new InternalServerError(errorMessage, {
-      originalError: exception instanceof Error ? exception.name : 'UnknownError',
+    this.logger.error({
+      eventId,
+      ...requestContext(request),
+      statusCode: 500,
+      errorType: exception instanceof Error ? exception.name : 'UnknownError',
     });
-
-    response.status(500).json(domainError.toJSON());
+    response.status(500).json(serializeHttpError(500, eventId));
   }
 }

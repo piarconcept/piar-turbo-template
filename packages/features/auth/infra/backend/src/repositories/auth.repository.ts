@@ -13,6 +13,8 @@ import type {
 } from '@piar/auth-configuration';
 import {
   AccountEntity,
+  BusinessRuleViolationError,
+  ForbiddenError,
   InvalidCredentialsError,
   ResourceAlreadyExistsError,
   NotFoundError,
@@ -153,23 +155,37 @@ export class AuthRepository implements IAuthRepository {
   }
 
   async forgotPassword(payload: ForgotPasswordRequest): Promise<ForgotPasswordResponse> {
-    const account = await this.accountPort.getByEmail(payload.email);
-
-    if (!account) {
-      return { success: false, message: 'Email not found' };
-    }
+    await this.accountPort.getByEmail(payload.email);
 
     return {
       success: true,
-      message: `Password reset email sent to ${payload.email}`,
+      message: 'If an account exists, password reset instructions will be sent.',
     };
   }
 
   async updateUserRole(payload: UpdateUserRoleRequest): Promise<UpdateUserRoleResponse> {
+    if (!payload.actorAccountId) {
+      throw new ForbiddenError('Authenticated administrator context is required');
+    }
+
     const account = await this.accountPort.getById(payload.userId);
 
     if (!account) {
       throw new NotFoundError('User', payload.userId, 'user_not_found');
+    }
+
+    if (account.role === 'admin' && payload.role !== 'admin') {
+      if (account.id === payload.actorAccountId) {
+        throw new ForbiddenError('Administrators cannot demote their own account');
+      }
+
+      const hasAnotherAdmin = await this.accountPort.hasMultipleByRole('admin');
+      if (!hasAnotherAdmin) {
+        throw new BusinessRuleViolationError(
+          'last_admin',
+          'The last administrator cannot be demoted',
+        );
+      }
     }
 
     account.role = payload.role;

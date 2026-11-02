@@ -23,7 +23,7 @@ export class HttpClient {
 
     this.axiosInstance = axios.create({
       baseURL: clientConfig.baseUrl,
-      withCredentials: clientConfig.withCredentials ?? true, // Enable cookies by default
+      withCredentials: clientConfig.withCredentials ?? false,
       timeout: clientConfig.timeout ?? 30000, // 30 seconds default
       headers: {
         'Content-Type': 'application/json',

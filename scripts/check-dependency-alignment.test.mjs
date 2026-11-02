@@ -30,8 +30,8 @@ test('the dependency guard rejects framework, type, and obsolete test-library dr
     assert.deepEqual(checkDependencyAlignment(fixtureRoot), []);
 
     const cases = [
-      ['packages/ui/layout/package.json', '>=15.5.25 <16', '^16.0.0', /peerDependencies\.next/],
-      ['apps/client/web/package.json', '15.5.25', '16.0.0', /dependencies\.next/],
+      ['packages/ui/layout/package.json', '>=15.5.28 <16', '^16.0.0', /peerDependencies\.next/],
+      ['apps/client/web/package.json', '15.5.28', '16.0.0', /dependencies\.next/],
       ['apps/api/web-bff/package.json', '^4.0.4', '^3.3.0', /@nestjs\/config/],
       ['packages/features/auth/api/package.json', '^11.4.7', '^8.0.7', /@nestjs\/swagger/],
       ['packages/domain/dynamic-form/package.json', '^24.13.3', '^20.0.0', /@types\/node/],

@@ -6,6 +6,15 @@ This project follows Conventional Commits and keeps a single "Unreleased" sectio
 
 ## Unreleased
 
+- Added an auditable security/privacy baseline, control evidence register, incident/rotation/recovery
+  runbook, residual-risk register, and a redacted security check in `pnpm verify`.
+- Fixed an unguarded role-management route, administrator invariant bypass, account enumeration,
+  unsafe JWT fallback, unvalidated request bodies, permissive production CORS, and sensitive error
+  reflection/logging.
+- Added global and authentication-specific throttling, wired Next.js security headers, disabled
+  production `unsafe-eval`, made browser credentials opt-in, and disabled backoffice caching.
+- Updated Next.js to `15.5.28`, sharp to `0.35.5`, Auth.js to `5.0.0-beta.32`, and compatible
+  production dependencies; the live production audit has no high or critical finding.
 - Updated Node.js to the `24.22.1` security release, remediating the Brotli decoder
   out-of-bounds write tracked as CVE-2026-111497.
 - Reduced GitHub Actions to one push/manual verification workflow and fixed the Linux process

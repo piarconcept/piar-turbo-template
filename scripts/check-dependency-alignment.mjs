@@ -19,8 +19,8 @@ const ignoredDirectories = new Set([
 ]);
 
 const expected = {
-  next: '15.5.25',
-  nextPeer: '>=15.5.25 <16',
+  next: '15.5.28',
+  nextPeer: '>=15.5.28 <16',
   react: '19.1.0',
   reactDom: '19.1.0',
   nodeTypes: '^24.13.3',

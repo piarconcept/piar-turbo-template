@@ -87,8 +87,11 @@ with `AccountPort` bound to `AccountRepository`.
 
 ## Operational Notes
 
-- `forgot-password` is currently a placeholder flow.
-- Role update endpoint should stay admin-protected at the BFF/security layer.
+- `forgot-password` is currently a placeholder delivery flow, but its response is identical whether
+  or not an account exists.
+- Role updates require JWT and administrator guards, a server-derived actor, and protected
+  self/last-administrator invariants.
+- Authentication endpoints have tighter throttles than the general BFF policy.
 - Keep auth DTOs and configuration package types aligned.
 
 ## Verification Commands

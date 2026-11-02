@@ -103,7 +103,7 @@ export default defineConfig([
 ]);
 ```
 
-The clients keep `next` and `eslint-config-next` on the same supported 15.5 patch. The
+The clients keep `next` and `eslint-config-next` on the same supported `15.5.28` patch. The
 `@eslint/eslintrc` compatibility layer is required because this Next.js line still exposes legacy
 shareable presets while the repository uses ESLint 9 flat configuration.
 

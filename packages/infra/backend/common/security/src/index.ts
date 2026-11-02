@@ -3,3 +3,4 @@ export * from './jwt/jwt-token.service';
 export * from './guards/jwt-auth.guard';
 export * from './guards/admin.guard';
 export * from './types/jwt-payload';
+export * from './origin/allowed-origins';

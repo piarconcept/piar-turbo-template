@@ -6,7 +6,9 @@ NestJS error handling infrastructure for BFF applications.
 
 - Global exception filter for ApplicationError
 - Error response interceptor
-- Automatic serialization of domain errors to HTTP responses
+- Safe serialization of domain errors to HTTP responses
+- Random event IDs for support correlation without reflecting raw error data
+- Metadata-only logs without URLs, submitted values, exception messages, details, or stacks
 
 ## Usage
 
@@ -50,13 +52,17 @@ throw new InvalidCredentialsError(
 
 ```json
 {
-  "code": 2003,
-  "message": "Invalid email or password",
+  "code": "INVALID_CREDENTIALS",
+  "message": "Invalid credentials",
   "statusCode": 401,
+  "details": { "eventId": "4c76395b-3197-4b10-88f0-0dd1847c7851" },
   "i18nKey": "errors.auth.invalidCredentials",
   "timestamp": "2026-01-23T10:30:00.000Z"
 }
 ```
+
+Application code may retain detailed errors internally, but the BFF filter returns a stable safe
+message and event identifier. Do not reintroduce raw exception objects or request URLs into logs.
 
 ## Development
 

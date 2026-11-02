@@ -4,9 +4,25 @@ packages:
 
 overrides:
   esbuild: ^0.25.0
-  js-yaml: ^4.1.1
-  lodash: ^4.17.23
+  js-yaml: 4.3.2
+  lodash: 4.18.0
   diff: ^4.0.4
-  next: 15.5.25
+  next: 15.5.28
   react: 19.1.0
   react-dom: 19.1.0
+  sharp: 0.35.5
+  '@nestjs/common': 11.1.18
+  '@nestjs/core': 11.1.18
+  '@nestjs/platform-express': 11.1.18
+  '@nestjs/testing': 11.1.18
+  '@nestjs/jwt': 11.0.2
+  '@nestjs/typeorm': 11.0.3
+  'minimatch@>=9.0.0 <10': 9.0.7
+  picomatch: 4.0.4
+  multer: 2.5.0
+  'brace-expansion@>=2.0.0 <3': 2.1.7
+  postcss: 8.5.18
+  'nanoid@>=3.0.0 <4': 3.3.18
+  source-map-js: 1.2.2
+  proxy-addr: 2.0.8
+  body-parser: 2.4.0

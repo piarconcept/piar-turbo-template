@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import type { LoginRequest } from '@piar/auth-configuration';
+import { IsBoolean, IsEmail, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
 /**
  * Login DTO with Swagger decorators
@@ -10,6 +11,8 @@ export class LoginDto implements LoginRequest {
     example: 'admin@piar.com',
     type: String,
   })
+  @IsEmail()
+  @MaxLength(254)
   email!: string;
 
   @ApiProperty({
@@ -18,6 +21,9 @@ export class LoginDto implements LoginRequest {
     type: String,
     format: 'password',
   })
+  @IsString()
+  @MinLength(1)
+  @MaxLength(128)
   password!: string;
 
   @ApiProperty({
@@ -26,5 +32,7 @@ export class LoginDto implements LoginRequest {
     type: Boolean,
     required: false,
   })
+  @IsOptional()
+  @IsBoolean()
   rememberMe?: boolean;
 }

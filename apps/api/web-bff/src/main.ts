@@ -1,13 +1,24 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
+import { resolveAllowedOrigins } from '@piar/infra-backend-common-security';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.useGlobalPipes(
+    new ValidationPipe({
+      forbidNonWhitelisted: true,
+      transform: true,
+      validationError: { target: false, value: false },
+      whitelist: true,
+    }),
+  );
+
   // Enable CORS for web client
   app.enableCors({
-    origin: process.env.WEB_CLIENT_URL || 'http://localhost:3000',
+    origin: resolveAllowedOrigins(process.env.WEB_CLIENT_URL, ['http://localhost:3000']),
     credentials: true,
   });
 

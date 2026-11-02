@@ -18,6 +18,8 @@ Architecture root causes belong in `docs/architecture/fixes/`. Use this director
 
 ## Index
 
+- `2026-11-02-nextjs-auth-dependency-security-release.md` - Patched the resolved Next.js, sharp,
+  Auth.js and production dependency graph and verified zero high/critical advisories
 - `2026-10-23-node-brotli-security-release.md` - Updated the exact Node.js runtime to remediate the
   high-severity Brotli decoder vulnerability
 - `2026-09-09-node24-runtime-compatibility.md` - Migrated the exact Node.js runtime without framework drift and added native compatibility tests
@@ -25,4 +27,4 @@ Architecture root causes belong in `docs/architecture/fixes/`. Use this director
 
 ## Last Updated
 
-23 October 2026 - Added the Node.js Brotli security release remediation
+2 November 2026 - Added the Next.js/Auth.js dependency security remediation

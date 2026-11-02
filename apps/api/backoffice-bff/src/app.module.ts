@@ -1,6 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
+import { minutes, ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AccountsModule } from '@piar/accounts-api';
 import { AuthModule } from '@piar/auth-api';
 import { ContactSubmissionModule } from '@piar/contact-api';
@@ -30,6 +31,10 @@ const ENV_FILE = '.env';
       load: [() => loadConfigurationParams()],
       envFilePath: [ENV_FILE],
     }),
+    ThrottlerModule.forRoot([
+      { name: 'short', ttl: minutes(1), limit: 60 },
+      { name: 'long', ttl: minutes(15), limit: 500 },
+    ]),
 
     // Modules
     HealthModule.register(),
@@ -71,6 +76,10 @@ const ENV_FILE = '.env';
     DynamicPageRepositoryProviderModule,
   ],
   providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
     {
       provide: APP_FILTER,
       useClass: ApplicationErrorFilter,

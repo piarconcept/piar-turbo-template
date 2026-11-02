@@ -78,7 +78,7 @@ piar-repo/
 Integrated and validated in this template:
 
 - Node.js 24.22.1 with `.nvmrc`-driven local and CI runtime checks
-- Next.js 15.5.25, React 19.1.0, NestJS 11, TypeScript 5.9, and pnpm 10.28.0
+- Next.js 15.5.28, React 19.1.0, NestJS 11, TypeScript 5.9, and pnpm 10.28.0
 - Auth with access + refresh session flow
 - Accounts admin module (CRUD + admin safety rules)
 - Backoffice search (accounts collection)
@@ -148,7 +148,8 @@ See `CONTRIBUTING.md` for workflow and commit rules.
 
 ## Security
 
-See `SECURITY.md` for reporting vulnerabilities.
+See `SECURITY.md` for reporting vulnerabilities and `docs/security/README.md` for the implemented
+baseline, evidence, operations runbook, residual risks, and non-certification scope.
 
 ## Code of Conduct
 
